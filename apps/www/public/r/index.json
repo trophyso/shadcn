@@ -20,6 +20,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "leaderboard",
+      "type": "registry:ui"
+    },
+    {
       "name": "streak-at-risk",
       "type": "registry:ui"
     },
