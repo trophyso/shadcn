@@ -6,6 +6,10 @@
     {
       "name": "streak-badge",
       "type": "registry:ui"
+    },
+    {
+      "name": "streak-calendar",
+      "type": "registry:ui"
     }
   ]
 }
