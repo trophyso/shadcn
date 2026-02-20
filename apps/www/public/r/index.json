@@ -20,6 +20,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "leaderboard-entry",
+      "type": "registry:ui"
+    },
+    {
       "name": "leaderboard",
       "type": "registry:ui"
     },

@@ -109,6 +109,17 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "leaderboard-entry",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/leaderboard-entry.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
