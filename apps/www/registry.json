@@ -12,13 +12,15 @@
       "cssVars": {}
     },
     {
-      "name": "style",
-      "type": "registry:style",
+      "name": "streak-badge",
+      "type": "registry:ui",
       "dependencies": ["class-variance-authority", "lucide-react"],
-      "devDependencies": ["tw-animate-css"],
-      "registryDependencies": ["utils"],
-      "files": [],
-      "cssVars": {}
+      "files": [
+        {
+          "path": "registry/trophy/ui/streak-badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
