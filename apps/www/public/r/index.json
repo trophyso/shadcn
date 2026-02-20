@@ -12,6 +12,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "achievement-progress",
+      "type": "registry:ui"
+    },
+    {
       "name": "achievement-unlocked",
       "type": "registry:ui"
     },

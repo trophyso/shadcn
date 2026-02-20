@@ -87,6 +87,17 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "achievement-progress",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/achievement-progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
