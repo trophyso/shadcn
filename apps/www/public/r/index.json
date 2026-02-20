@@ -8,6 +8,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "achievement-grid",
+      "type": "registry:ui"
+    },
+    {
       "name": "streak-at-risk",
       "type": "registry:ui"
     },

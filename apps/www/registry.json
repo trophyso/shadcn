@@ -65,6 +65,17 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "achievement-grid",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/achievement-grid.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
