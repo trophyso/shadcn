@@ -12,6 +12,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "achievement-unlocked",
+      "type": "registry:ui"
+    },
+    {
       "name": "streak-at-risk",
       "type": "registry:ui"
     },
