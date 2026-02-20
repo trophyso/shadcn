@@ -10,6 +10,10 @@
     {
       "name": "streak-calendar",
       "type": "registry:ui"
+    },
+    {
+      "name": "streak-freeze-indicator",
+      "type": "registry:ui"
     }
   ]
 }
