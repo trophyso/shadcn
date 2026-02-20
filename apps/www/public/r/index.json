@@ -24,6 +24,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "leaderboard-podium",
+      "type": "registry:ui"
+    },
+    {
       "name": "leaderboard",
       "type": "registry:ui"
     },

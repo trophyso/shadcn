@@ -120,6 +120,17 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "leaderboard-podium",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/leaderboard-podium.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
