@@ -4,6 +4,10 @@
   "homepage": "https://ui.trophy.so",
   "items": [
     {
+      "name": "achievement-badge",
+      "type": "registry:ui"
+    },
+    {
       "name": "streak-at-risk",
       "type": "registry:ui"
     },

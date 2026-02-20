@@ -54,6 +54,17 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "achievement-badge",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/achievement-badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
