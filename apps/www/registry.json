@@ -1,0 +1,24 @@
+{
+  "name": "trophy",
+  "homepage": "https://ui.trophy.so",
+  "items": [
+    {
+      "name": "index",
+      "type": "registry:style",
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "devDependencies": ["tw-animate-css"],
+      "registryDependencies": ["utils"],
+      "files": [],
+      "cssVars": {}
+    },
+    {
+      "name": "style",
+      "type": "registry:style",
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "devDependencies": ["tw-animate-css"],
+      "registryDependencies": ["utils"],
+      "files": [],
+      "cssVars": {}
+    }
+  ]
+}

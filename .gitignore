@@ -1,0 +1,29 @@
+# dependencies
+node_modules
+.pnpm-store
+
+# build
+.next
+.turbo
+dist
+out
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+pnpm-debug.log*
+
+# env
+.env
+.env.local
+.env.*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
