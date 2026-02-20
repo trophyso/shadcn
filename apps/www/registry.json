@@ -43,6 +43,17 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "streak-at-risk",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/streak-at-risk.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
