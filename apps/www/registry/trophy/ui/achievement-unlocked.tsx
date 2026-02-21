@@ -5,18 +5,12 @@ import { Share2, Trophy, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-// Types (inlined)
+// Types (inlined - only fields used by this component)
 interface Achievement {
   id: string;
   name: string;
-  trigger: "metric" | "api" | "streak";
   description?: string | null;
   badgeUrl?: string | null;
-  key?: string;
-  metricId?: string;
-  metricName?: string;
-  metricValue?: number;
-  streakLength?: number;
 }
 
 // Props
