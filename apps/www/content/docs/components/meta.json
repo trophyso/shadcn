@@ -1,0 +1,25 @@
+{
+  "title": "Components",
+  "pages": [
+    "---Streaks---",
+    "streak-badge",
+    "streak-calendar",
+    "streak-freeze-indicator",
+    "streak-at-risk",
+    "---Achievements---",
+    "achievement-badge",
+    "achievement-grid",
+    "achievement-unlocked",
+    "achievement-progress",
+    "---Leaderboards---",
+    "leaderboard",
+    "leaderboard-entry",
+    "leaderboard-podium",
+    "user-rank",
+    "---Points---",
+    "points-display",
+    "points-animation",
+    "---Core---",
+    "trophy-provider"
+  ]
+}
