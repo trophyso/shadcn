@@ -106,20 +106,27 @@ const StreakBadge = React.forwardRef<HTMLDivElement, StreakBadgeProps>(
       lg: "h-5 w-5",
     }[size ?? "default"];
 
+    // Build accessible label
+    const ariaLabel = showFrequency
+      ? `${streakLength} ${pluralLabel} streak`
+      : `${streakLength} ${frequency} streak`;
+
     return (
       <div
         ref={ref}
+        role="status"
+        aria-label={ariaLabel}
         className={cn(
           streakBadgeVariants({ variant, size }),
-          animate && "motion-safe:animate-streak-pulse",
+          animate && streakLength > 0 && "motion-safe:animate-pulse",
           className,
         )}
         {...props}
       >
-        {showFlame && (icon ?? <Flame className={cn(iconSize, "shrink-0")} />)}
-        <span>{streakLength}</span>
+        {showFlame && (icon ?? <Flame className={cn(iconSize, "shrink-0")} aria-hidden="true" />)}
+        <span aria-hidden="true">{streakLength}</span>
         {showFrequency && (
-          <span className="font-normal opacity-80">{pluralLabel}</span>
+          <span className="font-normal opacity-80" aria-hidden="true">{pluralLabel}</span>
         )}
       </div>
     );
