@@ -116,10 +116,13 @@ const LeaderboardEntry = React.forwardRef<
       lg: "h-5 w-5",
     }[size ?? "default"];
 
+    const entryLabel = `Rank ${ranking.rank}: ${displayName}${showValue ? `, ${ranking.value.toLocaleString()}${valueLabel ? ` ${valueLabel}` : ""}` : ""}${isCurrentUser ? " (you)" : ""}`;
+
     return (
       <div
         ref={ref}
-        role={onClick ? "button" : undefined}
+        role={onClick ? "button" : "listitem"}
+        aria-label={entryLabel}
         tabIndex={onClick ? 0 : undefined}
         onClick={onClick}
         onKeyDown={
@@ -141,7 +144,7 @@ const LeaderboardEntry = React.forwardRef<
         {...props}
       >
         {/* Rank */}
-        <div className="w-12 flex justify-center shrink-0">
+        <div className="w-12 flex justify-center shrink-0" aria-hidden="true">
           {rankDisplay ? (
             <div
               className={cn(
@@ -165,11 +168,13 @@ const LeaderboardEntry = React.forwardRef<
             (avatarUrl ? (
               <img
                 src={avatarUrl}
-                alt={displayName}
+                alt=""
+                aria-hidden="true"
                 className={cn("rounded-full object-cover shrink-0", avatarSize)}
               />
             ) : (
               <div
+                aria-hidden="true"
                 className={cn(
                   "flex items-center justify-center rounded-full font-medium shrink-0",
                   avatarSize,
