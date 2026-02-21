@@ -5,25 +5,15 @@ import { Snowflake } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-// Types (inlined)
+// Types (inlined - only fields used by this component)
 interface StreakPeriod {
   periodStart: string;
   periodEnd: string;
-  length: number;
   usedFreeze?: boolean;
 }
 
 interface StreakResponse {
-  length: number;
-  frequency: "daily" | "weekly" | "monthly";
-  started: string | null;
-  periodStart: string | null;
-  periodEnd: string | null;
-  expires: string | null;
   streakHistory: StreakPeriod[];
-  rank: number | null;
-  freezes?: number;
-  maxFreezes?: number;
 }
 
 // Helper to check if a date falls within a streak period
