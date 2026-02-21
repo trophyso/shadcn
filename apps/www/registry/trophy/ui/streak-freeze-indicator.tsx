@@ -105,16 +105,20 @@ const StreakFreezeIndicator = React.forwardRef<
       lg: "h-3 w-3",
     }[size ?? "default"];
 
+    const ariaLabel = `${freezes} of ${maxFreezes} streak freeze${maxFreezes === 1 ? "" : "s"} available`;
+
     // Text variant
     if (variant === "text") {
       return (
         <div
           ref={ref}
+          role="status"
+          aria-label={ariaLabel}
           className={cn(freezeIndicatorVariants({ variant, size }), className)}
           {...props}
         >
-          <Snowflake className={cn(iconSize, "text-blue-500")} />
-          <span className="font-medium">
+          <Snowflake className={cn(iconSize, "text-blue-500")} aria-hidden="true" />
+          <span className="font-medium" aria-hidden="true">
             {freezes}
             {showMax && (
               <span className="text-muted-foreground">/{maxFreezes}</span>
@@ -157,16 +161,19 @@ const StreakFreezeIndicator = React.forwardRef<
     return (
       <div
         ref={ref}
+        role="status"
+        aria-label={ariaLabel}
         className={cn(freezeIndicatorVariants({ variant, size }), className)}
-        title={`${freezes} of ${maxFreezes} streak freezes available`}
         {...props}
       >
-        {indicators}
-        {showMax && variant === "dots" && (
-          <span className="ml-1 text-muted-foreground">
-            {freezes}/{maxFreezes}
-          </span>
-        )}
+        <span aria-hidden="true" className="inline-flex items-center gap-inherit">
+          {indicators}
+          {showMax && variant === "dots" && (
+            <span className="ml-1 text-muted-foreground">
+              {freezes}/{maxFreezes}
+            </span>
+          )}
+        </span>
       </div>
     );
   },
