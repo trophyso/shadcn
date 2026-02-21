@@ -176,7 +176,11 @@ const AchievementProgress = React.forwardRef<
 
         {/* Completion message */}
         {isComplete && (
-          <p className={cn("text-green-600 dark:text-green-400", textSize)}>
+          <p
+            role="status"
+            aria-live="polite"
+            className={cn("text-green-600 dark:text-green-400", textSize)}
+          >
             Complete! 🎉
           </p>
         )}
