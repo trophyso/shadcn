@@ -6,20 +6,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-// Types (inlined)
+// Types (inlined - only fields used by this component)
 interface Achievement {
   id: string;
   name: string;
   trigger: "metric" | "api" | "streak";
   description?: string | null;
   badgeUrl?: string | null;
-  key?: string;
-  metricId?: string;
-  metricName?: string;
   metricValue?: number;
-  streakLength?: number;
-  userAttributes?: Array<{ key: string; value: string }>;
-  eventAttribute?: { key: string; value: string };
 }
 
 interface UserAchievement extends Achievement {
