@@ -1,0 +1,222 @@
+---
+title: Leaderboard
+description: A full-featured leaderboard component for displaying user rankings with medals, avatars, and multiple layout variants.
+---
+
+# Leaderboard
+
+A comprehensive leaderboard component that displays user rankings with visual rank indicators (crowns, medals), avatars, and scores. Supports multiple layout variants and current user highlighting.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/leaderboard.json
+```
+
+## Usage
+
+```tsx
+import { Leaderboard } from "@/components/ui/leaderboard"
+```
+
+```tsx
+<Leaderboard
+  rankings={[
+    { userId: "1", userName: "Alice", rank: 1, value: 2500 },
+    { userId: "2", userName: "Bob", rank: 2, value: 2200 },
+    { userId: "3", userName: "Charlie", rank: 3, value: 1800 },
+  ]}
+/>
+```
+
+## Examples
+
+### With Trophy API Response
+
+```tsx
+const leaderboard = await trophy.leaderboards.get({ leaderboardId: "weekly-xp" })
+
+<Leaderboard leaderboard={leaderboard} />
+```
+
+### Variants
+
+```tsx
+// Table style with header (default)
+<Leaderboard rankings={rankings} variant="table" />
+
+// Card style - each entry in a separate card
+<Leaderboard rankings={rankings} variant="cards" />
+
+// Compact style - smaller text, tighter spacing
+<Leaderboard rankings={rankings} variant="compact" />
+```
+
+### Highlight Current User
+
+```tsx
+<Leaderboard
+  rankings={rankings}
+  currentUserId="user_123"
+/>
+// Current user row is highlighted with "(you)" label
+```
+
+### Limit Displayed Entries
+
+```tsx
+<Leaderboard
+  rankings={rankings}
+  limit={10}
+/>
+// Shows top 10 with "+X more" indicator if there are more
+```
+
+### Custom Value Label
+
+```tsx
+// Points
+<Leaderboard rankings={rankings} valueLabel="Points" />
+
+// XP
+<Leaderboard rankings={rankings} valueLabel="XP" />
+
+// Tasks
+<Leaderboard rankings={rankings} valueLabel="Tasks" />
+```
+
+### Hide Value Column
+
+```tsx
+<Leaderboard rankings={rankings} showValue={false} />
+```
+
+### Without Avatars
+
+```tsx
+<Leaderboard rankings={rankings} showAvatar={false} />
+```
+
+### Clickable Rows
+
+```tsx
+<Leaderboard
+  rankings={rankings}
+  onUserClick={(ranking) => {
+    router.push(`/profile/${ranking.userId}`)
+  }}
+/>
+```
+
+### Custom Empty State
+
+```tsx
+<Leaderboard
+  rankings={[]}
+  emptyState={
+    <div className="text-center py-8">
+      <p className="text-lg font-medium">Be the first!</p>
+      <p className="text-muted-foreground">Complete tasks to appear on the leaderboard</p>
+    </div>
+  }
+/>
+```
+
+### Weekly Leaderboard with Tabs
+
+```tsx
+const [period, setPeriod] = useState<"daily" | "weekly" | "allTime">("weekly")
+
+const leaderboard = await trophy.leaderboards.get({
+  leaderboardId: "xp",
+  period,
+})
+
+<Tabs value={period} onValueChange={setPeriod}>
+  <TabsList>
+    <TabsTrigger value="daily">Today</TabsTrigger>
+    <TabsTrigger value="weekly">This Week</TabsTrigger>
+    <TabsTrigger value="allTime">All Time</TabsTrigger>
+  </TabsList>
+</Tabs>
+
+<Leaderboard
+  leaderboard={leaderboard}
+  currentUserId={session.userId}
+  limit={25}
+  variant="table"
+/>
+```
+
+### Compact Sidebar Widget
+
+```tsx
+<Card>
+  <CardHeader>
+    <CardTitle>Top Players</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <Leaderboard
+      rankings={rankings}
+      variant="compact"
+      limit={5}
+      showAvatar={false}
+      valueLabel="pts"
+    />
+  </CardContent>
+</Card>
+```
+
+## API Reference
+
+### Leaderboard
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `leaderboard` | `LeaderboardResponse` | - | Full Trophy API response |
+| `rankings` | `LeaderboardRanking[]` | - | Rankings array (alternative to leaderboard prop) |
+| `variant` | `"table" \| "cards" \| "compact"` | `"table"` | Layout variant |
+| `currentUserId` | `string` | - | Highlight this user's row |
+| `limit` | `number` | - | Max entries to display |
+| `showValue` | `boolean` | `true` | Show score/value column |
+| `valueLabel` | `string` | `"Score"` | Label for value column |
+| `showAvatar` | `boolean` | `true` | Show avatar placeholders |
+| `emptyState` | `ReactNode` | - | Custom empty state |
+| `onUserClick` | `(ranking) => void` | - | Row click handler |
+
+### LeaderboardRanking
+
+```ts
+interface LeaderboardRanking {
+  userId: string
+  userName: string | null
+  rank: number
+  value: number
+}
+```
+
+### LeaderboardResponse
+
+```ts
+interface LeaderboardResponse {
+  rankings: LeaderboardRanking[]
+}
+```
+
+## Features
+
+- **Rank medals** - Crown for 1st, silver medal for 2nd, bronze for 3rd
+- **Avatar initials** - Auto-generated from username
+- **Current user highlight** - Visual emphasis with "(you)" label
+- **Limit with indicator** - Shows "+X more" when truncated
+- **Formatted numbers** - Locale-aware number formatting
+- **Clickable rows** - Full keyboard and mouse support
+
+## Accessibility
+
+- Uses `role="list"` with `aria-label="Leaderboard rankings"`
+- Each entry uses `role="listitem"` with descriptive `aria-label`
+- Clickable rows are keyboard accessible (Enter/Space)
+- Rank icons and avatars marked `aria-hidden` (decorative)
+- Table header marked `aria-hidden` (info repeated in item labels)
+- Numbers formatted with `toLocaleString()` for screen readers
