@@ -6,7 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-// Types (inlined)
+// Types (inlined - only fields used by this component)
 interface LeaderboardRanking {
   userId: string;
   userName: string | null;
@@ -15,16 +15,7 @@ interface LeaderboardRanking {
 }
 
 interface LeaderboardResponse {
-  id: string;
-  name: string;
-  key: string;
-  rankBy: "points" | "streak" | "metric";
-  status: string;
-  description: string | null;
   rankings: LeaderboardRanking[];
-  start: string;
-  end: string | null;
-  maxParticipants: number;
 }
 
 // Variants
