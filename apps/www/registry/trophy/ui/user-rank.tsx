@@ -155,19 +155,23 @@ const UserRank = React.forwardRef<HTMLDivElement, UserRankProps>(
       lg: "h-5 w-5",
     }[size ?? "default"];
 
+    const statusLabel = `${displayName}, Rank ${ranking.rank}${totalParticipants ? ` of ${totalParticipants}` : ""}, ${ranking.value.toLocaleString()}${metricLabel ? ` ${metricLabel}` : ""}${trend === "up" ? ", trending up" : trend === "down" ? ", trending down" : trend === "new" ? ", new entry" : ""}`;
+
     return (
       <div
         ref={ref}
+        role="status"
+        aria-label={statusLabel}
         className={cn(userRankVariants({ variant, size }), className)}
         {...props}
       >
         {/* Avatar */}
         {showAvatar && (
-          <div className="shrink-0">
+          <div className="shrink-0" aria-hidden="true">
             {avatarUrl ? (
               <img
                 src={avatarUrl}
-                alt={displayName}
+                alt=""
                 className={cn("rounded-full object-cover", avatarSize)}
               />
             ) : (
@@ -195,7 +199,7 @@ const UserRank = React.forwardRef<HTMLDivElement, UserRankProps>(
         </div>
 
         {/* Rank display */}
-        <div className="flex flex-col items-end gap-1 shrink-0">
+        <div className="flex flex-col items-end gap-1 shrink-0" aria-hidden="true">
           <div className="flex items-center gap-2">
             {/* Rank badge or number */}
             {rankBadge ? (
@@ -226,7 +230,10 @@ const UserRank = React.forwardRef<HTMLDivElement, UserRankProps>(
 
         {/* Percentile or total (optional) */}
         {(showPercentile || totalParticipants) && (
-          <div className="text-right text-sm text-muted-foreground shrink-0 hidden sm:block">
+          <div
+            aria-hidden="true"
+            className="text-right text-sm text-muted-foreground shrink-0 hidden sm:block"
+          >
             {showPercentile && percentile !== null ? (
               <div>
                 <span className="font-medium text-foreground">
