@@ -103,6 +103,14 @@ const AchievementBadge = React.forwardRef<
       return null;
     }
 
+    // Build accessible label
+    const statusLabel = isUnlocked ? "Unlocked" : "Locked";
+    const progressLabel =
+      showProgress && isMetric && !isUnlocked
+        ? `, ${currentValue} of ${target} progress`
+        : "";
+    const ariaLabel = `${achievement.name}, ${statusLabel}${progressLabel}`;
+
     const imageSize = {
       sm: "h-12 w-12",
       default: "h-16 w-16",
@@ -127,7 +135,8 @@ const AchievementBadge = React.forwardRef<
     return (
       <div
         ref={ref}
-        role={onClick ? "button" : undefined}
+        role={onClick ? "button" : "article"}
+        aria-label={ariaLabel}
         tabIndex={onClick ? 0 : undefined}
         onClick={onClick}
         onKeyDown={
@@ -205,8 +214,15 @@ const AchievementBadge = React.forwardRef<
 
         {/* Progress bar for metric achievements */}
         {showProgress && isMetric && !isUnlocked && (
-          <div className="w-full space-y-1">
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+          <div className="w-full space-y-1" aria-hidden="true">
+            <div
+              role="progressbar"
+              aria-valuenow={currentValue}
+              aria-valuemin={0}
+              aria-valuemax={target}
+              aria-label={`Progress: ${currentValue} of ${target}`}
+              className="h-1.5 w-full overflow-hidden rounded-full bg-muted"
+            >
               <div
                 className="h-full bg-purple-500 transition-all"
                 style={{ width: `${progress}%` }}
