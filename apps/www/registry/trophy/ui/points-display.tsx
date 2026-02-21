@@ -133,9 +133,13 @@ const PointsDisplay = React.forwardRef<HTMLDivElement, PointsDisplayProps>(
       ? points.awards.slice(0, showRecentAwards)
       : [];
 
+    const statusLabel = `${displayValue} ${points.name}${recentAwards.length > 0 ? `, ${recentAwards.length} recent award${recentAwards.length > 1 ? "s" : ""}` : ""}`;
+
     return (
       <div
         ref={ref}
+        role="status"
+        aria-label={statusLabel}
         className={cn(pointsDisplayVariants({ variant, size }), className)}
         {...props}
       >
@@ -143,11 +147,13 @@ const PointsDisplay = React.forwardRef<HTMLDivElement, PointsDisplayProps>(
         {showBadge && points.badgeUrl ? (
           <img
             src={points.badgeUrl}
-            alt={points.name}
+            alt=""
+            aria-hidden="true"
             className={cn("rounded object-contain shrink-0", badgeSize)}
           />
         ) : (
           <div
+            aria-hidden="true"
             className={cn(
               "flex items-center justify-center rounded-full bg-primary/10 shrink-0",
               badgeSize,
