@@ -169,7 +169,7 @@ const StreakAtRisk = React.forwardRef<HTMLDivElement, StreakAtRiskProps>(
           {showCountdown && (
             <p className="text-sm opacity-80">
               {formatTimeRemaining(timeRemaining)} remaining to extend your{" "}
-              {streak.length}-day streak
+              {streak.length}-{streak.frequency.replace("ly", "")} streak
             </p>
           )}
         </div>
