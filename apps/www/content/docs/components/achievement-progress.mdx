@@ -1,0 +1,215 @@
+---
+title: Achievement Progress
+description: A progress bar component for tracking advancement toward metric-based achievements with customizable display options.
+---
+
+# Achievement Progress
+
+A progress bar component designed for metric-based achievements. Shows visual progress toward a goal with optional labels, percentages, and animated transitions.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/achievement-progress.json
+```
+
+## Usage
+
+```tsx
+import { AchievementProgress } from "@/components/ui/achievement-progress"
+```
+
+```tsx
+<AchievementProgress
+  achievement={{
+    id: "task-master",
+    name: "Task Master",
+    metricValue: 100,
+  }}
+  currentValue={45}
+/>
+```
+
+## Examples
+
+### With Trophy API Data
+
+```tsx
+const achievements = await trophy.users.achievements({ userId: "user_123" })
+const progress = await trophy.metrics.get({ userId: "user_123", metricId: "tasks_completed" })
+
+const taskMaster = achievements.find(a => a.id === "task-master")
+
+<AchievementProgress
+  achievement={taskMaster}
+  currentValue={progress.value}
+/>
+```
+
+### Variants
+
+```tsx
+// Solid purple (default)
+<AchievementProgress
+  achievement={achievement}
+  currentValue={45}
+  variant="default"
+/>
+
+// Purple to pink gradient
+<AchievementProgress
+  achievement={achievement}
+  currentValue={45}
+  variant="gradient"
+/>
+```
+
+### Sizes
+
+```tsx
+<AchievementProgress achievement={achievement} currentValue={45} size="sm" />
+<AchievementProgress achievement={achievement} currentValue={45} size="default" />
+<AchievementProgress achievement={achievement} currentValue={45} size="lg" />
+```
+
+### Display Options
+
+```tsx
+// Show numeric progress (default)
+<AchievementProgress
+  achievement={achievement}
+  currentValue={45}
+  showValue
+/>
+// Displays: 45/100
+
+// Show percentage
+<AchievementProgress
+  achievement={achievement}
+  currentValue={45}
+  showPercentage
+/>
+// Displays: 45%
+
+// Show achievement name
+<AchievementProgress
+  achievement={achievement}
+  currentValue={45}
+  showName
+/>
+// Displays: Task Master    45/100
+
+// Combine all
+<AchievementProgress
+  achievement={achievement}
+  currentValue={45}
+  showName
+  showValue
+  showPercentage
+/>
+// Displays: Task Master    45/100  45%
+```
+
+### Without Animation
+
+```tsx
+<AchievementProgress
+  achievement={achievement}
+  currentValue={45}
+  animate={false}
+/>
+```
+
+### Completed Achievement
+
+When `currentValue >= metricValue`, the bar turns green and shows a completion message:
+
+```tsx
+<AchievementProgress
+  achievement={{
+    id: "task-master",
+    name: "Task Master",
+    metricValue: 100,
+  }}
+  currentValue={100}
+  showName
+/>
+// Displays green bar with "Complete! 🎉"
+```
+
+### Progress Dashboard
+
+```tsx
+const achievements = await trophy.users.achievements({ userId: "user_123" })
+const metricAchievements = achievements.filter(a => a.trigger === "metric")
+
+<div className="space-y-4">
+  {metricAchievements.map((achievement) => (
+    <AchievementProgress
+      key={achievement.id}
+      achievement={achievement}
+      currentValue={userProgress[achievement.id] ?? 0}
+      showName
+      showPercentage
+      size="lg"
+    />
+  ))}
+</div>
+```
+
+### Compact List View
+
+```tsx
+<div className="space-y-2">
+  {achievements.map((achievement) => (
+    <AchievementProgress
+      key={achievement.id}
+      achievement={achievement}
+      currentValue={progress[achievement.id]}
+      showName
+      showValue={false}
+      size="sm"
+    />
+  ))}
+</div>
+```
+
+## API Reference
+
+### AchievementProgress
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `achievement` | `Achievement` | Required | Achievement data (must have metricValue) |
+| `currentValue` | `number` | Required | User's current progress |
+| `variant` | `"default" \| "gradient"` | `"default"` | Progress bar style |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Component size |
+| `showValue` | `boolean` | `true` | Show numeric progress (e.g., "45/100") |
+| `showPercentage` | `boolean` | `false` | Show percentage |
+| `showName` | `boolean` | `false` | Show achievement name |
+| `animate` | `boolean` | `true` | Animate progress bar on mount |
+
+### Achievement
+
+```ts
+interface Achievement {
+  id: string
+  name: string
+  metricValue?: number // Target value for completion
+}
+```
+
+## Features
+
+- **Animated progress** - Smooth animation from 0 to current value on mount
+- **Completion state** - Bar turns green and shows celebration message when complete
+- **Flexible display** - Mix and match name, value, and percentage labels
+- **Gradient option** - Eye-catching purple-to-pink gradient variant
+
+## Accessibility
+
+- Progress bar uses `role="progressbar"` with proper ARIA attributes
+- `aria-valuenow` reflects current progress
+- `aria-valuemin` and `aria-valuemax` define the range
+- `aria-label` includes achievement name for context
+- Completion message uses `role="status"` with `aria-live="polite"` for announcements
