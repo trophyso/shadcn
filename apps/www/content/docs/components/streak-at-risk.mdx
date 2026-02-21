@@ -1,0 +1,133 @@
+---
+title: Streak At Risk
+description: Alert banner warning users when their streak is about to expire, with countdown and action button.
+---
+
+# Streak At Risk
+
+An alert component that warns users when their streak is close to expiring. Automatically shows warning or critical state based on time remaining, with optional countdown and action button.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/streak-at-risk.json
+```
+
+## Usage
+
+```tsx
+import { StreakAtRisk } from "@/components/ui/streak-at-risk"
+```
+
+```tsx
+const streak = await trophy.streaks.get({ userId: "user_123" })
+
+<StreakAtRisk streak={streak} />
+```
+
+## Examples
+
+### Basic Alert
+
+```tsx
+<StreakAtRisk streak={streak} />
+```
+
+### With Action Button
+
+```tsx
+<StreakAtRisk 
+  streak={streak}
+  onAction={() => router.push("/complete-activity")}
+  actionLabel="Complete now"
+/>
+```
+
+### Toast Variant
+
+```tsx
+<StreakAtRisk streak={streak} variant="toast" />
+```
+
+### Inline Variant
+
+```tsx
+<StreakAtRisk streak={streak} variant="inline" />
+```
+
+### Dismissible
+
+```tsx
+<StreakAtRisk 
+  streak={streak}
+  dismissible
+  onDismiss={() => console.log("Dismissed")}
+/>
+```
+
+### Custom Thresholds
+
+```tsx
+<StreakAtRisk 
+  streak={streak}
+  warningHours={12}  // Show warning at 12 hours
+  criticalHours={4}  // Show critical at 4 hours
+/>
+```
+
+### Without Countdown
+
+```tsx
+<StreakAtRisk streak={streak} showCountdown={false} />
+```
+
+## API Reference
+
+### StreakAtRisk
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `streak` | `StreakResponse` | Required | Trophy API streak response |
+| `variant` | `"banner" \| "toast" \| "inline"` | `"banner"` | Display variant |
+| `warningHours` | `number` | `6` | Hours threshold for warning state |
+| `criticalHours` | `number` | `2` | Hours threshold for critical state |
+| `showCountdown` | `boolean` | `true` | Show time remaining countdown |
+| `dismissible` | `boolean` | `false` | Allow dismissing the alert |
+| `onDismiss` | `() => void` | - | Callback when dismissed |
+| `onAction` | `() => void` | - | Callback for action button |
+| `actionLabel` | `string` | `"Keep streak alive"` | Action button text |
+
+### StreakResponse
+
+```ts
+interface StreakResponse {
+  length: number
+  frequency: "daily" | "weekly" | "monthly"
+  expires: string | null  // "YYYY-MM-DD"
+}
+```
+
+## Behavior
+
+The component automatically manages visibility:
+
+| Condition | Result |
+|-----------|--------|
+| No `expires` date | Returns `null` |
+| Already expired | Returns `null` |
+| More than `warningHours` remaining | Returns `null` |
+| Between `warningHours` and `criticalHours` | Warning state (yellow) |
+| Less than `criticalHours` remaining | Critical state (red) |
+| Dismissed by user | Returns `null` |
+
+## Countdown
+
+- Updates every minute automatically
+- Formats as "Xh Ym" or "Xd Yh" for longer durations
+- Shows streak length and frequency in message
+
+## Accessibility
+
+- Uses `role="alert"` for immediate screen reader announcement
+- Dismiss button has `aria-label`
+- Color-coded severity with text labels
