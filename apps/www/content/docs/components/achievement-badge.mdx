@@ -1,0 +1,196 @@
+---
+title: Achievement Badge
+description: A versatile badge component for displaying individual achievements with locked/unlocked states and progress tracking.
+---
+
+# Achievement Badge
+
+A flexible achievement card component that displays individual achievements with support for locked/unlocked states, progress tracking for metric-based achievements, and multiple visual styles.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/achievement-badge.json
+```
+
+## Usage
+
+```tsx
+import { AchievementBadge } from "@/components/ui/achievement-badge"
+```
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "first-steps",
+    name: "First Steps",
+    trigger: "metric",
+    achievedAt: "2024-01-15T10:30:00Z",
+  }}
+/>
+```
+
+## Examples
+
+### With Trophy API Response
+
+```tsx
+const achievements = await trophy.users.achievements({ userId: "user_123" })
+const achievement = achievements.find(a => a.id === "first-steps")
+
+<AchievementBadge achievement={achievement} />
+```
+
+### Locked Achievement
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "power-user",
+    name: "Power User",
+    trigger: "metric",
+    description: "Complete 100 tasks",
+    metricValue: 100,
+    achievedAt: null, // null = locked
+  }}
+/>
+```
+
+### Variants
+
+```tsx
+<AchievementBadge achievement={achievement} variant="card" />
+<AchievementBadge achievement={achievement} variant="badge" />
+<AchievementBadge achievement={achievement} variant="minimal" />
+```
+
+### Sizes
+
+```tsx
+<AchievementBadge achievement={achievement} size="sm" />
+<AchievementBadge achievement={achievement} size="default" />
+<AchievementBadge achievement={achievement} size="lg" />
+<AchievementBadge achievement={achievement} size="xl" />
+```
+
+### With Progress Tracking
+
+For metric-based achievements, show progress toward the goal:
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "task-master",
+    name: "Task Master",
+    trigger: "metric",
+    metricValue: 50, // Target
+    achievedAt: null,
+  }}
+  showProgress
+  currentValue={35} // User's current progress
+/>
+// Displays: 35/50 progress bar
+```
+
+### With Description
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "early-bird",
+    name: "Early Bird",
+    trigger: "api",
+    description: "Complete a task before 6am",
+    achievedAt: "2024-01-10T05:30:00Z",
+  }}
+  showDescription
+/>
+```
+
+### Locked Styles
+
+Control how locked achievements appear:
+
+```tsx
+// Grayscale (default) - dimmed and desaturated
+<AchievementBadge achievement={lockedAchievement} lockedStyle="grayscale" />
+
+// Silhouette - blacked out mystery style
+<AchievementBadge achievement={lockedAchievement} lockedStyle="silhouette" />
+
+// Hidden - don't render at all
+<AchievementBadge achievement={lockedAchievement} lockedStyle="hidden" />
+```
+
+### Without Lock Icon
+
+```tsx
+<AchievementBadge achievement={lockedAchievement} showLockIcon={false} />
+```
+
+### Clickable Achievement
+
+```tsx
+<AchievementBadge
+  achievement={achievement}
+  onClick={() => openAchievementModal(achievement)}
+/>
+```
+
+### Custom Badge Icon
+
+When no `badgeUrl` is provided:
+
+```tsx
+import { Star } from "lucide-react"
+
+<AchievementBadge
+  achievement={achievement}
+  icon={<Star className="h-10 w-10" />}
+/>
+```
+
+## API Reference
+
+### AchievementBadge
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `achievement` | `UserAchievement` | Required | Achievement data with locked/unlocked state |
+| `variant` | `"card" \| "badge" \| "minimal"` | `"card"` | Visual style variant |
+| `size` | `"sm" \| "default" \| "lg" \| "xl"` | `"default"` | Badge size |
+| `showDescription` | `boolean` | `false` | Show description text below name |
+| `showProgress` | `boolean` | `false` | Show progress bar for metric achievements |
+| `currentValue` | `number` | `0` | Current progress value (for metric achievements) |
+| `lockedStyle` | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | How to display locked achievements |
+| `showLockIcon` | `boolean` | `true` | Show lock icon overlay on locked achievements |
+| `icon` | `ReactNode` | - | Custom icon when no badgeUrl |
+| `onClick` | `function` | - | Click handler (makes badge interactive) |
+
+### UserAchievement
+
+The component accepts a Trophy API achievement response:
+
+```ts
+interface Achievement {
+  id: string
+  name: string
+  trigger: "metric" | "api" | "streak"
+  description?: string | null
+  badgeUrl?: string | null
+  metricValue?: number
+}
+
+interface UserAchievement extends Achievement {
+  achievedAt: string | null // null = locked, ISO date = unlocked
+}
+```
+
+## Accessibility
+
+- Uses `role="article"` by default, `role="button"` when clickable
+- Includes descriptive `aria-label` with achievement name, locked/unlocked status, and progress
+- Keyboard accessible when clickable (Enter/Space to activate)
+- Progress bar includes proper `aria-valuenow`, `aria-valuemin`, `aria-valuemax`
+- Lock icon is decorative (`aria-hidden`)
+- Images include `alt` text with achievement name
