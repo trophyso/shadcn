@@ -1,0 +1,207 @@
+---
+title: Leaderboard Entry
+description: A single leaderboard row component for displaying individual user rankings with customizable appearance.
+---
+
+# Leaderboard Entry
+
+A standalone component for rendering a single leaderboard row. Use it to build custom leaderboard layouts or display individual rankings in isolation (e.g., showing a user's current position).
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/leaderboard-entry.json
+```
+
+## Usage
+
+```tsx
+import { LeaderboardEntry } from "@/components/ui/leaderboard-entry"
+```
+
+```tsx
+<LeaderboardEntry
+  ranking={{
+    userId: "user_123",
+    userName: "Alice",
+    rank: 1,
+    value: 2500,
+  }}
+/>
+```
+
+## Examples
+
+### With Trophy API Data
+
+```tsx
+const leaderboard = await trophy.leaderboards.get({ leaderboardId: "weekly-xp" })
+
+{leaderboard.rankings.map((ranking) => (
+  <LeaderboardEntry key={ranking.userId} ranking={ranking} />
+))}
+```
+
+### Variants
+
+```tsx
+// Default - bottom border between entries
+<LeaderboardEntry ranking={ranking} variant="default" />
+
+// Card - standalone card with shadow
+<LeaderboardEntry ranking={ranking} variant="card" />
+
+// Minimal - no borders or background
+<LeaderboardEntry ranking={ranking} variant="minimal" />
+```
+
+### Sizes
+
+```tsx
+<LeaderboardEntry ranking={ranking} size="sm" />
+<LeaderboardEntry ranking={ranking} size="default" />
+<LeaderboardEntry ranking={ranking} size="lg" />
+```
+
+### Current User Highlight
+
+```tsx
+<LeaderboardEntry ranking={ranking} isCurrentUser />
+// Highlighted background with "(you)" label
+```
+
+### With Custom Avatar
+
+```tsx
+<LeaderboardEntry
+  ranking={ranking}
+  avatarUrl="https://example.com/avatar.jpg"
+/>
+```
+
+### Without Avatar
+
+```tsx
+<LeaderboardEntry ranking={ranking} showAvatar={false} />
+```
+
+### Custom Value Label
+
+```tsx
+<LeaderboardEntry ranking={ranking} valueLabel="XP" />
+// Displays: 2,500 XP
+
+<LeaderboardEntry ranking={ranking} valueLabel="pts" />
+// Displays: 2,500 pts
+```
+
+### Hide Value
+
+```tsx
+<LeaderboardEntry ranking={ranking} showValue={false} />
+```
+
+### Force Top-3 Styling
+
+Show medals regardless of actual rank:
+
+```tsx
+<LeaderboardEntry ranking={{ ...ranking, rank: 5 }} isTopThree />
+// Shows medal even though rank is 5
+```
+
+### Clickable Entry
+
+```tsx
+<LeaderboardEntry
+  ranking={ranking}
+  onClick={() => router.push(`/profile/${ranking.userId}`)}
+/>
+```
+
+### Show User's Own Position
+
+Display the current user's rank anywhere on the page:
+
+```tsx
+const userRank = await trophy.leaderboards.getUserRank({
+  leaderboardId: "weekly-xp",
+  userId: session.userId,
+})
+
+<Card>
+  <CardHeader>
+    <CardTitle>Your Ranking</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <LeaderboardEntry
+      ranking={userRank}
+      isCurrentUser
+      variant="minimal"
+      size="lg"
+    />
+  </CardContent>
+</Card>
+```
+
+### Custom Leaderboard List
+
+Build a custom list with entries:
+
+```tsx
+<div className="divide-y rounded-lg border">
+  {rankings.map((ranking, index) => (
+    <LeaderboardEntry
+      key={ranking.userId}
+      ranking={ranking}
+      isCurrentUser={ranking.userId === currentUserId}
+      variant="minimal"
+      onClick={() => handleUserClick(ranking)}
+    />
+  ))}
+</div>
+```
+
+## API Reference
+
+### LeaderboardEntry
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `ranking` | `LeaderboardRanking` | Required | User ranking data |
+| `variant` | `"default" \| "card" \| "minimal"` | `"default"` | Visual style |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Entry size |
+| `isCurrentUser` | `boolean` | `false` | Highlight as current user |
+| `isTopThree` | `boolean` | - | Force top-3 medal styling |
+| `showAvatar` | `boolean` | `true` | Show avatar |
+| `showValue` | `boolean` | `true` | Show score value |
+| `valueLabel` | `string` | - | Label after value (e.g., "XP") |
+| `avatarUrl` | `string` | - | Custom avatar image URL |
+| `onClick` | `function` | - | Click handler |
+
+### LeaderboardRanking
+
+```ts
+interface LeaderboardRanking {
+  userId: string
+  userName: string | null
+  rank: number
+  value: number
+}
+```
+
+## Features
+
+- **Rank medals** - Crown for 1st, silver medal for 2nd, bronze for 3rd
+- **Avatar support** - Custom URL or auto-generated initials
+- **Current user styling** - Highlighted background with "(you)" label
+- **Flexible sizing** - Three size options for different contexts
+- **Clickable** - Full keyboard and mouse support when onClick provided
+
+## Accessibility
+
+- Uses `role="listitem"` by default, `role="button"` when clickable
+- Full descriptive `aria-label` with rank, name, value, and current user status
+- Keyboard accessible with Enter/Space when clickable
+- Avatars and rank icons marked `aria-hidden` (decorative)
+- Numbers formatted with `toLocaleString()` for screen readers
