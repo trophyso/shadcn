@@ -1,0 +1,124 @@
+---
+title: Streak Calendar
+description: A monthly calendar view showing streak activity history with freeze indicators.
+---
+
+# Streak Calendar
+
+A visual calendar component that displays streak activity history. Shows active days, freeze usage, and supports both Sunday and Monday week starts.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/streak-calendar.json
+```
+
+## Usage
+
+```tsx
+import { StreakCalendar } from "@/components/ui/streak-calendar"
+```
+
+```tsx
+const streak = await trophy.streaks.get({ userId: "user_123" })
+
+<StreakCalendar streak={streak} />
+```
+
+## Examples
+
+### Basic Calendar
+
+```tsx
+<StreakCalendar streak={streak} />
+```
+
+### Specific Month
+
+```tsx
+<StreakCalendar 
+  streak={streak} 
+  month={new Date(2024, 0, 1)} // January 2024
+/>
+```
+
+### Monday Start
+
+```tsx
+<StreakCalendar streak={streak} startOfWeek={1} />
+```
+
+### Without Freeze Indicators
+
+```tsx
+<StreakCalendar streak={streak} showFreezes={false} />
+```
+
+### With Day Click Handler
+
+```tsx
+<StreakCalendar 
+  streak={streak} 
+  onDayClick={(date, wasActive) => {
+    console.log(`Clicked ${date}, was active: ${wasActive}`)
+  }}
+/>
+```
+
+### Manual Streak Data
+
+```tsx
+<StreakCalendar 
+  streak={{
+    streakHistory: [
+      { periodStart: "2024-01-01", periodEnd: "2024-01-07" },
+      { periodStart: "2024-01-09", periodEnd: "2024-01-15", usedFreeze: true },
+    ]
+  }}
+/>
+```
+
+## API Reference
+
+### StreakCalendar
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `streak` | `StreakResponse` | Required | Trophy API streak response with history |
+| `month` | `Date` | Current month | Month to display |
+| `showFreezes` | `boolean` | `true` | Show freeze indicators on days |
+| `startOfWeek` | `0 \| 1` | `0` | Week start: 0 = Sunday, 1 = Monday |
+| `onDayClick` | `(date: Date, wasActive: boolean) => void` | - | Callback when day is clicked |
+
+### StreakResponse
+
+```ts
+interface StreakResponse {
+  streakHistory: StreakPeriod[]
+}
+
+interface StreakPeriod {
+  periodStart: string  // "YYYY-MM-DD"
+  periodEnd: string    // "YYYY-MM-DD"
+  usedFreeze?: boolean
+}
+```
+
+## Visual States
+
+| State | Appearance |
+|-------|------------|
+| Active day | Orange background |
+| Freeze used | Blue background with snowflake icon |
+| Today | Ring outline |
+| Future | Muted, disabled |
+| Inactive | Default background |
+
+## Accessibility
+
+- Uses `role="grid"` with proper grid semantics
+- Column headers with `role="columnheader"`
+- Each day has descriptive `aria-label` with date and status
+- Today marked with `aria-current="date"`
+- Future days are disabled
+- Legend provides visual key explanation
