@@ -163,6 +163,8 @@ const AchievementGrid = React.forwardRef<HTMLDivElement, AchievementGridProps>(
     return (
       <div
         ref={ref}
+        role="list"
+        aria-label="Achievements"
         className={cn(achievementGridVariants({ columns, gap }), className)}
         {...props}
       >
@@ -174,10 +176,14 @@ const AchievementGrid = React.forwardRef<HTMLDivElement, AchievementGridProps>(
             return null;
           }
 
+          const statusLabel = isUnlocked ? "Earned" : "Locked";
+          const itemLabel = `${achievement.name} - ${statusLabel}`;
+
           return (
             <div
               key={achievement.id}
-              role={onAchievementClick ? "button" : undefined}
+              role={onAchievementClick ? "button" : "listitem"}
+              aria-label={onAchievementClick ? itemLabel : undefined}
               tabIndex={onAchievementClick ? 0 : undefined}
               onClick={() => onAchievementClick?.(achievement)}
               onKeyDown={
@@ -204,7 +210,7 @@ const AchievementGrid = React.forwardRef<HTMLDivElement, AchievementGridProps>(
               {achievement.badgeUrl ? (
                 <img
                   src={achievement.badgeUrl}
-                  alt={achievement.name}
+                  alt={`${achievement.name} badge - ${statusLabel}`}
                   className={cn(
                     imageSize,
                     "rounded-full object-cover",
@@ -216,6 +222,7 @@ const AchievementGrid = React.forwardRef<HTMLDivElement, AchievementGridProps>(
                 />
               ) : (
                 <div
+                  aria-hidden="true"
                   className={cn(
                     imageSize,
                     "flex items-center justify-center rounded-full",
