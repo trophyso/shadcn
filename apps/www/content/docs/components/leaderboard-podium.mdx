@@ -1,0 +1,189 @@
+---
+title: Leaderboard Podium
+description: A visual podium display for the top 3 ranked users with medals, avatars, and animated entrance.
+---
+
+# Leaderboard Podium
+
+A celebratory podium component that displays the top 3 users in a traditional podium layout (2nd-1st-3rd). Features animated entrance, medal badges, and customizable styling.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/leaderboard-podium.json
+```
+
+## Usage
+
+```tsx
+import { LeaderboardPodium } from "@/components/ui/leaderboard-podium"
+```
+
+```tsx
+<LeaderboardPodium
+  rankings={[
+    { userId: "1", userName: "Alice", rank: 1, value: 2500 },
+    { userId: "2", userName: "Bob", rank: 2, value: 2200 },
+    { userId: "3", userName: "Charlie", rank: 3, value: 1800 },
+  ]}
+/>
+```
+
+## Examples
+
+### With Trophy API Data
+
+```tsx
+const leaderboard = await trophy.leaderboards.get({ leaderboardId: "weekly-xp" })
+
+<LeaderboardPodium rankings={leaderboard.rankings} />
+```
+
+### Sizes
+
+```tsx
+<LeaderboardPodium rankings={rankings} size="sm" />
+<LeaderboardPodium rankings={rankings} size="default" />
+<LeaderboardPodium rankings={rankings} size="lg" />
+```
+
+### Medal Styles
+
+```tsx
+// Classic - medal badge overlay on avatar
+<LeaderboardPodium rankings={rankings} medalStyle="classic" />
+
+// Modern - rounded corners on podium blocks
+<LeaderboardPodium rankings={rankings} medalStyle="modern" />
+
+// Minimal - no medal badge, just colored avatar ring
+<LeaderboardPodium rankings={rankings} medalStyle="minimal" />
+```
+
+### Without Animation
+
+```tsx
+<LeaderboardPodium rankings={rankings} animated={false} />
+```
+
+### Without Values
+
+```tsx
+<LeaderboardPodium rankings={rankings} showValue={false} />
+```
+
+### Without Avatars
+
+Shows medal icons instead of avatar initials:
+
+```tsx
+<LeaderboardPodium rankings={rankings} showAvatar={false} />
+```
+
+### Hero Section
+
+```tsx
+<div className="bg-gradient-to-b from-purple-900 to-purple-950 py-12 px-4 rounded-xl">
+  <h2 className="text-2xl font-bold text-white text-center mb-8">
+    This Week's Champions
+  </h2>
+  <LeaderboardPodium
+    rankings={rankings}
+    size="lg"
+    medalStyle="modern"
+  />
+</div>
+```
+
+### With Full Leaderboard Below
+
+```tsx
+<div className="space-y-8">
+  <LeaderboardPodium rankings={rankings} />
+  
+  <Leaderboard
+    rankings={rankings.slice(3)} // Skip top 3
+    variant="table"
+  />
+</div>
+```
+
+### Contest Results Page
+
+```tsx
+<Card>
+  <CardHeader>
+    <CardTitle>February Challenge Results</CardTitle>
+    <CardDescription>Congratulations to our top performers!</CardDescription>
+  </CardHeader>
+  <CardContent className="flex justify-center py-8">
+    <LeaderboardPodium
+      rankings={contestResults}
+      size="lg"
+      showValue
+    />
+  </CardContent>
+</Card>
+```
+
+### Partial Podium
+
+Works with fewer than 3 users:
+
+```tsx
+// Only 2 users - shows 2nd and 1st place
+<LeaderboardPodium
+  rankings={[
+    { userId: "1", userName: "Alice", rank: 1, value: 2500 },
+    { userId: "2", userName: "Bob", rank: 2, value: 2200 },
+  ]}
+/>
+
+// Only 1 user - shows just 1st place
+<LeaderboardPodium
+  rankings={[
+    { userId: "1", userName: "Alice", rank: 1, value: 2500 },
+  ]}
+/>
+```
+
+## API Reference
+
+### LeaderboardPodium
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `rankings` | `LeaderboardRanking[]` | Required | Top rankings (uses first 3) |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Podium size |
+| `showValue` | `boolean` | `true` | Show score below name |
+| `showAvatar` | `boolean` | `true` | Show avatar initials |
+| `animated` | `boolean` | `true` | Animate entrance |
+| `medalStyle` | `"classic" \| "modern" \| "minimal"` | `"classic"` | Medal display style |
+
+### LeaderboardRanking
+
+```ts
+interface LeaderboardRanking {
+  userId: string
+  userName: string | null
+  rank: number
+  value: number
+}
+```
+
+## Features
+
+- **Podium layout** - Classic 2nd-1st-3rd arrangement with height differences
+- **Medal colors** - Gold crown for 1st, silver medal for 2nd, bronze for 3rd
+- **Animated entrance** - Staggered fade-in from bottom (1st appears first)
+- **Flexible sizing** - Three size options for different contexts
+- **Partial support** - Works with 1, 2, or 3 users
+- **Reduced motion** - Respects `prefers-reduced-motion`
+
+## Accessibility
+
+- Container uses `role="list"` with `aria-label="Top 3 rankings"`
+- Each position uses `role="listitem"` with descriptive `aria-label`
+- Avatars, medals, and podium blocks marked `aria-hidden` (decorative)
+- Numbers formatted with `toLocaleString()` for screen readers
+- Animations respect `prefers-reduced-motion` media query
