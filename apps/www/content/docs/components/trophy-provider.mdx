@@ -1,0 +1,317 @@
+---
+title: Trophy Provider
+description: A React context provider for managing Trophy configuration and user state across your application.
+---
+
+# Trophy Provider
+
+A context provider component that manages Trophy API configuration and current user state. Provides hooks for accessing user data and configuration throughout your component tree.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/trophy-provider.json
+```
+
+## Usage
+
+```tsx
+import { TrophyProvider } from "@/components/ui/trophy-provider"
+```
+
+```tsx
+<TrophyProvider
+  config={{ apiKey: process.env.NEXT_PUBLIC_TROPHY_API_KEY }}
+  user={{ id: "user_123", name: "Alice" }}
+>
+  <App />
+</TrophyProvider>
+```
+
+## Examples
+
+### Basic Setup
+
+Wrap your app with `TrophyProvider` at the root:
+
+```tsx
+// app/layout.tsx
+import { TrophyProvider } from "@/components/ui/trophy-provider"
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <TrophyProvider
+          config={{
+            apiKey: process.env.NEXT_PUBLIC_TROPHY_API_KEY,
+          }}
+        >
+          {children}
+        </TrophyProvider>
+      </body>
+    </html>
+  )
+}
+```
+
+### With Initial User
+
+```tsx
+// After authentication
+const session = await getSession()
+
+<TrophyProvider
+  config={{ apiKey: process.env.NEXT_PUBLIC_TROPHY_API_KEY }}
+  user={{
+    id: session.userId,
+    name: session.user.name,
+    avatarUrl: session.user.image,
+    attributes: {
+      plan: session.user.plan,
+      role: session.user.role,
+    },
+  }}
+>
+  <App />
+</TrophyProvider>
+```
+
+### With User Change Handler
+
+```tsx
+<TrophyProvider
+  config={{ apiKey: env.TROPHY_API_KEY }}
+  user={currentUser}
+  onUserChange={(user) => {
+    if (user) {
+      analytics.identify(user.id, { name: user.name })
+    } else {
+      analytics.reset()
+    }
+  }}
+>
+  <App />
+</TrophyProvider>
+```
+
+### Custom API URL
+
+For self-hosted or staging environments:
+
+```tsx
+<TrophyProvider
+  config={{
+    apiKey: process.env.TROPHY_API_KEY,
+    baseUrl: "https://trophy.staging.example.com",
+    debug: process.env.NODE_ENV === "development",
+  }}
+>
+  <App />
+</TrophyProvider>
+```
+
+## Hooks
+
+### useTrophy
+
+Access the full Trophy context:
+
+```tsx
+import { useTrophy } from "@/components/ui/trophy-provider"
+
+function ProfilePage() {
+  const { user, setUser, config, isConfigured } = useTrophy()
+
+  if (!isConfigured) {
+    return <div>Trophy not configured</div>
+  }
+
+  return (
+    <div>
+      <h1>Welcome, {user?.name}</h1>
+      <button onClick={() => setUser(null)}>Log out</button>
+    </div>
+  )
+}
+```
+
+### useTrophyUser
+
+Get just the current user:
+
+```tsx
+import { useTrophyUser } from "@/components/ui/trophy-provider"
+
+function UserBadge() {
+  const user = useTrophyUser()
+
+  if (!user) return null
+
+  return (
+    <div className="flex items-center gap-2">
+      <img src={user.avatarUrl} alt={user.name} />
+      <span>{user.name}</span>
+    </div>
+  )
+}
+```
+
+### useIsCurrentUser
+
+Check if a user ID matches the current user:
+
+```tsx
+import { useIsCurrentUser } from "@/components/ui/trophy-provider"
+
+function LeaderboardRow({ ranking }) {
+  const isMe = useIsCurrentUser(ranking.userId)
+
+  return (
+    <div className={isMe ? "bg-primary/10" : ""}>
+      {ranking.userName} {isMe && "(you)"}
+    </div>
+  )
+}
+```
+
+### useTrophyOptional
+
+Safe hook that returns `null` if not inside a provider:
+
+```tsx
+import { useTrophyOptional } from "@/components/ui/trophy-provider"
+
+function OptionalFeature() {
+  const trophy = useTrophyOptional()
+
+  // Works even outside TrophyProvider
+  if (!trophy?.user) {
+    return <div>Sign in to track progress</div>
+  }
+
+  return <ProgressDisplay userId={trophy.user.id} />
+}
+```
+
+## Updating User
+
+Update the current user after login/logout:
+
+```tsx
+function AuthButtons() {
+  const { setUser } = useTrophy()
+
+  const handleLogin = async () => {
+    const session = await signIn()
+    setUser({
+      id: session.userId,
+      name: session.user.name,
+      avatarUrl: session.user.image,
+    })
+  }
+
+  const handleLogout = () => {
+    signOut()
+    setUser(null)
+  }
+
+  return (
+    <>
+      <button onClick={handleLogin}>Sign In</button>
+      <button onClick={handleLogout}>Sign Out</button>
+    </>
+  )
+}
+```
+
+## Updating Config
+
+Update configuration at runtime:
+
+```tsx
+function SettingsPage() {
+  const { config, updateConfig } = useTrophy()
+
+  return (
+    <label>
+      <input
+        type="checkbox"
+        checked={config.debug}
+        onChange={(e) => updateConfig({ debug: e.target.checked })}
+      />
+      Enable debug mode
+    </label>
+  )
+}
+```
+
+## Integration with Components
+
+Trophy components can use the provider for user context:
+
+```tsx
+// Components automatically highlight current user
+<Leaderboard
+  rankings={rankings}
+  currentUserId={user?.id} // From useTrophyUser()
+/>
+
+// User rank shows "you" label
+<UserRank
+  ranking={userRanking}
+  // isCurrentUser derived from context
+/>
+```
+
+## API Reference
+
+### TrophyProvider
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `config` | `TrophyConfig` | `{}` | Initial configuration |
+| `user` | `TrophyUser \| null` | `null` | Initial user |
+| `onUserChange` | `(user: TrophyUser \| null) => void` | - | Called when user changes |
+
+### TrophyConfig
+
+```ts
+interface TrophyConfig {
+  apiKey?: string
+  baseUrl?: string  // Default: "https://api.trophy.so"
+  debug?: boolean
+}
+```
+
+### TrophyUser
+
+```ts
+interface TrophyUser {
+  id: string
+  name?: string | null
+  avatarUrl?: string | null
+  attributes?: Record<string, string | number | boolean>
+}
+```
+
+### TrophyContextValue
+
+```ts
+interface TrophyContextValue {
+  config: TrophyConfig
+  user: TrophyUser | null
+  setUser: (user: TrophyUser | null) => void
+  updateConfig: (config: Partial<TrophyConfig>) => void
+  isConfigured: boolean
+}
+```
+
+## Hooks Summary
+
+| Hook | Returns | Throws if no Provider |
+|------|---------|----------------------|
+| `useTrophy()` | `TrophyContextValue` | Yes |
+| `useTrophyOptional()` | `TrophyContextValue \| null` | No |
+| `useTrophyUser()` | `TrophyUser \| null` | No |
+| `useIsCurrentUser(id)` | `boolean` | No |
