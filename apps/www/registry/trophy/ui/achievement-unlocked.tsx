@@ -105,14 +105,14 @@ const AchievementUnlocked = React.forwardRef<
           </span>
 
           {/* Badge */}
-          <div className="relative mb-6">
+          <div className="relative mb-6" aria-hidden="true">
             {/* Glow effect */}
             <div className="absolute inset-0 rounded-full bg-purple-500/30 blur-xl motion-safe:animate-pulse" />
 
             {achievement.badgeUrl ? (
               <img
                 src={achievement.badgeUrl}
-                alt={achievement.name}
+                alt=""
                 className="relative h-32 w-32 rounded-full object-cover ring-4 ring-purple-500/50"
               />
             ) : (
@@ -138,6 +138,7 @@ const AchievementUnlocked = React.forwardRef<
           <div className="flex gap-3">
             <button
               type="button"
+              autoFocus
               onClick={() => onOpenChange(false)}
               className="rounded-lg bg-primary px-6 py-2.5 font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
