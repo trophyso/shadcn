@@ -6,23 +6,11 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-// Types (inlined)
+// Types (inlined - only fields used by this component)
 interface StreakResponse {
   length: number;
   frequency: "daily" | "weekly" | "monthly";
-  started: string | null;
-  periodStart: string | null;
-  periodEnd: string | null;
   expires: string | null;
-  streakHistory: Array<{
-    periodStart: string;
-    periodEnd: string;
-    length: number;
-    usedFreeze?: boolean;
-  }>;
-  rank: number | null;
-  freezes?: number;
-  maxFreezes?: number;
 }
 
 // Helper to calculate time remaining until end of day
