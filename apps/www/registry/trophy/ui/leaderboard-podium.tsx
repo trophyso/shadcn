@@ -143,10 +143,13 @@ const LeaderboardPodium = React.forwardRef<
             lg: config.heightLg,
           }[size ?? "default"];
 
+          const itemLabel = `Rank ${ranking.rank}: ${displayName}${showValue ? `, ${ranking.value.toLocaleString()}` : ""}`;
+
           return (
             <div
               key={ranking.userId}
               role="listitem"
+              aria-label={itemLabel}
               className={cn(
                 "flex flex-col items-center",
                 animated &&
@@ -157,7 +160,7 @@ const LeaderboardPodium = React.forwardRef<
               )}
             >
               {/* Avatar with medal */}
-              <div className="relative mb-2">
+              <div className="relative mb-2" aria-hidden="true">
                 {showAvatar ? (
                   <div
                     className={cn(
@@ -232,6 +235,7 @@ const LeaderboardPodium = React.forwardRef<
 
               {/* Podium block */}
               <div
+                aria-hidden="true"
                 className={cn(
                   "mt-2 w-16 rounded-t-lg",
                   size === "sm" && "w-12",
