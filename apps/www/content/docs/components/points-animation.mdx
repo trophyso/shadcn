@@ -1,0 +1,281 @@
+---
+title: Points Animation
+description: Animated floating text for displaying point gains with multiple animation styles and a queue management hook.
+---
+
+# Points Animation
+
+An animated component for displaying point gains with floating, popping, or sliding effects. Includes a container component and `usePointsAnimation` hook for managing multiple simultaneous animations.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/points-animation.json
+```
+
+Add the required keyframes to your `tailwind.config.js`:
+
+```js
+module.exports = {
+  theme: {
+    extend: {
+      keyframes: {
+        "points-float": {
+          "0%": { opacity: "1", transform: "translateY(0)" },
+          "100%": { opacity: "0", transform: "translateY(-50px)" },
+        },
+        "points-pop": {
+          "0%": { opacity: "0", transform: "scale(0.5)" },
+          "50%": { opacity: "1", transform: "scale(1.2)" },
+          "100%": { opacity: "0", transform: "scale(1)" },
+        },
+        "points-slide": {
+          "0%": { opacity: "1", transform: "translateX(0)" },
+          "100%": { opacity: "0", transform: "translateX(30px)" },
+        },
+      },
+      animation: {
+        "points-float": "points-float 1s ease-out forwards",
+        "points-pop": "points-pop 1s ease-out forwards",
+        "points-slide": "points-slide 1s ease-out forwards",
+      },
+    },
+  },
+}
+```
+
+## Usage
+
+```tsx
+import { PointsAnimation, usePointsAnimation } from "@/components/ui/points-animation"
+```
+
+```tsx
+<PointsAnimation value={50} />
+```
+
+## Examples
+
+### Basic Animation
+
+```tsx
+const [show, setShow] = useState(false)
+
+<button onClick={() => setShow(true)}>Earn Points</button>
+
+{show && (
+  <PointsAnimation
+    value={100}
+    onAnimationEnd={() => setShow(false)}
+  />
+)}
+```
+
+### Animation Variants
+
+```tsx
+// Float upward (default)
+<PointsAnimation value={50} variant="float" />
+
+// Pop/scale effect
+<PointsAnimation value={50} variant="pop" />
+
+// Slide right
+<PointsAnimation value={50} variant="slide" />
+```
+
+### Sizes
+
+```tsx
+<PointsAnimation value={50} size="sm" />
+<PointsAnimation value={50} size="default" />
+<PointsAnimation value={50} size="lg" />
+<PointsAnimation value={50} size="xl" />
+```
+
+### Colors
+
+```tsx
+<PointsAnimation value={50} color="green" />   // Default
+<PointsAnimation value={50} color="gold" />    // For coins/currency
+<PointsAnimation value={50} color="blue" />    // For XP
+<PointsAnimation value={50} color="purple" />  // For special rewards
+<PointsAnimation value={50} color="default" /> // Foreground color
+```
+
+### Custom Prefix/Suffix
+
+```tsx
+<PointsAnimation value={100} prefix="+" suffix=" XP" />
+// Shows: +100 XP
+
+<PointsAnimation value={50} prefix="" suffix=" coins" />
+// Shows: 50 coins
+```
+
+### Custom Duration
+
+```tsx
+<PointsAnimation value={100} duration={2000} />
+// 2 second animation
+```
+
+### Using the Hook
+
+The `usePointsAnimation` hook manages a queue of animations:
+
+```tsx
+function GameComponent() {
+  const { items, trigger, remove, duration } = usePointsAnimation()
+
+  const handleAction = () => {
+    // Trigger animation at click position
+    trigger(50, { 
+      x: event.clientX, 
+      y: event.clientY,
+      color: "gold",
+      suffix: " XP"
+    })
+  }
+
+  return (
+    <>
+      <button onClick={handleAction}>Complete Task</button>
+      
+      <PointsAnimationContainer
+        items={items}
+        onItemComplete={remove}
+        duration={duration}
+      />
+    </>
+  )
+}
+```
+
+### Hook with Options
+
+```tsx
+const { items, trigger, remove, clear } = usePointsAnimation({
+  duration: 1500,  // Animation duration
+  maxItems: 5,     // Max concurrent animations
+})
+```
+
+### Integration with Trophy Events
+
+```tsx
+function PointsTracker() {
+  const { items, trigger, remove, duration } = usePointsAnimation()
+  const [total, setTotal] = useState(0)
+
+  // Listen for point awards
+  useEffect(() => {
+    const eventSource = new EventSource('/api/trophy-events')
+    
+    eventSource.addEventListener('points.awarded', (event) => {
+      const { awarded, trigger: pointTrigger } = JSON.parse(event.data)
+      
+      // Update total
+      setTotal(prev => prev + awarded)
+      
+      // Show animation
+      trigger(awarded, {
+        color: "gold",
+        suffix: " pts",
+        variant: "float"
+      })
+    })
+    
+    return () => eventSource.close()
+  }, [trigger])
+
+  return (
+    <>
+      <PointsDisplay points={{ name: "Points", total, awards: [] }} />
+      <PointsAnimationContainer
+        items={items}
+        onItemComplete={remove}
+        duration={duration}
+      />
+    </>
+  )
+}
+```
+
+### Positioned Animations
+
+Trigger animations at specific screen positions:
+
+```tsx
+const handleClick = (event: React.MouseEvent) => {
+  trigger(25, {
+    x: event.clientX,
+    y: event.clientY,
+    variant: "float",
+    color: "green",
+  })
+}
+
+<div onClick={handleClick} className="cursor-pointer">
+  Click anywhere for points!
+</div>
+```
+
+### Combo/Streak Multiplier
+
+```tsx
+const handleCombo = (points: number, multiplier: number) => {
+  trigger(points * multiplier, {
+    color: multiplier > 2 ? "gold" : "green",
+    size: multiplier > 2 ? "xl" : "lg",
+    suffix: multiplier > 1 ? ` x${multiplier}` : "",
+  })
+}
+```
+
+## API Reference
+
+### PointsAnimation
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `number` | Required | Points value to display |
+| `variant` | `"float" \| "pop" \| "slide"` | `"float"` | Animation style |
+| `size` | `"sm" \| "default" \| "lg" \| "xl"` | `"default"` | Text size |
+| `prefix` | `string` | `"+"` | Text before value |
+| `suffix` | `string` | `""` | Text after value |
+| `color` | `"default" \| "green" \| "gold" \| "blue" \| "purple"` | `"green"` | Text color |
+| `duration` | `number` | `1000` | Animation duration in ms |
+| `show` | `boolean` | `true` | Control visibility |
+| `onAnimationEnd` | `() => void` | - | Callback when animation completes |
+
+### PointsAnimationContainer
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `items` | `PointsAnimationItem[]` | Required | Array of animations to render |
+| `onItemComplete` | `(id: string) => void` | - | Called when an item finishes |
+| `duration` | `number` | `1000` | Default animation duration |
+
+### usePointsAnimation
+
+```tsx
+const { items, trigger, remove, clear, duration } = usePointsAnimation({
+  duration?: number,  // Default: 1000
+  maxItems?: number,  // Default: 10
+})
+```
+
+| Return | Type | Description |
+|--------|------|-------------|
+| `items` | `PointsAnimationItem[]` | Current animation queue |
+| `trigger` | `(value, opts?) => string` | Add animation, returns id |
+| `remove` | `(id: string) => void` | Remove animation by id |
+| `clear` | `() => void` | Clear all animations |
+| `duration` | `number` | Configured duration |
+
+## Accessibility
+
+- All animation elements marked `aria-hidden="true"` (decorative)
+- Container has `pointer-events-none` to prevent interaction blocking
+- Animations are visual feedback only—point changes should be announced separately via `role="status"` on the points display
