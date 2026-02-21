@@ -125,19 +125,26 @@ const StreakCalendar = React.forwardRef<HTMLDivElement, StreakCalendarProps>(
     const monthName = month.toLocaleDateString("en-US", { month: "long" });
 
     return (
-      <div ref={ref} className={cn("w-full max-w-sm", className)} {...props}>
+      <div
+        ref={ref}
+        role="grid"
+        aria-label={`Streak calendar for ${monthName} ${year}`}
+        className={cn("w-full max-w-sm", className)}
+        {...props}
+      >
         {/* Header */}
         <div className="mb-4 text-center">
-          <h3 className="text-lg font-semibold">
+          <h3 className="text-lg font-semibold" id="streak-calendar-title">
             {monthName} {year}
           </h3>
         </div>
 
         {/* Weekday headers */}
-        <div className="mb-2 grid grid-cols-7 gap-1">
+        <div role="row" className="mb-2 grid grid-cols-7 gap-1">
           {weekdays.map((day) => (
             <div
               key={day}
+              role="columnheader"
               className="text-center text-xs font-medium text-muted-foreground"
             >
               {day}
@@ -146,7 +153,7 @@ const StreakCalendar = React.forwardRef<HTMLDivElement, StreakCalendarProps>(
         </div>
 
         {/* Calendar grid */}
-        <div className="grid grid-cols-7 gap-1">
+        <div role="rowgroup" className="grid grid-cols-7 gap-1">
           {days.map((day, index) => {
             if (day === null) {
               return <div key={`empty-${index}`} className="aspect-square" />;
@@ -158,10 +165,28 @@ const StreakCalendar = React.forwardRef<HTMLDivElement, StreakCalendarProps>(
             const isActive = wasDateActive(date, periods);
             const usedFreeze = showFreezes && didUseFreezeOnDate(date, periods);
 
+            // Build accessible label
+            const dateLabel = date.toLocaleDateString("en-US", {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+            });
+            const statusLabel = usedFreeze
+              ? "freeze used"
+              : isActive
+                ? "streak active"
+                : isFuture
+                  ? "future"
+                  : "no activity";
+            const ariaLabel = `${dateLabel}${isToday ? ", today" : ""}, ${statusLabel}`;
+
             return (
               <button
                 key={day}
                 type="button"
+                role="gridcell"
+                aria-label={ariaLabel}
+                aria-current={isToday ? "date" : undefined}
                 onClick={() => onDayClick?.(date, isActive)}
                 disabled={isFuture}
                 className={cn(
@@ -185,14 +210,18 @@ const StreakCalendar = React.forwardRef<HTMLDivElement, StreakCalendarProps>(
         </div>
 
         {/* Legend */}
-        <div className="mt-4 flex items-center justify-center gap-4 text-xs text-muted-foreground">
+        <div
+          role="legend"
+          aria-label="Calendar legend"
+          className="mt-4 flex items-center justify-center gap-4 text-xs text-muted-foreground"
+        >
           <div className="flex items-center gap-1">
-            <div className="h-3 w-3 rounded bg-orange-500" />
+            <div className="h-3 w-3 rounded bg-orange-500" aria-hidden="true" />
             <span>Active</span>
           </div>
           {showFreezes && (
             <div className="flex items-center gap-1">
-              <div className="h-3 w-3 rounded bg-blue-500" />
+              <div className="h-3 w-3 rounded bg-blue-500" aria-hidden="true" />
               <span>Freeze used</span>
             </div>
           )}
