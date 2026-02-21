@@ -1,0 +1,250 @@
+---
+title: User Rank
+description: A compact card for displaying a user's current leaderboard position with trend indicators and percentile ranking.
+---
+
+# User Rank
+
+A self-contained card component for displaying a user's leaderboard position. Shows rank, score, trend direction, and optional percentile—perfect for dashboards and profile pages.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/user-rank.json
+```
+
+## Usage
+
+```tsx
+import { UserRank } from "@/components/ui/user-rank"
+```
+
+```tsx
+<UserRank
+  ranking={{
+    userId: "user_123",
+    userName: "Alice",
+    rank: 42,
+    value: 1850,
+  }}
+/>
+```
+
+## Examples
+
+### With Trophy API Data
+
+```tsx
+const userRank = await trophy.leaderboards.getUserRank({
+  leaderboardId: "weekly-xp",
+  userId: session.userId,
+})
+
+<UserRank ranking={userRank} />
+```
+
+### Variants
+
+```tsx
+// Default card style
+<UserRank ranking={ranking} variant="default" />
+
+// Highlighted (primary border/background)
+<UserRank ranking={ranking} variant="highlight" />
+
+// Minimal (no border/background)
+<UserRank ranking={ranking} variant="minimal" />
+```
+
+### Sizes
+
+```tsx
+<UserRank ranking={ranking} size="sm" />
+<UserRank ranking={ranking} size="default" />
+<UserRank ranking={ranking} size="lg" />
+```
+
+### With Trend Indicator
+
+Show rank movement since last period:
+
+```tsx
+// Rank improved
+<UserRank ranking={ranking} trend="up" rankChange={5} />
+// Shows: ↑ +5
+
+// Rank dropped
+<UserRank ranking={ranking} trend="down" rankChange={3} />
+// Shows: ↓ -3
+
+// Rank unchanged
+<UserRank ranking={ranking} trend="same" />
+// Shows: —
+
+// New entry
+<UserRank ranking={ranking} trend="new" />
+// Shows: NEW
+```
+
+### With Total Participants
+
+```tsx
+<UserRank
+  ranking={ranking}
+  totalParticipants={1000}
+/>
+// Shows: "of 1,000" below rank
+```
+
+### With Percentile
+
+```tsx
+<UserRank
+  ranking={{ ...ranking, rank: 50 }}
+  totalParticipants={1000}
+  showPercentile
+/>
+// Shows: "Top 5%" (rank 50 of 1000)
+```
+
+### Custom Metric Label
+
+```tsx
+<UserRank ranking={ranking} metricLabel="XP" />
+// Shows: 1,850 XP
+
+<UserRank ranking={ranking} metricLabel="points" />
+// Shows: 1,850 points
+```
+
+### With Custom Avatar
+
+```tsx
+<UserRank
+  ranking={ranking}
+  avatarUrl="https://example.com/avatar.jpg"
+/>
+```
+
+### Without Avatar
+
+```tsx
+<UserRank ranking={ranking} showAvatar={false} />
+```
+
+### Dashboard Widget
+
+```tsx
+<Card>
+  <CardHeader>
+    <CardTitle>Your Ranking</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <UserRank
+      ranking={userRank}
+      trend="up"
+      rankChange={12}
+      totalParticipants={5000}
+      showPercentile
+      metricLabel="XP"
+      variant="minimal"
+    />
+  </CardContent>
+</Card>
+```
+
+### Profile Page Header
+
+```tsx
+<div className="flex flex-col md:flex-row gap-4">
+  <UserRank
+    ranking={weeklyRank}
+    trend={weeklyTrend}
+    rankChange={weeklyChange}
+    totalParticipants={totalUsers}
+    showPercentile
+    metricLabel="Weekly XP"
+    size="lg"
+    variant="highlight"
+  />
+  
+  <UserRank
+    ranking={allTimeRank}
+    totalParticipants={totalUsers}
+    showPercentile
+    metricLabel="Total XP"
+    size="lg"
+  />
+</div>
+```
+
+### Multiple Leaderboards
+
+```tsx
+const leaderboards = [
+  { id: "xp", name: "Experience", rank: userXpRank },
+  { id: "tasks", name: "Tasks Completed", rank: userTasksRank },
+  { id: "streak", name: "Longest Streak", rank: userStreakRank },
+]
+
+<div className="space-y-3">
+  {leaderboards.map((lb) => (
+    <UserRank
+      key={lb.id}
+      ranking={lb.rank}
+      metricLabel={lb.name}
+      variant="default"
+      size="sm"
+    />
+  ))}
+</div>
+```
+
+## API Reference
+
+### UserRank
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `ranking` | `LeaderboardRanking` | Required | User's ranking data |
+| `variant` | `"default" \| "highlight" \| "minimal"` | `"default"` | Visual style |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Component size |
+| `trend` | `"up" \| "down" \| "same" \| "new"` | `"same"` | Rank trend direction |
+| `rankChange` | `number` | - | Positions gained/lost |
+| `totalParticipants` | `number` | - | Total users in leaderboard |
+| `metricLabel` | `string` | - | Label for the value (e.g., "XP") |
+| `showAvatar` | `boolean` | `true` | Show user avatar |
+| `avatarUrl` | `string` | - | Custom avatar image URL |
+| `showPercentile` | `boolean` | `false` | Show percentile ranking |
+
+### LeaderboardRanking
+
+```ts
+interface LeaderboardRanking {
+  userId: string
+  userName: string | null
+  rank: number
+  value: number
+}
+```
+
+### RankTrend
+
+```ts
+type RankTrend = "up" | "down" | "same" | "new"
+```
+
+## Features
+
+- **Trend indicators** - Visual up/down arrows with color coding
+- **Percentile calculation** - Auto-calculated from rank and total
+- **Medal badges** - Crown/medals for top 3 positions
+- **Responsive** - Percentile hidden on mobile, shown on larger screens
+- **Flexible layout** - Works standalone or in card containers
+
+## Accessibility
+
+- Uses `role="status"` for live region announcements
+- Full descriptive `aria-label` with name, rank, total, value, metric, and trend
+- Decorative elements (avatar, badges, icons) marked `aria-hidden`
+- Numbers formatted with `toLocaleString()` for screen readers
