@@ -1,0 +1,110 @@
+---
+title: Streak Badge
+description: A compact badge displaying the current streak count with customizable styling and animations.
+---
+
+# Streak Badge
+
+A compact badge component for displaying user streak counts. Supports multiple variants, sizes, and can display the streak frequency.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/streak-badge.json
+```
+
+## Usage
+
+```tsx
+import { StreakBadge } from "@/components/ui/streak-badge"
+```
+
+```tsx
+<StreakBadge length={7} />
+```
+
+## Examples
+
+### With Trophy API Response
+
+```tsx
+const streak = await trophy.streaks.get({ userId: "user_123" })
+
+<StreakBadge streak={streak} />
+```
+
+### Variants
+
+```tsx
+<StreakBadge length={7} variant="default" />
+<StreakBadge length={7} variant="outline" />
+<StreakBadge length={7} variant="ghost" />
+```
+
+### Sizes
+
+```tsx
+<StreakBadge length={7} size="sm" />
+<StreakBadge length={7} size="default" />
+<StreakBadge length={7} size="lg" />
+```
+
+### With Frequency Label
+
+```tsx
+<StreakBadge length={7} showFrequency />
+// Displays: "7 days"
+```
+
+### Custom Icon
+
+```tsx
+import { Zap } from "lucide-react"
+
+<StreakBadge length={7} icon={<Zap className="h-4 w-4" />} />
+```
+
+### Without Animation
+
+```tsx
+<StreakBadge length={7} animate={false} />
+```
+
+### Without Flame Icon
+
+```tsx
+<StreakBadge length={7} showFlame={false} />
+```
+
+## API Reference
+
+### StreakBadge
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `streak` | `StreakResponse` | - | Trophy API streak response object |
+| `length` | `number` | - | Manual streak length (alternative to streak prop) |
+| `variant` | `"default" \| "outline" \| "ghost"` | `"default"` | Visual style variant |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Badge size |
+| `showFrequency` | `boolean` | `false` | Show frequency label (e.g., "7 days") |
+| `showFlame` | `boolean` | `true` | Show the flame icon |
+| `icon` | `ReactNode` | - | Custom icon to replace flame |
+| `animate` | `boolean` | `true` | Pulse animation when streak > 0 |
+
+### StreakResponse
+
+The component accepts a Trophy API streak response:
+
+```ts
+interface StreakResponse {
+  length: number
+  frequency: "daily" | "weekly" | "monthly"
+}
+```
+
+## Accessibility
+
+- Uses `role="status"` for screen reader announcements
+- Includes descriptive `aria-label` with streak count and frequency
+- Decorative elements marked with `aria-hidden`
+- Animation respects `prefers-reduced-motion`
