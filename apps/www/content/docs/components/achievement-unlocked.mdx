@@ -1,0 +1,199 @@
+---
+title: Achievement Unlocked
+description: A celebratory modal dialog for announcing newly unlocked achievements with animations and optional sharing.
+---
+
+# Achievement Unlocked
+
+A modal dialog component for celebrating achievement unlocks. Features a glowing badge animation, smooth transitions, and an optional share button for social engagement.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/achievement-unlocked.json
+```
+
+## Usage
+
+```tsx
+import { AchievementUnlocked } from "@/components/ui/achievement-unlocked"
+```
+
+```tsx
+const [open, setOpen] = useState(false)
+
+<AchievementUnlocked
+  achievement={{
+    id: "first-win",
+    name: "First Win",
+    description: "Complete your first challenge",
+  }}
+  open={open}
+  onOpenChange={setOpen}
+/>
+```
+
+## Examples
+
+### Basic Usage
+
+```tsx
+const [showUnlock, setShowUnlock] = useState(false)
+const [unlockedAchievement, setUnlockedAchievement] = useState(null)
+
+// When achievement unlocks (e.g., from webhook or API response)
+const handleAchievementUnlock = (achievement) => {
+  setUnlockedAchievement(achievement)
+  setShowUnlock(true)
+}
+
+<AchievementUnlocked
+  achievement={unlockedAchievement}
+  open={showUnlock}
+  onOpenChange={setShowUnlock}
+/>
+```
+
+### With Badge Image
+
+```tsx
+<AchievementUnlocked
+  achievement={{
+    id: "streak-master",
+    name: "Streak Master",
+    description: "Maintain a 30-day streak",
+    badgeUrl: "https://example.com/badges/streak-master.png",
+  }}
+  open={open}
+  onOpenChange={setOpen}
+/>
+```
+
+### With Share Button
+
+```tsx
+<AchievementUnlocked
+  achievement={achievement}
+  open={open}
+  onOpenChange={setOpen}
+  onShare={() => {
+    navigator.share({
+      title: `I unlocked "${achievement.name}"!`,
+      text: achievement.description,
+      url: window.location.href,
+    })
+  }}
+/>
+```
+
+### Trophy Webhook Integration
+
+Listen for real-time achievement unlocks:
+
+```tsx
+// In your webhook handler or SSE listener
+useEffect(() => {
+  const eventSource = new EventSource('/api/trophy-events')
+  
+  eventSource.addEventListener('achievement.unlocked', (event) => {
+    const achievement = JSON.parse(event.data)
+    setUnlockedAchievement(achievement)
+    setShowUnlock(true)
+  })
+  
+  return () => eventSource.close()
+}, [])
+
+<AchievementUnlocked
+  achievement={unlockedAchievement}
+  open={showUnlock}
+  onOpenChange={setShowUnlock}
+  onShare={handleShare}
+/>
+```
+
+### Queue Multiple Unlocks
+
+Handle multiple achievements unlocking at once:
+
+```tsx
+const [queue, setQueue] = useState<Achievement[]>([])
+const [current, setCurrent] = useState<Achievement | null>(null)
+
+const handleUnlock = (achievement: Achievement) => {
+  if (current) {
+    setQueue(q => [...q, achievement])
+  } else {
+    setCurrent(achievement)
+  }
+}
+
+const handleClose = () => {
+  if (queue.length > 0) {
+    setCurrent(queue[0])
+    setQueue(q => q.slice(1))
+  } else {
+    setCurrent(null)
+  }
+}
+
+<AchievementUnlocked
+  achievement={current}
+  open={!!current}
+  onOpenChange={(open) => !open && handleClose()}
+/>
+```
+
+### Custom Styling
+
+```tsx
+<AchievementUnlocked
+  achievement={achievement}
+  open={open}
+  onOpenChange={setOpen}
+  className="bg-gradient-to-b from-purple-900 to-purple-950"
+/>
+```
+
+## API Reference
+
+### AchievementUnlocked
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `achievement` | `Achievement` | Required | The achievement to display |
+| `open` | `boolean` | Required | Controls dialog visibility |
+| `onOpenChange` | `(open: boolean) => void` | Required | Called when open state changes |
+| `onShare` | `() => void` | - | Share button click handler (button hidden if not provided) |
+| `className` | `string` | - | Additional classes for the dialog |
+
+### Achievement
+
+```ts
+interface Achievement {
+  id: string
+  name: string
+  description?: string | null
+  badgeUrl?: string | null
+}
+```
+
+## Features
+
+- **Animated entrance** - Smooth fade and zoom animation on open
+- **Glowing badge** - Pulsing glow effect around the achievement badge
+- **Focus management** - Auto-focuses the "Awesome!" button
+- **Escape to close** - Press Escape key to dismiss
+- **Click outside** - Click backdrop to close
+- **Body scroll lock** - Prevents background scrolling when open
+- **Reduced motion** - Respects `prefers-reduced-motion` preference
+
+## Accessibility
+
+- Uses `role="dialog"` with `aria-modal="true"`
+- Dialog title linked via `aria-labelledby`
+- Close button has `aria-label="Close"`
+- Decorative badge/icon marked `aria-hidden`
+- Escape key closes dialog
+- Focus trapped within dialog while open
+- Auto-focus on primary action button
