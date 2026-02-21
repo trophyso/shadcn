@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Crown, Medal, Trophy, TrendingDown, TrendingUp } from "lucide-react";
+import { Crown, Medal, Trophy } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
@@ -115,18 +115,21 @@ const Leaderboard = React.forwardRef<HTMLDivElement, LeaderboardProps>(
       <div
         ref={ref}
         className={cn(leaderboardVariants({ variant }), className)}
-        role="list"
-        aria-label="Leaderboard rankings"
         {...props}
       >
         {/* Header for table variant */}
         {variant === "table" && (
-          <div className="flex items-center gap-4 px-4 py-2 text-sm font-medium text-muted-foreground">
+          <div
+            aria-hidden="true"
+            className="flex items-center gap-4 px-4 py-2 text-sm font-medium text-muted-foreground"
+          >
             <span className="w-12 text-center">Rank</span>
             <span className="flex-1">User</span>
             {showValue && <span className="w-20 text-right">{valueLabel}</span>}
           </div>
         )}
+
+        <div role="list" aria-label="Leaderboard rankings">
 
         {displayRankings.map((ranking) => {
           const isCurrentUser = ranking.userId === currentUserId;
@@ -134,10 +137,13 @@ const Leaderboard = React.forwardRef<HTMLDivElement, LeaderboardProps>(
           const displayName =
             ranking.userName || `User ${ranking.userId.slice(0, 6)}`;
 
+          const itemLabel = `Rank ${ranking.rank}: ${displayName}${showValue ? `, ${ranking.value.toLocaleString()} ${valueLabel}` : ""}${isCurrentUser ? " (you)" : ""}`;
+
           return (
             <div
               key={ranking.userId}
               role="listitem"
+              aria-label={itemLabel}
               onClick={() => onUserClick?.(ranking)}
               onKeyDown={
                 onUserClick
@@ -158,7 +164,7 @@ const Leaderboard = React.forwardRef<HTMLDivElement, LeaderboardProps>(
               )}
             >
               {/* Rank */}
-              <div className="w-12 flex justify-center">
+              <div className="w-12 flex justify-center" aria-hidden="true">
                 {rankDisplay ? (
                   <div
                     className={cn(
@@ -179,6 +185,7 @@ const Leaderboard = React.forwardRef<HTMLDivElement, LeaderboardProps>(
               <div className="flex flex-1 items-center gap-3 min-w-0">
                 {showAvatar && (
                   <div
+                    aria-hidden="true"
                     className={cn(
                       "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-medium",
                       isCurrentUser
@@ -208,6 +215,8 @@ const Leaderboard = React.forwardRef<HTMLDivElement, LeaderboardProps>(
             </div>
           );
         })}
+
+        </div>
 
         {/* Show more indicator */}
         {limit && rankings.length > limit && (
