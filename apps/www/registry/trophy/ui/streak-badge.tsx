@@ -6,27 +6,10 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-// Types (inlined)
-interface StreakPeriod {
-  periodStart: string;
-  periodEnd: string;
-  length: number;
-  usedFreeze?: boolean;
-}
-
+// Types (inlined - only fields used by this component)
 interface StreakResponse {
   length: number;
   frequency: "daily" | "weekly" | "monthly";
-  started: string | null;
-  periodStart: string | null;
-  periodEnd: string | null;
-  expires: string | null;
-  streakHistory: StreakPeriod[];
-  rank: number | null;
-  freezes?: number;
-  maxFreezes?: number;
-  freezeAutoEarnInterval?: number;
-  freezeAutoEarnAmount?: number;
 }
 
 // Variants
@@ -135,4 +118,4 @@ const StreakBadge = React.forwardRef<HTMLDivElement, StreakBadgeProps>(
 StreakBadge.displayName = "StreakBadge";
 
 export { StreakBadge, streakBadgeVariants };
-export type { StreakBadgeProps, StreakResponse, StreakPeriod };
+export type { StreakBadgeProps, StreakResponse };
