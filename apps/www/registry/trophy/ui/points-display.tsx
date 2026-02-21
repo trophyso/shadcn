@@ -6,34 +6,19 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-// Types (inlined from Trophy API)
+// Types (inlined - only fields used by this component)
 interface PointsTrigger {
-  id: string;
-  type: "metric" | "api";
-  points: number;
   metricName: string | null;
-  metricThreshold: number | null;
 }
 
 interface PointsAward {
   id: string;
   awarded: number;
-  date: string;
-  total: number;
   trigger: PointsTrigger | null;
-  boosts: PointsBoost[] | null;
-}
-
-interface PointsBoost {
-  id: string;
-  name: string;
-  multiplier: number;
 }
 
 interface PointsResponse {
-  id: string;
   name: string;
-  description: string | null;
   badgeUrl: string | null;
   total: number;
   awards: PointsAward[];
@@ -220,5 +205,4 @@ export type {
   PointsResponse,
   PointsAward,
   PointsTrigger,
-  PointsBoost,
 };
