@@ -97,6 +97,7 @@ const PointsAnimation = React.forwardRef<HTMLDivElement, PointsAnimationProps>(
     return (
       <div
         ref={ref}
+        aria-hidden="true"
         className={cn(
           pointsAnimationVariants({ variant, size }),
           colorClasses[color],
@@ -149,6 +150,7 @@ const PointsAnimationContainer = React.forwardRef<
     return (
       <div
         ref={ref}
+        aria-hidden="true"
         className={cn("pointer-events-none fixed inset-0 z-50 overflow-hidden", className)}
         {...props}
       >
