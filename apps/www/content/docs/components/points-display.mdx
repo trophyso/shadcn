@@ -1,0 +1,255 @@
+---
+title: Points Display
+description: A flexible component for displaying user point totals with customizable icons, badges, and recent award history.
+---
+
+# Points Display
+
+A versatile component for showing user point balances. Supports custom icons, badge images, recent award breakdowns, and multiple layout variants for different UI contexts.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/points-display.json
+```
+
+## Usage
+
+```tsx
+import { PointsDisplay } from "@/components/ui/points-display"
+```
+
+```tsx
+<PointsDisplay
+  points={{
+    name: "XP",
+    total: 2500,
+    badgeUrl: null,
+    awards: [],
+  }}
+/>
+```
+
+## Examples
+
+### With Trophy API Data
+
+```tsx
+const points = await trophy.points.get({ userId: "user_123" })
+
+<PointsDisplay points={points} />
+```
+
+### Variants
+
+```tsx
+// Default card style
+<PointsDisplay points={points} variant="default" />
+
+// Minimal (no border/padding)
+<PointsDisplay points={points} variant="minimal" />
+
+// Highlighted (primary color accent)
+<PointsDisplay points={points} variant="highlight" />
+
+// Inline (compact, horizontal)
+<PointsDisplay points={points} variant="inline" />
+```
+
+### Sizes
+
+```tsx
+<PointsDisplay points={points} size="sm" />
+<PointsDisplay points={points} size="default" />
+<PointsDisplay points={points} size="lg" />
+```
+
+### Icon Types
+
+Built-in icon presets:
+
+```tsx
+// Lightning bolt (good for XP)
+<PointsDisplay points={points} iconType="xp" />
+
+// Star (good for points)
+<PointsDisplay points={points} iconType="points" />
+
+// Gift (good for credits/coins)
+<PointsDisplay points={points} iconType="credits" />
+
+// Award (default)
+<PointsDisplay points={points} iconType="default" />
+```
+
+### Custom Icon
+
+```tsx
+import { Coins } from "lucide-react"
+
+<PointsDisplay points={points} icon={Coins} />
+```
+
+### With Badge Image
+
+When `badgeUrl` is provided:
+
+```tsx
+<PointsDisplay
+  points={{
+    name: "Gold Coins",
+    total: 1500,
+    badgeUrl: "https://example.com/coin-badge.png",
+    awards: [],
+  }}
+  showBadge
+/>
+```
+
+### Without Badge
+
+```tsx
+<PointsDisplay points={points} showBadge={false} />
+// Always shows icon, never badge image
+```
+
+### Show Recent Awards
+
+Display the last N point awards:
+
+```tsx
+<PointsDisplay
+  points={{
+    name: "XP",
+    total: 2500,
+    badgeUrl: null,
+    awards: [
+      { id: "1", awarded: 50, trigger: { metricName: "task_completed" } },
+      { id: "2", awarded: 100, trigger: { metricName: "streak_bonus" } },
+      { id: "3", awarded: 25, trigger: { metricName: "daily_login" } },
+    ],
+  }}
+  showRecentAwards={3}
+/>
+// Shows: +50 task_completed, +100 streak_bonus, +25 daily_login
+```
+
+### Custom Value Formatter
+
+```tsx
+// Abbreviate large numbers
+<PointsDisplay
+  points={points}
+  formatValue={(val) => {
+    if (val >= 1000000) return `${(val / 1000000).toFixed(1)}M`
+    if (val >= 1000) return `${(val / 1000).toFixed(1)}K`
+    return val.toString()
+  }}
+/>
+// 2500 → "2.5K"
+```
+
+### Without Name Label
+
+```tsx
+<PointsDisplay points={points} showName={false} />
+```
+
+### Header/Nav Integration
+
+```tsx
+<nav className="flex items-center gap-4">
+  <Logo />
+  <div className="flex-1" />
+  <PointsDisplay
+    points={userPoints}
+    variant="inline"
+    size="sm"
+    iconType="xp"
+  />
+  <UserMenu />
+</nav>
+```
+
+### Dashboard Card
+
+```tsx
+<Card>
+  <CardHeader>
+    <CardTitle>Your Balance</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <PointsDisplay
+      points={userPoints}
+      variant="minimal"
+      size="lg"
+      showRecentAwards={5}
+    />
+  </CardContent>
+</Card>
+```
+
+### Multiple Point Types
+
+```tsx
+const [xp, coins, gems] = await Promise.all([
+  trophy.points.get({ userId, pointsId: "xp" }),
+  trophy.points.get({ userId, pointsId: "coins" }),
+  trophy.points.get({ userId, pointsId: "gems" }),
+])
+
+<div className="grid grid-cols-3 gap-4">
+  <PointsDisplay points={xp} iconType="xp" />
+  <PointsDisplay points={coins} iconType="credits" />
+  <PointsDisplay points={gems} icon={Diamond} />
+</div>
+```
+
+## API Reference
+
+### PointsDisplay
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `points` | `PointsResponse` | Required | Points data from Trophy API |
+| `variant` | `"default" \| "minimal" \| "highlight" \| "inline"` | `"default"` | Visual style |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Component size |
+| `iconType` | `"xp" \| "points" \| "credits" \| "default"` | `"default"` | Built-in icon preset |
+| `icon` | `ComponentType` | - | Custom icon component |
+| `showBadge` | `boolean` | `true` | Show badge image if available |
+| `showName` | `boolean` | `true` | Show points name label |
+| `showRecentAwards` | `number` | - | Number of recent awards to display |
+| `animated` | `boolean` | `false` | Animate value changes |
+| `formatValue` | `(value: number) => string` | - | Custom value formatter |
+
+### PointsResponse
+
+```ts
+interface PointsResponse {
+  name: string
+  badgeUrl: string | null
+  total: number
+  awards: PointsAward[]
+}
+
+interface PointsAward {
+  id: string
+  awarded: number
+  trigger: { metricName: string | null } | null
+}
+```
+
+## Features
+
+- **Icon presets** - Built-in icons for XP, points, credits
+- **Badge support** - Display custom badge images
+- **Recent awards** - Show breakdown of recent point earnings
+- **Custom formatting** - Abbreviate large numbers (1K, 1M)
+- **Multiple variants** - Card, minimal, highlighted, inline layouts
+
+## Accessibility
+
+- Uses `role="status"` for live region announcements
+- Descriptive `aria-label` with total, name, and recent award count
+- Badge/icon marked `aria-hidden` (decorative)
+- Numbers formatted with `toLocaleString()` for screen readers
