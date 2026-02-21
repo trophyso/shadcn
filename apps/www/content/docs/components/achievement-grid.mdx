@@ -1,0 +1,205 @@
+---
+title: Achievement Grid
+description: A responsive grid layout for displaying collections of achievements with filtering, sorting, and customizable badge styles.
+---
+
+# Achievement Grid
+
+A grid component for displaying multiple achievements in a responsive layout. Includes built-in filtering, sorting, and customizable display options for locked/unlocked states.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/achievement-grid.json
+```
+
+## Usage
+
+```tsx
+import { AchievementGrid } from "@/components/ui/achievement-grid"
+```
+
+```tsx
+<AchievementGrid achievements={achievements} />
+```
+
+## Examples
+
+### With Trophy API Response
+
+```tsx
+const achievements = await trophy.users.achievements({ userId: "user_123" })
+
+<AchievementGrid achievements={achievements} />
+```
+
+### Column Layouts
+
+```tsx
+// Fixed columns
+<AchievementGrid achievements={achievements} columns={2} />
+<AchievementGrid achievements={achievements} columns={3} />
+<AchievementGrid achievements={achievements} columns={4} />
+
+// Auto-responsive (default)
+<AchievementGrid achievements={achievements} columns="auto" />
+// 2 cols mobile → 3 cols tablet → 4 cols desktop → 5 cols large
+```
+
+### Gap Sizes
+
+```tsx
+<AchievementGrid achievements={achievements} gap="sm" />
+<AchievementGrid achievements={achievements} gap="default" />
+<AchievementGrid achievements={achievements} gap="lg" />
+```
+
+### Filtering
+
+Show only specific achievement states:
+
+```tsx
+// All achievements (default)
+<AchievementGrid achievements={achievements} filter="all" />
+
+// Only earned achievements
+<AchievementGrid achievements={achievements} filter="earned" />
+
+// Only locked achievements
+<AchievementGrid achievements={achievements} filter="locked" />
+```
+
+### Sorting
+
+```tsx
+// Alphabetical by name (default)
+<AchievementGrid achievements={achievements} sortBy="name" />
+
+// Most recently earned first
+<AchievementGrid achievements={achievements} sortBy="earned" />
+
+// Group by trigger type (metric, api, streak)
+<AchievementGrid achievements={achievements} sortBy="trigger" />
+```
+
+### Badge Variants
+
+```tsx
+<AchievementGrid achievements={achievements} badgeVariant="card" />
+<AchievementGrid achievements={achievements} badgeVariant="badge" />
+<AchievementGrid achievements={achievements} badgeVariant="minimal" />
+```
+
+### Badge Sizes
+
+```tsx
+<AchievementGrid achievements={achievements} badgeSize="sm" />
+<AchievementGrid achievements={achievements} badgeSize="default" />
+<AchievementGrid achievements={achievements} badgeSize="lg" />
+```
+
+### Locked Styles
+
+Control how locked achievements display:
+
+```tsx
+// Grayscale (default)
+<AchievementGrid achievements={achievements} lockedStyle="grayscale" />
+
+// Silhouette - mystery style
+<AchievementGrid achievements={achievements} lockedStyle="silhouette" />
+
+// Hidden - don't show locked achievements
+<AchievementGrid achievements={achievements} lockedStyle="hidden" />
+```
+
+### Clickable Achievements
+
+```tsx
+<AchievementGrid
+  achievements={achievements}
+  onAchievementClick={(achievement) => {
+    openDetailModal(achievement)
+  }}
+/>
+```
+
+### Custom Empty State
+
+```tsx
+<AchievementGrid
+  achievements={[]}
+  filter="earned"
+  emptyState={
+    <div className="text-center py-8">
+      <p className="text-lg font-medium">Start your journey!</p>
+      <p className="text-muted-foreground">Complete tasks to earn achievements</p>
+    </div>
+  }
+/>
+```
+
+### Complete Example
+
+```tsx
+const [filter, setFilter] = useState<"all" | "earned" | "locked">("all")
+
+<Tabs value={filter} onValueChange={setFilter}>
+  <TabsList>
+    <TabsTrigger value="all">All</TabsTrigger>
+    <TabsTrigger value="earned">Earned</TabsTrigger>
+    <TabsTrigger value="locked">Locked</TabsTrigger>
+  </TabsList>
+</Tabs>
+
+<AchievementGrid
+  achievements={achievements}
+  filter={filter}
+  sortBy="earned"
+  columns="auto"
+  badgeVariant="card"
+  onAchievementClick={handleClick}
+/>
+```
+
+## API Reference
+
+### AchievementGrid
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `achievements` | `UserAchievement[]` | Required | Array of achievements to display |
+| `columns` | `2 \| 3 \| 4 \| "auto"` | `"auto"` | Number of grid columns |
+| `gap` | `"sm" \| "default" \| "lg"` | `"default"` | Gap between grid items |
+| `filter` | `"all" \| "earned" \| "locked"` | `"all"` | Filter achievements by state |
+| `sortBy` | `"name" \| "earned" \| "trigger"` | `"name"` | Sort order for achievements |
+| `badgeSize` | `"sm" \| "default" \| "lg"` | `"default"` | Size of achievement badges |
+| `badgeVariant` | `"card" \| "badge" \| "minimal"` | `"card"` | Visual style for badges |
+| `lockedStyle` | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | How to display locked achievements |
+| `emptyState` | `ReactNode` | - | Custom empty state component |
+| `onAchievementClick` | `(achievement) => void` | - | Click handler for achievements |
+
+### UserAchievement
+
+```ts
+interface Achievement {
+  id: string
+  name: string
+  trigger: "metric" | "api" | "streak"
+  badgeUrl?: string | null
+}
+
+interface UserAchievement extends Achievement {
+  achievedAt: string | null // null = locked
+}
+```
+
+## Accessibility
+
+- Grid uses `role="list"` with `aria-label="Achievements"`
+- Each item uses `role="listitem"` (or `role="button"` when clickable)
+- Clickable items include `aria-label` with achievement name and status
+- Keyboard navigation with Enter/Space to activate clickable items
+- Badge images include descriptive `alt` text with earned/locked status
+- Decorative icons marked `aria-hidden`
+- Default empty states announce context-appropriate messages
