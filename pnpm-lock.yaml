@@ -145,6 +145,9 @@ importers:
         specifier: ^3.0.1
         version: 3.5.0
     devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3
+        version: 3.3.3
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.4.1
         version: 4.7.1(prettier@3.8.1)
