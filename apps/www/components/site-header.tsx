@@ -29,7 +29,7 @@ export function SiteHeader() {
             className="hidden size-8 lg:flex"
           >
             <Link href="/">
-              <Icons.logo className="size-5" />
+              <Icons.logo className="size-10" />
               <span className="sr-only">{siteConfig.name}</span>
             </Link>
           </Button>
