@@ -19,6 +19,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com",
+      },
     ],
   },
   redirects() {
@@ -27,6 +31,14 @@ const nextConfig = {
         source: "/components",
         destination: "/docs/components",
         permanent: true,
+      },
+    ]
+  },
+  rewrites() {
+    return [
+      {
+        source: "/docs/:path*.md",
+        destination: "/llm/:path*",
       },
     ]
   },
