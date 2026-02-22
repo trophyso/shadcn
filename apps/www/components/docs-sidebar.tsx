@@ -26,6 +26,9 @@ const TOP_LEVEL_SECTIONS = [
 const EXCLUDED_SECTIONS = ["(root)"]
 const EXCLUDED_PAGES: string[] = []
 
+// Add component file paths here to show a "new" indicator
+const NEW_COMPONENTS: string[] = []
+
 export function DocsSidebar({
   tree,
   ...props
@@ -83,6 +86,7 @@ export function DocsSidebar({
                 {item.type === "folder" && (
                   <SidebarMenu className="gap-0.5">
                     {item.children.map((item) => {
+                      const isNew = NEW_COMPONENTS.includes(item.$id ?? "")
                       return (
                         item.type === "page" &&
                         !EXCLUDED_PAGES.includes(item.url) && (
@@ -94,7 +98,15 @@ export function DocsSidebar({
                             >
                               <Link href={item.url}>
                                 <span className="absolute inset-0 flex w-(--sidebar-width) bg-transparent" />
-                                {item.name}
+                                <span className="flex items-center gap-2">
+                                  {item.name}
+                                  {isNew && (
+                                    <span
+                                      className="bg-primary h-1.5 w-1.5 shrink-0 rounded-full"
+                                      aria-label="New component"
+                                    />
+                                  )}
+                                </span>
                               </Link>
                             </SidebarMenuButton>
                           </SidebarMenuItem>
