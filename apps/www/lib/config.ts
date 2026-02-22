@@ -6,7 +6,7 @@ export const siteConfig = {
     "A collection of Open Source gamification components that you can customize, extend, and build on.",
   links: {
     twitter: "https://twitter.com/trophyso",
-    github: "https://github.com/trophyso/ui",
+    github: "https://github.com/trophyso/shadcn",
   },
   navItems: [
     {
@@ -18,9 +18,9 @@ export const siteConfig = {
       label: "Components",
     },
   ],
-}
+};
 
 export const META_THEME_COLORS = {
   light: "#ffffff",
   dark: "#09090b",
-}
+};
