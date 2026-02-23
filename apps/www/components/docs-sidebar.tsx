@@ -4,121 +4,91 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import type { source } from "@/lib/source"
+import { cn } from "@/lib/utils"
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from "@/registry/trophy/ui/sidebar"
 
-const TOP_LEVEL_SECTIONS = [
-  { name: "Introduction", href: "/docs" },
-  {
-    name: "Components",
-    href: "/docs/components",
-  },
-]
+type PageTree = typeof source.pageTree
+type PageTreeNode = PageTree["children"][number]
 
-const EXCLUDED_SECTIONS = ["(root)"]
-const EXCLUDED_PAGES: string[] = []
+function collectPages(nodes: PageTreeNode[]): { name: string; url: string }[] {
+  const pages: { name: string; url: string }[] = []
+  for (const node of nodes) {
+    if (node.type === "page" && node.url !== "/docs" && node.url !== "/docs/components") {
+      pages.push({ name: node.name as string, url: node.url })
+    }
+    if (node.type === "folder" && node.children) {
+      pages.push(...collectPages(node.children))
+    }
+  }
+  return pages
+}
 
-// Add component file paths here to show a "new" indicator
-const NEW_COMPONENTS: string[] = []
+function SidebarLink({
+  href,
+  isActive,
+  children,
+}: {
+  href: string
+  isActive: boolean
+  children: React.ReactNode
+}) {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "block rounded-md px-2 py-1.5 text-[0.8rem] font-medium text-muted-foreground transition-colors hover:text-foreground",
+        isActive && "bg-accent text-foreground"
+      )}
+    >
+      {children}
+    </Link>
+  )
+}
 
-export function DocsSidebar({
-  tree,
-  ...props
-}: React.ComponentProps<typeof Sidebar> & { tree: typeof source.pageTree }) {
+export function DocsSidebar({ tree }: { tree: PageTree }) {
   const pathname = usePathname()
+  const componentPages = collectPages(tree.children)
 
   return (
     <Sidebar
       className="sticky top-[calc(var(--header-height)+1px)] z-30 hidden h-[calc(100svh-var(--footer-height)+2rem)] bg-transparent lg:flex"
       collapsible="none"
-      {...props}
     >
       <SidebarContent className="no-scrollbar overflow-x-hidden px-2 pb-12">
         <div className="h-(--top-spacing) shrink-0" />
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-muted-foreground font-medium">
-            Getting Started
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {TOP_LEVEL_SECTIONS.map(({ name, href }) => {
-                return (
-                  <SidebarMenuItem key={name}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={
-                        href === "/docs" || href === "/docs/components"
-                          ? pathname === href
-                          : pathname.startsWith(href)
-                      }
-                      className="data-[active=true]:bg-accent data-[active=true]:border-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md"
-                    >
-                      <Link href={href}>
-                        <span className="absolute inset-0 flex w-(--sidebar-width) bg-transparent" />
-                        {name}
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                )
-              })}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        {tree.children.map((item) => {
-          if (EXCLUDED_SECTIONS.includes(item.$id ?? "")) {
-            return null
-          }
-
-          return (
-            <SidebarGroup key={item.$id}>
-              <SidebarGroupLabel className="text-muted-foreground font-medium">
-                {item.name}
-              </SidebarGroupLabel>
-              <SidebarGroupContent>
-                {item.type === "folder" && (
-                  <SidebarMenu className="gap-0.5">
-                    {item.children.map((item) => {
-                      const isNew = NEW_COMPONENTS.includes(item.$id ?? "")
-                      return (
-                        item.type === "page" &&
-                        !EXCLUDED_PAGES.includes(item.url) && (
-                          <SidebarMenuItem key={item.url}>
-                            <SidebarMenuButton
-                              asChild
-                              isActive={item.url === pathname}
-                              className="data-[active=true]:bg-accent data-[active=true]:border-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md"
-                            >
-                              <Link href={item.url}>
-                                <span className="absolute inset-0 flex w-(--sidebar-width) bg-transparent" />
-                                <span className="flex items-center gap-2">
-                                  {item.name}
-                                  {isNew && (
-                                    <span
-                                      className="bg-primary h-1.5 w-1.5 shrink-0 rounded-full"
-                                      aria-label="New component"
-                                    />
-                                  )}
-                                </span>
-                              </Link>
-                            </SidebarMenuButton>
-                          </SidebarMenuItem>
-                        )
-                      )
-                    })}
-                  </SidebarMenu>
-                )}
-              </SidebarGroupContent>
-            </SidebarGroup>
-          )
-        })}
+        <div className="flex flex-col gap-4 px-2">
+          <div className="flex flex-col gap-0.5">
+            <h4 className="mb-1 px-2 text-xs font-medium text-muted-foreground">
+              Getting Started
+            </h4>
+            <SidebarLink href="/docs" isActive={pathname === "/docs"}>
+              Introduction
+            </SidebarLink>
+            <SidebarLink
+              href="/docs/components"
+              isActive={pathname === "/docs/components"}
+            >
+              Components
+            </SidebarLink>
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <h4 className="mb-1 px-2 text-xs font-medium text-muted-foreground">
+              Components
+            </h4>
+            {componentPages.map((page) => (
+              <SidebarLink
+                key={page.url}
+                href={page.url}
+                isActive={pathname === page.url}
+              >
+                {page.name}
+              </SidebarLink>
+            ))}
+          </div>
+        </div>
       </SidebarContent>
     </Sidebar>
   )
