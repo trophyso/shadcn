@@ -7,6 +7,8 @@ description: A compact badge displaying the current streak count with customizab
 
 A compact badge component for displaying user streak counts. Supports multiple variants, sizes, and can display the streak frequency.
 
+<ComponentPreview name="streak-badge" />
+
 ## Installation
 
 ```bash
@@ -35,46 +37,15 @@ const streak = await trophy.streaks.get({ userId: "user_123" })
 
 ### Variants
 
-```tsx
-<StreakBadge length={7} variant="default" />
-<StreakBadge length={7} variant="outline" />
-<StreakBadge length={7} variant="ghost" />
-```
+<ComponentPreview name="streak-badge" />
 
 ### Sizes
 
-```tsx
-<StreakBadge length={7} size="sm" />
-<StreakBadge length={7} size="default" />
-<StreakBadge length={7} size="lg" />
-```
+<ComponentPreview name="streak-badge-sizes" />
 
 ### With Frequency Label
 
-```tsx
-<StreakBadge length={7} showFrequency />
-// Displays: "7 days"
-```
-
-### Custom Icon
-
-```tsx
-import { Zap } from "lucide-react"
-
-<StreakBadge length={7} icon={<Zap className="h-4 w-4" />} />
-```
-
-### Without Animation
-
-```tsx
-<StreakBadge length={7} animate={false} />
-```
-
-### Without Flame Icon
-
-```tsx
-<StreakBadge length={7} showFlame={false} />
-```
+<ComponentPreview name="streak-badge-frequency" />
 
 ## API Reference
 

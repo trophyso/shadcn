@@ -3,6 +3,7 @@ import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 import { CodeBlock, InlineCode } from "@/components/code-block"
+import { ComponentPreviewWrapper } from "@/components/component-preview-wrapper"
 
 export const mdxComponents = {
   h1: ({ className, ...props }: React.ComponentProps<"h1">) => (
@@ -132,5 +133,8 @@ export const mdxComponents = {
       className={cn("font-medium underline underline-offset-4", className)}
       {...props}
     />
+  ),
+  ComponentPreview: ({ name }: { name: string }) => (
+    <ComponentPreviewWrapper name={name} />
   ),
 }

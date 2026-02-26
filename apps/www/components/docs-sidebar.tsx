@@ -18,7 +18,7 @@ function SidebarLink({
 }: {
   href: string
   isActive: boolean
-  children: React.ReactNode
+  children: string
 }) {
   return (
     <Link
@@ -34,7 +34,7 @@ function SidebarLink({
   )
 }
 
-function SidebarSeparator({ name }: { name: React.ReactNode }) {
+function SidebarSeparator({ name }: { name: string }) {
   return (
     <div className="text-foreground mt-6 mb-2 px-3 text-xs font-semibold tracking-wide first:mt-0">
       {name}
@@ -67,20 +67,22 @@ function renderNodes(
 
   for (const node of nodes) {
     if (node.type === "separator") {
+      const name = typeof node.name === "string" ? node.name : String(node.name)
       result.push(
-        <SidebarSeparator key={node.$id || String(node.name)} name={node.name} />
+        <SidebarSeparator key={node.$id || name} name={name} />
       )
     } else if (node.type === "page") {
       if (node.url === "/docs" || node.url === "/docs/components") {
         continue
       }
+      const nodeName = typeof node.name === "string" ? node.name : String(node.name)
       result.push(
         <SidebarLink
           key={node.url}
           href={node.url}
           isActive={pathname === node.url}
         >
-          {node.name}
+          {nodeName}
         </SidebarLink>
       )
     } else if (node.type === "folder" && node.children) {
