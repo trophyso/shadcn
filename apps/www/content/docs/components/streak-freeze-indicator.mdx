@@ -7,6 +7,8 @@ description: Visual indicator showing available streak freezes with multiple dis
 
 Displays the number of available streak freezes. Supports dots, snowflakes, or text variants to show remaining vs total freezes.
 
+<ComponentPreview name="streak-freeze-indicator" />
+
 ## Installation
 
 ```bash
@@ -15,9 +17,19 @@ npx shadcn@latest add https://ui.trophy.so/r/streak-freeze-indicator.json
 
 ## Usage
 
+Import the component:
+
 ```tsx
 import { StreakFreezeIndicator } from "@/components/ui/streak-freeze-indicator"
 ```
+
+Basic usage:
+
+```tsx
+<StreakFreezeIndicator freezes={2} maxFreezes={3} />
+```
+
+With Trophy API data:
 
 ```tsx
 const streak = await trophy.streaks.get({ userId: "user_123" })
@@ -27,66 +39,25 @@ const streak = await trophy.streaks.get({ userId: "user_123" })
 
 ## Examples
 
-### Dots Variant (Default)
+### Variants
 
 ```tsx
-<StreakFreezeIndicator freezes={2} maxFreezes={3} />
-// Displays: ●●○
+<StreakFreezeIndicator freezes={2} maxFreezes={3} variant="dots" />
+<StreakFreezeIndicator freezes={2} maxFreezes={3} variant="snowflakes" />
+<StreakFreezeIndicator freezes={2} maxFreezes={3} variant="text" />
 ```
 
-### Snowflakes Variant
+### Show Max
+
+Display as "2/3" format.
 
 ```tsx
-<StreakFreezeIndicator 
-  freezes={2} 
-  maxFreezes={3} 
-  variant="snowflakes" 
-/>
-// Displays: ❄️❄️❄️ (2 filled, 1 muted)
-```
-
-### Text Variant
-
-```tsx
-<StreakFreezeIndicator 
-  freezes={2} 
-  maxFreezes={3} 
-  variant="text" 
-/>
-// Displays: ❄️ 2
-```
-
-### With Max Count
-
-```tsx
-<StreakFreezeIndicator 
-  freezes={2} 
-  maxFreezes={3} 
-  showMax 
-/>
-// Displays: ●●○ 2/3
-```
-
-### Sizes
-
-```tsx
-<StreakFreezeIndicator freezes={2} maxFreezes={3} size="sm" />
-<StreakFreezeIndicator freezes={2} maxFreezes={3} size="default" />
-<StreakFreezeIndicator freezes={2} maxFreezes={3} size="lg" />
-```
-
-### With Trophy API
-
-```tsx
-const streak = await trophy.streaks.get({ userId: "user_123" })
-// streak.freezes = 2, streak.maxFreezes = 3
-
-<StreakFreezeIndicator streak={streak} />
+<StreakFreezeIndicator freezes={2} maxFreezes={3} showMax />
 ```
 
 ## API Reference
 
-### StreakFreezeIndicator
+### Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -94,12 +65,9 @@ const streak = await trophy.streaks.get({ userId: "user_123" })
 | `freezes` | `number` | - | Manual freeze count |
 | `maxFreezes` | `number` | - | Manual max freezes |
 | `variant` | `"dots" \| "snowflakes" \| "text"` | `"dots"` | Display variant |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Component size |
 | `showMax` | `boolean` | `false` | Show "2/3" format |
-| `filledIcon` | `ReactNode` | - | Custom filled indicator |
-| `emptyIcon` | `ReactNode` | - | Custom empty indicator |
 
-### StreakResponse
+### Types
 
 ```ts
 interface StreakResponse {
@@ -108,13 +76,7 @@ interface StreakResponse {
 }
 ```
 
-## Behavior
-
-- Returns `null` if `maxFreezes` is 0 (no freezes configured)
-- Defaults `maxFreezes` to `freezes` if not provided
-
 ## Accessibility
 
 - Uses `role="status"` for screen reader announcements
-- Descriptive `aria-label`: "2 of 3 streak freezes available"
-- Visual indicators marked `aria-hidden`
+- Descriptive `aria-label` with freeze count

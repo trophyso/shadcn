@@ -75,8 +75,6 @@ export function Logo({ theme = 'light', size = 'medium' }: LogoProps) {
 export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
     return (
         <svg
-            width="36"
-            height="36"
             viewBox="0 0 40 64"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +86,7 @@ export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
                 width="13"
                 height="15"
                 transform="rotate(180 28 64.75)"
-                fill="black"
+                fill="currentColor"
             />
             <rect
                 x="32"
@@ -96,7 +94,7 @@ export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
                 width="13"
                 height="13"
                 transform="rotate(180 28 49.75)"
-                fill="black"
+                fill="currentColor"
             />
             <rect
                 x="19"
@@ -104,7 +102,7 @@ export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
                 width="15"
                 height="13"
                 transform="rotate(180 15 49.75)"
-                fill="black"
+                fill="currentColor"
             />
             <rect
                 x="53.5"
@@ -112,7 +110,7 @@ export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
                 width="13"
                 height="15"
                 transform="rotate(180 49.5 43.25)"
-                fill="black"
+                fill="currentColor"
             />
             <rect
                 x="53.5"
@@ -120,7 +118,7 @@ export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
                 width="13"
                 height="13"
                 transform="rotate(180 49.5 28.25)"
-                fill="black"
+                fill="currentColor"
             />
             <rect
                 x="40.5"
@@ -128,7 +126,7 @@ export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
                 width="15"
                 height="13"
                 transform="rotate(180 36.5 28.25)"
-                fill="black"
+                fill="currentColor"
             />
         </svg>
     )

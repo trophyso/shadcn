@@ -91,13 +91,14 @@ export function MobileNav({
                     <div className="flex flex-col gap-3">
                       {group.children.map((item) => {
                         if (item.type === "page") {
+                          const itemName = typeof item.name === "string" ? item.name : String(item.name)
                           return (
                             <MobileLink
                               key={`${item.url}-${index}`}
                               href={item.url}
                               onOpenChange={setOpen}
                             >
-                              {item.name}
+                              {itemName}
                             </MobileLink>
                           )
                         }
@@ -120,9 +121,9 @@ function MobileLink({
   className,
   children,
   ...props
-}: LinkProps & {
+}: Omit<LinkProps, "children"> & {
   onOpenChange?: (open: boolean) => void
-  children: React.ReactNode
+  children: string
   className?: string
 }) {
   const router = useRouter()

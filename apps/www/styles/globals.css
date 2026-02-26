@@ -275,3 +275,26 @@
     animation: points-slide 1s ease-out forwards;
   }
 }
+
+/* Code block styles */
+pre {
+  background-color: var(--code) !important;
+}
+
+pre code {
+  display: block;
+  font-family:
+    var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+pre code span {
+  font-style: normal !important;
+  color: var(--shiki-light) !important;
+}
+
+.dark pre code span {
+  color: var(--shiki-dark) !important;
+}
