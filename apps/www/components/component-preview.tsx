@@ -1,9 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { Check, Code2, Copy, Eye } from "lucide-react"
+import { Code2, Eye } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { CodeBlock } from "@/components/code-block"
 import { Button } from "@/registry/trophy/ui/button"
 
 interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -13,23 +14,12 @@ interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function ComponentPreview({
-  name,
   children,
   code,
   className,
   ...props
 }: ComponentPreviewProps) {
-  const [copied, setCopied] = React.useState(false)
   const [view, setView] = React.useState<"preview" | "code">("preview")
-
-  const copyToClipboard = React.useCallback(() => {
-    if (!code) return
-
-    navigator.clipboard.writeText(code).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
-  }, [code])
 
   return (
     <div
@@ -62,27 +52,6 @@ export function ComponentPreview({
             </Button>
           )}
         </div>
-        {code && view === "code" && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-7 gap-1.5 px-2.5 text-xs"
-            onClick={copyToClipboard}
-            aria-label={copied ? "Copied" : "Copy code"}
-          >
-            {copied ? (
-              <>
-                <Check className="h-3.5 w-3.5 text-green-500" />
-                <span className="text-green-500">Copied</span>
-              </>
-            ) : (
-              <>
-                <Copy className="h-3.5 w-3.5" />
-                <span>Copy</span>
-              </>
-            )}
-          </Button>
-        )}
       </div>
 
       {view === "preview" ? (
@@ -92,9 +61,11 @@ export function ComponentPreview({
           </div>
         </div>
       ) : (
-        <pre className="no-scrollbar overflow-x-auto bg-muted/50 p-4 text-sm">
-          <code className="text-foreground">{code}</code>
-        </pre>
+        <CodeBlock
+          code={code}
+          language="tsx"
+          className="my-0 rounded-none border-0"
+        />
       )}
     </div>
   )

@@ -276,29 +276,25 @@
   }
 }
 
-/* Shiki syntax highlighting */
+/* Code block styles */
 pre {
   background-color: var(--code) !important;
 }
 
 pre code {
   display: block;
-  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family:
+    var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
   font-size: 0.875rem;
   line-height: 1.5;
 }
 
 pre code span {
   font-style: normal !important;
+  color: var(--shiki-light) !important;
 }
 
-/* Light theme uses Shiki's github-light */
-pre {
-  --shiki-color-text: var(--code-foreground);
-}
-
-/* Dark theme uses Shiki's github-dark */
-.dark pre {
-  --shiki-color-text: var(--code-foreground);
+.dark pre code span {
+  color: var(--shiki-dark) !important;
 }
