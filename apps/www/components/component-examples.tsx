@@ -45,6 +45,22 @@ export const componentExamples: Record<
 <StreakBadge length={14} variant="outline" />
 <StreakBadge length={30} variant="ghost" />`,
   },
+  "streak-badge-basic": {
+    component: <StreakBadge length={7} />,
+    code: `<StreakBadge length={7} />`,
+  },
+  "streak-badge-variants": {
+    component: (
+      <div className="flex flex-wrap items-center gap-4">
+        <StreakBadge length={7} variant="default" />
+        <StreakBadge length={7} variant="outline" />
+        <StreakBadge length={7} variant="ghost" />
+      </div>
+    ),
+    code: `<StreakBadge length={7} variant="default" />
+<StreakBadge length={7} variant="outline" />
+<StreakBadge length={7} variant="ghost" />`,
+  },
   "streak-badge-sizes": {
     component: (
       <div className="flex flex-wrap items-center gap-4">
@@ -60,6 +76,10 @@ export const componentExamples: Record<
   "streak-badge-frequency": {
     component: <StreakBadge length={7} showFrequency />,
     code: `<StreakBadge length={7} showFrequency />`,
+  },
+  "streak-badge-no-animation": {
+    component: <StreakBadge length={7} animate={false} />,
+    code: `<StreakBadge length={7} animate={false} />`,
   },
   "streak-calendar": {
     component: (
@@ -147,8 +167,7 @@ export const componentExamples: Record<
             name: "Task Master",
             metricValue: 100,
           }}
-          current={75}
-          target={100}
+          currentValue={75}
         />
       </div>
     ),
@@ -158,8 +177,7 @@ export const componentExamples: Record<
     name: "Task Master",
     metricValue: 100,
   }}
-  current={75}
-  target={100}
+  currentValue={75}
 />`,
   },
   "leaderboard-entry": {
@@ -178,6 +196,26 @@ export const componentExamples: Record<
     ),
     code: `<LeaderboardEntry
   ranking={{ userId: "1", userName: "Alice", rank: 1, value: 1250 }}
+/>
+<LeaderboardEntry
+  ranking={{ userId: "2", userName: "Bob", rank: 2, value: 1100 }}
+/>
+<LeaderboardEntry
+  ranking={{ userId: "3", userName: "Charlie", rank: 3, value: 980 }}
+/>`,
+  },
+  "leaderboard-entry-current-user": {
+    component: (
+      <div className="flex w-full max-w-md flex-col gap-2">
+        <LeaderboardEntry
+          ranking={{ userId: "1", userName: "You", rank: 5, value: 850 }}
+          isCurrentUser
+        />
+      </div>
+    ),
+    code: `<LeaderboardEntry
+  ranking={ranking}
+  isCurrentUser
 />`,
   },
   "user-rank": {
@@ -200,23 +238,79 @@ export const componentExamples: Record<
   },
   "points-display": {
     component: (
+      <PointsDisplay
+        points={{ name: "XP", total: 2500, badgeUrl: null, awards: [] }}
+      />
+    ),
+    code: `<PointsDisplay
+  points={{ name: "XP", total: 2500, badgeUrl: null, awards: [] }}
+/>`,
+  },
+  "points-display-sizes": {
+    component: (
       <div className="flex flex-wrap items-center gap-4">
         <PointsDisplay
           points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
-        />
-        <PointsDisplay
-          points={{ name: "XP", total: 500, badgeUrl: null, awards: [] }}
           size="sm"
         />
         <PointsDisplay
-          points={{ name: "XP", total: 10000, badgeUrl: null, awards: [] }}
+          points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
+          size="default"
+        />
+        <PointsDisplay
+          points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
           size="lg"
         />
       </div>
     ),
-    code: `<PointsDisplay
-  points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
-/>`,
+    code: `<PointsDisplay points={points} size="sm" />
+<PointsDisplay points={points} size="default" />
+<PointsDisplay points={points} size="lg" />`,
+  },
+  "points-display-variants": {
+    component: (
+      <div className="flex flex-wrap items-center gap-6">
+        <PointsDisplay
+          points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
+          variant="default"
+        />
+        <PointsDisplay
+          points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
+          variant="minimal"
+        />
+        <PointsDisplay
+          points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
+          variant="inline"
+        />
+      </div>
+    ),
+    code: `<PointsDisplay points={points} variant="default" />
+<PointsDisplay points={points} variant="minimal" />
+<PointsDisplay points={points} variant="inline" />`,
+  },
+  "points-display-icons": {
+    component: (
+      <div className="flex flex-wrap items-center gap-4">
+        <PointsDisplay
+          points={{ name: "XP", total: 500, badgeUrl: null, awards: [] }}
+          iconType="xp"
+          size="sm"
+        />
+        <PointsDisplay
+          points={{ name: "Points", total: 500, badgeUrl: null, awards: [] }}
+          iconType="points"
+          size="sm"
+        />
+        <PointsDisplay
+          points={{ name: "Credits", total: 500, badgeUrl: null, awards: [] }}
+          iconType="credits"
+          size="sm"
+        />
+      </div>
+    ),
+    code: `<PointsDisplay points={points} iconType="xp" />
+<PointsDisplay points={points} iconType="points" />
+<PointsDisplay points={points} iconType="credits" />`,
   },
   "points-animation": {
     component: <PointsAnimation value={100} prefix="+" suffix=" XP" />,

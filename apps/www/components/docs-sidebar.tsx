@@ -34,9 +34,12 @@ function SidebarLink({
   )
 }
 
-function SidebarSeparator({ name }: { name: string }) {
+function SidebarSeparator({ name, isFirst = false }: { name: string; isFirst?: boolean }) {
   return (
-    <div className="text-foreground mt-6 mb-2 px-3 text-xs font-semibold tracking-wide first:mt-0">
+    <div className={cn(
+      "text-foreground mb-2 px-3 text-xs font-semibold tracking-wide",
+      isFirst ? "mt-3" : "mt-6"
+    )}>
       {name}
     </div>
   )
@@ -64,13 +67,15 @@ function renderNodes(
   pathname: string
 ): React.ReactNode[] {
   const result: React.ReactNode[] = []
+  let isFirstSeparator = true
 
   for (const node of nodes) {
     if (node.type === "separator") {
       const name = typeof node.name === "string" ? node.name : String(node.name)
       result.push(
-        <SidebarSeparator key={node.$id || name} name={name} />
+        <SidebarSeparator key={node.$id || name} name={name} isFirst={isFirstSeparator} />
       )
+      isFirstSeparator = false
     } else if (node.type === "page") {
       if (node.url === "/docs" || node.url === "/docs/components") {
         continue
