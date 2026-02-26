@@ -1,7 +1,9 @@
-import { LucideProps, Trophy } from "lucide-react"
+import { LucideProps } from "lucide-react"
+
+import { LogoIcon } from "@/components/logo"
 
 export const Icons = {
-  logo: (props: LucideProps) => <Trophy {...props} />,
+  logo: (props: LucideProps) => <LogoIcon {...props} />,
   gitHub: (props: LucideProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path

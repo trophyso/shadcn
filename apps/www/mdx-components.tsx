@@ -2,6 +2,7 @@ import * as React from "react"
 import Link from "next/link"
 
 import { cn } from "@/lib/utils"
+import { CodeBlock, InlineCode } from "@/components/code-block"
 
 export const mdxComponents = {
   h1: ({ className, ...props }: React.ComponentProps<"h1">) => (
@@ -116,34 +117,15 @@ export const mdxComponents = {
       {...props}
     />
   ),
-  pre: ({ className, children, ...props }: React.ComponentProps<"pre">) => {
-    return (
-      <pre
-        className={cn(
-          "no-scrollbar bg-muted min-w-0 overflow-x-auto rounded-lg px-4 py-3.5 outline-none",
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </pre>
-    )
+  pre: (props: React.ComponentProps<"pre"> & { "data-language"?: string }) => {
+    return <CodeBlock {...props} />
   },
   code: ({ className, ...props }: React.ComponentProps<"code">) => {
-    // Inline Code.
     if (typeof props.children === "string") {
-      return (
-        <code
-          className={cn(
-            "bg-muted relative rounded-md px-[0.3rem] py-[0.2rem] font-mono text-[0.8rem] break-words outline-none",
-            className
-          )}
-          {...props}
-        />
-      )
+      return <InlineCode className={className} {...props} />
     }
 
-    return <code {...props} />
+    return <code className={className} {...props} />
   },
   Link: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
     <Link

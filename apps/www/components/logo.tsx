@@ -88,7 +88,7 @@ export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
                 width="13"
                 height="15"
                 transform="rotate(180 28 64.75)"
-                fill="black"
+                fill="currentColor"
             />
             <rect
                 x="32"
@@ -96,7 +96,7 @@ export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
                 width="13"
                 height="13"
                 transform="rotate(180 28 49.75)"
-                fill="black"
+                fill="currentColor"
             />
             <rect
                 x="19"
@@ -104,7 +104,7 @@ export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
                 width="15"
                 height="13"
                 transform="rotate(180 15 49.75)"
-                fill="black"
+                fill="currentColor"
             />
             <rect
                 x="53.5"
@@ -112,7 +112,7 @@ export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
                 width="13"
                 height="15"
                 transform="rotate(180 49.5 43.25)"
-                fill="black"
+                fill="currentColor"
             />
             <rect
                 x="53.5"
@@ -120,7 +120,7 @@ export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
                 width="13"
                 height="13"
                 transform="rotate(180 49.5 28.25)"
-                fill="black"
+                fill="currentColor"
             />
             <rect
                 x="40.5"
@@ -128,7 +128,7 @@ export function LogoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
                 width="15"
                 height="13"
                 transform="rotate(180 36.5 28.25)"
-                fill="black"
+                fill="currentColor"
             />
         </svg>
     )
