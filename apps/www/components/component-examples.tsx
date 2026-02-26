@@ -7,6 +7,7 @@ import { StreakCalendar } from "@/registry/trophy/ui/streak-calendar"
 import { StreakFreezeIndicator } from "@/registry/trophy/ui/streak-freeze-indicator"
 import { StreakAtRisk } from "@/registry/trophy/ui/streak-at-risk"
 import { AchievementBadge } from "@/registry/trophy/ui/achievement-badge"
+import { AchievementProgress } from "@/registry/trophy/ui/achievement-progress"
 import { LeaderboardEntry } from "@/registry/trophy/ui/leaderboard-entry"
 import { UserRank } from "@/registry/trophy/ui/user-rank"
 import { PointsDisplay } from "@/registry/trophy/ui/points-display"
@@ -135,6 +136,30 @@ export const componentExamples: Record<
     description: "Complete a task before 9am",
     achievedAt: new Date().toISOString(),
   }}
+/>`,
+  },
+  "achievement-progress": {
+    component: (
+      <div className="w-full max-w-sm">
+        <AchievementProgress
+          achievement={{
+            id: "1",
+            name: "Task Master",
+            metricValue: 100,
+          }}
+          current={75}
+          target={100}
+        />
+      </div>
+    ),
+    code: `<AchievementProgress
+  achievement={{
+    id: "1",
+    name: "Task Master",
+    metricValue: 100,
+  }}
+  current={75}
+  target={100}
 />`,
   },
   "leaderboard-entry": {
