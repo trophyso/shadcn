@@ -30,7 +30,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "fumadocs-core": "15.3.1",
-    "fumadocs-mdx": "11.6.3",
+    "fumadocs-mdx": "14.2.11",
     "fumadocs-ui": "15.3.1",
     "hast-util-to-jsx-runtime": "^2.3.6",
     "lucide-react": "0.474.0",
