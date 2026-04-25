@@ -293,10 +293,6 @@
 }
 
 /* Code block styles */
-pre {
-  background-color: var(--code) !important;
-}
-
 pre code {
   display: block;
   font-family:

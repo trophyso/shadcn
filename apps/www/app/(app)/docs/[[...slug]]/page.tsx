@@ -4,6 +4,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { findNeighbour } from "fumadocs-core/server"
 
 import { mdxComponents } from "@/mdx-components"
+import { DocsSidebarCta } from "@/components/docs-sidebar-cta"
+import { DocsTableOfContents } from "@/components/docs-toc"
 import { source } from "@/lib/source"
 import { siteConfig } from "@/lib/config"
 import { Button } from "@/registry/trophy/ui/button"
@@ -149,6 +151,20 @@ export default async function DocsPage(props: {
               </Link>
             </Button>
           )}
+        </div>
+      </div>
+      <div className="sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[calc(100svh-var(--footer-height)+2rem)] w-72 flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
+        <div className="h-(--top-spacing) shrink-0" />
+        {/* @ts-expect-error - fumadocs types */}
+        {doc.toc?.length ? (
+          <div className="no-scrollbar overflow-y-auto px-8">
+            {/* @ts-expect-error - fumadocs types */}
+            <DocsTableOfContents toc={doc.toc} />
+            <div className="h-12" />
+          </div>
+        ) : null}
+        <div className="flex flex-1 flex-col gap-12 px-6">
+          <DocsSidebarCta />
         </div>
       </div>
     </div>

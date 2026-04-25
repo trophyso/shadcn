@@ -7,6 +7,7 @@ import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { MobileNav } from "@/components/mobile-nav"
 import { ModeSwitcher } from "@/components/mode-switcher"
+import { CommandMenu } from "@/components/command-menu"
 import { Button } from "@/registry/trophy/ui/button"
 import { Separator } from "@/registry/trophy/ui/separator"
 
@@ -35,6 +36,7 @@ export function SiteHeader() {
           </Button>
           <MainNav items={siteConfig.navItems} className="hidden lg:flex" />
           <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
+            <CommandMenu tree={pageTree} navItems={siteConfig.navItems} />
             <Separator
               orientation="vertical"
               className="ml-2 hidden lg:block"

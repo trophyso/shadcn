@@ -24,9 +24,9 @@ function SidebarLink({
     <Link
       href={href}
       className={cn(
-        "text-muted-foreground hover:text-foreground block rounded-md px-3 py-1.5 text-sm transition-colors",
+        "text-foreground block rounded-md px-3 py-1.5 text-[0.8rem] transition-colors hover:bg-primary/10 text-primary font-medium",
         isActive &&
-          "bg-primary/10 text-primary font-medium"
+        "bg-primary/10 text-primary font-medium"
       )}
     >
       {children}
@@ -54,7 +54,7 @@ function SidebarSection({
 }) {
   return (
     <div className="flex flex-col">
-      <h4 className="text-muted-foreground mb-2 px-3 text-xs font-medium uppercase tracking-wider">
+      <h4 className="text-muted-foreground mb-2 px-3 text-xs font-medium tracking-wider">
         {title}
       </h4>
       <div className="flex flex-col gap-0.5">{children}</div>
@@ -108,7 +108,7 @@ export function DocsSidebar({ tree }: { tree: PageTree }) {
     >
       <SidebarContent className="no-scrollbar overflow-x-hidden px-2 pb-12">
         <div className="h-(--top-spacing) shrink-0" />
-        <nav className="flex flex-col gap-1 px-1">
+        <nav className="flex flex-col gap-8 px-1">
           <SidebarSection title="Getting Started">
             <SidebarLink href="/docs" isActive={pathname === "/docs"}>
               Introduction
@@ -121,14 +121,9 @@ export function DocsSidebar({ tree }: { tree: PageTree }) {
             </SidebarLink>
           </SidebarSection>
 
-          <div className="mt-6">
-            <h4 className="text-muted-foreground mb-2 px-3 text-xs font-medium uppercase tracking-wider">
-              Components
-            </h4>
-            <div className="flex flex-col gap-0.5">
-              {renderNodes(tree.children, pathname)}
-            </div>
-          </div>
+          <SidebarSection title="Components">
+            {renderNodes(tree.children, pathname)}
+          </SidebarSection>
         </nav>
       </SidebarContent>
     </Sidebar>
