@@ -1,6 +1,4 @@
 import Link from "next/link"
-
-import { siteConfig } from "@/lib/config"
 import { cn } from "@/lib/utils"
 import { Button } from "@/registry/trophy/ui/button"
 
@@ -24,7 +22,7 @@ export function DocsSidebarCta({ className }: React.ComponentProps<"div">) {
         Get Started
       </Button>
       <Link
-        href={siteConfig.links.github}
+        href="https://trophy.so?utm_source=trophy-ui&utm_medium=docs-sidebar-cta"
         target="_blank"
         rel="noreferrer"
         className="absolute inset-0 z-20"

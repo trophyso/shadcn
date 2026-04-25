@@ -27,7 +27,6 @@ Before using Trophy UI, ensure your project meets these requirements:
 - **Achievements**: achievement-badge, achievement-grid, achievement-unlocked, achievement-progress
 - **Leaderboards**: leaderboard, leaderboard-entry, leaderboard-podium, user-rank
 - **Points**: points-display, points-animation
-- **Core**: trophy-provider
 
 ## License
 

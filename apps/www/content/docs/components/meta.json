@@ -14,7 +14,6 @@
     "leaderboard-podium",
     "user-rank",
     "points-display",
-    "points-animation",
-    "trophy-provider"
+    "points-animation"
   ]
 }
