@@ -1,7 +1,5 @@
 import { Metadata } from "next"
 import Link from "next/link"
-
-import { siteConfig } from "@/lib/config"
 import {
   PageActions,
   PageHeader,
@@ -73,24 +71,6 @@ export default function IndexPage() {
             </Button>
           </PageActions>
         </PageHeader>
-      </div>
-      <div className="container-wrapper section-soft flex-1 pb-6">
-        <div className="container overflow-hidden">
-          <section className="py-8 text-center">
-            <h2 className="text-2xl font-semibold mb-4">Gamification Components</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Streaks, achievements, leaderboards, and points — all the components you need 
-              to build engaging gamification experiences. Built on top of{" "}
-              <a href="https://ui.shadcn.com" className="underline underline-offset-4" target="_blank" rel="noreferrer">
-                shadcn/ui
-              </a>{" "}
-              and designed to work with the{" "}
-              <a href="https://trophy.so" className="underline underline-offset-4" target="_blank" rel="noreferrer">
-                Trophy API
-              </a>.
-            </p>
-          </section>
-        </div>
       </div>
     </div>
   )
