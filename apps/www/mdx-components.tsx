@@ -3,7 +3,15 @@ import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 import { CodeBlock, InlineCode } from "@/components/code-block"
+import { CodeTabs } from "@/components/code-tabs"
 import { ComponentPreviewWrapper } from "@/components/component-preview-wrapper"
+import { ComponentSource } from "@/components/component-source"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/registry/trophy/ui/tabs"
 
 export const mdxComponents = {
   h1: ({ className, ...props }: React.ComponentProps<"h1">) => (
@@ -134,7 +142,66 @@ export const mdxComponents = {
       {...props}
     />
   ),
+  Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
+    <h3
+      className={cn(
+        "mt-8 scroll-m-32 text-xl font-medium tracking-tight",
+        className
+      )}
+      {...props}
+    />
+  ),
+  Steps: ({ ...props }: React.ComponentProps<"div">) => (
+    <div
+      className="[&>h3]:step steps mb-12 [counter-reset:step] *:[h3]:first:!mt-0"
+      {...props}
+    />
+  ),
+  Tabs: ({ className, ...props }: React.ComponentProps<typeof Tabs>) => (
+    <Tabs className={cn("relative mt-6 w-full", className)} {...props} />
+  ),
+  TabsList: ({
+    className,
+    ...props
+  }: React.ComponentProps<typeof TabsList>) => (
+    <TabsList
+      className={cn(
+        "justify-start gap-4 rounded-none bg-transparent px-0",
+        className
+      )}
+      {...props}
+    />
+  ),
+  TabsTrigger: ({
+    className,
+    ...props
+  }: React.ComponentProps<typeof TabsTrigger>) => (
+    <TabsTrigger
+      className={cn(
+        "text-muted-foreground data-[state=active]:text-foreground data-[state=active]:border-primary hover:text-primary rounded-none border-0 border-b-2 border-transparent bg-transparent px-0 pb-3 text-base data-[state=active]:bg-transparent data-[state=active]:shadow-none",
+        className
+      )}
+      {...props}
+    />
+  ),
+  TabsContent: ({
+    className,
+    ...props
+  }: React.ComponentProps<typeof TabsContent>) => (
+    <TabsContent
+      className={cn(
+        "relative [&_h3]:text-base [&_h3]:font-medium [&>.steps]:mt-6",
+        className
+      )}
+      {...props}
+    />
+  ),
+  Tab: ({ className, ...props }: React.ComponentProps<"div">) => (
+    <div className={cn(className)} {...props} />
+  ),
+  CodeTabs,
   ComponentPreview: ({ name }: { name: string }) => (
     <ComponentPreviewWrapper name={name} />
   ),
+  ComponentSource,
 }

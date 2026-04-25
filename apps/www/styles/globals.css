@@ -189,6 +189,16 @@
   @apply bg-surface/40;
 }
 
+@utility step {
+  counter-increment: step;
+  @apply relative;
+
+  &:before {
+    content: counter(step);
+    @apply text-muted-foreground right-0 mr-2 hidden size-7 items-center justify-center rounded-full text-center -indent-px font-mono text-sm font-medium md:absolute;
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -309,4 +319,24 @@ pre code span {
 
 .dark pre code span {
   color: var(--shiki-dark) !important;
+}
+
+@layer components {
+  .steps {
+    &:first-child {
+      @apply !mt-0;
+    }
+
+    &:first-child > h3:first-child {
+      @apply !mt-0;
+    }
+
+    > h3 {
+      @apply !mt-16;
+    }
+
+    > h3 + p {
+      @apply !mt-2;
+    }
+  }
 }

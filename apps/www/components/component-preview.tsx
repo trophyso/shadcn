@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { Code2, Eye } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { CodeBlock } from "@/components/code-block"
@@ -35,9 +34,8 @@ export function ComponentPreview({
             variant={view === "preview" ? "secondary" : "ghost"}
             size="sm"
             onClick={() => setView("preview")}
-            className="h-7 gap-1.5 px-2.5 text-xs"
+            className="h-7 px-2.5 text-xs"
           >
-            <Eye className="h-3.5 w-3.5" />
             Preview
           </Button>
           {code && (
@@ -45,9 +43,8 @@ export function ComponentPreview({
               variant={view === "code" ? "secondary" : "ghost"}
               size="sm"
               onClick={() => setView("code")}
-              className="h-7 gap-1.5 px-2.5 text-xs"
+              className="h-7 px-2.5 text-xs"
             >
-              <Code2 className="h-3.5 w-3.5" />
               Code
             </Button>
           )}

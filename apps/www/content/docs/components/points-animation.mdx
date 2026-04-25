@@ -3,13 +3,18 @@ title: Points Animation
 description: Animated floating text for displaying point gains with multiple animation styles.
 ---
 
-# Points Animation
-
-An animated component for displaying point gains with floating, popping, or sliding effects. Includes a container component for managing multiple animations.
-
 <ComponentPreview name="points-animation" />
 
 ## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
 
 ```bash
 npx shadcn@latest add https://ui.trophy.so/r/points-animation.json
@@ -34,6 +39,24 @@ Add the required keyframes to your CSS:
   100% { opacity: 0; transform: translateX(30px); }
 }
 ```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="points-animation" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
 
 ## Usage
 
