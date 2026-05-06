@@ -3,6 +3,8 @@ title: Achievement Unlocked
 description: A celebratory modal dialog for announcing newly unlocked achievements with animations and optional sharing.
 ---
 
+<ComponentPreview name="achievement-unlocked" />
+
 ## Installation
 
 <CodeTabs>
@@ -200,23 +202,3 @@ interface Achievement {
   badgeUrl?: string | null
 }
 ```
-
-## Features
-
-- **Animated entrance** - Smooth fade and zoom animation on open
-- **Glowing badge** - Pulsing glow effect around the achievement badge
-- **Focus management** - Auto-focuses the "Awesome!" button
-- **Escape to close** - Press Escape key to dismiss
-- **Click outside** - Click backdrop to close
-- **Body scroll lock** - Prevents background scrolling when open
-- **Reduced motion** - Respects `prefers-reduced-motion` preference
-
-## Accessibility
-
-- Uses `role="dialog"` with `aria-modal="true"`
-- Dialog title linked via `aria-labelledby`
-- Close button has `aria-label="Close"`
-- Decorative badge/icon marked `aria-hidden`
-- Escape key closes dialog
-- Focus trapped within dialog while open
-- Auto-focus on primary action button

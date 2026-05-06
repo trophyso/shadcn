@@ -8,7 +8,11 @@ import { StreakFreezeIndicator } from "@/registry/trophy/ui/streak-freeze-indica
 import { StreakAtRisk } from "@/registry/trophy/ui/streak-at-risk"
 import { AchievementBadge } from "@/registry/trophy/ui/achievement-badge"
 import { AchievementProgress } from "@/registry/trophy/ui/achievement-progress"
+import { AchievementGrid } from "@/registry/trophy/ui/achievement-grid"
+import { AchievementUnlocked } from "@/registry/trophy/ui/achievement-unlocked"
 import { LeaderboardEntry } from "@/registry/trophy/ui/leaderboard-entry"
+import { Leaderboard } from "@/registry/trophy/ui/leaderboard"
+import { LeaderboardPodium } from "@/registry/trophy/ui/leaderboard-podium"
 import { UserRank } from "@/registry/trophy/ui/user-rank"
 import { PointsDisplay } from "@/registry/trophy/ui/points-display"
 import { PointsAnimation } from "@/registry/trophy/ui/points-animation"
@@ -180,6 +184,65 @@ export const componentExamples: Record<
   currentValue={75}
 />`,
   },
+  "achievement-grid": {
+    component: (
+      <div className="w-full max-w-3xl">
+        <AchievementGrid
+          achievements={[
+            {
+              id: "1",
+              name: "Early Bird",
+              trigger: "api",
+              achievedAt: new Date().toISOString(),
+            },
+            {
+              id: "2",
+              name: "First Steps",
+              trigger: "streak",
+              achievedAt: null,
+            },
+            {
+              id: "3",
+              name: "Task Master",
+              trigger: "metric",
+              achievedAt: new Date().toISOString(),
+            },
+          ]}
+          columns={3}
+        />
+      </div>
+    ),
+    code: `<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: null },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  columns={3}
+/>`,
+  },
+  "achievement-unlocked": {
+    component: (
+      <AchievementUnlocked
+        achievement={{
+          id: "first-win",
+          name: "First Win",
+          description: "Complete your first challenge",
+        }}
+        open
+        onOpenChange={() => {}}
+      />
+    ),
+    code: `<AchievementUnlocked
+  achievement={{
+    id: "first-win",
+    name: "First Win",
+    description: "Complete your first challenge",
+  }}
+  open
+  onOpenChange={() => {}}
+/>`,
+  },
   "leaderboard-entry": {
     component: (
       <div className="flex w-full max-w-md flex-col gap-2">
@@ -216,6 +279,44 @@ export const componentExamples: Record<
     code: `<LeaderboardEntry
   ranking={ranking}
   isCurrentUser
+/>`,
+  },
+  leaderboard: {
+    component: (
+      <div className="w-full max-w-2xl">
+        <Leaderboard
+          rankings={[
+            { userId: "1", userName: "Alice", rank: 1, value: 1250 },
+            { userId: "2", userName: "Bob", rank: 2, value: 1100 },
+            { userId: "3", userName: "Charlie", rank: 3, value: 980 },
+          ]}
+        />
+      </div>
+    ),
+    code: `<Leaderboard
+  rankings={[
+    { userId: "1", userName: "Alice", rank: 1, value: 1250 },
+    { userId: "2", userName: "Bob", rank: 2, value: 1100 },
+    { userId: "3", userName: "Charlie", rank: 3, value: 980 },
+  ]}
+/>`,
+  },
+  "leaderboard-podium": {
+    component: (
+      <LeaderboardPodium
+        rankings={[
+          { userId: "1", userName: "Alice", rank: 1, value: 1250 },
+          { userId: "2", userName: "Bob", rank: 2, value: 1100 },
+          { userId: "3", userName: "Charlie", rank: 3, value: 980 },
+        ]}
+      />
+    ),
+    code: `<LeaderboardPodium
+  rankings={[
+    { userId: "1", userName: "Alice", rank: 1, value: 1250 },
+    { userId: "2", userName: "Bob", rank: 2, value: 1100 },
+    { userId: "3", userName: "Charlie", rank: 3, value: 980 },
+  ]}
 />`,
   },
   "user-rank": {

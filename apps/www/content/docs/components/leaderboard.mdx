@@ -3,6 +3,8 @@ title: Leaderboard
 description: A full-featured leaderboard component for displaying user rankings with medals, avatars, and multiple layout variants.
 ---
 
+<ComponentPreview name="leaderboard" />
+
 ## Installation
 
 <CodeTabs>
@@ -225,21 +227,3 @@ interface LeaderboardResponse {
   rankings: LeaderboardRanking[]
 }
 ```
-
-## Features
-
-- **Rank medals** - Crown for 1st, silver medal for 2nd, bronze for 3rd
-- **Avatar initials** - Auto-generated from username
-- **Current user highlight** - Visual emphasis with "(you)" label
-- **Limit with indicator** - Shows "+X more" when truncated
-- **Formatted numbers** - Locale-aware number formatting
-- **Clickable rows** - Full keyboard and mouse support
-
-## Accessibility
-
-- Uses `role="list"` with `aria-label="Leaderboard rankings"`
-- Each entry uses `role="listitem"` with descriptive `aria-label`
-- Clickable rows are keyboard accessible (Enter/Space)
-- Rank icons and avatars marked `aria-hidden` (decorative)
-- Table header marked `aria-hidden` (info repeated in item labels)
-- Numbers formatted with `toLocaleString()` for screen readers

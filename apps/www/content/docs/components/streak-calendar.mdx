@@ -102,20 +102,3 @@ interface StreakPeriod {
   usedFreeze?: boolean
 }
 ```
-
-## Visual States
-
-| State | Appearance |
-|-------|------------|
-| Active day | Orange background |
-| Freeze used | Blue background with snowflake icon |
-| Today | Ring outline |
-| Future | Muted, disabled |
-| Inactive | Default background |
-
-## Accessibility
-
-- Uses `role="grid"` with proper grid semantics
-- Column headers with `role="columnheader"`
-- Each day has descriptive `aria-label` with date and status
-- Today marked with `aria-current="date"`

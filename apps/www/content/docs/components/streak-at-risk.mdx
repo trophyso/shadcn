@@ -110,17 +110,3 @@ interface StreakResponse {
   expires: string | null
 }
 ```
-
-## Visual States
-
-| State | Condition | Appearance |
-|-------|-----------|------------|
-| Warning | 2-6 hours remaining | Yellow/amber styling |
-| Critical | < 2 hours remaining | Red styling |
-| Hidden | > 6 hours remaining | Not displayed |
-
-## Accessibility
-
-- Uses `role="alert"` for important announcements
-- Clear, actionable messaging
-- Dismissible with keyboard

@@ -3,6 +3,8 @@ title: Leaderboard Podium
 description: A visual podium display for the top 3 ranked users with medals, avatars, and animated entrance.
 ---
 
+<ComponentPreview name="leaderboard-podium" />
+
 ## Installation
 
 <CodeTabs>
@@ -193,20 +195,3 @@ interface LeaderboardRanking {
   value: number
 }
 ```
-
-## Features
-
-- **Podium layout** - Classic 2nd-1st-3rd arrangement with height differences
-- **Medal colors** - Gold crown for 1st, silver medal for 2nd, bronze for 3rd
-- **Animated entrance** - Staggered fade-in from bottom (1st appears first)
-- **Flexible sizing** - Three size options for different contexts
-- **Partial support** - Works with 1, 2, or 3 users
-- **Reduced motion** - Respects `prefers-reduced-motion`
-
-## Accessibility
-
-- Container uses `role="list"` with `aria-label="Top 3 rankings"`
-- Each position uses `role="listitem"` with descriptive `aria-label`
-- Avatars, medals, and podium blocks marked `aria-hidden` (decorative)
-- Numbers formatted with `toLocaleString()` for screen readers
-- Animations respect `prefers-reduced-motion` media query

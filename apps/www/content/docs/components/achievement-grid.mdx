@@ -3,6 +3,8 @@ title: Achievement Grid
 description: A responsive grid layout for displaying collections of achievements with filtering, sorting, and customizable badge styles.
 ---
 
+<ComponentPreview name="achievement-grid" />
+
 ## Installation
 
 <CodeTabs>
@@ -216,13 +218,3 @@ interface UserAchievement extends Achievement {
   achievedAt: string | null // null = locked
 }
 ```
-
-## Accessibility
-
-- Grid uses `role="list"` with `aria-label="Achievements"`
-- Each item uses `role="listitem"` (or `role="button"` when clickable)
-- Clickable items include `aria-label` with achievement name and status
-- Keyboard navigation with Enter/Space to activate clickable items
-- Badge images include descriptive `alt` text with earned/locked status
-- Decorative icons marked `aria-hidden`
-- Default empty states announce context-appropriate messages
