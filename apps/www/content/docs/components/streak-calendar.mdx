@@ -46,14 +46,6 @@ Import the component:
 import { StreakCalendar } from "@/components/ui/streak-calendar"
 ```
 
-With Trophy API data:
-
-```tsx
-const streak = await trophy.streaks.get({ userId: "user_123" })
-
-<StreakCalendar streak={streak} />
-```
-
 ## Examples
 
 ### Specific Month
@@ -83,7 +75,7 @@ const streak = await trophy.streaks.get({ userId: "user_123" })
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `streak` | `StreakResponse` | Required | Trophy API streak response with history |
+| `streak` | `StreakResponse` | Required | Streak data with history |
 | `month` | `Date` | Current month | Month to display |
 | `showFreezes` | `boolean` | `true` | Show freeze indicators on days |
 | `startOfWeek` | `0 \| 1` | `0` | Week start: 0 = Sunday, 1 = Monday |

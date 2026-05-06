@@ -34,39 +34,6 @@
       ]
     },
     {
-      "name": "streak-freeze-indicator",
-      "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "lucide-react"],
-      "files": [
-        {
-          "path": "registry/trophy/ui/streak-freeze-indicator.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "streak-at-risk",
-      "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "lucide-react"],
-      "files": [
-        {
-          "path": "registry/trophy/ui/streak-at-risk.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "achievement-badge",
-      "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "lucide-react"],
-      "files": [
-        {
-          "path": "registry/trophy/ui/achievement-badge.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
       "name": "achievement-grid",
       "type": "registry:ui",
       "dependencies": ["class-variance-authority", "lucide-react"],
@@ -106,17 +73,6 @@
       "files": [
         {
           "path": "registry/trophy/ui/leaderboard.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "leaderboard-entry",
-      "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "lucide-react"],
-      "files": [
-        {
-          "path": "registry/trophy/ui/leaderboard-entry.tsx",
           "type": "registry:ui"
         }
       ]

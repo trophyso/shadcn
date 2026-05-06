@@ -144,7 +144,7 @@ export function CommandMenu({
       </DialogTrigger>
       <DialogContent
         showCloseButton={false}
-        className="rounded-xl border-none bg-clip-padding p-2 pb-11 shadow-2xl ring-4 ring-neutral-200/80 dark:bg-neutral-900 dark:ring-neutral-800"
+        className="rounded-xl border-none bg-clip-padding p-2 pb-11 shadow-2xl ring-4 ring-border/80 bg-popover"
       >
         <DialogHeader className="sr-only">
           <DialogTitle>Search documentation...</DialogTitle>

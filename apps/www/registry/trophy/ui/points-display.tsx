@@ -73,8 +73,6 @@ interface PointsDisplayProps
   showName?: boolean;
   /** Show recent awards count */
   showRecentAwards?: number;
-  /** Animate on change */
-  animated?: boolean;
   /** Custom formatter for points value */
   formatValue?: (value: number) => string;
 }
@@ -91,7 +89,6 @@ const PointsDisplay = React.forwardRef<HTMLDivElement, PointsDisplayProps>(
       showBadge = true,
       showName = true,
       showRecentAwards,
-      animated = false,
       formatValue,
       ...props
     },
@@ -154,7 +151,6 @@ const PointsDisplay = React.forwardRef<HTMLDivElement, PointsDisplayProps>(
             <span
               className={cn(
                 "font-bold tabular-nums",
-                animated && "transition-all duration-300",
                 size === "lg" && "text-2xl",
                 size === "sm" && "text-base",
                 size === "default" && "text-xl",
@@ -177,7 +173,7 @@ const PointsDisplay = React.forwardRef<HTMLDivElement, PointsDisplayProps>(
                   key={award.id}
                   className="inline-flex items-center gap-1 text-xs text-muted-foreground"
                 >
-                  <span className="text-green-500">+{award.awarded}</span>
+                  <span className="text-success">+{award.awarded}</span>
                   {award.trigger?.metricName && (
                     <span className="truncate max-w-[100px]">
                       {award.trigger.metricName}

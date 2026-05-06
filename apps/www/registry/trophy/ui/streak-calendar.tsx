@@ -186,13 +186,13 @@ const StreakCalendar = React.forwardRef<HTMLDivElement, StreakCalendarProps>(
                   isFuture && "text-muted-foreground/50 cursor-not-allowed",
                   isActive &&
                     !usedFreeze &&
-                    "bg-orange-500 text-white hover:bg-orange-600",
-                  usedFreeze && "bg-blue-500 text-white hover:bg-blue-600",
+                    "bg-warning text-warning-foreground hover:bg-warning/90",
+                  usedFreeze && "bg-info text-info-foreground hover:bg-info/90",
                 )}
               >
                 {day}
                 {usedFreeze && (
-                  <Snowflake className="absolute -top-1 -right-1 h-3 w-3 text-blue-200" />
+                  <Snowflake className="absolute -top-1 -right-1 h-3 w-3 text-info-foreground/80" />
                 )}
               </button>
             );
@@ -206,12 +206,12 @@ const StreakCalendar = React.forwardRef<HTMLDivElement, StreakCalendarProps>(
           className="mt-4 flex items-center justify-center gap-4 text-xs text-muted-foreground"
         >
           <div className="flex items-center gap-1">
-            <div className="h-3 w-3 rounded bg-orange-500" aria-hidden="true" />
+            <div className="h-3 w-3 rounded bg-warning" aria-hidden="true" />
             <span>Active</span>
           </div>
           {showFreezes && (
             <div className="flex items-center gap-1">
-              <div className="h-3 w-3 rounded bg-blue-500" aria-hidden="true" />
+              <div className="h-3 w-3 rounded bg-info" aria-hidden="true" />
               <span>Freeze used</span>
             </div>
           )}

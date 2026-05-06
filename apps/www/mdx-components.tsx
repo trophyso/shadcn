@@ -6,6 +6,7 @@ import { CodeBlock, InlineCode } from "@/components/code-block"
 import { CodeTabs } from "@/components/code-tabs"
 import { ComponentPreviewWrapper } from "@/components/component-preview-wrapper"
 import { ComponentSource } from "@/components/component-source"
+import { ThemeSource } from "@/components/theme-source"
 import {
   Tabs,
   TabsContent,
@@ -204,4 +205,5 @@ export const mdxComponents = {
     <ComponentPreviewWrapper name={name} />
   ),
   ComponentSource,
+  ThemeSource,
 }

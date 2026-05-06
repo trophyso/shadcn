@@ -1,0 +1,27 @@
+---
+title: Styling Standards
+description: Token and theming standards for keeping Trophy UI unopinionated.
+---
+
+Trophy UI components are themeable and unopinionated by default. Component styles are built on semantic tokens, not fixed palette classes, so they remain portable across customer design systems.
+
+## Core Standards
+
+- Components use semantic Tailwind aliases like `bg-primary`, `text-muted-foreground`, and `border-border`.
+- Semantic aliases are backed by CSS custom properties so users can theme globally.
+- Component defaults do not hardcode color palette classes (for example `purple-500`, `orange-500`, `black/80`).
+- Brand and gamification color treatments stay behind tokens (`achievement`, `rank-1`, `warning`, `success`) rather than fixed color values.
+- Every foreground token is paired with a matching `-foreground` token for accessibility and contrast control.
+
+## Token Groups We Use
+
+- **Core surface tokens**: `background`, `foreground`, `card`, `popover`, `border`, `input`, `ring`
+- **Action tokens**: `primary`, `secondary`, `accent`, `destructive`
+- **Feedback tokens**: `success`, `warning`, `info`
+- **Gamification tokens**: `achievement`, `rank-1`, `rank-2`, `rank-3`
+
+## Minimal Default Theme
+
+This repository includes a copyable minimal theme starter at `apps/www/content/themes/trophy-minimal-theme.css`.
+
+<ThemeSource name="trophy-minimal-theme" />

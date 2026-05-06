@@ -87,8 +87,8 @@ export function CodeBlock({
           >
             {copied ? (
               <>
-                <Check className="h-3 w-3 text-green-500" />
-                <span className="text-green-500">Copied</span>
+                <Check className="h-3 w-3 text-success" />
+                <span className="text-success">Copied</span>
               </>
             ) : (
               <>
@@ -108,7 +108,7 @@ export function CodeBlock({
           aria-label={copied ? "Copied" : "Copy code"}
         >
           {copied ? (
-            <Check className="h-3.5 w-3.5 text-green-500" />
+            <Check className="h-3.5 w-3.5 text-success" />
           ) : (
             <Copy className="h-3.5 w-3.5 text-muted-foreground" />
           )}

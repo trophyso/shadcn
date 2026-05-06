@@ -221,7 +221,7 @@ const AchievementGrid = React.forwardRef<HTMLDivElement, AchievementGridProps>(
                     imageSize,
                     "flex items-center justify-center rounded-full",
                     isUnlocked
-                      ? "bg-purple-500 text-white"
+                      ? "bg-achievement text-achievement-foreground"
                       : "bg-muted text-muted-foreground",
                   )}
                 >

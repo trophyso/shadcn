@@ -77,7 +77,7 @@ function renderNodes(
       )
       isFirstSeparator = false
     } else if (node.type === "page") {
-      if (node.url === "/docs" || node.url === "/docs/components") {
+      if (!node.url.startsWith("/docs/components/")) {
         continue
       }
       const nodeName = typeof node.name === "string" ? node.name : String(node.name)
@@ -114,10 +114,10 @@ export function DocsSidebar({ tree }: { tree: PageTree }) {
               Introduction
             </SidebarLink>
             <SidebarLink
-              href="/docs/components"
-              isActive={pathname === "/docs/components"}
+              href="/docs/styling-standards"
+              isActive={pathname === "/docs/styling-standards"}
             >
-              Components
+              Styling Standards
             </SidebarLink>
           </SidebarSection>
 

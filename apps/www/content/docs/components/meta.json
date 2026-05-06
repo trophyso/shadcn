@@ -3,17 +3,11 @@
   "pages": [
     "streak-badge",
     "streak-calendar",
-    "streak-freeze-indicator",
-    "streak-at-risk",
-    "achievement-badge",
     "achievement-grid",
     "achievement-unlocked",
     "achievement-progress",
     "leaderboard",
-    "leaderboard-entry",
     "leaderboard-podium",
-    "user-rank",
-    "points-display",
-    "points-animation"
+    "points-display"
   ]
 }

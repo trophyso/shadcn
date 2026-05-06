@@ -63,7 +63,7 @@ const AchievementUnlocked = React.forwardRef<
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-50 bg-black/80 motion-safe:animate-in motion-safe:fade-in-0"
+        className="fixed inset-0 z-50 bg-foreground/80"
         onClick={() => onOpenChange(false)}
         aria-hidden="true"
       />
@@ -77,7 +77,6 @@ const AchievementUnlocked = React.forwardRef<
         className={cn(
           "fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2",
           "w-full max-w-md rounded-xl bg-card p-6 shadow-2xl",
-          "motion-safe:animate-in motion-safe:fade-in-0 motion-safe:zoom-in-95",
           className,
         )}
       >
@@ -94,23 +93,22 @@ const AchievementUnlocked = React.forwardRef<
         {/* Content */}
         <div className="flex flex-col items-center text-center">
           {/* Celebration text */}
-          <span className="mb-4 text-sm font-medium uppercase tracking-wider text-purple-500">
+          <span className="mb-4 text-sm font-medium uppercase tracking-wider text-achievement">
             Achievement Unlocked!
           </span>
 
           {/* Badge */}
           <div className="relative mb-6" aria-hidden="true">
-            {/* Glow effect */}
-            <div className="absolute inset-0 rounded-full bg-purple-500/30 blur-xl motion-safe:animate-pulse" />
+            <div className="absolute inset-0 rounded-full bg-achievement/30 blur-xl" />
 
             {achievement.badgeUrl ? (
               <img
                 src={achievement.badgeUrl}
                 alt=""
-                className="relative h-32 w-32 rounded-full object-cover ring-4 ring-purple-500/50"
+                className="relative h-32 w-32 rounded-full object-cover ring-4 ring-achievement/50"
               />
             ) : (
-              <div className="relative flex h-32 w-32 items-center justify-center rounded-full bg-purple-500 text-white ring-4 ring-purple-500/50">
+              <div className="relative flex h-32 w-32 items-center justify-center rounded-full bg-achievement text-achievement-foreground ring-4 ring-achievement/50">
                 <Trophy className="h-16 w-16" />
               </div>
             )}

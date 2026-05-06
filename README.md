@@ -23,10 +23,10 @@ Before using Trophy UI, ensure your project meets these requirements:
 
 ## Available Components
 
-- **Streaks**: streak-badge, streak-calendar, streak-freeze-indicator, streak-at-risk
-- **Achievements**: achievement-badge, achievement-grid, achievement-unlocked, achievement-progress
-- **Leaderboards**: leaderboard, leaderboard-entry, leaderboard-podium, user-rank
-- **Points**: points-display, points-animation
+- **Streaks**: streak-badge, streak-calendar
+- **Achievements**: achievement-grid, achievement-unlocked, achievement-progress
+- **Leaderboards**: leaderboard, leaderboard-podium
+- **Points**: points-display
 
 ## License
 

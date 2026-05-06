@@ -32,27 +32,27 @@ const podiumVariants = cva("flex items-end justify-center gap-2", {
 const PODIUM_CONFIG = {
   1: {
     icon: Crown,
-    color: "text-yellow-500",
-    bg: "bg-yellow-500/10",
-    ringColor: "ring-yellow-500/50",
+    color: "text-rank-1",
+    bg: "bg-rank-1/10",
+    ringColor: "ring-rank-1/50",
     height: "h-32",
     heightSm: "h-24",
     heightLg: "h-40",
   },
   2: {
     icon: Medal,
-    color: "text-gray-400",
-    bg: "bg-gray-400/10",
-    ringColor: "ring-gray-400/50",
+    color: "text-rank-2",
+    bg: "bg-rank-2/10",
+    ringColor: "ring-rank-2/50",
     height: "h-24",
     heightSm: "h-20",
     heightLg: "h-32",
   },
   3: {
     icon: Medal,
-    color: "text-amber-600",
-    bg: "bg-amber-600/10",
-    ringColor: "ring-amber-600/50",
+    color: "text-rank-3",
+    bg: "bg-rank-3/10",
+    ringColor: "ring-rank-3/50",
     height: "h-20",
     heightSm: "h-16",
     heightLg: "h-28",
@@ -70,8 +70,6 @@ interface LeaderboardPodiumProps
   showValue?: boolean;
   /** Show avatar */
   showAvatar?: boolean;
-  /** Animate entrance */
-  animated?: boolean;
   /** Medal style variant */
   medalStyle?: "classic" | "modern" | "minimal";
 }
@@ -87,7 +85,6 @@ const LeaderboardPodium = React.forwardRef<
       rankings,
       showValue = true,
       showAvatar = true,
-      animated = true,
       medalStyle = "classic",
       ...props
     },
@@ -131,7 +128,7 @@ const LeaderboardPodium = React.forwardRef<
         aria-label="Top 3 rankings"
         {...props}
       >
-        {podiumOrder.map((ranking, index) => {
+        {podiumOrder.map((ranking) => {
           const config = PODIUM_CONFIG[ranking.rank as 1 | 2 | 3];
           if (!config) return null;
 
@@ -150,14 +147,7 @@ const LeaderboardPodium = React.forwardRef<
               key={ranking.userId}
               role="listitem"
               aria-label={itemLabel}
-              className={cn(
-                "flex flex-col items-center",
-                animated &&
-                  "motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-4",
-                animated && index === 0 && "motion-safe:delay-100",
-                animated && index === 1 && "motion-safe:delay-0",
-                animated && index === 2 && "motion-safe:delay-200",
-              )}
+              className="flex flex-col items-center"
             >
               {/* Avatar with medal */}
               <div className="relative mb-2" aria-hidden="true">

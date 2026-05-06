@@ -46,14 +46,6 @@ Import the component:
 import { PointsDisplay } from "@/components/ui/points-display"
 ```
 
-With Trophy API data:
-
-```tsx
-const points = await trophy.points.get({ userId: "user_123" })
-
-<PointsDisplay points={points} />
-```
-
 ## Examples
 
 ### Sizes
@@ -80,7 +72,7 @@ Built-in icon presets for different point types.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `points` | `PointsResponse` | Required | Points data from Trophy API |
+| `points` | `PointsResponse` | Required | Points data object |
 | `variant` | `"default" \| "minimal" \| "highlight" \| "inline"` | `"default"` | Visual style |
 | `size` | `"sm" \| "default" \| "lg"` | `"default"` | Component size |
 | `iconType` | `"xp" \| "points" \| "credits" \| "default"` | `"default"` | Built-in icon preset |

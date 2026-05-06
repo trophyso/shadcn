@@ -31,13 +31,11 @@ const achievementProgressVariants = cva("w-full", {
   },
 });
 
-const progressBarVariants = cva(
-  "h-full rounded-full transition-all duration-500 ease-out",
-  {
+const progressBarVariants = cva("h-full rounded-full", {
     variants: {
       variant: {
-        default: "bg-purple-500",
-        gradient: "bg-gradient-to-r from-purple-500 to-pink-500",
+        default: "bg-achievement",
+        gradient: "bg-gradient-to-r from-achievement to-primary",
       },
     },
     defaultVariants: {
@@ -61,8 +59,6 @@ interface AchievementProgressProps
   showPercentage?: boolean;
   /** Show achievement name */
   showName?: boolean;
-  /** Animate the progress bar */
-  animate?: boolean;
 }
 
 const AchievementProgress = React.forwardRef<
@@ -79,7 +75,6 @@ const AchievementProgress = React.forwardRef<
       showValue = true,
       showPercentage = false,
       showName = false,
-      animate = true,
       ...props
     },
     ref,
@@ -100,23 +95,6 @@ const AchievementProgress = React.forwardRef<
       default: "text-sm",
       lg: "text-base",
     }[size ?? "default"];
-
-    // For animation, start at 0 and animate to actual value
-    const [displayProgress, setDisplayProgress] = React.useState(
-      animate ? 0 : progress,
-    );
-
-    React.useEffect(() => {
-      if (animate) {
-        // Small delay to ensure the animation is visible
-        const timeout = setTimeout(() => {
-          setDisplayProgress(progress);
-        }, 100);
-        return () => clearTimeout(timeout);
-      } else {
-        setDisplayProgress(progress);
-      }
-    }, [progress, animate]);
 
     return (
       <div
@@ -161,9 +139,9 @@ const AchievementProgress = React.forwardRef<
           <div
             className={cn(
               progressBarVariants({ variant }),
-              isComplete && "bg-green-500",
+              isComplete && "bg-success",
             )}
-            style={{ width: `${displayProgress}%` }}
+            style={{ width: `${progress}%` }}
           />
         </div>
 
@@ -172,7 +150,7 @@ const AchievementProgress = React.forwardRef<
           <p
             role="status"
             aria-live="polite"
-            className={cn("text-green-600 dark:text-green-400", textSize)}
+            className={cn("text-success", textSize)}
           >
             Complete! 🎉
           </p>

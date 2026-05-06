@@ -4,18 +4,12 @@ import * as React from "react"
 
 import { StreakBadge } from "@/registry/trophy/ui/streak-badge"
 import { StreakCalendar } from "@/registry/trophy/ui/streak-calendar"
-import { StreakFreezeIndicator } from "@/registry/trophy/ui/streak-freeze-indicator"
-import { StreakAtRisk } from "@/registry/trophy/ui/streak-at-risk"
-import { AchievementBadge } from "@/registry/trophy/ui/achievement-badge"
 import { AchievementProgress } from "@/registry/trophy/ui/achievement-progress"
 import { AchievementGrid } from "@/registry/trophy/ui/achievement-grid"
 import { AchievementUnlocked } from "@/registry/trophy/ui/achievement-unlocked"
-import { LeaderboardEntry } from "@/registry/trophy/ui/leaderboard-entry"
 import { Leaderboard } from "@/registry/trophy/ui/leaderboard"
 import { LeaderboardPodium } from "@/registry/trophy/ui/leaderboard-podium"
-import { UserRank } from "@/registry/trophy/ui/user-rank"
 import { PointsDisplay } from "@/registry/trophy/ui/points-display"
-import { PointsAnimation } from "@/registry/trophy/ui/points-animation"
 
 function createStreakHistory() {
   const today = new Date()
@@ -81,10 +75,6 @@ export const componentExamples: Record<
     component: <StreakBadge length={7} showFrequency />,
     code: `<StreakBadge length={7} showFrequency />`,
   },
-  "streak-badge-no-animation": {
-    component: <StreakBadge length={7} animate={false} />,
-    code: `<StreakBadge length={7} animate={false} />`,
-  },
   "streak-calendar": {
     component: (
       <StreakCalendar
@@ -99,66 +89,6 @@ export const componentExamples: Record<
       { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
       // ... more dates
     ],
-  }}
-/>`,
-  },
-  "streak-freeze-indicator": {
-    component: (
-      <div className="flex flex-wrap items-center gap-4">
-        <StreakFreezeIndicator freezes={2} maxFreezes={3} />
-        <StreakFreezeIndicator freezes={3} maxFreezes={3} />
-      </div>
-    ),
-    code: `<StreakFreezeIndicator freezes={2} maxFreezes={3} />`,
-  },
-  "streak-at-risk": {
-    component: (
-      <StreakAtRisk
-        streak={{
-          length: 14,
-          frequency: "daily",
-          expires: new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString(),
-        }}
-      />
-    ),
-    code: `<StreakAtRisk
-  streak={{
-    length: 14,
-    frequency: "daily",
-    expires: "2024-01-15T23:59:59Z",
-  }}
-/>`,
-  },
-  "achievement-badge": {
-    component: (
-      <div className="flex flex-wrap items-center gap-4">
-        <AchievementBadge
-          achievement={{
-            id: "1",
-            name: "Early Bird",
-            trigger: "api",
-            description: "Complete a task before 9am",
-            achievedAt: new Date().toISOString(),
-          }}
-        />
-        <AchievementBadge
-          achievement={{
-            id: "2",
-            name: "First Steps",
-            trigger: "api",
-            description: "Complete your first task",
-            achievedAt: null,
-          }}
-        />
-      </div>
-    ),
-    code: `<AchievementBadge
-  achievement={{
-    id: "1",
-    name: "Early Bird",
-    trigger: "api",
-    description: "Complete a task before 9am",
-    achievedAt: new Date().toISOString(),
   }}
 />`,
   },
@@ -243,44 +173,6 @@ export const componentExamples: Record<
   onOpenChange={() => {}}
 />`,
   },
-  "leaderboard-entry": {
-    component: (
-      <div className="flex w-full max-w-md flex-col gap-2">
-        <LeaderboardEntry
-          ranking={{ userId: "1", userName: "Alice", rank: 1, value: 1250 }}
-        />
-        <LeaderboardEntry
-          ranking={{ userId: "2", userName: "Bob", rank: 2, value: 1100 }}
-        />
-        <LeaderboardEntry
-          ranking={{ userId: "3", userName: "Charlie", rank: 3, value: 980 }}
-        />
-      </div>
-    ),
-    code: `<LeaderboardEntry
-  ranking={{ userId: "1", userName: "Alice", rank: 1, value: 1250 }}
-/>
-<LeaderboardEntry
-  ranking={{ userId: "2", userName: "Bob", rank: 2, value: 1100 }}
-/>
-<LeaderboardEntry
-  ranking={{ userId: "3", userName: "Charlie", rank: 3, value: 980 }}
-/>`,
-  },
-  "leaderboard-entry-current-user": {
-    component: (
-      <div className="flex w-full max-w-md flex-col gap-2">
-        <LeaderboardEntry
-          ranking={{ userId: "1", userName: "You", rank: 5, value: 850 }}
-          isCurrentUser
-        />
-      </div>
-    ),
-    code: `<LeaderboardEntry
-  ranking={ranking}
-  isCurrentUser
-/>`,
-  },
   leaderboard: {
     component: (
       <div className="w-full max-w-2xl">
@@ -317,24 +209,6 @@ export const componentExamples: Record<
     { userId: "2", userName: "Bob", rank: 2, value: 1100 },
     { userId: "3", userName: "Charlie", rank: 3, value: 980 },
   ]}
-/>`,
-  },
-  "user-rank": {
-    component: (
-      <div className="flex flex-wrap items-center gap-4">
-        <UserRank
-          ranking={{ userId: "1", userName: "Alice", rank: 1, value: 1250 }}
-        />
-        <UserRank
-          ranking={{ userId: "2", userName: "Bob", rank: 2, value: 1100 }}
-        />
-        <UserRank
-          ranking={{ userId: "3", userName: "Charlie", rank: 3, value: 980 }}
-        />
-      </div>
-    ),
-    code: `<UserRank
-  ranking={{ userId: "1", userName: "Alice", rank: 1, value: 1250 }}
 />`,
   },
   "points-display": {
@@ -412,10 +286,6 @@ export const componentExamples: Record<
     code: `<PointsDisplay points={points} iconType="xp" />
 <PointsDisplay points={points} iconType="points" />
 <PointsDisplay points={points} iconType="credits" />`,
-  },
-  "points-animation": {
-    component: <PointsAnimation value={100} prefix="+" suffix=" XP" />,
-    code: `<PointsAnimation value={100} prefix="+" suffix=" XP" />`,
   },
 }
 

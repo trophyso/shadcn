@@ -1,6 +1,6 @@
 ---
 title: Leaderboard Podium
-description: A visual podium display for the top 3 ranked users with medals, avatars, and animated entrance.
+description: A visual podium display for the top 3 ranked users with medals and avatars.
 ---
 
 <ComponentPreview name="leaderboard-podium" />
@@ -56,14 +56,6 @@ import { LeaderboardPodium } from "@/components/ui/leaderboard-podium"
 
 ## Examples
 
-### With Trophy API Data
-
-```tsx
-const leaderboard = await trophy.leaderboards.get({ leaderboardId: "weekly-xp" })
-
-<LeaderboardPodium rankings={leaderboard.rankings} />
-```
-
 ### Sizes
 
 ```tsx
@@ -83,12 +75,6 @@ const leaderboard = await trophy.leaderboards.get({ leaderboardId: "weekly-xp" }
 
 // Minimal - no medal badge, just colored avatar ring
 <LeaderboardPodium rankings={rankings} medalStyle="minimal" />
-```
-
-### Without Animation
-
-```tsx
-<LeaderboardPodium rankings={rankings} animated={false} />
 ```
 
 ### Without Values
@@ -182,7 +168,6 @@ Works with fewer than 3 users:
 | `size` | `"sm" \| "default" \| "lg"` | `"default"` | Podium size |
 | `showValue` | `boolean` | `true` | Show score below name |
 | `showAvatar` | `boolean` | `true` | Show avatar initials |
-| `animated` | `boolean` | `true` | Animate entrance |
 | `medalStyle` | `"classic" \| "modern" \| "minimal"` | `"classic"` | Medal display style |
 
 ### LeaderboardRanking

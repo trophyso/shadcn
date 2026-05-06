@@ -59,20 +59,6 @@ Basic usage:
 />
 ```
 
-With Trophy API data:
-
-```tsx
-const achievement = await trophy.achievements.get({ 
-  userId: "user_123",
-  achievementId: "task-master"
-})
-
-<AchievementProgress
-  achievement={achievement}
-  currentValue={userProgress}
-/>
-```
-
 ## Examples
 
 ### With Percentage
@@ -106,7 +92,6 @@ const achievement = await trophy.achievements.get({
 | `showPercentage` | `boolean` | `false` | Show percentage label |
 | `showValue` | `boolean` | `false` | Show current/target values |
 | `showName` | `boolean` | `true` | Show achievement name |
-| `animate` | `boolean` | `true` | Animate the progress bar |
 
 ### Types
 

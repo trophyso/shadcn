@@ -56,14 +56,6 @@ import { Leaderboard } from "@/components/ui/leaderboard"
 
 ## Examples
 
-### With Trophy API Response
-
-```tsx
-const leaderboard = await trophy.leaderboards.get({ leaderboardId: "weekly-xp" })
-
-<Leaderboard leaderboard={leaderboard} />
-```
-
 ### Variants
 
 ```tsx
@@ -152,11 +144,6 @@ const leaderboard = await trophy.leaderboards.get({ leaderboardId: "weekly-xp" }
 ```tsx
 const [period, setPeriod] = useState<"daily" | "weekly" | "allTime">("weekly")
 
-const leaderboard = await trophy.leaderboards.get({
-  leaderboardId: "xp",
-  period,
-})
-
 <Tabs value={period} onValueChange={setPeriod}>
   <TabsList>
     <TabsTrigger value="daily">Today</TabsTrigger>
@@ -198,7 +185,7 @@ const leaderboard = await trophy.leaderboards.get({
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `leaderboard` | `LeaderboardResponse` | - | Full Trophy API response |
+| `leaderboard` | `LeaderboardResponse` | - | Full leaderboard data object |
 | `rankings` | `LeaderboardRanking[]` | - | Rankings array (alternative to leaderboard prop) |
 | `variant` | `"table" \| "cards" \| "compact"` | `"table"` | Layout variant |
 | `currentUserId` | `string` | - | Highlight this user's row |

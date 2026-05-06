@@ -18,10 +18,10 @@ const streakBadgeVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-orange-500 text-white hover:bg-orange-600",
+        default: "bg-warning text-warning-foreground hover:bg-warning/90",
         outline:
-          "border-2 border-orange-500 text-orange-500 bg-transparent hover:bg-orange-50 dark:hover:bg-orange-950",
-        ghost: "text-orange-500 bg-orange-500/10 hover:bg-orange-500/20",
+          "border-2 border-warning text-warning bg-transparent hover:bg-warning/10",
+        ghost: "text-warning bg-warning/10 hover:bg-warning/20",
       },
       size: {
         sm: "text-xs px-2 py-0.5",
@@ -51,8 +51,6 @@ interface StreakBadgeProps
   showFlame?: boolean;
   /** Custom icon to replace flame */
   icon?: React.ReactNode;
-  /** Animate on mount/change */
-  animate?: boolean;
 }
 
 const StreakBadge = React.forwardRef<HTMLDivElement, StreakBadgeProps>(
@@ -66,7 +64,6 @@ const StreakBadge = React.forwardRef<HTMLDivElement, StreakBadgeProps>(
       showFrequency = false,
       showFlame = true,
       icon,
-      animate = true,
       ...props
     },
     ref,
@@ -101,7 +98,6 @@ const StreakBadge = React.forwardRef<HTMLDivElement, StreakBadgeProps>(
         aria-label={ariaLabel}
         className={cn(
           streakBadgeVariants({ variant, size }),
-          animate && streakLength > 0 && "motion-safe:animate-pulse",
           className,
         )}
         {...props}

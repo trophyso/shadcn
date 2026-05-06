@@ -36,11 +36,11 @@ const leaderboardVariants = cva("w-full", {
 function getRankDisplay(rank: number) {
   switch (rank) {
     case 1:
-      return { icon: Crown, color: "text-yellow-500", bg: "bg-yellow-500/10" };
+      return { icon: Crown, color: "text-rank-1", bg: "bg-rank-1/10" };
     case 2:
-      return { icon: Medal, color: "text-gray-400", bg: "bg-gray-400/10" };
+      return { icon: Medal, color: "text-rank-2", bg: "bg-rank-2/10" };
     case 3:
-      return { icon: Medal, color: "text-amber-600", bg: "bg-amber-600/10" };
+      return { icon: Medal, color: "text-rank-3", bg: "bg-rank-3/10" };
     default:
       return null;
   }
