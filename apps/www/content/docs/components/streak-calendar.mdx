@@ -1,6 +1,6 @@
 ---
 title: Streak Calendar
-description: A monthly calendar view showing streak activity history with freeze indicators.
+description: A streak calendar with week, month, and git-style history views.
 ---
 
 <ComponentPreview name="streak-calendar" />
@@ -48,25 +48,81 @@ import { StreakCalendar } from "@/components/ui/streak-calendar"
 
 ## Examples
 
-### Specific Month
+### Week View (Default)
+
+<ComponentPreview name="streak-calendar" />
 
 ```tsx
-<StreakCalendar 
-  streak={streak} 
-  month={new Date(2024, 0, 1)}
-/>
+const streak = [
+  { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
+  { periodStart: "2024-01-02", periodEnd: "2024-01-02" },
+  { periodStart: "2024-01-03", periodEnd: "2024-01-03" },
+]
+
+<StreakCalendar streak={streak} />
 ```
 
 ### Monday Start
 
+<ComponentPreview name="streak-calendar-monday" />
+
 ```tsx
+const streak = [
+  { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
+  { periodStart: "2024-01-02", periodEnd: "2024-01-02" },
+  { periodStart: "2024-01-03", periodEnd: "2024-01-03" },
+]
+
 <StreakCalendar streak={streak} startOfWeek={1} />
 ```
 
-### Without Freeze Indicators
+### Month View
+
+<ComponentPreview name="streak-calendar-month" />
 
 ```tsx
-<StreakCalendar streak={streak} showFreezes={false} />
+const streak = [
+  { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
+  { periodStart: "2024-01-02", periodEnd: "2024-01-02" },
+  { periodStart: "2024-01-03", periodEnd: "2024-01-03" },
+]
+
+<StreakCalendar 
+  streak={streak}
+  view="month"
+  month={new Date(2024, 0, 1)}
+/>
+```
+
+### Git-Style Year View
+
+<ComponentPreview name="streak-calendar-year" />
+
+```tsx
+const streak = [
+  { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
+  { periodStart: "2024-01-02", periodEnd: "2024-01-02" },
+  { periodStart: "2024-01-03", periodEnd: "2024-01-03" },
+]
+
+<StreakCalendar 
+  streak={streak} 
+  view="year"
+/>
+```
+
+### With Freezes
+
+<ComponentPreview name="streak-calendar-with-freezes" />
+
+```tsx
+const streak = [
+  { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
+  { periodStart: "2024-01-02", periodEnd: "2024-01-02" },
+  { periodStart: "2024-01-04", periodEnd: "2024-01-04", usedFreeze: true },
+]
+
+<StreakCalendar streak={streak} />
 ```
 
 ## API Reference
@@ -75,8 +131,10 @@ import { StreakCalendar } from "@/components/ui/streak-calendar"
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `streak` | `StreakResponse` | Required | Streak data with history |
+| `streak` | `StreakPeriod[]` | Required | Streak data as periods array |
+| `view` | `"week" \| "month" \| "year"` | `"week"` | Calendar layout style |
 | `month` | `Date` | Current month | Month to display |
+| `referenceDate` | `Date` | Today | Anchor date for week view |
 | `showFreezes` | `boolean` | `true` | Show freeze indicators on days |
 | `startOfWeek` | `0 \| 1` | `0` | Week start: 0 = Sunday, 1 = Monday |
 | `onDayClick` | `(date: Date, wasActive: boolean) => void` | - | Callback when day is clicked |
@@ -84,10 +142,6 @@ import { StreakCalendar } from "@/components/ui/streak-calendar"
 ### Types
 
 ```ts
-interface StreakResponse {
-  streakHistory: StreakPeriod[]
-}
-
 interface StreakPeriod {
   periodStart: string
   periodEnd: string

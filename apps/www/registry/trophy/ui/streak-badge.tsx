@@ -14,23 +14,16 @@ interface StreakResponse {
 
 // Variants
 const streakBadgeVariants = cva(
-  "inline-flex items-center gap-1.5 rounded-full font-semibold transition-colors",
+  "inline-flex flex-col items-center justify-center rounded-3xl border border-border/60 bg-card text-center text-card-foreground transition-colors",
   {
     variants: {
-      variant: {
-        default: "bg-warning text-warning-foreground hover:bg-warning/90",
-        outline:
-          "border-2 border-warning text-warning bg-transparent hover:bg-warning/10",
-        ghost: "text-warning bg-warning/10 hover:bg-warning/20",
-      },
       size: {
-        sm: "text-xs px-2 py-0.5",
-        default: "text-sm px-3 py-1",
-        lg: "text-base px-4 py-1.5",
+        sm: "w-28 gap-1.5 p-3",
+        default: "w-40 gap-2.5 p-5",
+        lg: "w-52 gap-3 p-6",
       },
     },
     defaultVariants: {
-      variant: "default",
       size: "default",
     },
   },
@@ -39,8 +32,8 @@ const streakBadgeVariants = cva(
 // Props
 interface StreakBadgeProps
   extends
-    React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof streakBadgeVariants> {
+  React.HTMLAttributes<HTMLDivElement>,
+  VariantProps<typeof streakBadgeVariants> {
   /** Trophy API streak response */
   streak?: StreakResponse;
   /** Manual streak length (alternative to streak prop) */
@@ -49,6 +42,8 @@ interface StreakBadgeProps
   showFrequency?: boolean;
   /** Show flame icon */
   showFlame?: boolean;
+  /** Optional subtitle shown below streak length */
+  subtitle?: string;
   /** Custom icon to replace flame */
   icon?: React.ReactNode;
 }
@@ -57,12 +52,12 @@ const StreakBadge = React.forwardRef<HTMLDivElement, StreakBadgeProps>(
   (
     {
       className,
-      variant,
       size,
       streak,
       length,
       showFrequency = false,
       showFlame = true,
+      subtitle,
       icon,
       ...props
     },
@@ -81,10 +76,26 @@ const StreakBadge = React.forwardRef<HTMLDivElement, StreakBadgeProps>(
       streakLength === 1 ? frequencyLabel : `${frequencyLabel}s`;
 
     const iconSize = {
-      sm: "h-3 w-3",
-      default: "h-4 w-4",
-      lg: "h-5 w-5",
+      sm: "h-10 w-10",
+      default: "h-16 w-16",
+      lg: "h-20 w-20",
     }[size ?? "default"];
+
+    const valueSize = {
+      sm: "text-2xl",
+      default: "text-5xl",
+      lg: "text-6xl",
+    }[size ?? "default"];
+
+    const subtitleSize = {
+      sm: "text-xs",
+      default: "text-sm",
+      lg: "text-base",
+    }[size ?? "default"];
+
+    const subtitleText =
+      subtitle ?? (showFrequency ? `${pluralLabel} streak` : `${frequencyLabel} streak`);
+    const valueUnit = showFrequency ? pluralLabel : frequencyLabel;
 
     // Build accessible label
     const ariaLabel = showFrequency
@@ -97,16 +108,28 @@ const StreakBadge = React.forwardRef<HTMLDivElement, StreakBadgeProps>(
         role="status"
         aria-label={ariaLabel}
         className={cn(
-          streakBadgeVariants({ variant, size }),
+          streakBadgeVariants({ size }),
           className,
         )}
         {...props}
       >
-        {showFlame && (icon ?? <Flame className={cn(iconSize, "shrink-0")} aria-hidden="true" />)}
-        <span aria-hidden="true">{streakLength}</span>
-        {showFrequency && (
-          <span className="font-normal opacity-80" aria-hidden="true">{pluralLabel}</span>
-        )}
+        {showFlame &&
+          (icon ?? (
+            <Flame
+              className={cn(
+                iconSize,
+                "shrink-0 text-warning drop-shadow-[0_0_20px_hsl(var(--warning)/0.35)]",
+              )}
+              aria-hidden="true"
+            />
+          ))}
+        <span className={cn("font-semibold tracking-tight", valueSize)} aria-hidden="true">
+          {streakLength}
+          <span className="ml-2 font-medium text-muted-foreground">{valueUnit}</span>
+        </span>
+        <span className={cn("font-normal text-muted-foreground", subtitleSize)} aria-hidden="true">
+          {subtitleText}
+        </span>
       </div>
     );
   },

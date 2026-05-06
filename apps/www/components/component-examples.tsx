@@ -11,19 +11,69 @@ import { Leaderboard } from "@/registry/trophy/ui/leaderboard"
 import { LeaderboardPodium } from "@/registry/trophy/ui/leaderboard-podium"
 import { PointsDisplay } from "@/registry/trophy/ui/points-display"
 
-function createStreakHistory() {
+function formatDateKey(date: Date) {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, "0")
+  const day = String(date.getDate()).padStart(2, "0")
+  return `${year}-${month}-${day}`
+}
+
+function createStreakHistory(options?: { withFreezes?: boolean }) {
+  const { withFreezes = false } = options ?? {}
   const today = new Date()
   const history = []
   for (let i = 6; i >= 0; i--) {
     const date = new Date(today)
     date.setDate(date.getDate() - i)
-    const dateStr = date.toISOString().split("T")[0]
+    const dateStr = formatDateKey(date)
     history.push({
       periodStart: dateStr,
       periodEnd: dateStr,
-      usedFreeze: i === 4,
+      usedFreeze: withFreezes ? i === 4 : false,
     })
   }
+  return history
+}
+
+function createStreakHistoryWithVisibleFreeze() {
+  const today = new Date()
+  const history = []
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(today)
+    date.setDate(date.getDate() - i)
+    const dateStr = formatDateKey(date)
+    history.push({
+      periodStart: dateStr,
+      periodEnd: dateStr,
+      usedFreeze: i === 0,
+    })
+  }
+  return history
+}
+
+function createYearStyleStreakHistory() {
+  const today = new Date()
+  const history = []
+
+  for (let i = 364; i >= 0; i--) {
+    const date = new Date(today)
+    date.setDate(date.getDate() - i)
+
+    if (Math.random() < 0.45) {
+      const dateStr = formatDateKey(date)
+      history.push({
+        periodStart: dateStr,
+        periodEnd: dateStr,
+      })
+    }
+  }
+
+  // Ensure year view always has at least one active day.
+  if (history.length === 0) {
+    const todayKey = formatDateKey(today)
+    history.push({ periodStart: todayKey, periodEnd: todayKey })
+  }
+
   return history
 }
 
@@ -32,32 +82,12 @@ export const componentExamples: Record<
   { component: React.ReactNode; code: string }
 > = {
   "streak-badge": {
-    component: (
-      <div className="flex flex-wrap items-center gap-4">
-        <StreakBadge length={7} />
-        <StreakBadge length={14} variant="outline" />
-        <StreakBadge length={30} variant="ghost" />
-      </div>
-    ),
-    code: `<StreakBadge length={7} />
-<StreakBadge length={14} variant="outline" />
-<StreakBadge length={30} variant="ghost" />`,
+    component: <StreakBadge length={7} />,
+    code: `<StreakBadge length={7} />`,
   },
   "streak-badge-basic": {
     component: <StreakBadge length={7} />,
     code: `<StreakBadge length={7} />`,
-  },
-  "streak-badge-variants": {
-    component: (
-      <div className="flex flex-wrap items-center gap-4">
-        <StreakBadge length={7} variant="default" />
-        <StreakBadge length={7} variant="outline" />
-        <StreakBadge length={7} variant="ghost" />
-      </div>
-    ),
-    code: `<StreakBadge length={7} variant="default" />
-<StreakBadge length={7} variant="outline" />
-<StreakBadge length={7} variant="ghost" />`,
   },
   "streak-badge-sizes": {
     component: (
@@ -71,25 +101,61 @@ export const componentExamples: Record<
 <StreakBadge length={7} size="default" />
 <StreakBadge length={7} size="lg" />`,
   },
-  "streak-badge-frequency": {
-    component: <StreakBadge length={7} showFrequency />,
-    code: `<StreakBadge length={7} showFrequency />`,
-  },
   "streak-calendar": {
     component: (
+      <StreakCalendar streak={createStreakHistory()} />
+    ),
+    code: `<StreakCalendar
+  streak={[
+    { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
+    // ... more dates
+  ]}
+/>`,
+  },
+  "streak-calendar-monday": {
+    component: (
       <StreakCalendar
-        streak={{
-          streakHistory: createStreakHistory(),
-        }}
+        startOfWeek={1}
+        streak={createStreakHistory()}
       />
     ),
     code: `<StreakCalendar
-  streak={{
-    streakHistory: [
-      { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
-      // ... more dates
-    ],
-  }}
+  streak={createStreakHistory()}
+  startOfWeek={1}
+/>`,
+  },
+  "streak-calendar-month": {
+    component: (
+      <StreakCalendar
+        view="month"
+        month={new Date()}
+        streak={createStreakHistory()}
+      />
+    ),
+    code: `<StreakCalendar
+  streak={createStreakHistory()}
+  view="month"
+  month={new Date()}
+/>`,
+  },
+  "streak-calendar-year": {
+    component: (
+      <StreakCalendar
+        view="year"
+        streak={createYearStyleStreakHistory()}
+      />
+    ),
+    code: `<StreakCalendar
+  streak={createYearStyleStreakHistory()}
+  view="year"
+/>`,
+  },
+  "streak-calendar-with-freezes": {
+    component: (
+      <StreakCalendar streak={createStreakHistoryWithVisibleFreeze()} />
+    ),
+    code: `<StreakCalendar
+  streak={createStreakHistoryWithVisibleFreeze()}
 />`,
   },
   "achievement-progress": {
@@ -160,7 +226,7 @@ export const componentExamples: Record<
           description: "Complete your first challenge",
         }}
         open
-        onOpenChange={() => {}}
+        onOpenChange={() => { }}
       />
     ),
     code: `<AchievementUnlocked
