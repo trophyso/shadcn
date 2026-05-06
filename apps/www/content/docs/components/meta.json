@@ -3,6 +3,7 @@
   "pages": [
     "streak-badge",
     "streak-calendar",
+    "streak-card",
     "achievement-grid",
     "achievement-unlocked",
     "achievement-progress",

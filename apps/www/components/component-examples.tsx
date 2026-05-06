@@ -4,6 +4,7 @@ import * as React from "react"
 
 import { StreakBadge } from "@/registry/trophy/ui/streak-badge"
 import { StreakCalendar } from "@/registry/trophy/ui/streak-calendar"
+import { StreakCard } from "@/registry/trophy/ui/streak-card"
 import { AchievementProgress } from "@/registry/trophy/ui/achievement-progress"
 import { AchievementGrid } from "@/registry/trophy/ui/achievement-grid"
 import { AchievementUnlocked } from "@/registry/trophy/ui/achievement-unlocked"
@@ -77,10 +78,12 @@ function createYearStyleStreakHistory() {
   return history
 }
 
-export const componentExamples: Record<
-  string,
-  { component: React.ReactNode; code: string }
-> = {
+type ComponentExampleConfig = {
+  component: React.ReactNode
+  code: string
+}
+
+export const componentExamples: Record<string, ComponentExampleConfig> = {
   "streak-badge": {
     component: <StreakBadge length={7} />,
     code: `<StreakBadge length={7} />`,
@@ -156,6 +159,26 @@ export const componentExamples: Record<
     ),
     code: `<StreakCalendar
   streak={createStreakHistoryWithVisibleFreeze()}
+/>`,
+  },
+  "streak-card": {
+    component: (
+      <div className="w-full max-w-xl">
+        <StreakCard
+          streak={createStreakHistory()}
+          currentStreak={16}
+          longestStreak={100}
+          total={131}
+          defaultHowItWorksOpen
+        />
+      </div>
+    ),
+    code: `<StreakCard
+  streak={createStreakHistory()}
+  currentStreak={16}
+  longestStreak={100}
+  total={131}
+  defaultHowItWorksOpen
 />`,
   },
   "achievement-progress": {

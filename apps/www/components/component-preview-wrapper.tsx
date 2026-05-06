@@ -1,7 +1,10 @@
 import { promises as fs } from "node:fs"
 import path from "node:path"
 
-import { ComponentExample, getExampleCode } from "@/components/component-examples"
+import {
+  ComponentExample,
+} from "@/components/component-examples"
+import { getComponentPreviewConfig } from "@/components/component-preview-config"
 import { ComponentPreview } from "@/components/component-preview"
 
 async function getComponentSource(name: string): Promise<string | undefined> {
@@ -22,10 +25,15 @@ async function getComponentSource(name: string): Promise<string | undefined> {
 }
 
 export async function ComponentPreviewWrapper({ name }: { name: string }) {
-  const code = (await getComponentSource(name)) ?? getExampleCode(name)
+  const code = await getComponentSource(name)
+  const previewOptions = getComponentPreviewConfig(name)
 
   return (
-    <ComponentPreview name={name} code={code}>
+    <ComponentPreview
+      name={name}
+      code={code}
+      showPreviewCard={previewOptions?.showCard ?? true}
+    >
       <ComponentExample name={name} />
     </ComponentPreview>
   )

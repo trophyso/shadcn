@@ -4,6 +4,10 @@
   "homepage": "https://ui.trophy.so",
   "items": [
     {
+      "name": "streak-card",
+      "type": "registry:ui"
+    },
+    {
       "name": "achievement-grid",
       "type": "registry:ui"
     },

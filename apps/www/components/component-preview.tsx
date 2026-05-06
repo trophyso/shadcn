@@ -10,11 +10,13 @@ interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string
   children: React.ReactNode
   code?: string
+  showPreviewCard?: boolean
 }
 
 export function ComponentPreview({
   children,
   code,
+  showPreviewCard = true,
   className,
   ...props
 }: ComponentPreviewProps) {
@@ -53,9 +55,13 @@ export function ComponentPreview({
 
       {view === "preview" ? (
         <div className="flex min-h-[200px] items-center justify-center bg-[repeating-linear-gradient(45deg,var(--muted)_0,var(--muted)_1px,transparent_0,transparent_50%)] bg-[size:8px_8px] p-8">
-          <div className="flex flex-wrap items-center justify-center gap-4 rounded-lg bg-background p-6 shadow-sm">
-            {children}
-          </div>
+          {showPreviewCard ? (
+            <div className="flex flex-wrap items-center justify-center gap-4 rounded-lg bg-background p-6 shadow-sm">
+              {children}
+            </div>
+          ) : (
+            children
+          )}
         </div>
       ) : (
         <CodeBlock

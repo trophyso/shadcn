@@ -5,16 +5,26 @@
     {
       "name": "index",
       "type": "registry:style",
-      "dependencies": ["class-variance-authority", "lucide-react"],
-      "devDependencies": ["tw-animate-css"],
-      "registryDependencies": ["utils"],
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "devDependencies": [
+        "tw-animate-css"
+      ],
+      "registryDependencies": [
+        "utils"
+      ],
       "files": [],
       "cssVars": {}
     },
     {
       "name": "streak-badge",
       "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "lucide-react"],
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
       "files": [
         {
           "path": "registry/trophy/ui/streak-badge.tsx",
@@ -25,7 +35,9 @@
     {
       "name": "streak-calendar",
       "type": "registry:ui",
-      "dependencies": ["lucide-react"],
+      "dependencies": [
+        "lucide-react"
+      ],
       "files": [
         {
           "path": "registry/trophy/ui/streak-calendar.tsx",
@@ -34,9 +46,28 @@
       ]
     },
     {
+      "name": "streak-card",
+      "type": "registry:ui",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "streak-calendar"
+      ],
+      "files": [
+        {
+          "path": "registry/trophy/ui/streak-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "achievement-grid",
       "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "lucide-react"],
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
       "files": [
         {
           "path": "registry/trophy/ui/achievement-grid.tsx",
@@ -47,7 +78,9 @@
     {
       "name": "achievement-unlocked",
       "type": "registry:ui",
-      "dependencies": ["lucide-react"],
+      "dependencies": [
+        "lucide-react"
+      ],
       "files": [
         {
           "path": "registry/trophy/ui/achievement-unlocked.tsx",
@@ -58,7 +91,9 @@
     {
       "name": "achievement-progress",
       "type": "registry:ui",
-      "dependencies": ["class-variance-authority"],
+      "dependencies": [
+        "class-variance-authority"
+      ],
       "files": [
         {
           "path": "registry/trophy/ui/achievement-progress.tsx",
@@ -69,7 +104,10 @@
     {
       "name": "leaderboard",
       "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "lucide-react"],
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
       "files": [
         {
           "path": "registry/trophy/ui/leaderboard.tsx",
@@ -80,7 +118,10 @@
     {
       "name": "leaderboard-podium",
       "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "lucide-react"],
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
       "files": [
         {
           "path": "registry/trophy/ui/leaderboard-podium.tsx",
