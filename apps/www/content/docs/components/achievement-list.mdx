@@ -1,0 +1,126 @@
+---
+title: Achievement List
+description: A vertical list layout for achievements with badge, description, and optional progress indicator.
+---
+
+<ComponentPreview name="achievement-list" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/achievement-list.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="achievement-list" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { AchievementList } from "@/components/ui/achievement-list"
+```
+
+```tsx
+<AchievementList
+  achievements={[
+    {
+      id: "list-1",
+      name: "10 Day Streak",
+      description: "Open app for 10 days",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 60,
+    },
+    {
+      id: "list-2",
+      name: "5,000 Calorie Burn",
+      description: "Burn 5K calories total",
+      trigger: "metric",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 32,
+    },
+  ]}
+/>
+```
+
+## Example
+
+<ComponentPreview name="achievement-list" />
+
+```tsx
+<AchievementList
+  achievements={[
+    {
+      id: "list-1",
+      name: "10 Day Streak",
+      description: "Open app for 10 days",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 60,
+    },
+    {
+      id: "list-2",
+      name: "5,000 Calorie Burn",
+      description: "Burn 5K calories total",
+      trigger: "metric",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 32,
+    },
+  ]}
+/>
+```
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `achievements` | `UserAchievement[]` | Required | Array of achievements to render in list rows |
+| `badgeSize` | `"sm" \| "default" \| "lg"` | `"default"` | Size of badge in each row |
+| `lockedStyle` | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | Locked achievement visual treatment |
+| `onAchievementClick` | `(achievement) => void` | - | Row click handler |
+| `columns` | `2 \| 3 \| 4 \| "auto"` | `"auto"` | Supported for compatibility with `AchievementGrid` |
+| `gap` | `"sm" \| "default" \| "lg"` | `"default"` | Vertical spacing between rows |
+
+### Types
+
+```ts
+interface Achievement {
+  id: string
+  name: string
+  description?: string | null
+  trigger: "metric" | "api" | "streak"
+  badgeUrl?: string | null
+  progress?: number // optional, unlocked only
+  rarity?: number // accepted but not rendered in list rows
+}
+
+interface UserAchievement extends Achievement {
+  achievedAt: string | null
+}
+```

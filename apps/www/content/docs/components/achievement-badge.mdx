@@ -1,0 +1,207 @@
+---
+title: Achievement Badge
+description: A single achievement card with locked states, progress rings, rarity labels, and click handling.
+---
+
+<ComponentPreview name="achievement-badge" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/achievement-badge.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="achievement-badge" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { AchievementBadge } from "@/components/ui/achievement-badge"
+```
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+/>
+```
+
+## Examples
+
+### Badge Sizes
+
+<ComponentPreview name="achievement-badge-sizes" />
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  badgeSize="sm"
+/>
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  badgeSize="default"
+/>
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  badgeSize="lg"
+/>
+```
+
+### Locked Styles
+
+<ComponentPreview name="achievement-badge-locked-styles" />
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "2",
+    name: "Perfectionist",
+    trigger: "metric",
+    achievedAt: null,
+  }}
+  lockedStyle="grayscale"
+/>
+<AchievementBadge
+  achievement={{
+    id: "2",
+    name: "Perfectionist",
+    trigger: "metric",
+    achievedAt: null,
+  }}
+  lockedStyle="silhouette"
+/>
+<AchievementBadge
+  achievement={{
+    id: "2",
+    name: "Perfectionist",
+    trigger: "metric",
+    achievedAt: null,
+  }}
+  lockedStyle="hidden"
+/>
+```
+
+### Series Progress
+
+<ComponentPreview name="achievement-badge-series-progress" />
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "series-1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+/>
+```
+
+### Rarity
+
+<ComponentPreview name="achievement-badge-rarity" />
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "rare-1",
+    name: "Daily Legend",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    rarity: 3,
+  }}
+/>
+```
+
+### Clickable Achievement
+
+<ComponentPreview name="achievement-badge-clickable" />
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  onAchievementClick={(achievement) => {
+    openDetailModal(achievement)
+  }}
+/>
+```
+
+## API Reference
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `achievement` | `UserAchievement` | Required | Achievement data for this badge |
+| `badgeSize` | `"sm" \| "default" \| "lg"` | `"default"` | Badge size |
+| `lockedStyle` | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | Locked state presentation |
+| `onAchievementClick` | `(achievement) => void` | - | Click handler |
+
+### Types
+
+```ts
+interface Achievement {
+  id: string
+  name: string
+  trigger: "metric" | "api" | "streak"
+  badgeUrl?: string | null
+  progress?: number // optional series progress from 0 to 100, unlocked only
+  rarity?: number // optional rarity from 1 to 100 shown as "X% of users"
+}
+
+interface UserAchievement extends Achievement {
+  achievedAt: string | null
+}
+```

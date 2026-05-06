@@ -8,15 +8,23 @@
       "type": "registry:ui"
     },
     {
+      "name": "achievement-badge",
+      "type": "registry:ui"
+    },
+    {
       "name": "achievement-grid",
       "type": "registry:ui"
     },
     {
-      "name": "achievement-progress",
+      "name": "achievement-list",
       "type": "registry:ui"
     },
     {
       "name": "achievement-unlocked",
+      "type": "registry:ui"
+    },
+    {
+      "name": "achievement-card",
       "type": "registry:ui"
     },
     {

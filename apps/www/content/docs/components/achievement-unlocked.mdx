@@ -98,13 +98,18 @@ const handleAchievementUnlock = (achievement) => {
 
 ```tsx
 <AchievementUnlocked
-  achievement={achievement}
+  achievement={{
+    id: "streak-master",
+    name: "Streak Master",
+    description: "Maintain a 30-day streak",
+    badgeUrl: "https://example.com/badges/streak-master.png",
+  }}
   open={open}
   onOpenChange={setOpen}
   onShare={() => {
     navigator.share({
-      title: `I unlocked "${achievement.name}"!`,
-      text: achievement.description,
+      title: `I unlocked "Streak Master"!`,
+      text: "Maintain a 30-day streak",
       url: window.location.href,
     })
   }}
@@ -173,7 +178,12 @@ const handleClose = () => {
 
 ```tsx
 <AchievementUnlocked
-  achievement={achievement}
+  achievement={{
+    id: "streak-master",
+    name: "Streak Master",
+    description: "Maintain a 30-day streak",
+    badgeUrl: "https://example.com/badges/streak-master.png",
+  }}
   open={open}
   onOpenChange={setOpen}
   className="bg-gradient-to-b from-purple-900 to-purple-950"

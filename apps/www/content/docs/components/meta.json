@@ -4,9 +4,11 @@
     "streak-badge",
     "streak-calendar",
     "streak-card",
+    "achievement-badge",
     "achievement-grid",
+    "achievement-list",
     "achievement-unlocked",
-    "achievement-progress",
+    "achievement-card",
     "leaderboard",
     "leaderboard-podium",
     "points-display"

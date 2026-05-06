@@ -1,6 +1,6 @@
 ---
 title: Achievement Grid
-description: A responsive grid layout for displaying collections of achievements with filtering, sorting, and customizable badge styles.
+description: A responsive grid layout for displaying collections of achievements using the reusable achievement badge component.
 ---
 
 <ComponentPreview name="achievement-grid" />
@@ -45,136 +45,130 @@ import { AchievementGrid } from "@/components/ui/achievement-grid"
 ```
 
 ```tsx
-<AchievementGrid achievements={achievements} />
+<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+/>
 ```
 
 ## Examples
 
 ### Column Layouts
 
+<ComponentPreview name="achievement-grid-columns" />
+
 ```tsx
 // Fixed columns
-<AchievementGrid achievements={achievements} columns={2} />
-<AchievementGrid achievements={achievements} columns={3} />
-<AchievementGrid achievements={achievements} columns={4} />
+<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  columns={2}
+/>
+<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  columns={3}
+/>
+<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  columns={4}
+/>
 
 // Auto-responsive (default)
-<AchievementGrid achievements={achievements} columns="auto" />
+<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  columns="auto"
+/>
 // 2 cols mobile → 3 cols tablet → 4 cols desktop → 5 cols large
 ```
 
 ### Gap Sizes
 
-```tsx
-<AchievementGrid achievements={achievements} gap="sm" />
-<AchievementGrid achievements={achievements} gap="default" />
-<AchievementGrid achievements={achievements} gap="lg" />
-```
-
-### Filtering
-
-Show only specific achievement states:
-
-```tsx
-// All achievements (default)
-<AchievementGrid achievements={achievements} filter="all" />
-
-// Only earned achievements
-<AchievementGrid achievements={achievements} filter="earned" />
-
-// Only locked achievements
-<AchievementGrid achievements={achievements} filter="locked" />
-```
-
-### Sorting
-
-```tsx
-// Alphabetical by name (default)
-<AchievementGrid achievements={achievements} sortBy="name" />
-
-// Most recently earned first
-<AchievementGrid achievements={achievements} sortBy="earned" />
-
-// Group by trigger type (metric, api, streak)
-<AchievementGrid achievements={achievements} sortBy="trigger" />
-```
-
-### Badge Variants
-
-```tsx
-<AchievementGrid achievements={achievements} badgeVariant="card" />
-<AchievementGrid achievements={achievements} badgeVariant="badge" />
-<AchievementGrid achievements={achievements} badgeVariant="minimal" />
-```
-
-### Badge Sizes
-
-```tsx
-<AchievementGrid achievements={achievements} badgeSize="sm" />
-<AchievementGrid achievements={achievements} badgeSize="default" />
-<AchievementGrid achievements={achievements} badgeSize="lg" />
-```
-
-### Locked Styles
-
-Control how locked achievements display:
-
-```tsx
-// Grayscale (default)
-<AchievementGrid achievements={achievements} lockedStyle="grayscale" />
-
-// Silhouette - mystery style
-<AchievementGrid achievements={achievements} lockedStyle="silhouette" />
-
-// Hidden - don't show locked achievements
-<AchievementGrid achievements={achievements} lockedStyle="hidden" />
-```
-
-### Clickable Achievements
+<ComponentPreview name="achievement-grid-gap" />
 
 ```tsx
 <AchievementGrid
-  achievements={achievements}
-  onAchievementClick={(achievement) => {
-    openDetailModal(achievement)
-  }}
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  gap="sm"
 />
-```
-
-### Custom Empty State
-
-```tsx
 <AchievementGrid
-  achievements={[]}
-  filter="earned"
-  emptyState={
-    <div className="text-center py-8">
-      <p className="text-lg font-medium">Start your journey!</p>
-      <p className="text-muted-foreground">Complete tasks to earn achievements</p>
-    </div>
-  }
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  gap="default"
+/>
+<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  gap="lg"
 />
 ```
+
+`AchievementGrid` composes the `AchievementBadge` component internally. For visual badge options such as size, locked styles, progress, rarity, and click handling, see [Achievement Badge](/docs/components/achievement-badge).
 
 ### Complete Example
 
+<ComponentPreview name="achievement-grid-complete" />
+
 ```tsx
-const [filter, setFilter] = useState<"all" | "earned" | "locked">("all")
-
-<Tabs value={filter} onValueChange={setFilter}>
-  <TabsList>
-    <TabsTrigger value="all">All</TabsTrigger>
-    <TabsTrigger value="earned">Earned</TabsTrigger>
-    <TabsTrigger value="locked">Locked</TabsTrigger>
-  </TabsList>
-</Tabs>
-
 <AchievementGrid
-  achievements={achievements}
-  filter={filter}
-  sortBy="earned"
-  columns="auto"
-  badgeVariant="card"
+  achievements={[
+    {
+      id: "complete-1",
+      name: "Consistency I",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 28,
+    },
+    {
+      id: "complete-2",
+      name: "Daily Legend",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      rarity: 3,
+    },
+    {
+      id: "complete-3",
+      name: "Power User",
+      trigger: "metric",
+      achievedAt: "2024-01-01T00:00:00Z",
+      rarity: 12,
+    },
+    {
+      id: "complete-4",
+      name: "Consistency II",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 62,
+    },
+  ]}
+  columns={4}
   onAchievementClick={handleClick}
 />
 ```
@@ -188,15 +182,11 @@ const [filter, setFilter] = useState<"all" | "earned" | "locked">("all")
 | `achievements` | `UserAchievement[]` | Required | Array of achievements to display |
 | `columns` | `2 \| 3 \| 4 \| "auto"` | `"auto"` | Number of grid columns |
 | `gap` | `"sm" \| "default" \| "lg"` | `"default"` | Gap between grid items |
-| `filter` | `"all" \| "earned" \| "locked"` | `"all"` | Filter achievements by state |
-| `sortBy` | `"name" \| "earned" \| "trigger"` | `"name"` | Sort order for achievements |
 | `badgeSize` | `"sm" \| "default" \| "lg"` | `"default"` | Size of achievement badges |
-| `badgeVariant` | `"card" \| "badge" \| "minimal"` | `"card"` | Visual style for badges |
 | `lockedStyle` | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | How to display locked achievements |
-| `emptyState` | `ReactNode` | - | Custom empty state component |
 | `onAchievementClick` | `(achievement) => void` | - | Click handler for achievements |
 
-### UserAchievement
+### Types
 
 ```ts
 interface Achievement {
@@ -204,6 +194,8 @@ interface Achievement {
   name: string
   trigger: "metric" | "api" | "streak"
   badgeUrl?: string | null
+  progress?: number // optional series progress from 0 to 100, unlocked only
+  rarity?: number // optional rarity from 1 to 100 shown as "X% of users"
 }
 
 interface UserAchievement extends Achievement {

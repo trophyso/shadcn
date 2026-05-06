@@ -62,7 +62,37 @@
       ]
     },
     {
+      "name": "achievement-badge",
+      "type": "registry:ui",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/trophy/ui/achievement-badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "achievement-grid",
+      "type": "registry:ui",
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "achievement-badge"
+      ],
+      "files": [
+        {
+          "path": "registry/trophy/ui/achievement-grid.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "achievement-list",
       "type": "registry:ui",
       "dependencies": [
         "class-variance-authority",
@@ -70,7 +100,7 @@
       ],
       "files": [
         {
-          "path": "registry/trophy/ui/achievement-grid.tsx",
+          "path": "registry/trophy/ui/achievement-list.tsx",
           "type": "registry:ui"
         }
       ]
@@ -89,14 +119,16 @@
       ]
     },
     {
-      "name": "achievement-progress",
+      "name": "achievement-card",
       "type": "registry:ui",
-      "dependencies": [
-        "class-variance-authority"
+      "dependencies": [],
+      "registryDependencies": [
+        "achievement-badge",
+        "achievement-list"
       ],
       "files": [
         {
-          "path": "registry/trophy/ui/achievement-progress.tsx",
+          "path": "registry/trophy/ui/achievement-card.tsx",
           "type": "registry:ui"
         }
       ]

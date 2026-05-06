@@ -5,8 +5,10 @@ import * as React from "react"
 import { StreakBadge } from "@/registry/trophy/ui/streak-badge"
 import { StreakCalendar } from "@/registry/trophy/ui/streak-calendar"
 import { StreakCard } from "@/registry/trophy/ui/streak-card"
-import { AchievementProgress } from "@/registry/trophy/ui/achievement-progress"
+import { AchievementBadge } from "@/registry/trophy/ui/achievement-badge"
+import { AchievementCard } from "@/registry/trophy/ui/achievement-card"
 import { AchievementGrid } from "@/registry/trophy/ui/achievement-grid"
+import { AchievementList } from "@/registry/trophy/ui/achievement-list"
 import { AchievementUnlocked } from "@/registry/trophy/ui/achievement-unlocked"
 import { Leaderboard } from "@/registry/trophy/ui/leaderboard"
 import { LeaderboardPodium } from "@/registry/trophy/ui/leaderboard-podium"
@@ -77,6 +79,241 @@ function createYearStyleStreakHistory() {
 
   return history
 }
+
+const achievementGridUnlockedPreviewItems = [
+  {
+    id: "1",
+    name: "Early Bird",
+    trigger: "api" as const,
+    achievedAt: new Date().toISOString(),
+  },
+  {
+    id: "2",
+    name: "First Steps",
+    trigger: "streak" as const,
+    achievedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "3",
+    name: "Task Master",
+    trigger: "metric" as const,
+    achievedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "4",
+    name: "Marathon",
+    trigger: "streak" as const,
+    achievedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "5",
+    name: "API Explorer",
+    trigger: "api" as const,
+    achievedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+]
+
+const achievementGridLockedPreviewItems = [
+  ...achievementGridUnlockedPreviewItems,
+  {
+    id: "6",
+    name: "Perfectionist",
+    trigger: "metric" as const,
+    achievedAt: null,
+  },
+  {
+    id: "7",
+    name: "Night Owl",
+    trigger: "streak" as const,
+    achievedAt: null,
+  },
+]
+
+const achievementGridSeriesPreviewItems = [
+  {
+    id: "series-1",
+    name: "Consistency I",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    progress: 28,
+  },
+  {
+    id: "series-2",
+    name: "Consistency II",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    progress: 62,
+  },
+  {
+    id: "series-3",
+    name: "Consistency III",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    progress: 84,
+  },
+  {
+    id: "series-4",
+    name: "Consistency IV",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    progress: 100,
+  },
+]
+
+const achievementGridRarityPreviewItems = [
+  {
+    id: "rarity-1",
+    name: "Daily Legend",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    rarity: 3,
+  },
+  {
+    id: "rarity-2",
+    name: "Power User",
+    trigger: "metric" as const,
+    achievedAt: new Date().toISOString(),
+    rarity: 12,
+  },
+  {
+    id: "rarity-3",
+    name: "Finisher",
+    trigger: "api" as const,
+    achievedAt: new Date().toISOString(),
+    rarity: 41,
+  },
+  {
+    id: "rarity-4",
+    name: "First Win",
+    trigger: "api" as const,
+    achievedAt: new Date().toISOString(),
+    rarity: 78,
+  },
+]
+
+const achievementGridCompletePreviewItems = [
+  {
+    id: "complete-1",
+    name: "Consistency I",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    progress: 28,
+  },
+  {
+    id: "complete-2",
+    name: "Daily Legend",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    rarity: 3,
+  },
+  {
+    id: "complete-3",
+    name: "Power User",
+    trigger: "metric" as const,
+    achievedAt: new Date().toISOString(),
+    rarity: 12,
+  },
+  {
+    id: "complete-4",
+    name: "Consistency II",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    progress: 62,
+  },
+]
+
+const achievementBadgePreviewItem = {
+  id: "badge-1",
+  name: "Consistency I",
+  trigger: "streak" as const,
+  achievedAt: new Date().toISOString()
+}
+
+const achievementListPreviewItems = [
+  {
+    id: "list-1",
+    name: "10 Day Streak",
+    description: "Open app for 10 days",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    progress: 60,
+  },
+  {
+    id: "list-2",
+    name: "5,000 Calorie Burn",
+    description: "Burn 5K calories total",
+    trigger: "metric" as const,
+    achievedAt: new Date().toISOString(),
+    progress: 32,
+  },
+  {
+    id: "list-3",
+    name: "Weekend Warrior",
+    description: "Complete challenges on weekends",
+    trigger: "api" as const,
+    achievedAt: null,
+  },
+]
+
+const achievementCardPreviewItems = [
+  {
+    id: "card-1",
+    name: "Wellness God",
+    description: "Meditate for 30 days",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    rarity: 8,
+  },
+  {
+    id: "card-2",
+    name: "10 day streak",
+    description: "Open app for 10 days",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    progress: 60,
+    rarity: 24,
+  },
+  {
+    id: "card-3",
+    name: "Chatbot King",
+    description: "Chat with AI 500 times",
+    trigger: "api" as const,
+    achievedAt: new Date().toISOString(),
+    rarity: 5,
+  },
+  {
+    id: "card-4",
+    name: "Fully Hydrated Bro",
+    description: "Drink 5,000L of water total",
+    trigger: "metric" as const,
+    achievedAt: new Date().toISOString(),
+    progress: 32,
+  },
+]
+
+const achievementCardHighlightedPreviewItems = [
+  {
+    id: "highlight-1",
+    name: "Wellness God",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    rarity: 8,
+  },
+  {
+    id: "highlight-2",
+    name: "10 day streak",
+    trigger: "streak" as const,
+    achievedAt: new Date().toISOString(),
+    rarity: 24,
+  },
+  {
+    id: "highlight-3",
+    name: "Chatbot King",
+    trigger: "api" as const,
+    achievedAt: new Date().toISOString(),
+    rarity: 5,
+  },
+]
 
 type ComponentExampleConfig = {
   component: React.ReactNode
@@ -181,28 +418,6 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
   defaultHowItWorksOpen
 />`,
   },
-  "achievement-progress": {
-    component: (
-      <div className="w-full max-w-sm">
-        <AchievementProgress
-          achievement={{
-            id: "1",
-            name: "Task Master",
-            metricValue: 100,
-          }}
-          currentValue={75}
-        />
-      </div>
-    ),
-    code: `<AchievementProgress
-  achievement={{
-    id: "1",
-    name: "Task Master",
-    metricValue: 100,
-  }}
-  currentValue={75}
-/>`,
-  },
   "achievement-grid": {
     component: (
       <div className="w-full max-w-3xl">
@@ -218,7 +433,7 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
               id: "2",
               name: "First Steps",
               trigger: "streak",
-              achievedAt: null,
+              achievedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
             },
             {
               id: "3",
@@ -234,10 +449,340 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
     code: `<AchievementGrid
   achievements={[
     { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
-    { id: "2", name: "First Steps", trigger: "streak", achievedAt: null },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
     { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
   ]}
   columns={3}
+/>`,
+  },
+  "achievement-grid-columns": {
+    component: (
+      <div className="w-full max-w-5xl space-y-6">
+        <AchievementGrid achievements={achievementGridUnlockedPreviewItems} columns={2} />
+        <AchievementGrid achievements={achievementGridUnlockedPreviewItems} columns={3} />
+        <AchievementGrid achievements={achievementGridUnlockedPreviewItems} columns={4} />
+      </div>
+    ),
+    code: `<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  columns={2}
+/>
+<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  columns={3}
+/>
+<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  columns={4}
+/>`,
+  },
+  "achievement-grid-gap": {
+    component: (
+      <div className="w-full max-w-5xl space-y-6">
+        <AchievementGrid achievements={achievementGridUnlockedPreviewItems} gap="sm" />
+        <AchievementGrid achievements={achievementGridUnlockedPreviewItems} gap="default" />
+        <AchievementGrid achievements={achievementGridUnlockedPreviewItems} gap="lg" />
+      </div>
+    ),
+    code: `<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  gap="sm"
+/>
+<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  gap="default"
+/>
+<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+  gap="lg"
+/>`,
+  },
+  "achievement-badge": {
+    component: (
+      <AchievementBadge achievement={achievementBadgePreviewItem} />
+    ),
+    code: `<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+/>`,
+  },
+  "achievement-badge-sizes": {
+    component: (
+      <div className="flex flex-wrap items-center gap-4">
+        <AchievementBadge
+          achievement={achievementGridUnlockedPreviewItems[0]}
+          badgeSize="sm"
+        />
+        <AchievementBadge
+          achievement={achievementGridUnlockedPreviewItems[0]}
+          badgeSize="default"
+        />
+        <AchievementBadge
+          achievement={achievementGridUnlockedPreviewItems[0]}
+          badgeSize="lg"
+        />
+      </div>
+    ),
+    code: `<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  badgeSize="sm"
+/>
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  badgeSize="default"
+/>
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  badgeSize="lg"
+/>`,
+  },
+  "achievement-badge-locked-styles": {
+    component: (
+      <div className="flex flex-wrap items-center gap-4">
+        <AchievementBadge
+          achievement={achievementGridLockedPreviewItems[5]}
+          lockedStyle="grayscale"
+        />
+        <AchievementBadge
+          achievement={achievementGridLockedPreviewItems[5]}
+          lockedStyle="silhouette"
+        />
+        <AchievementBadge
+          achievement={achievementGridLockedPreviewItems[5]}
+          lockedStyle="hidden"
+        />
+      </div>
+    ),
+    code: `<AchievementBadge
+  achievement={{
+    id: "2",
+    name: "Perfectionist",
+    trigger: "metric",
+    achievedAt: null,
+  }}
+  lockedStyle="grayscale"
+/>
+<AchievementBadge
+  achievement={{
+    id: "2",
+    name: "Perfectionist",
+    trigger: "metric",
+    achievedAt: null,
+  }}
+  lockedStyle="silhouette"
+/>
+<AchievementBadge
+  achievement={{
+    id: "2",
+    name: "Perfectionist",
+    trigger: "metric",
+    achievedAt: null,
+  }}
+  lockedStyle="hidden"
+/>`,
+  },
+  "achievement-badge-series-progress": {
+    component: (
+      <div className="flex flex-wrap items-center gap-4">
+        {achievementGridSeriesPreviewItems.map((achievement) => (
+          <AchievementBadge key={achievement.id} achievement={achievement} />
+        ))}
+      </div>
+    ),
+    code: `<AchievementBadge
+  achievement={{
+    id: "series-1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+/>`,
+  },
+  "achievement-badge-rarity": {
+    component: (
+      <div className="flex flex-wrap items-center gap-4">
+        {achievementGridRarityPreviewItems.map((achievement) => (
+          <AchievementBadge key={achievement.id} achievement={achievement} />
+        ))}
+      </div>
+    ),
+    code: `<AchievementBadge
+  achievement={{
+    id: "rarity-1",
+    name: "Daily Legend",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    rarity: 3,
+  }}
+/>`,
+  },
+  "achievement-badge-clickable": {
+    component: (
+      <AchievementBadge
+        achievement={achievementBadgePreviewItem}
+        onAchievementClick={() => { }}
+      />
+    ),
+    code: `<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  onAchievementClick={(achievement) => {
+    openDetailModal(achievement)
+  }}
+/>`,
+  },
+  "achievement-grid-complete": {
+    component: (
+      <div className="w-full max-w-5xl">
+        <AchievementGrid
+          achievements={achievementGridCompletePreviewItems}
+          columns={4}
+          onAchievementClick={() => { }}
+        />
+      </div>
+    ),
+    code: `<AchievementGrid
+  achievements={[
+    { id: "complete-1", name: "Consistency I", trigger: "streak", achievedAt: "2024-01-01T00:00:00Z", progress: 28 },
+    { id: "complete-2", name: "Daily Legend", trigger: "streak", achievedAt: "2024-01-01T00:00:00Z", rarity: 3 },
+    { id: "complete-3", name: "Power User", trigger: "metric", achievedAt: "2024-01-01T00:00:00Z", rarity: 12 },
+    { id: "complete-4", name: "Consistency II", trigger: "streak", achievedAt: "2024-01-01T00:00:00Z", progress: 62 },
+  ]}
+  columns={4}
+  onAchievementClick={handleClick}
+/>`,
+  },
+  "achievement-list": {
+    component: (
+      <div className="w-full max-w-2xl">
+        <AchievementList achievements={achievementListPreviewItems} />
+      </div>
+    ),
+    code: `<AchievementList
+  achievements={[
+    {
+      id: "list-1",
+      name: "10 Day Streak",
+      description: "Open app for 10 days",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 60,
+    },
+    {
+      id: "list-2",
+      name: "5,000 Calorie Burn",
+      description: "Burn 5K calories total",
+      trigger: "metric",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 32,
+    },
+  ]}
+/>`,
+  },
+  "achievement-card": {
+    component: (
+      <div className="w-full max-w-md">
+        <AchievementCard
+          achievements={achievementCardPreviewItems}
+          highlightedAchievements={achievementCardHighlightedPreviewItems}
+        />
+      </div>
+    ),
+    code: `<AchievementCard
+  highlightedAchievements={[
+    {
+      id: "highlight-1",
+      name: "Wellness God",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      rarity: 8,
+    },
+    {
+      id: "highlight-2",
+      name: "10 day streak",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      rarity: 24,
+    },
+    {
+      id: "highlight-3",
+      name: "Chatbot King",
+      trigger: "api",
+      achievedAt: "2024-01-01T00:00:00Z",
+      rarity: 5,
+    },
+  ]}
+  achievements={[
+    {
+      id: "list-1",
+      name: "10 day streak",
+      description: "Open app for 10 days",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 60,
+    },
+    {
+      id: "list-2",
+      name: "Fully Hydrated Bro",
+      description: "Drink 5,000L of water total",
+      trigger: "metric",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 32,
+    },
+  ]}
 />`,
   },
   "achievement-unlocked": {
