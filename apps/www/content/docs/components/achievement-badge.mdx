@@ -93,6 +93,16 @@ import { AchievementBadge } from "@/components/ui/achievement-badge"
   }}
   badgeSize="lg"
 />
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  badgeSize="xl"
+/>
 ```
 
 ### Locked Styles
@@ -185,7 +195,7 @@ import { AchievementBadge } from "@/components/ui/achievement-badge"
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `achievement` | `UserAchievement` | Required | Achievement data for this badge |
-| `badgeSize` | `"sm" \| "default" \| "lg"` | `"default"` | Badge size |
+| `badgeSize` | `"sm" \| "default" \| "lg" \| "xl"` | `"default"` | Badge size |
 | `lockedStyle` | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | Locked state presentation |
 | `onAchievementClick` | `(achievement) => void` | - | Click handler |
 

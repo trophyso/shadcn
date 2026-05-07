@@ -80,6 +80,35 @@ function createYearStyleStreakHistory() {
   return history
 }
 
+function AchievementUnlockedPreview() {
+  const [open, setOpen] = React.useState(false)
+
+  return (
+    <div className="flex items-center justify-center">
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="rounded-lg border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+      >
+        Show achievement unlocked
+      </button>
+
+      <AchievementUnlocked
+        achievement={{
+          id: "task-champion",
+          name: "Task Champion",
+          description: "Complete a task 30 days in a row. Congratulations!!",
+          unlockedAt: new Date().toISOString(),
+        }}
+        open={open}
+        onOpenChange={setOpen}
+        secondaryActionLabel="Share"
+        onSecondaryActionClick={() => { }}
+      />
+    </div>
+  )
+}
+
 const achievementGridUnlockedPreviewItems = [
   {
     id: "1",
@@ -259,7 +288,7 @@ const achievementCardPreviewItems = [
   {
     id: "card-1",
     name: "Wellness God",
-    description: "Meditate for 30 days",
+    description: "Meditate 30 days in a row",
     trigger: "streak" as const,
     achievedAt: new Date().toISOString(),
     rarity: 8,
@@ -550,6 +579,10 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
           achievement={achievementGridUnlockedPreviewItems[0]}
           badgeSize="lg"
         />
+        <AchievementBadge
+          achievement={achievementGridUnlockedPreviewItems[0]}
+          badgeSize="xl"
+        />
       </div>
     ),
     code: `<AchievementBadge
@@ -581,6 +614,16 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
     progress: 28,
   }}
   badgeSize="lg"
+/>
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  badgeSize="xl"
 />`,
   },
   "achievement-badge-locked-styles": {
@@ -786,25 +829,34 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
 />`,
   },
   "achievement-unlocked": {
-    component: (
-      <AchievementUnlocked
-        achievement={{
-          id: "first-win",
-          name: "First Win",
-          description: "Complete your first challenge",
-        }}
-        open
-        onOpenChange={() => { }}
-      />
-    ),
-    code: `<AchievementUnlocked
+    component: <AchievementUnlockedPreview />,
+    code: `const [open, setOpen] = useState(false)
+
+<button
+  type="button"
+  onClick={() => setOpen(true)}
+  className="rounded-lg border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+>
+  Show achievement unlocked
+</button>
+
+<AchievementUnlocked
   achievement={{
-    id: "first-win",
-    name: "First Win",
-    description: "Complete your first challenge",
+    id: "task-champion",
+    name: "Task Champion",
+    description: "Complete a task 30 days in a row. Congratulations!!",
+    unlockedAt: new Date().toISOString(),
   }}
-  open
-  onOpenChange={() => {}}
+  open={open}
+  onOpenChange={setOpen}
+  secondaryActionLabel="Share"
+  onSecondaryActionClick={() => {
+    navigator.share?.({
+      title: "I unlocked Task Champion!",
+      text: "Complete a task 30 days in a row. Congratulations!!",
+      url: window.location.href,
+    })
+  }}
 />`,
   },
   leaderboard: {

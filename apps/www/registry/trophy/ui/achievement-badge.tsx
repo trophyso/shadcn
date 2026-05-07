@@ -20,7 +20,7 @@ interface UserAchievement extends Achievement {
 
 interface AchievementBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   achievement: UserAchievement;
-  badgeSize?: "sm" | "default" | "lg";
+  badgeSize?: "sm" | "default" | "lg" | "xl";
   lockedStyle?: "grayscale" | "silhouette" | "hidden";
   onAchievementClick?: (achievement: UserAchievement) => void;
 }
@@ -29,18 +29,21 @@ const badgeSizeMap = {
   sm: "h-12 w-12",
   default: "h-16 w-16",
   lg: "h-20 w-20",
+  xl: "h-28 w-28",
 } as const;
 
 const iconSizeMap = {
   sm: "h-8 w-8",
   default: "h-10 w-10",
   lg: "h-12 w-12",
+  xl: "h-16 w-16",
 } as const;
 
 const progressRingSizeMap = {
   sm: 72,
   default: 88,
   lg: 104,
+  xl: 136,
 } as const;
 
 const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>(

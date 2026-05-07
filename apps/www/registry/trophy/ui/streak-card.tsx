@@ -43,7 +43,7 @@ const StreakCard = React.forwardRef<HTMLDivElement, StreakCardProps>(
       actionLabel = "View Details",
       onActionClick,
       showHowItWorks = true,
-      howItWorksTitle = "How streaks work?",
+      howItWorksTitle = "How do streaks work?",
       howItWorksItems = [
         "Complete at least one activity each day to build your streak.",
         "Each day you do an activity, your streak increases.",

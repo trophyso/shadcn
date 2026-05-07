@@ -47,14 +47,31 @@ import { AchievementUnlocked } from "@/components/ui/achievement-unlocked"
 ```tsx
 const [open, setOpen] = useState(false)
 
+<button
+  type="button"
+  onClick={() => setOpen(true)}
+  className="rounded-lg border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+>
+  Show achievement unlocked
+</button>
+
 <AchievementUnlocked
   achievement={{
-    id: "first-win",
-    name: "First Win",
-    description: "Complete your first challenge",
+    id: "task-champion",
+    name: "Task Champion",
+    description: "Complete a task 30 days in a row. Congratulations!!",
+    unlockedAt: new Date().toISOString(),
   }}
   open={open}
   onOpenChange={setOpen}
+  secondaryActionLabel="Share"
+  onSecondaryActionClick={() => {
+    navigator.share?.({
+      title: "I unlocked Task Champion!",
+      text: "Complete a task 30 days in a row. Congratulations!!",
+      url: window.location.href,
+    })
+  }}
 />
 ```
 
@@ -79,117 +96,6 @@ const handleAchievementUnlock = (achievement) => {
 />
 ```
 
-### With Badge Image
-
-```tsx
-<AchievementUnlocked
-  achievement={{
-    id: "streak-master",
-    name: "Streak Master",
-    description: "Maintain a 30-day streak",
-    badgeUrl: "https://example.com/badges/streak-master.png",
-  }}
-  open={open}
-  onOpenChange={setOpen}
-/>
-```
-
-### With Share Button
-
-```tsx
-<AchievementUnlocked
-  achievement={{
-    id: "streak-master",
-    name: "Streak Master",
-    description: "Maintain a 30-day streak",
-    badgeUrl: "https://example.com/badges/streak-master.png",
-  }}
-  open={open}
-  onOpenChange={setOpen}
-  onShare={() => {
-    navigator.share({
-      title: `I unlocked "Streak Master"!`,
-      text: "Maintain a 30-day streak",
-      url: window.location.href,
-    })
-  }}
-/>
-```
-
-### Trophy Webhook Integration
-
-Listen for real-time achievement unlocks:
-
-```tsx
-// In your webhook handler or SSE listener
-useEffect(() => {
-  const eventSource = new EventSource('/api/trophy-events')
-  
-  eventSource.addEventListener('achievement.unlocked', (event) => {
-    const achievement = JSON.parse(event.data)
-    setUnlockedAchievement(achievement)
-    setShowUnlock(true)
-  })
-  
-  return () => eventSource.close()
-}, [])
-
-<AchievementUnlocked
-  achievement={unlockedAchievement}
-  open={showUnlock}
-  onOpenChange={setShowUnlock}
-  onShare={handleShare}
-/>
-```
-
-### Queue Multiple Unlocks
-
-Handle multiple achievements unlocking at once:
-
-```tsx
-const [queue, setQueue] = useState<Achievement[]>([])
-const [current, setCurrent] = useState<Achievement | null>(null)
-
-const handleUnlock = (achievement: Achievement) => {
-  if (current) {
-    setQueue(q => [...q, achievement])
-  } else {
-    setCurrent(achievement)
-  }
-}
-
-const handleClose = () => {
-  if (queue.length > 0) {
-    setCurrent(queue[0])
-    setQueue(q => q.slice(1))
-  } else {
-    setCurrent(null)
-  }
-}
-
-<AchievementUnlocked
-  achievement={current}
-  open={!!current}
-  onOpenChange={(open) => !open && handleClose()}
-/>
-```
-
-### Custom Styling
-
-```tsx
-<AchievementUnlocked
-  achievement={{
-    id: "streak-master",
-    name: "Streak Master",
-    description: "Maintain a 30-day streak",
-    badgeUrl: "https://example.com/badges/streak-master.png",
-  }}
-  open={open}
-  onOpenChange={setOpen}
-  className="bg-gradient-to-b from-purple-900 to-purple-950"
-/>
-```
-
 ## API Reference
 
 ### AchievementUnlocked
@@ -199,7 +105,9 @@ const handleClose = () => {
 | `achievement` | `Achievement` | Required | The achievement to display |
 | `open` | `boolean` | Required | Controls dialog visibility |
 | `onOpenChange` | `(open: boolean) => void` | Required | Called when open state changes |
-| `onShare` | `() => void` | - | Share button click handler (button hidden if not provided) |
+| `secondaryActionLabel` | `string` | `"Share"` | Label for the secondary action button |
+| `onSecondaryActionClick` | `() => void` | - | Secondary button click handler for social share or custom actions |
+| `onShare` | `() => void` | - | Deprecated alias for `onSecondaryActionClick` |
 | `className` | `string` | - | Additional classes for the dialog |
 
 ### Achievement
@@ -209,6 +117,6 @@ interface Achievement {
   id: string
   name: string
   description?: string | null
-  badgeUrl?: string | null
+  unlockedAt?: string
 }
 ```

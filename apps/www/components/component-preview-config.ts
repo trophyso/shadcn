@@ -42,6 +42,9 @@ const componentPreviewConfig: Record<string, ComponentPreviewConfig> = {
   "achievement-card": {
     showCard: false,
   },
+  "achievement-unlocked": {
+    showCard: false,
+  },
 }
 
 export function getComponentPreviewConfig(name: string): ComponentPreviewConfig | undefined {
