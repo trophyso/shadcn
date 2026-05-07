@@ -1,6 +1,6 @@
 ---
 title: Leaderboard Podium
-description: A visual podium display for the top 3 ranked users with medals and avatars.
+description: A visual podium display for the top 3 ranked users with crowns and avatars.
 ---
 
 <ComponentPreview name="leaderboard-podium" />
@@ -47,16 +47,26 @@ import { LeaderboardPodium } from "@/components/ui/leaderboard-podium"
 ```tsx
 <LeaderboardPodium
   rankings={[
-    { userId: "1", userName: "Alice", rank: 1, value: 2500 },
-    { userId: "2", userName: "Bob", rank: 2, value: 2200 },
-    { userId: "3", userName: "Charlie", rank: 3, value: 1800 },
+    { userId: "1", userName: "Ava Elizabeth Turner", rank: 1, value: 2500, avatarUrl: "https://i.pravatar.cc/96?img=32" },
+    { userId: "2", userName: "Leo Harrison", rank: 2, value: 2200, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+    { userId: "3", userName: "Rowan Elijah", rank: 3, value: 1800, avatarUrl: "https://i.pravatar.cc/96?img=15" },
   ]}
 />
 ```
 
 ## Examples
 
+### Basic Usage
+
+<ComponentPreview name="leaderboard-podium" />
+
+```tsx
+<LeaderboardPodium rankings={rankings} />
+```
+
 ### Sizes
+
+<ComponentPreview name="leaderboard-podium-sizes" />
 
 ```tsx
 <LeaderboardPodium rankings={rankings} size="sm" />
@@ -64,82 +74,11 @@ import { LeaderboardPodium } from "@/components/ui/leaderboard-podium"
 <LeaderboardPodium rankings={rankings} size="lg" />
 ```
 
-### Medal Styles
-
-```tsx
-// Classic - medal badge overlay on avatar
-<LeaderboardPodium rankings={rankings} medalStyle="classic" />
-
-// Modern - rounded corners on podium blocks
-<LeaderboardPodium rankings={rankings} medalStyle="modern" />
-
-// Minimal - no medal badge, just colored avatar ring
-<LeaderboardPodium rankings={rankings} medalStyle="minimal" />
-```
-
-### Without Values
-
-```tsx
-<LeaderboardPodium rankings={rankings} showValue={false} />
-```
-
-### Without Avatars
-
-Shows medal icons instead of avatar initials:
-
-```tsx
-<LeaderboardPodium rankings={rankings} showAvatar={false} />
-```
-
-### Hero Section
-
-```tsx
-<div className="bg-gradient-to-b from-purple-900 to-purple-950 py-12 px-4 rounded-xl">
-  <h2 className="text-2xl font-bold text-white text-center mb-8">
-    This Week's Champions
-  </h2>
-  <LeaderboardPodium
-    rankings={rankings}
-    size="lg"
-    medalStyle="modern"
-  />
-</div>
-```
-
-### With Full Leaderboard Below
-
-```tsx
-<div className="space-y-8">
-  <LeaderboardPodium rankings={rankings} />
-  
-  <Leaderboard
-    rankings={rankings.slice(3)} // Skip top 3
-    variant="table"
-  />
-</div>
-```
-
-### Contest Results Page
-
-```tsx
-<Card>
-  <CardHeader>
-    <CardTitle>February Challenge Results</CardTitle>
-    <CardDescription>Congratulations to our top performers!</CardDescription>
-  </CardHeader>
-  <CardContent className="flex justify-center py-8">
-    <LeaderboardPodium
-      rankings={contestResults}
-      size="lg"
-      showValue
-    />
-  </CardContent>
-</Card>
-```
-
 ### Partial Podium
 
 Works with fewer than 3 users:
+
+<ComponentPreview name="leaderboard-podium-partial" />
 
 ```tsx
 // Only 2 users - shows 2nd and 1st place
@@ -147,13 +86,6 @@ Works with fewer than 3 users:
   rankings={[
     { userId: "1", userName: "Alice", rank: 1, value: 2500 },
     { userId: "2", userName: "Bob", rank: 2, value: 2200 },
-  ]}
-/>
-
-// Only 1 user - shows just 1st place
-<LeaderboardPodium
-  rankings={[
-    { userId: "1", userName: "Alice", rank: 1, value: 2500 },
   ]}
 />
 ```
@@ -167,8 +99,8 @@ Works with fewer than 3 users:
 | `rankings` | `LeaderboardRanking[]` | Required | Top rankings (uses first 3) |
 | `size` | `"sm" \| "default" \| "lg"` | `"default"` | Podium size |
 | `showValue` | `boolean` | `true` | Show score below name |
-| `showAvatar` | `boolean` | `true` | Show avatar initials |
-| `medalStyle` | `"classic" \| "modern" \| "minimal"` | `"classic"` | Medal display style |
+| `showAvatar` | `boolean` | `true` | Show avatar images |
+| `medalStyle` | `"classic" \| "modern" \| "minimal"` | `"classic"` | Crown badge display style |
 
 ### LeaderboardRanking
 
@@ -178,5 +110,6 @@ interface LeaderboardRanking {
   userName: string | null
   rank: number
   value: number
+  avatarUrl?: string | null
 }
 ```

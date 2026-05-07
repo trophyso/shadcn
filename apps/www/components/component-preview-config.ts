@@ -3,16 +3,16 @@ export type ComponentPreviewConfig = {
 }
 
 const componentPreviewConfig: Record<string, ComponentPreviewConfig> = {
+  "streak-badge": {
+    showCard: false,
+  },
+  "streak-badge-basic": {
+    showCard: false,
+  },
+  "streak-badge-sizes": {
+    showCard: false,
+  },
   "streak-card": {
-    showCard: false,
-  },
-  "achievement-grid": {
-    showCard: false,
-  },
-  "achievement-grid-columns": {
-    showCard: false,
-  },
-  "achievement-grid-gap": {
     showCard: false,
   },
   "achievement-badge": {
@@ -33,16 +33,25 @@ const componentPreviewConfig: Record<string, ComponentPreviewConfig> = {
   "achievement-badge-clickable": {
     showCard: false,
   },
+  "achievement-grid": {
+    showCard: false,
+  },
+  "achievement-grid-columns": {
+    showCard: false,
+  },
+  "achievement-grid-gap": {
+    showCard: false,
+  },
   "achievement-grid-complete": {
     showCard: false,
   },
   "achievement-list": {
     showCard: false,
   },
-  "achievement-card": {
+  "achievement-unlocked": {
     showCard: false,
   },
-  "achievement-unlocked": {
+  "achievement-card": {
     showCard: false,
   },
   "leaderboard-rankings": {
@@ -55,6 +64,27 @@ const componentPreviewConfig: Record<string, ComponentPreviewConfig> = {
     showCard: false,
   },
   "leaderboard-rankings-current-user-focus": {
+    showCard: false,
+  },
+  "points-badge": {
+    showCard: false,
+  },
+  "points-badge-with-level": {
+    showCard: false,
+  },
+  "points-badge-sizes": {
+    showCard: false,
+  },
+  "points-chart": {
+    showCard: false,
+  },
+  "points-chart-levels": {
+    showCard: false,
+  },
+  "leaderboard-card": {
+    showCard: false,
+  },
+  "leaderboard-card-with-previous-runs": {
     showCard: false,
   },
 }

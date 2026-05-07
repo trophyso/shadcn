@@ -12,7 +12,9 @@ import { AchievementList } from "@/registry/trophy/ui/achievement-list"
 import { AchievementUnlocked } from "@/registry/trophy/ui/achievement-unlocked"
 import { LeaderboardRankings } from "@/registry/trophy/ui/leaderboard-rankings"
 import { LeaderboardPodium } from "@/registry/trophy/ui/leaderboard-podium"
-import { PointsDisplay } from "@/registry/trophy/ui/points-display"
+import { LeaderboardCard } from "@/registry/trophy/ui/leaderboard-card"
+import { PointsBadge } from "@/registry/trophy/ui/points-badge"
+import { PointsChart } from "@/registry/trophy/ui/points-chart"
 
 function formatDateKey(date: Date) {
   const year = date.getFullYear()
@@ -104,6 +106,127 @@ function AchievementUnlockedPreview() {
         onOpenChange={setOpen}
         secondaryActionLabel="Share"
         onSecondaryActionClick={() => { }}
+      />
+    </div>
+  )
+}
+
+function LeaderboardCardWithPreviousRunsPreview() {
+  const [selectedRunId, setSelectedRunId] = React.useState("this-week")
+  const runData = React.useMemo(() => {
+    return {
+      "this-week": {
+        fromDate: "2026-05-01",
+        toDate: "2026-05-07",
+        podiumRankings: leaderboardPodiumPreviewRankings,
+        rankings: leaderboardCardPreviewRankings,
+      },
+      "last-week": {
+        fromDate: "2026-04-24",
+        toDate: "2026-04-30",
+        podiumRankings: [
+          { userId: "2", userName: "Leo Harrison", rank: 1, value: 1320, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+          { userId: "1", userName: "Ava Elizabeth Turner", rank: 2, value: 1260, avatarUrl: "https://i.pravatar.cc/96?img=32" },
+          { userId: "3", userName: "Rowan Elijah", rank: 3, value: 1010, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+        ],
+        rankings: [
+          { userId: "u-2", rank: 1, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 292100, avatarUrl: "https://i.pravatar.cc/96?img=12", displayed: true },
+          { userId: "u-1", rank: 2, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 286900, avatarUrl: "https://i.pravatar.cc/96?img=32", displayed: true },
+          { userId: "u-3", rank: 3, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 241000, avatarUrl: "https://i.pravatar.cc/96?img=15", displayed: true },
+          { userId: "u-4", rank: 4, name: "Mia Sophia Bennett", byline: "Level 34 - Gold", total: 224100, avatarUrl: "https://i.pravatar.cc/96?img=47", displayed: false },
+          { userId: "u-5", rank: 5, name: "Olivia Reed", byline: "Level 32 - Gold", total: 212400, avatarUrl: "https://i.pravatar.cc/96?img=5", displayed: true },
+          { userId: "u-6", rank: 6, name: "William Turner", byline: "Level 31 - Gold", total: 201900, avatarUrl: "https://i.pravatar.cc/96?img=52", displayed: false },
+          { userId: "u-7", rank: 7, name: "Ruby Claire", byline: "Level 29 - Silver", total: 197200, avatarUrl: "https://i.pravatar.cc/96?img=9", displayed: false },
+          { userId: "u-8", rank: 8, name: "Ethan Brooks", byline: "Level 28 - Silver", total: 189000, avatarUrl: "https://i.pravatar.cc/96?img=60", displayed: true },
+          { userId: "u-9", rank: 9, name: "Chloe Madison", byline: "Level 27 - Silver", total: 180300, avatarUrl: "https://i.pravatar.cc/96?img=29", displayed: true },
+          { userId: "u-10", rank: 10, name: "Noah Bennett", byline: "Level 26 - Silver", total: 172200, avatarUrl: "https://i.pravatar.cc/96?img=36", displayed: false },
+        ],
+      },
+      "2026-04-20": {
+        fromDate: "2026-04-17",
+        toDate: "2026-04-23",
+        podiumRankings: [
+          { userId: "1", userName: "Ava Elizabeth Turner", rank: 1, value: 1210, avatarUrl: "https://i.pravatar.cc/96?img=32" },
+          { userId: "3", userName: "Rowan Elijah", rank: 2, value: 1140, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+          { userId: "2", userName: "Leo Harrison", rank: 3, value: 1090, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+        ],
+        rankings: [
+          { userId: "u-1", rank: 1, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 281400, avatarUrl: "https://i.pravatar.cc/96?img=32", displayed: true },
+          { userId: "u-3", rank: 2, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 249300, avatarUrl: "https://i.pravatar.cc/96?img=15", displayed: true },
+          { userId: "u-2", rank: 3, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 245700, avatarUrl: "https://i.pravatar.cc/96?img=12", displayed: true },
+          { userId: "u-4", rank: 4, name: "Mia Sophia Bennett", byline: "Level 34 - Gold", total: 226600, avatarUrl: "https://i.pravatar.cc/96?img=47", displayed: false },
+          { userId: "u-5", rank: 5, name: "Olivia Reed", byline: "Level 32 - Gold", total: 214000, avatarUrl: "https://i.pravatar.cc/96?img=5", displayed: true },
+          { userId: "u-6", rank: 6, name: "William Turner", byline: "Level 31 - Gold", total: 204500, avatarUrl: "https://i.pravatar.cc/96?img=52", displayed: false },
+          { userId: "u-7", rank: 7, name: "Ruby Claire", byline: "Level 29 - Silver", total: 198900, avatarUrl: "https://i.pravatar.cc/96?img=9", displayed: false },
+          { userId: "u-8", rank: 8, name: "Ethan Brooks", byline: "Level 28 - Silver", total: 191700, avatarUrl: "https://i.pravatar.cc/96?img=60", displayed: true },
+          { userId: "u-9", rank: 9, name: "Chloe Madison", byline: "Level 27 - Silver", total: 182600, avatarUrl: "https://i.pravatar.cc/96?img=29", displayed: true },
+          { userId: "u-10", rank: 10, name: "Noah Bennett", byline: "Level 26 - Silver", total: 174900, avatarUrl: "https://i.pravatar.cc/96?img=36", displayed: false },
+        ],
+      },
+      "2026-04-13": {
+        fromDate: "2026-04-10",
+        toDate: "2026-04-16",
+        podiumRankings: [
+          { userId: "3", userName: "Rowan Elijah", rank: 1, value: 1280, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+          { userId: "1", userName: "Ava Elizabeth Turner", rank: 2, value: 1200, avatarUrl: "https://i.pravatar.cc/96?img=32" },
+          { userId: "2", userName: "Leo Harrison", rank: 3, value: 1080, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+        ],
+        rankings: [
+          { userId: "u-3", rank: 1, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 287700, avatarUrl: "https://i.pravatar.cc/96?img=15", displayed: true },
+          { userId: "u-1", rank: 2, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 283200, avatarUrl: "https://i.pravatar.cc/96?img=32", displayed: true },
+          { userId: "u-2", rank: 3, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 246000, avatarUrl: "https://i.pravatar.cc/96?img=12", displayed: true },
+          { userId: "u-4", rank: 4, name: "Mia Sophia Bennett", byline: "Level 34 - Gold", total: 227900, avatarUrl: "https://i.pravatar.cc/96?img=47", displayed: false },
+          { userId: "u-5", rank: 5, name: "Olivia Reed", byline: "Level 32 - Gold", total: 216400, avatarUrl: "https://i.pravatar.cc/96?img=5", displayed: true },
+          { userId: "u-6", rank: 6, name: "William Turner", byline: "Level 31 - Gold", total: 206800, avatarUrl: "https://i.pravatar.cc/96?img=52", displayed: false },
+          { userId: "u-7", rank: 7, name: "Ruby Claire", byline: "Level 29 - Silver", total: 200400, avatarUrl: "https://i.pravatar.cc/96?img=9", displayed: false },
+          { userId: "u-8", rank: 8, name: "Ethan Brooks", byline: "Level 28 - Silver", total: 193300, avatarUrl: "https://i.pravatar.cc/96?img=60", displayed: true },
+          { userId: "u-9", rank: 9, name: "Chloe Madison", byline: "Level 27 - Silver", total: 185500, avatarUrl: "https://i.pravatar.cc/96?img=29", displayed: true },
+          { userId: "u-10", rank: 10, name: "Noah Bennett", byline: "Level 26 - Silver", total: 177000, avatarUrl: "https://i.pravatar.cc/96?img=36", displayed: false },
+        ],
+      },
+      "2026-04-06": {
+        fromDate: "2026-04-03",
+        toDate: "2026-04-09",
+        podiumRankings: [
+          { userId: "2", userName: "Leo Harrison", rank: 1, value: 1230, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+          { userId: "3", userName: "Rowan Elijah", rank: 2, value: 1170, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+          { userId: "1", userName: "Ava Elizabeth Turner", rank: 3, value: 1110, avatarUrl: "https://i.pravatar.cc/96?img=32" },
+        ],
+        rankings: [
+          { userId: "u-2", rank: 1, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 279900, avatarUrl: "https://i.pravatar.cc/96?img=12", displayed: true },
+          { userId: "u-3", rank: 2, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 273100, avatarUrl: "https://i.pravatar.cc/96?img=15", displayed: true },
+          { userId: "u-1", rank: 3, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 268400, avatarUrl: "https://i.pravatar.cc/96?img=32", displayed: true },
+          { userId: "u-4", rank: 4, name: "Mia Sophia Bennett", byline: "Level 34 - Gold", total: 229800, avatarUrl: "https://i.pravatar.cc/96?img=47", displayed: false },
+          { userId: "u-5", rank: 5, name: "Olivia Reed", byline: "Level 32 - Gold", total: 218700, avatarUrl: "https://i.pravatar.cc/96?img=5", displayed: true },
+          { userId: "u-6", rank: 6, name: "William Turner", byline: "Level 31 - Gold", total: 208300, avatarUrl: "https://i.pravatar.cc/96?img=52", displayed: false },
+          { userId: "u-7", rank: 7, name: "Ruby Claire", byline: "Level 29 - Silver", total: 202100, avatarUrl: "https://i.pravatar.cc/96?img=9", displayed: false },
+          { userId: "u-8", rank: 8, name: "Ethan Brooks", byline: "Level 28 - Silver", total: 194700, avatarUrl: "https://i.pravatar.cc/96?img=60", displayed: true },
+          { userId: "u-9", rank: 9, name: "Chloe Madison", byline: "Level 27 - Silver", total: 187600, avatarUrl: "https://i.pravatar.cc/96?img=29", displayed: true },
+          { userId: "u-10", rank: 10, name: "Noah Bennett", byline: "Level 26 - Silver", total: 179900, avatarUrl: "https://i.pravatar.cc/96?img=36", displayed: false },
+        ],
+      },
+    }
+  }, [])
+  const selectedRun = runData[selectedRunId as keyof typeof runData] ?? runData["this-week"]
+
+  return (
+    <div className="w-full max-w-2xl">
+      <LeaderboardCard
+        title="Weekly Leaderboard"
+        fromDate={selectedRun.fromDate}
+        toDate={selectedRun.toDate}
+        currentUserId="u-5"
+        selectedRunId={selectedRunId}
+        onRunChange={setSelectedRunId}
+        runOptions={[
+          { id: "this-week", label: "This week" },
+          { id: "last-week", label: "Last week" },
+          { id: "2026-04-20", label: "Apr 17 - Apr 23" },
+          { id: "2026-04-13", label: "Apr 10 - Apr 16" },
+          { id: "2026-04-06", label: "Apr 3 - Apr 9" },
+        ]}
+        podiumRankings={selectedRun.podiumRankings}
+        rankings={selectedRun.rankings}
       />
     </div>
   )
@@ -342,6 +465,25 @@ const achievementCardHighlightedPreviewItems = [
     achievedAt: new Date().toISOString(),
     rarity: 5,
   },
+]
+
+const leaderboardPodiumPreviewRankings = [
+  { userId: "1", userName: "Ava Elizabeth Turner", rank: 1, value: 1250, avatarUrl: "https://i.pravatar.cc/96?img=32" },
+  { userId: "2", userName: "Leo Harrison", rank: 2, value: 1100, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+  { userId: "3", userName: "Rowan Elijah", rank: 3, value: 980, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+]
+
+const leaderboardCardPreviewRankings = [
+  { userId: "u-1", rank: 1, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 289400, avatarUrl: "https://i.pravatar.cc/96?img=32", displayed: true },
+  { userId: "u-2", rank: 2, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 251800, avatarUrl: "https://i.pravatar.cc/96?img=12", displayed: true },
+  { userId: "u-3", rank: 3, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 238300, avatarUrl: "https://i.pravatar.cc/96?img=15", displayed: true },
+  { userId: "u-4", rank: 4, name: "Mia Sophia Bennett", byline: "Level 34 - Gold", total: 221700, avatarUrl: "https://i.pravatar.cc/96?img=47", displayed: false },
+  { userId: "u-5", rank: 5, name: "Olivia Reed", byline: "Level 32 - Gold", total: 210900, avatarUrl: "https://i.pravatar.cc/96?img=5", displayed: true },
+  { userId: "u-6", rank: 6, name: "William Turner", byline: "Level 31 - Gold", total: 199500, avatarUrl: "https://i.pravatar.cc/96?img=52", displayed: false },
+  { userId: "u-7", rank: 7, name: "Ruby Claire", byline: "Level 29 - Silver", total: 198300, avatarUrl: "https://i.pravatar.cc/96?img=9", displayed: false },
+  { userId: "u-8", rank: 8, name: "Ethan Brooks", byline: "Level 28 - Silver", total: 187200, avatarUrl: "https://i.pravatar.cc/96?img=60", displayed: true },
+  { userId: "u-9", rank: 9, name: "Chloe Madison", byline: "Level 27 - Silver", total: 176800, avatarUrl: "https://i.pravatar.cc/96?img=29", displayed: true },
+  { userId: "u-10", rank: 10, name: "Noah Bennett", byline: "Level 26 - Silver", total: 169300, avatarUrl: "https://i.pravatar.cc/96?img=36", displayed: false },
 ]
 
 type ComponentExampleConfig = {
@@ -1124,96 +1266,226 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
   "leaderboard-podium": {
     component: (
       <LeaderboardPodium
+        rankings={leaderboardPodiumPreviewRankings}
+      />
+    ),
+    code: `<LeaderboardPodium
+  rankings={[
+    { userId: "1", userName: "Ava Elizabeth Turner", rank: 1, value: 1250, avatarUrl: "https://i.pravatar.cc/96?img=32" },
+    { userId: "2", userName: "Leo Harrison", rank: 2, value: 1100, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+    { userId: "3", userName: "Rowan Elijah", rank: 3, value: 980, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+  ]}
+/>`,
+  },
+  "leaderboard-podium-sizes": {
+    component: (
+      <div className="flex w-full flex-col items-center gap-8">
+        <LeaderboardPodium rankings={leaderboardPodiumPreviewRankings} size="sm" />
+        <LeaderboardPodium rankings={leaderboardPodiumPreviewRankings} size="default" />
+        <LeaderboardPodium rankings={leaderboardPodiumPreviewRankings} size="lg" />
+      </div>
+    ),
+    code: `<LeaderboardPodium rankings={rankings} size="sm" />
+<LeaderboardPodium rankings={rankings} size="default" />
+<LeaderboardPodium rankings={rankings} size="lg" />`,
+  },
+  "leaderboard-podium-partial": {
+    component: (
+      <LeaderboardPodium
         rankings={[
-          { userId: "1", userName: "Alice", rank: 1, value: 1250 },
-          { userId: "2", userName: "Bob", rank: 2, value: 1100 },
-          { userId: "3", userName: "Charlie", rank: 3, value: 980 },
+          { userId: "1", userName: "Alice", rank: 1, value: 2500, avatarUrl: "https://i.pravatar.cc/96?img=34" },
+          { userId: "2", userName: "Bob", rank: 2, value: 2200, avatarUrl: "https://i.pravatar.cc/96?img=19" },
         ]}
       />
     ),
     code: `<LeaderboardPodium
   rankings={[
-    { userId: "1", userName: "Alice", rank: 1, value: 1250 },
-    { userId: "2", userName: "Bob", rank: 2, value: 1100 },
-    { userId: "3", userName: "Charlie", rank: 3, value: 980 },
+    { userId: "1", userName: "Alice", rank: 1, value: 2500 },
+    { userId: "2", userName: "Bob", rank: 2, value: 2200 },
   ]}
 />`,
   },
-  "points-display": {
+  "leaderboard-card": {
     component: (
-      <PointsDisplay
-        points={{ name: "XP", total: 2500, badgeUrl: null, awards: [] }}
-      />
+      <div className="w-full max-w-2xl">
+        <LeaderboardCard
+          title="Weekly Leaderboard"
+          fromDate="2026-05-01"
+          toDate="2026-05-07"
+          currentUserId="u-5"
+          podiumRankings={leaderboardPodiumPreviewRankings}
+          rankings={leaderboardCardPreviewRankings}
+        />
+      </div>
     ),
-    code: `<PointsDisplay
-  points={{ name: "XP", total: 2500, badgeUrl: null, awards: [] }}
+    code: `<LeaderboardCard
+  title="Weekly Leaderboard"
+  fromDate="2026-05-01"
+  toDate="2026-05-07"
+  currentUserId="u-5"
+  podiumRankings={[
+    { userId: "u-1", userName: "Ava Elizabeth Turner", rank: 1, value: 289400, avatarUrl: "https://i.pravatar.cc/96?img=32" },
+    { userId: "u-2", userName: "Leo Harrison", rank: 2, value: 251800, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+    { userId: "u-3", userName: "Rowan Elijah", rank: 3, value: 238300, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+  ]}
+  rankings={[
+    { userId: "u-1", rank: 1, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 289400, displayed: true },
+    { userId: "u-2", rank: 2, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 251800, displayed: true },
+    { userId: "u-3", rank: 3, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 238300, displayed: true },
+    { userId: "u-4", rank: 4, name: "Mia Sophia Bennett", byline: "Level 34 - Gold", total: 221700, displayed: false },
+    { userId: "u-5", rank: 5, name: "Olivia Reed", byline: "Level 32 - Gold", total: 210900, displayed: true },
+    { userId: "u-6", rank: 6, name: "William Turner", byline: "Level 31 - Gold", total: 199500, displayed: false },
+    { userId: "u-7", rank: 7, name: "Ruby Claire", byline: "Level 29 - Silver", total: 198300, displayed: false },
+    { userId: "u-8", rank: 8, name: "Ethan Brooks", byline: "Level 28 - Silver", total: 187200, displayed: true },
+    { userId: "u-9", rank: 9, name: "Chloe Madison", byline: "Level 27 - Silver", total: 176800, displayed: true },
+    { userId: "u-10", rank: 10, name: "Noah Bennett", byline: "Level 26 - Silver", total: 169300, displayed: false },
+  ]}
 />`,
   },
-  "points-display-sizes": {
+  "leaderboard-card-with-previous-runs": {
+    component: <LeaderboardCardWithPreviousRunsPreview />,
+    code: `const [selectedRunId, setSelectedRunId] = useState("this-week")
+const runs = {
+  "this-week": {
+    fromDate: "2026-05-01",
+    toDate: "2026-05-07",
+    podiumRankings,
+    rankings,
+  },
+  "last-week": {
+    fromDate: "2026-04-24",
+    toDate: "2026-04-30",
+    podiumRankings: lastWeekPodiumRankings,
+    rankings: lastWeekRankings,
+  },
+  // ...older runs
+}
+const selectedRun = runs[selectedRunId] ?? runs["this-week"]
+
+<LeaderboardCard
+  title="Weekly Leaderboard"
+  fromDate={selectedRun.fromDate}
+  toDate={selectedRun.toDate}
+  currentUserId="u-5"
+  selectedRunId={selectedRunId}
+  onRunChange={setSelectedRunId}
+  runOptions={[
+    { id: "this-week", label: "This week" },
+    { id: "last-week", label: "Last week" },
+    { id: "2026-04-20", label: "Apr 17 - Apr 23" },
+    { id: "2026-04-13", label: "Apr 10 - Apr 16" },
+    { id: "2026-04-06", label: "Apr 3 - Apr 9" },
+  ]}
+  podiumRankings={selectedRun.podiumRankings}
+  rankings={selectedRun.rankings}
+/>`,
+  },
+  "points-badge": {
+    component: (
+      <PointsBadge
+        points={{ name: "XP", total: 2500, badgeUrl: null }}
+      />
+    ),
+    code: `<PointsBadge
+  points={{ name: "XP", total: 2500, badgeUrl: null }}
+/>`,
+  },
+  "points-badge-with-level": {
+    component: (
+      <PointsBadge
+        points={{ name: "XP", total: 2500, badgeUrl: null }}
+      />
+    ),
+    code: `<PointsBadge
+  points={{ name: "XP", total: 2500, badgeUrl: null }}
+/>`,
+  },
+  "points-badge-sizes": {
     component: (
       <div className="flex flex-wrap items-center gap-4">
-        <PointsDisplay
-          points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
+        <PointsBadge
+          points={{ name: "XP", total: 1250, badgeUrl: null }}
           size="sm"
         />
-        <PointsDisplay
-          points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
+        <PointsBadge
+          points={{ name: "XP", total: 1250, badgeUrl: null }}
           size="default"
         />
-        <PointsDisplay
-          points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
+        <PointsBadge
+          points={{ name: "XP", total: 1250, badgeUrl: null }}
           size="lg"
         />
       </div>
     ),
-    code: `<PointsDisplay points={points} size="sm" />
-<PointsDisplay points={points} size="default" />
-<PointsDisplay points={points} size="lg" />`,
+    code: `<PointsBadge points={points} size="sm" />
+<PointsBadge points={points} size="default" />
+<PointsBadge points={points} size="lg" />`,
   },
-  "points-display-variants": {
+  "points-chart": {
     component: (
-      <div className="flex flex-wrap items-center gap-6">
-        <PointsDisplay
-          points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
-          variant="default"
-        />
-        <PointsDisplay
-          points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
-          variant="minimal"
-        />
-        <PointsDisplay
-          points={{ name: "XP", total: 1250, badgeUrl: null, awards: [] }}
-          variant="inline"
+      <div className="w-full max-w-2xl">
+        <PointsChart
+          data={[
+            { date: "Fri", points: 0 },
+            { date: "Sat", points: 125 },
+            { date: "Sun", points: 290 },
+            { date: "Mon", points: 420 },
+            { date: "Tue", points: 680 },
+            { date: "Wed", points: 940 },
+            { date: "Thu", points: 1250 },
+          ]}
         />
       </div>
     ),
-    code: `<PointsDisplay points={points} variant="default" />
-<PointsDisplay points={points} variant="minimal" />
-<PointsDisplay points={points} variant="inline" />`,
+    code: `<PointsChart
+  data={[
+    { date: "Fri", points: 0 },
+    { date: "Sat", points: 125 },
+    { date: "Sun", points: 290 },
+    { date: "Mon", points: 420 },
+    { date: "Tue", points: 680 },
+    { date: "Wed", points: 940 },
+    { date: "Thu", points: 1250 },
+  ]}
+/>`,
   },
-  "points-display-icons": {
+  "points-chart-levels": {
     component: (
-      <div className="flex flex-wrap items-center gap-4">
-        <PointsDisplay
-          points={{ name: "XP", total: 500, badgeUrl: null, awards: [] }}
-          iconType="xp"
-          size="sm"
-        />
-        <PointsDisplay
-          points={{ name: "Points", total: 500, badgeUrl: null, awards: [] }}
-          iconType="points"
-          size="sm"
-        />
-        <PointsDisplay
-          points={{ name: "Credits", total: 500, badgeUrl: null, awards: [] }}
-          iconType="credits"
-          size="sm"
+      <div className="w-full max-w-2xl">
+        <PointsChart
+          data={[
+            { date: "Fri", points: 120 },
+            { date: "Sat", points: 260 },
+            { date: "Sun", points: 520 },
+            { date: "Mon", points: 710 },
+            { date: "Tue", points: 890 },
+            { date: "Wed", points: 1120 },
+            { date: "Thu", points: 1320 },
+          ]}
+          levels={[
+            { value: 250, color: "#CD7F32" },
+            { value: 500, color: "#C0C0C0" },
+            { value: 1000, color: "#D4AF37" },
+          ]}
         />
       </div>
     ),
-    code: `<PointsDisplay points={points} iconType="xp" />
-<PointsDisplay points={points} iconType="points" />
-<PointsDisplay points={points} iconType="credits" />`,
+    code: `<PointsChart
+  data={[
+    { date: "Fri", points: 120 },
+    { date: "Sat", points: 260 },
+    { date: "Sun", points: 520 },
+    { date: "Mon", points: 710 },
+    { date: "Tue", points: 890 },
+    { date: "Wed", points: 1120 },
+    { date: "Thu", points: 1320 },
+  ]}
+  levels={[
+    { value: 250, color: "#CD7F32" },
+    { value: 500, color: "#C0C0C0" },
+    { value: 1000, color: "#D4AF37" },
+  ]}
+/>`,
   },
 }
 

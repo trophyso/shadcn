@@ -69,6 +69,33 @@ import { LeaderboardRankings } from "@/components/ui/leaderboard-rankings"
 
 ## Examples
 
+### Basic Usage
+
+<ComponentPreview name="leaderboard-rankings" />
+
+```tsx
+<LeaderboardRankings
+  rankings={[
+    {
+      userId: "u-1",
+      rank: 1,
+      name: "Ava Elizabeth Turner",
+      byline: "Level 42 - Diamond",
+      total: 289400,
+      avatarUrl: "https://i.pravatar.cc/96?img=32",
+    },
+    {
+      userId: "u-2",
+      rank: 2,
+      name: "Leo Harrison",
+      byline: "Level 39 - Platinum",
+      total: 251800,
+      avatarUrl: "https://i.pravatar.cc/96?img=12",
+    },
+  ]}
+/>
+```
+
 ### Rank Change Indicators
 
 <ComponentPreview name="leaderboard-rankings-rank-change" />

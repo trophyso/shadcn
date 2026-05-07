@@ -79,20 +79,28 @@ const [open, setOpen] = useState(false)
 
 ### Basic Usage
 
-```tsx
-const [showUnlock, setShowUnlock] = useState(false)
-const [unlockedAchievement, setUnlockedAchievement] = useState(null)
+<ComponentPreview name="achievement-unlocked" />
 
-// When achievement unlocks (e.g., from webhook or API response)
-const handleAchievementUnlock = (achievement) => {
-  setUnlockedAchievement(achievement)
-  setShowUnlock(true)
-}
+```tsx
+const [open, setOpen] = useState(false)
+
+<button
+  type="button"
+  onClick={() => setOpen(true)}
+  className="rounded-lg border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+>
+  Show achievement unlocked
+</button>
 
 <AchievementUnlocked
-  achievement={unlockedAchievement}
-  open={showUnlock}
-  onOpenChange={setShowUnlock}
+  achievement={{
+    id: "task-champion",
+    name: "Task Champion",
+    description: "Complete a task 30 days in a row. Congratulations!!",
+    unlockedAt: new Date().toISOString(),
+  }}
+  open={open}
+  onOpenChange={setOpen}
 />
 ```
 

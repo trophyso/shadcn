@@ -1,0 +1,118 @@
+---
+title: Points Chart
+description: A line chart component for displaying points trends over time.
+---
+
+<ComponentPreview name="points-chart" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/points-chart.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="points-chart" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+Import the component:
+
+```tsx
+import { PointsChart } from "@/components/ui/points-chart"
+```
+
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="points-chart" />
+
+```tsx
+<PointsChart
+  data={[
+    { date: "Fri", points: 0 },
+    { date: "Sat", points: 125 },
+    { date: "Sun", points: 290 },
+    { date: "Mon", points: 420 },
+    { date: "Tue", points: 680 },
+    { date: "Wed", points: 940 },
+    { date: "Thu", points: 1250 },
+  ]}
+/>
+```
+
+### With Levels
+
+Add bronze, silver, and gold level markers on the Y-axis with matching dashed threshold lines.
+
+<ComponentPreview name="points-chart-levels" />
+
+```tsx
+<PointsChart
+  data={[
+    { date: "Fri", points: 120 },
+    { date: "Sat", points: 260 },
+    { date: "Sun", points: 520 },
+    { date: "Mon", points: 710 },
+    { date: "Tue", points: 890 },
+    { date: "Wed", points: 1120 },
+    { date: "Thu", points: 1320 },
+  ]}
+  levels={[
+    { value: 250, color: "#CD7F32" },
+    { value: 500, color: "#C0C0C0" },
+    { value: 1000, color: "#D4AF37" },
+  ]}
+/>
+```
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `data` | `PointsChartDataPoint[]` | Required | Time-series points values |
+| `height` | `number` | `260` | Chart container height in pixels |
+| `title` | `string` | `"Your points"` | Chart title text |
+| `yAxisLabel` | `string` | - | Optional Y-axis label text |
+| `levels` | `PointsChartLevel[]` | - | Optional level thresholds with star markers and dashed lines |
+
+### Types
+
+```ts
+interface PointsChartDataPoint {
+  date: string
+  points: number
+}
+
+interface PointsChartLevel {
+  value: number
+  color: string
+}
+```

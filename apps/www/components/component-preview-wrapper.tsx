@@ -17,7 +17,7 @@ async function getComponentSource(name: string): Promise<string | undefined> {
     try {
       return await fs.readFile(filePath, "utf8")
     } catch {
-      // Try a less specific component name, e.g. `points-display-icons` -> `points-display`.
+      // Try a less specific component name, e.g. `points-badge-sizes` -> `points-badge`.
     }
   }
 

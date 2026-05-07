@@ -11,6 +11,8 @@
     "achievement-card",
     "leaderboard-rankings",
     "leaderboard-podium",
-    "points-display"
+    "leaderboard-card",
+    "points-badge",
+    "points-chart"
   ]
 }

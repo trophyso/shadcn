@@ -56,6 +56,20 @@ import { AchievementGrid } from "@/components/ui/achievement-grid"
 
 ## Examples
 
+### Basic Usage
+
+<ComponentPreview name="achievement-grid" />
+
+```tsx
+<AchievementGrid
+  achievements={[
+    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
+    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
+    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+  ]}
+/>
+```
+
 ### Column Layouts
 
 <ComponentPreview name="achievement-grid-columns" />

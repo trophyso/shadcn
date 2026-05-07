@@ -58,6 +58,22 @@ import { AchievementBadge } from "@/components/ui/achievement-badge"
 
 ## Examples
 
+### Basic Usage
+
+<ComponentPreview name="achievement-badge" />
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+/>
+```
+
 ### Badge Sizes
 
 <ComponentPreview name="achievement-badge-sizes" />

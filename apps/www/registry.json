@@ -160,6 +160,48 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "leaderboard-card",
+      "type": "registry:ui",
+      "dependencies": [],
+      "registryDependencies": [
+        "leaderboard-podium",
+        "leaderboard-rankings"
+      ],
+      "files": [
+        {
+          "path": "registry/trophy/ui/leaderboard-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "points-badge",
+      "type": "registry:ui",
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/trophy/ui/points-badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "points-chart",
+      "type": "registry:ui",
+      "dependencies": [
+        "recharts"
+      ],
+      "files": [
+        {
+          "path": "registry/trophy/ui/points-chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

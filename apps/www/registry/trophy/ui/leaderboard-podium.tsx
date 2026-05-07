@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Crown, Medal } from "lucide-react";
+import { Crown } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
@@ -12,15 +12,16 @@ interface LeaderboardRanking {
   userName: string | null;
   rank: number;
   value: number;
+  avatarUrl?: string | null;
 }
 
 // Variants
-const podiumVariants = cva("flex items-end justify-center gap-2", {
+const podiumVariants = cva("flex items-end justify-center gap-4", {
   variants: {
     size: {
-      sm: "gap-1",
-      default: "gap-2",
-      lg: "gap-4",
+      sm: "gap-2",
+      default: "gap-4",
+      lg: "gap-6",
     },
   },
   defaultVariants: {
@@ -28,7 +29,7 @@ const podiumVariants = cva("flex items-end justify-center gap-2", {
   },
 });
 
-// Medal styles for each position
+// Podium styles for each position
 const PODIUM_CONFIG = {
   1: {
     icon: Crown,
@@ -40,7 +41,7 @@ const PODIUM_CONFIG = {
     heightLg: "h-40",
   },
   2: {
-    icon: Medal,
+    icon: Crown,
     color: "text-rank-2",
     bg: "bg-rank-2/10",
     ringColor: "ring-rank-2/50",
@@ -49,7 +50,7 @@ const PODIUM_CONFIG = {
     heightLg: "h-32",
   },
   3: {
-    icon: Medal,
+    icon: Crown,
     color: "text-rank-3",
     bg: "bg-rank-3/10",
     ringColor: "ring-rank-3/50",
@@ -70,7 +71,7 @@ interface LeaderboardPodiumProps
   showValue?: boolean;
   /** Show avatar */
   showAvatar?: boolean;
-  /** Medal style variant */
+  /** Crown badge style variant */
   medalStyle?: "classic" | "modern" | "minimal";
 }
 
@@ -134,6 +135,9 @@ const LeaderboardPodium = React.forwardRef<
 
           const displayName =
             ranking.userName || `User ${ranking.userId.slice(0, 6)}`;
+          const avatarSrc =
+            ranking.avatarUrl ??
+            `https://i.pravatar.cc/96?u=${encodeURIComponent(ranking.userId)}`;
           const podiumHeight = {
             sm: config.heightSm,
             default: config.height,
@@ -149,19 +153,17 @@ const LeaderboardPodium = React.forwardRef<
               aria-label={itemLabel}
               className="flex flex-col items-center"
             >
-              {/* Avatar with medal */}
+              {/* Avatar with crown */}
               <div className="relative mb-2" aria-hidden="true">
                 {showAvatar ? (
-                  <div
+                  <img
+                    src={avatarSrc}
+                    alt={`${displayName} avatar`}
                     className={cn(
-                      "flex items-center justify-center rounded-full font-bold ring-4",
-                      avatarSize,
-                      config.bg,
-                      config.ringColor,
+                      "rounded-full object-cover",
+                      avatarSize
                     )}
-                  >
-                    {displayName.charAt(0).toUpperCase()}
-                  </div>
+                  />
                 ) : (
                   <div
                     className={cn(
@@ -174,7 +176,7 @@ const LeaderboardPodium = React.forwardRef<
                   </div>
                 )}
 
-                {/* Medal badge */}
+                {/* Crown badge */}
                 {medalStyle !== "minimal" && (
                   <div
                     className={cn(
@@ -227,9 +229,9 @@ const LeaderboardPodium = React.forwardRef<
               <div
                 aria-hidden="true"
                 className={cn(
-                  "mt-2 w-16 rounded-t-lg",
-                  size === "sm" && "w-12",
-                  size === "lg" && "w-24",
+                  "mt-2 w-20 rounded-t-lg",
+                  size === "sm" && "w-16",
+                  size === "lg" && "w-28",
                   podiumHeight,
                   config.bg,
                   medalStyle === "modern" && "rounded-t-xl",
