@@ -10,7 +10,7 @@ import { AchievementCard } from "@/registry/trophy/ui/achievement-card"
 import { AchievementGrid } from "@/registry/trophy/ui/achievement-grid"
 import { AchievementList } from "@/registry/trophy/ui/achievement-list"
 import { AchievementUnlocked } from "@/registry/trophy/ui/achievement-unlocked"
-import { Leaderboard } from "@/registry/trophy/ui/leaderboard"
+import { LeaderboardRankings } from "@/registry/trophy/ui/leaderboard-rankings"
 import { LeaderboardPodium } from "@/registry/trophy/ui/leaderboard-podium"
 import { PointsDisplay } from "@/registry/trophy/ui/points-display"
 
@@ -859,23 +859,265 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
   }}
 />`,
   },
-  leaderboard: {
+  "leaderboard-rankings": {
     component: (
       <div className="w-full max-w-2xl">
-        <Leaderboard
+        <LeaderboardRankings
+          currentUserId="u-20"
           rankings={[
-            { userId: "1", userName: "Alice", rank: 1, value: 1250 },
-            { userId: "2", userName: "Bob", rank: 2, value: 1100 },
-            { userId: "3", userName: "Charlie", rank: 3, value: 980 },
+            {
+              userId: "u-1",
+              rank: 1,
+              name: "Ava Elizabeth Turner",
+              byline: "Level 42 - Diamond",
+              total: 289400,
+              avatarUrl: "https://i.pravatar.cc/96?img=32",
+            },
+            {
+              userId: "u-2",
+              rank: 2,
+              name: "Leo Harrison",
+              byline: "Level 39 - Platinum",
+              total: 251800,
+              avatarUrl: "https://i.pravatar.cc/96?img=12",
+            },
+            {
+              userId: "u-3",
+              rank: 3,
+              name: "Rowan Elijah",
+              byline: "Level 37 - Platinum",
+              total: 238300,
+              avatarUrl: "https://i.pravatar.cc/96?img=15",
+            },
+            {
+              userId: "u-4",
+              rank: 4,
+              name: "Mia Sophia Bennett",
+              byline: "Level 34 - Gold",
+              total: 221700,
+              avatarUrl: "https://i.pravatar.cc/96?img=47",
+            },
+            {
+              userId: "u-5",
+              rank: 5,
+              name: "William Turner",
+              byline: "Level 33 - Gold",
+              total: 199500,
+              avatarUrl: "https://i.pravatar.cc/96?img=52",
+            },
           ]}
         />
       </div>
     ),
-    code: `<Leaderboard
+    code: `<LeaderboardRankings
   rankings={[
-    { userId: "1", userName: "Alice", rank: 1, value: 1250 },
-    { userId: "2", userName: "Bob", rank: 2, value: 1100 },
-    { userId: "3", userName: "Charlie", rank: 3, value: 980 },
+    {
+      userId: "u-1",
+      rank: 1,
+      name: "Ava Elizabeth Turner",
+      byline: "Level 42 - Diamond",
+      total: 289400,
+      avatarUrl: "https://i.pravatar.cc/96?img=32",
+    },
+    {
+      userId: "u-2",
+      rank: 2,
+      name: "Leo Harrison",
+      byline: "Level 39 - Platinum",
+      total: 251800,
+      avatarUrl: "https://i.pravatar.cc/96?img=12",
+    },
+    {
+      userId: "u-3",
+      rank: 3,
+      name: "Rowan Elijah",
+      byline: "Level 37 - Platinum",
+      total: 238300,
+      avatarUrl: "https://i.pravatar.cc/96?img=15",
+    },
+    {
+      userId: "u-4",
+      rank: 4,
+      name: "Mia Sophia Bennett",
+      byline: "Level 34 - Gold",
+      total: 221700,
+      avatarUrl: "https://i.pravatar.cc/96?img=47",
+    },
+    {
+      userId: "u-5",
+      rank: 5,
+      name: "William Turner",
+      byline: "Level 33 - Gold",
+      total: 199500,
+      avatarUrl: "https://i.pravatar.cc/96?img=52",
+    },
+  ]}
+/>`,
+  },
+  "leaderboard-rankings-rank-change": {
+    component: (
+      <div className="w-full max-w-2xl">
+        <LeaderboardRankings
+          currentUserId="u-20"
+          rankings={[
+            {
+              userId: "u-1",
+              rank: 1,
+              name: "Ava Elizabeth Turner",
+              byline: "Level 42 - Diamond",
+              total: 289400,
+              avatarUrl: "https://i.pravatar.cc/96?img=32",
+              rankChange: 2,
+            },
+            {
+              userId: "u-2",
+              rank: 2,
+              name: "Leo Harrison",
+              byline: "Level 39 - Platinum",
+              total: 251800,
+              avatarUrl: "https://i.pravatar.cc/96?img=12",
+              rankChange: -1,
+            },
+            {
+              userId: "u-3",
+              rank: 3,
+              name: "Rowan Elijah",
+              byline: "Level 37 - Platinum",
+              total: 238300,
+              avatarUrl: "https://i.pravatar.cc/96?img=15",
+              rankChange: -2,
+            },
+            {
+              userId: "u-4",
+              rank: 4,
+              name: "Mia Sophia Bennett",
+              byline: "Level 34 - Gold",
+              total: 221700,
+              avatarUrl: "https://i.pravatar.cc/96?img=47",
+              rankChange: 1,
+            },
+          ]}
+        />
+      </div>
+    ),
+    code: `<LeaderboardRankings
+  rankings={[
+    {
+      userId: "u-1",
+      rank: 1,
+      name: "Ava Elizabeth Turner",
+      byline: "Level 42 - Diamond",
+      total: 289400,
+      avatarUrl: "https://i.pravatar.cc/96?img=32",
+      rankChange: 2,
+    },
+    {
+      userId: "u-2",
+      rank: 2,
+      name: "Leo Harrison",
+      byline: "Level 39 - Platinum",
+      total: 251800,
+      avatarUrl: "https://i.pravatar.cc/96?img=12",
+      rankChange: -1,
+    },
+    {
+      userId: "u-3",
+      rank: 3,
+      name: "Rowan Elijah",
+      byline: "Level 37 - Platinum",
+      total: 238300,
+      avatarUrl: "https://i.pravatar.cc/96?img=15",
+      rankChange: -2,
+    },
+    {
+      userId: "u-4",
+      rank: 4,
+      name: "Mia Sophia Bennett",
+      byline: "Level 34 - Gold",
+      total: 221700,
+      avatarUrl: "https://i.pravatar.cc/96?img=47",
+      rankChange: 1,
+    },
+  ]}
+/>`,
+  },
+  "leaderboard-rankings-pagination": {
+    component: (
+      <div className="w-full max-w-2xl">
+        <LeaderboardRankings
+          showPagination
+          rankings={[
+            { userId: "u-1", rank: 1, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 289400, avatarUrl: "https://i.pravatar.cc/96?img=32" },
+            { userId: "u-2", rank: 2, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 251800, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+            { userId: "u-3", rank: 3, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 238300, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+            { userId: "u-4", rank: 4, name: "Mia Sophia Bennett", byline: "Level 34 - Gold", total: 221700, avatarUrl: "https://i.pravatar.cc/96?img=47" },
+            { userId: "u-5", rank: 5, name: "William Turner", byline: "Level 33 - Gold", total: 199500, avatarUrl: "https://i.pravatar.cc/96?img=52" },
+            { userId: "u-6", rank: 6, name: "Ruby Claire", byline: "Level 31 - Gold", total: 198300, avatarUrl: "https://i.pravatar.cc/96?img=9" },
+            { userId: "u-7", rank: 7, name: "Ethan Brooks", byline: "Level 29 - Silver", total: 187200, avatarUrl: "https://i.pravatar.cc/96?img=60" },
+            { userId: "u-8", rank: 8, name: "Chloe Madison", byline: "Level 28 - Silver", total: 176800, avatarUrl: "https://i.pravatar.cc/96?img=29" },
+            { userId: "u-9", rank: 9, name: "Noah Bennett", byline: "Level 27 - Silver", total: 169300, avatarUrl: "https://i.pravatar.cc/96?img=36" },
+            { userId: "u-10", rank: 10, name: "Isla Monroe", byline: "Level 26 - Silver", total: 161900, avatarUrl: "https://i.pravatar.cc/96?img=33" },
+            { userId: "u-11", rank: 11, name: "Mason Carter", byline: "Level 25 - Bronze", total: 154600, avatarUrl: "https://i.pravatar.cc/96?img=61" },
+            { userId: "u-12", rank: 12, name: "Ella Foster", byline: "Level 24 - Bronze", total: 148200, avatarUrl: "https://i.pravatar.cc/96?img=26" },
+          ]}
+        />
+      </div>
+    ),
+    code: `<LeaderboardRankings
+  showPagination
+  rankings={[
+    { userId: "u-1", rank: 1, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 289400, avatarUrl: "https://i.pravatar.cc/96?img=32" },
+    { userId: "u-2", rank: 2, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 251800, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+    { userId: "u-3", rank: 3, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 238300, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+    // ...more rows
+  ]}
+/>`,
+  },
+  "leaderboard-rankings-current-user-focus": {
+    component: (
+      <div className="w-full max-w-2xl">
+        <LeaderboardRankings
+          currentUserId="u-20"
+          rankings={[
+            { userId: "u-1", rank: 1, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 289400, avatarUrl: "https://i.pravatar.cc/96?img=32", displayed: true },
+            { userId: "u-2", rank: 2, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 251800, avatarUrl: "https://i.pravatar.cc/96?img=12", displayed: true },
+            { userId: "u-3", rank: 3, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 238300, avatarUrl: "https://i.pravatar.cc/96?img=15", displayed: true },
+            { userId: "u-4", rank: 4, name: "Mia Sophia Bennett", byline: "Level 34 - Gold", total: 221700, avatarUrl: "https://i.pravatar.cc/96?img=47", displayed: false },
+            { userId: "u-5", rank: 5, name: "William Turner", byline: "Level 33 - Gold", total: 199500, avatarUrl: "https://i.pravatar.cc/96?img=52", displayed: false },
+            { userId: "u-6", rank: 6, name: "Ruby Claire", byline: "Level 31 - Gold", total: 198300, avatarUrl: "https://i.pravatar.cc/96?img=9", displayed: false },
+            { userId: "u-19", rank: 19, name: "Grace Coleman", byline: "Level 22 - Bronze", total: 130600, avatarUrl: "https://i.pravatar.cc/96?img=41", displayed: true },
+            { userId: "u-20", rank: 20, name: "Olivia Reed", byline: "Level 22 - Bronze", total: 129900, avatarUrl: "https://i.pravatar.cc/96?img=5", displayed: true },
+            { userId: "u-21", rank: 21, name: "Evan Knight", byline: "Level 21 - Bronze", total: 129300, avatarUrl: "https://i.pravatar.cc/96?img=8", displayed: true },
+            { userId: "u-22", rank: 22, name: "Ivy Brooks", byline: "Level 20 - Bronze", total: 128700, avatarUrl: "https://i.pravatar.cc/96?img=24", displayed: false },
+            { userId: "u-23", rank: 23, name: "Jack Porter", byline: "Level 20 - Bronze", total: 128100, avatarUrl: "https://i.pravatar.cc/96?img=62", displayed: false },
+            { userId: "u-24", rank: 24, name: "Lily Morgan", byline: "Level 19 - Bronze", total: 127500, avatarUrl: "https://i.pravatar.cc/96?img=48", displayed: false },
+            { userId: "u-40", rank: 40, name: "Nora Ellis", byline: "Level 14 - Rookie", total: 110300, avatarUrl: "https://i.pravatar.cc/96?img=27", displayed: true },
+            { userId: "u-41", rank: 41, name: "Owen Ward", byline: "Level 14 - Rookie", total: 109800, avatarUrl: "https://i.pravatar.cc/96?img=17", displayed: true },
+            { userId: "u-42", rank: 42, name: "Paige Hudson", byline: "Level 13 - Rookie", total: 109200, avatarUrl: "https://i.pravatar.cc/96?img=44", displayed: true },
+            { userId: "u-43", rank: 43, name: "Quinn Tate", byline: "Level 13 - Rookie", total: 108600, avatarUrl: "https://i.pravatar.cc/96?img=23", displayed: true },
+            { userId: "u-44", rank: 44, name: "Riley James", byline: "Level 12 - Rookie", total: 107900, avatarUrl: "https://i.pravatar.cc/96?img=58", displayed: true },
+          ]}
+        />
+      </div>
+    ),
+    code: `<LeaderboardRankings
+  currentUserId="u-20"
+  rankings={[
+    { userId: "u-1", rank: 1, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 289400, displayed: true },
+    { userId: "u-2", rank: 2, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 251800, displayed: true },
+    { userId: "u-3", rank: 3, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 238300, displayed: true },
+    { userId: "u-4", rank: 4, name: "Mia Sophia Bennett", byline: "Level 34 - Gold", total: 221700, displayed: false },
+    // ... hidden rows collapse into "..."
+    { userId: "u-19", rank: 19, name: "Grace Coleman", byline: "Level 22 - Bronze", total: 130600, displayed: true },
+    { userId: "u-20", rank: 20, name: "Olivia Reed", byline: "Level 22 - Bronze", total: 129900, displayed: true },
+    { userId: "u-21", rank: 21, name: "Evan Knight", byline: "Level 21 - Bronze", total: 129300, displayed: true },
+    { userId: "u-22", rank: 22, name: "Ivy Brooks", byline: "Level 20 - Bronze", total: 128700, displayed: false },
+    // ... another collapsed block
+    { userId: "u-40", rank: 40, name: "Nora Ellis", byline: "Level 14 - Rookie", total: 110300, displayed: true },
+    { userId: "u-41", rank: 41, name: "Owen Ward", byline: "Level 14 - Rookie", total: 109800, displayed: true },
+    { userId: "u-42", rank: 42, name: "Paige Hudson", byline: "Level 13 - Rookie", total: 109200, displayed: true },
+    { userId: "u-43", rank: 43, name: "Quinn Tate", byline: "Level 13 - Rookie", total: 108600, displayed: true },
+    { userId: "u-44", rank: 44, name: "Riley James", byline: "Level 12 - Rookie", total: 107900, displayed: true },
   ]}
 />`,
   },

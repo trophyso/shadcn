@@ -1,0 +1,167 @@
+---
+title: Leaderboard Rankings
+description: A leaderboard rankings list with rank, avatar, name, byline, totals, and crown highlights for the top 3.
+---
+
+<ComponentPreview name="leaderboard-rankings" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/leaderboard-rankings.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="leaderboard-rankings" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { LeaderboardRankings } from "@/components/ui/leaderboard-rankings"
+```
+
+```tsx
+<LeaderboardRankings
+  rankings={[
+    {
+      userId: "u-1",
+      rank: 1,
+      name: "Ava Elizabeth Turner",
+      byline: "Level 42 - Diamond",
+      total: 289400,
+      avatarUrl: "https://i.pravatar.cc/96?img=32",
+    },
+    {
+      userId: "u-2",
+      rank: 2,
+      name: "Leo Harrison",
+      byline: "Level 39 - Platinum",
+      total: 251800,
+      avatarUrl: "https://i.pravatar.cc/96?img=12",
+    },
+  ]}
+/>
+```
+
+## Examples
+
+### Rank Change Indicators
+
+<ComponentPreview name="leaderboard-rankings-rank-change" />
+
+```tsx
+<LeaderboardRankings
+  rankings={[
+    {
+      userId: "u-1",
+      rank: 1,
+      name: "Ava Elizabeth Turner",
+      byline: "Level 42 - Diamond",
+      total: 289400,
+      avatarUrl: "https://i.pravatar.cc/96?img=32",
+      rankChange: 2,
+    },
+    {
+      userId: "u-2",
+      rank: 2,
+      name: "Leo Harrison",
+      byline: "Level 39 - Platinum",
+      total: 251800,
+      avatarUrl: "https://i.pravatar.cc/96?img=12",
+      rankChange: -1,
+    },
+  ]}
+/>
+```
+
+### Pagination
+
+<ComponentPreview name="leaderboard-rankings-pagination" />
+
+```tsx
+<LeaderboardRankings
+  showPagination
+  rankings={[
+    { userId: "u-1", rank: 1, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 289400, avatarUrl: "https://i.pravatar.cc/96?img=32" },
+    { userId: "u-2", rank: 2, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 251800, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+    { userId: "u-3", rank: 3, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 238300, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+    // ...more rows
+  ]}
+/>
+```
+
+### Current User Focus
+
+<ComponentPreview name="leaderboard-rankings-current-user-focus" />
+
+```tsx
+<LeaderboardRankings
+  currentUserId="u-20"
+  rankings={[
+    { userId: "u-1", rank: 1, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 289400, displayed: true },
+    { userId: "u-2", rank: 2, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 251800, displayed: true },
+    { userId: "u-3", rank: 3, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 238300, displayed: true },
+    { userId: "u-4", rank: 4, name: "Mia Sophia Bennett", byline: "Level 34 - Gold", total: 221700, displayed: false },
+    // ... hidden rows collapse into "..."
+    { userId: "u-19", rank: 19, name: "Grace Coleman", byline: "Level 22 - Bronze", total: 130600, displayed: true },
+    { userId: "u-20", rank: 20, name: "Olivia Reed", byline: "Level 22 - Bronze", total: 129900, displayed: true },
+    { userId: "u-21", rank: 21, name: "Evan Knight", byline: "Level 21 - Bronze", total: 129300, displayed: true },
+    { userId: "u-22", rank: 22, name: "Ivy Brooks", byline: "Level 20 - Bronze", total: 128700, displayed: false },
+    // ... another collapsed block
+    { userId: "u-40", rank: 40, name: "Nora Ellis", byline: "Level 14 - Rookie", total: 110300, displayed: true },
+    { userId: "u-41", rank: 41, name: "Owen Ward", byline: "Level 14 - Rookie", total: 109800, displayed: true },
+    { userId: "u-42", rank: 42, name: "Paige Hudson", byline: "Level 13 - Rookie", total: 109200, displayed: true },
+    { userId: "u-43", rank: 43, name: "Quinn Tate", byline: "Level 13 - Rookie", total: 108600, displayed: true },
+    { userId: "u-44", rank: 44, name: "Riley James", byline: "Level 12 - Rookie", total: 107900, displayed: true },
+  ]}
+/>
+```
+
+## API Reference
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `rankings` | `LeaderboardRankingItem[]` | Required | Rows to render in ranking order |
+| `onUserClick` | `(ranking) => void` | - | Optional row click handler |
+| `currentUserId` | `string` | - | Highlights the matching row with a stronger border style |
+| `showPagination` | `boolean` | `false` | Show page controls and page size selector |
+| `defaultPageSize` | `10 \| 25 \| 50 \| 100` | `10` | Initial number of rankings shown per page |
+
+### LeaderboardRankingItem
+
+```ts
+interface LeaderboardRankingItem {
+  userId: string
+  rank: number
+  name: string
+  byline: string
+  total: number
+  avatarUrl?: string | null
+  rankChange?: number
+  displayed?: boolean
+}
+```

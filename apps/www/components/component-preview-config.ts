@@ -45,6 +45,18 @@ const componentPreviewConfig: Record<string, ComponentPreviewConfig> = {
   "achievement-unlocked": {
     showCard: false,
   },
+  "leaderboard-rankings": {
+    showCard: false,
+  },
+  "leaderboard-rankings-rank-change": {
+    showCard: false,
+  },
+  "leaderboard-rankings-pagination": {
+    showCard: false,
+  },
+  "leaderboard-rankings-current-user-focus": {
+    showCard: false,
+  },
 }
 
 export function getComponentPreviewConfig(name: string): ComponentPreviewConfig | undefined {

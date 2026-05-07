@@ -32,7 +32,7 @@
       "type": "registry:ui"
     },
     {
-      "name": "leaderboard",
+      "name": "leaderboard-rankings",
       "type": "registry:ui"
     },
     {

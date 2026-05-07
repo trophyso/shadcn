@@ -134,7 +134,7 @@
       ]
     },
     {
-      "name": "leaderboard",
+      "name": "leaderboard-rankings",
       "type": "registry:ui",
       "dependencies": [
         "class-variance-authority",
@@ -142,7 +142,7 @@
       ],
       "files": [
         {
-          "path": "registry/trophy/ui/leaderboard.tsx",
+          "path": "registry/trophy/ui/leaderboard-rankings.tsx",
           "type": "registry:ui"
         }
       ]
