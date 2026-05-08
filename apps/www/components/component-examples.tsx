@@ -82,6 +82,124 @@ function createYearStyleStreakHistory() {
   return history
 }
 
+type PointsChartPeriodId =
+  | "last-7-days"
+  | "last-4-weeks"
+  | "last-3-months"
+  | "last-6-months"
+  | "last-12-months"
+  | "year-to-date"
+  | "all-time"
+
+function formatPointsChartLabel(date: Date, granularity: "day" | "week" | "month") {
+  if (granularity === "month") {
+    return new Intl.DateTimeFormat("en-US", { month: "short" }).format(date)
+  }
+  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(date)
+}
+
+function buildPointsChartData(
+  count: number,
+  granularity: "day" | "week" | "month",
+  startValue: number,
+  stepValue: number
+) {
+  const now = new Date()
+  let lastPoints = Math.max(0, Math.round(startValue))
+
+  return Array.from({ length: count }, (_, index) => {
+    const date = new Date(now)
+    const offset = count - 1 - index
+
+    if (granularity === "day") {
+      date.setDate(date.getDate() - offset)
+    } else if (granularity === "week") {
+      date.setDate(date.getDate() - offset * 7)
+    } else {
+      date.setMonth(date.getMonth() - offset)
+    }
+
+    // Add deterministic variance so sample charts do not look perfectly linear.
+    const wave = Math.sin(index * 1.35) * stepValue * 0.55
+    const zigzag = ((index % 3) - 1) * stepValue * 0.25
+    const variance = wave + zigzag
+    const rawPoints = Math.max(0, Math.round(startValue + index * stepValue + variance))
+    const points = index === 0 ? rawPoints : Math.max(lastPoints, rawPoints)
+    lastPoints = points
+
+    return {
+      date: formatPointsChartLabel(date, granularity),
+      points,
+    }
+  })
+}
+
+function PointsChartPeriodSelectorPreview() {
+  const [period, setPeriod] = React.useState<PointsChartPeriodId>("last-7-days")
+
+  const datasets = React.useMemo(() => {
+    const ytdCount = new Date().getMonth() + 1
+
+    return {
+      "last-7-days": {
+        label: "Last 7 days",
+        data: buildPointsChartData(7, "day", 980, 35),
+      },
+      "last-4-weeks": {
+        label: "Last 4 weeks",
+        data: buildPointsChartData(28, "day", 520, 20),
+      },
+      "last-3-months": {
+        label: "Last 3 months",
+        data: buildPointsChartData(13, "week", 300, 55),
+      },
+      "last-6-months": {
+        label: "Last 6 months",
+        data: buildPointsChartData(6, "month", 220, 110),
+      },
+      "last-12-months": {
+        label: "Last 12 months",
+        data: buildPointsChartData(12, "month", 120, 70),
+      },
+      "year-to-date": {
+        label: "Year to date",
+        data: buildPointsChartData(ytdCount, "month", 150, 95),
+      },
+      "all-time": {
+        label: "All time",
+        data: buildPointsChartData(24, "month", 50, 45),
+      },
+    } satisfies Record<PointsChartPeriodId, { label: string; data: Array<{ date: string; points: number }> }>
+  }, [])
+
+  const selected = datasets[period]
+
+  return (
+    <div className="w-full max-w-2xl">
+      <PointsChart
+        title={`Your points · ${selected.label}`}
+        data={selected.data}
+        headerRight={
+          <select
+            value={period}
+            onChange={(event) => setPeriod(event.target.value as PointsChartPeriodId)}
+            className="rounded-md border bg-background px-2 py-1 text-xs text-foreground"
+            aria-label="Select points chart period"
+          >
+            <option value="last-7-days">Last 7 days</option>
+            <option value="last-4-weeks">Last 4 weeks</option>
+            <option value="last-3-months">Last 3 months</option>
+            <option value="last-6-months">Last 6 months</option>
+            <option value="last-12-months">Last 12 months</option>
+            <option value="year-to-date">Year to date</option>
+            <option value="all-time">All time</option>
+          </select>
+        }
+      />
+    </div>
+  )
+}
+
 function AchievementUnlockedPreview() {
   const [open, setOpen] = React.useState(false)
 
@@ -1390,16 +1508,6 @@ const selectedRun = runs[selectedRunId] ?? runs["this-week"]
   points={{ name: "XP", total: 2500, badgeUrl: null }}
 />`,
   },
-  "points-badge-with-level": {
-    component: (
-      <PointsBadge
-        points={{ name: "XP", total: 2500, badgeUrl: null }}
-      />
-    ),
-    code: `<PointsBadge
-  points={{ name: "XP", total: 2500, badgeUrl: null }}
-/>`,
-  },
   "points-badge-sizes": {
     component: (
       <div className="flex flex-wrap items-center gap-4">
@@ -1427,12 +1535,12 @@ const selectedRun = runs[selectedRunId] ?? runs["this-week"]
         <PointsChart
           data={[
             { date: "Fri", points: 0 },
-            { date: "Sat", points: 125 },
-            { date: "Sun", points: 290 },
-            { date: "Mon", points: 420 },
-            { date: "Tue", points: 680 },
-            { date: "Wed", points: 940 },
-            { date: "Thu", points: 1250 },
+            { date: "Sat", points: 160 },
+            { date: "Sun", points: 240 },
+            { date: "Mon", points: 430 },
+            { date: "Tue", points: 590 },
+            { date: "Wed", points: 910 },
+            { date: "Thu", points: 1180 },
           ]}
         />
       </div>
@@ -1440,12 +1548,12 @@ const selectedRun = runs[selectedRunId] ?? runs["this-week"]
     code: `<PointsChart
   data={[
     { date: "Fri", points: 0 },
-    { date: "Sat", points: 125 },
-    { date: "Sun", points: 290 },
-    { date: "Mon", points: 420 },
-    { date: "Tue", points: 680 },
-    { date: "Wed", points: 940 },
-    { date: "Thu", points: 1250 },
+    { date: "Sat", points: 160 },
+    { date: "Sun", points: 240 },
+    { date: "Mon", points: 430 },
+    { date: "Tue", points: 590 },
+    { date: "Wed", points: 910 },
+    { date: "Thu", points: 1180 },
   ]}
 />`,
   },
@@ -1455,12 +1563,12 @@ const selectedRun = runs[selectedRunId] ?? runs["this-week"]
         <PointsChart
           data={[
             { date: "Fri", points: 120 },
-            { date: "Sat", points: 260 },
-            { date: "Sun", points: 520 },
-            { date: "Mon", points: 710 },
-            { date: "Tue", points: 890 },
-            { date: "Wed", points: 1120 },
-            { date: "Thu", points: 1320 },
+            { date: "Sat", points: 240 },
+            { date: "Sun", points: 480 },
+            { date: "Mon", points: 620 },
+            { date: "Tue", points: 860 },
+            { date: "Wed", points: 1010 },
+            { date: "Thu", points: 1290 },
           ]}
           levels={[
             { value: 250, color: "#CD7F32" },
@@ -1473,18 +1581,48 @@ const selectedRun = runs[selectedRunId] ?? runs["this-week"]
     code: `<PointsChart
   data={[
     { date: "Fri", points: 120 },
-    { date: "Sat", points: 260 },
-    { date: "Sun", points: 520 },
-    { date: "Mon", points: 710 },
-    { date: "Tue", points: 890 },
-    { date: "Wed", points: 1120 },
-    { date: "Thu", points: 1320 },
+    { date: "Sat", points: 240 },
+    { date: "Sun", points: 480 },
+    { date: "Mon", points: 620 },
+    { date: "Tue", points: 860 },
+    { date: "Wed", points: 1010 },
+    { date: "Thu", points: 1290 },
   ]}
   levels={[
     { value: 250, color: "#CD7F32" },
     { value: 500, color: "#C0C0C0" },
     { value: 1000, color: "#D4AF37" },
   ]}
+/>`,
+  },
+  "points-chart-period-selector": {
+    component: <PointsChartPeriodSelectorPreview />,
+    code: `const [period, setPeriod] = useState("last-7-days")
+
+const datasets = {
+  "last-7-days": buildPointsChartData(7, "day", 980, 35),
+  "last-4-weeks": buildPointsChartData(28, "day", 520, 20),
+  "last-3-months": buildPointsChartData(13, "week", 300, 55),
+  "last-6-months": buildPointsChartData(6, "month", 220, 110),
+  "last-12-months": buildPointsChartData(12, "month", 120, 70),
+  "year-to-date": buildPointsChartData(new Date().getMonth() + 1, "month", 150, 95),
+  "all-time": buildPointsChartData(24, "month", 50, 45),
+}
+
+<PointsChart
+  title={\`Your points · \${periodLabel}\`}
+  data={datasets[period]}
+  headerRight={
+    <select value={period} onChange={(event) => setPeriod(event.target.value)}>
+      <option value="last-7-days">Last 7 days</option>
+      <option value="last-4-weeks">Last 4 weeks</option>
+      <option value="last-3-months">Last 3 months</option>
+      <option value="last-6-months">Last 6 months</option>
+      <option value="last-12-months">Last 12 months</option>
+      <option value="year-to-date">Year to date</option>
+      <option value="all-time">All time</option>
+    </select>
+  }
 />`,
   },
 }

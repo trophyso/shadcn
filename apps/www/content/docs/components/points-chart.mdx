@@ -91,6 +91,32 @@ Add bronze, silver, and gold level markers on the Y-axis with matching dashed th
 />
 ```
 
+### Period Selector
+
+Use a top-right selector to switch between date ranges and granularity presets.
+
+<ComponentPreview name="points-chart-period-selector" />
+
+```tsx
+const [period, setPeriod] = useState("last-7-days")
+
+<PointsChart
+  title={`Your points · ${periodLabel}`}
+  data={periodData}
+  headerRight={
+    <select value={period} onChange={(event) => setPeriod(event.target.value)}>
+      <option value="last-7-days">Last 7 days</option>
+      <option value="last-4-weeks">Last 4 weeks</option>
+      <option value="last-3-months">Last 3 months</option>
+      <option value="last-6-months">Last 6 months</option>
+      <option value="last-12-months">Last 12 months</option>
+      <option value="year-to-date">Year to date</option>
+      <option value="all-time">All time</option>
+    </select>
+  }
+/>
+```
+
 ## API Reference
 
 ### Props
@@ -100,6 +126,7 @@ Add bronze, silver, and gold level markers on the Y-axis with matching dashed th
 | `data` | `PointsChartDataPoint[]` | Required | Time-series points values |
 | `height` | `number` | `260` | Chart container height in pixels |
 | `title` | `string` | `"Your points"` | Chart title text |
+| `headerRight` | `ReactNode` | - | Optional right-side header content, such as a period selector |
 | `yAxisLabel` | `string` | - | Optional Y-axis label text |
 | `levels` | `PointsChartLevel[]` | - | Optional level thresholds with star markers and dashed lines |
 

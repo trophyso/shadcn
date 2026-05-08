@@ -29,12 +29,13 @@ interface PointsChartProps extends React.HTMLAttributes<HTMLDivElement> {
   data: PointsChartDataPoint[]
   height?: number
   title?: string
+  headerRight?: React.ReactNode
   yAxisLabel?: string
   levels?: PointsChartLevel[]
 }
 
 function formatValue(value: number) {
-  return value.toLocaleString()
+  return Math.round(value).toLocaleString()
 }
 
 function LevelReferenceStarLabel({
@@ -70,17 +71,42 @@ function PointsChart({
   data,
   height = 260,
   title = "Your points",
+  headerRight,
   yAxisLabel,
   levels,
   className,
   ...props
 }: PointsChartProps) {
+  const yDomain = React.useMemo<[number, number]>(() => {
+    const values = [
+      ...data.map((item) => item.points),
+      ...(levels?.map((level) => level.value) ?? []),
+    ]
+
+    if (values.length === 0) return [0, 100]
+
+    const minValue = Math.min(...values)
+    const maxValue = Math.max(...values)
+    const range = maxValue - minValue
+
+    if (range === 0) {
+      const padding = Math.max(maxValue * 0.15, 10)
+      return [Math.max(0, minValue - padding), maxValue + padding]
+    }
+
+    const padding = Math.max(range * 0.12, 10)
+    return [Math.max(0, minValue - padding), maxValue + padding]
+  }, [data, levels])
+
   return (
     <div
       className={cn("rounded-2xl border bg-card p-4", className)}
       {...props}
     >
-      <p className="mb-3 text-sm font-medium text-foreground">{title}</p>
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <p className="text-sm font-medium text-foreground">{title}</p>
+        {headerRight ? <div className="shrink-0">{headerRight}</div> : null}
+      </div>
       <div style={{ height }}>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 12, right: 12, left: 0, bottom: 4 }}>
@@ -94,6 +120,7 @@ function PointsChart({
             <YAxis
               tickLine={false}
               axisLine={false}
+              domain={yDomain}
               tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
               tickFormatter={formatValue}
               width={64}

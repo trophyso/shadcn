@@ -69,9 +69,6 @@ const componentPreviewConfig: Record<string, ComponentPreviewConfig> = {
   "points-badge": {
     showCard: false,
   },
-  "points-badge-with-level": {
-    showCard: false,
-  },
   "points-badge-sizes": {
     showCard: false,
   },
@@ -79,6 +76,9 @@ const componentPreviewConfig: Record<string, ComponentPreviewConfig> = {
     showCard: false,
   },
   "points-chart-levels": {
+    showCard: false,
+  },
+  "points-chart-period-selector": {
     showCard: false,
   },
   "leaderboard-card": {

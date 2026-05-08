@@ -30,8 +30,8 @@ const pointsBadgeVariants = cva(
 
 interface PointsBadgeProps
   extends
-    React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof pointsBadgeVariants> {
+  React.HTMLAttributes<HTMLDivElement>,
+  VariantProps<typeof pointsBadgeVariants> {
   points: PointsBadgeData;
   icon?: React.ComponentType<{ className?: string }>;
   formatValue?: (value: number) => string;
@@ -94,7 +94,7 @@ const PointsBadge = React.forwardRef<HTMLDivElement, PointsBadgeProps>(
           </div>
         )}
 
-        <div className="flex flex-col min-w-0">
+        <div className="flex min-w-0 flex-col">
           <div className="flex items-baseline gap-2">
             <span
               className={cn(
@@ -106,9 +106,7 @@ const PointsBadge = React.forwardRef<HTMLDivElement, PointsBadgeProps>(
             >
               {displayValue}
             </span>
-            <span className="text-muted-foreground truncate">
-              {points.name}
-            </span>
+            <span className="truncate text-muted-foreground">{points.name}</span>
           </div>
         </div>
       </div>
@@ -118,7 +116,4 @@ const PointsBadge = React.forwardRef<HTMLDivElement, PointsBadgeProps>(
 PointsBadge.displayName = "PointsBadge";
 
 export { PointsBadge, pointsBadgeVariants };
-export type {
-  PointsBadgeProps,
-  PointsBadgeData,
-};
+export type { PointsBadgeProps, PointsBadgeData };
