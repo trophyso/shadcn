@@ -107,18 +107,20 @@ const PointsAwards = React.forwardRef<HTMLDivElement, PointsAwardsProps>(
                 <div
                   key={row.id}
                   role="listitem"
-                  className="grid grid-cols-[11rem_8rem_minmax(0,1fr)] items-center gap-4 px-4 py-3"
+                  className="grid grid-cols-[7rem_minmax(0,1fr)_minmax(0,1fr)] items-center gap-4 py-3"
                 >
-                  <span className="truncate text-muted-foreground">{row.date}</span>
+                  <span className="truncate text-muted-foreground text-sm">{row.date}</span>
 
-                  <span className="justify-self-center font-bold tabular-nums text-foreground">
-                    {totalLabel}
-                  </span>
-
-                  <div className="flex items-center justify-end gap-2">
+                  <p className="flex items-center gap-2">
+                    <span className="justify-self-center font-bold tabular-nums text-foreground">
+                      {totalLabel}
+                    </span>
                     <span className="font-medium tabular-nums text-success">
                       {awardedLabel}
                     </span>
+                  </p>
+
+                  <div className="flex items-center justify-end gap-2">
                     {row.actions.map((action, index) => {
                       const Icon = actionIconMap[action.type];
                       const actionLabel = action.label ?? actionLabelMap[action.type];

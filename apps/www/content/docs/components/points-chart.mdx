@@ -104,7 +104,7 @@ const [period, setPeriod] = useState("last-7-days")
   title={`Your points · ${periodLabel}`}
   data={periodData}
   headerRight={
-    <select value={period} onChange={(event) => setPeriod(event.target.value)}>
+    <select value={period} onChange={(event) => setPeriod(event.target.value)} className="rounded-md border bg-background px-2 py-1 text-xs text-foreground">
       <option value="last-7-days">Last 7 days</option>
       <option value="last-4-weeks">Last 4 weeks</option>
       <option value="last-3-months">Last 3 months</option>

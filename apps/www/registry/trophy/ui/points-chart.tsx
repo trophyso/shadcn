@@ -104,7 +104,7 @@ function PointsChart({
       {...props}
     >
       <div className="mb-3 flex items-center justify-between gap-3">
-        <p className="text-sm font-medium text-foreground">{title}</p>
+        <p className="text-md font-semibold text-foreground">{title}</p>
         {headerRight ? <div className="shrink-0">{headerRight}</div> : null}
       </div>
       <div style={{ height }}>

@@ -73,7 +73,7 @@ const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>
       ? Math.min(100, Math.max(1, Math.round(achievement.rarity ?? 1)))
       : null;
     const ringSize = progressRingSizeMap[badgeSize];
-    const ringStrokeWidth = 6;
+    const ringStrokeWidth = 4;
     const ringRadius = (ringSize - ringStrokeWidth) / 2;
     const ringCircumference = 2 * Math.PI * ringRadius;
     const ringDashoffset =
@@ -92,15 +92,15 @@ const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>
         onKeyDown={
           onAchievementClick
             ? (e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  onAchievementClick(achievement);
-                }
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                onAchievementClick(achievement);
               }
+            }
             : undefined
         }
         className={cn(
-          "flex flex-col items-center gap-2 rounded-lg border bg-card p-4 shadow-sm transition-all hover:shadow-md",
+          "flex flex-col items-center justify-center gap-2 rounded-lg border bg-card p-4",
           onAchievementClick && "cursor-pointer",
           !isUnlocked && lockedStyle === "grayscale" && "opacity-50",
           className
@@ -125,7 +125,7 @@ const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>
                 cy={ringSize / 2}
                 r={ringRadius}
                 fill="none"
-                stroke="#D97706"
+                stroke="var(--primary)"
                 strokeLinecap="round"
                 strokeWidth={ringStrokeWidth}
                 strokeDasharray={ringCircumference}
@@ -144,8 +144,8 @@ const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>
                 "relative z-10 rounded-full object-cover",
                 !isUnlocked && lockedStyle === "grayscale" && "grayscale",
                 !isUnlocked &&
-                  lockedStyle === "silhouette" &&
-                  "brightness-0 opacity-30"
+                lockedStyle === "silhouette" &&
+                "brightness-0 opacity-30"
               )}
             />
           ) : (
@@ -155,8 +155,8 @@ const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>
                 badgeSizeMap[badgeSize],
                 "relative z-10 flex items-center justify-center rounded-full",
                 isUnlocked
-                  ? "bg-achievement text-achievement-foreground"
-                  : "bg-muted text-muted-foreground"
+                  ? "bg-muted text-muted-foreground"
+                  : "bg-primary text-primary-foreground"
               )}
             >
               <Trophy className={iconSizeMap[badgeSize]} />

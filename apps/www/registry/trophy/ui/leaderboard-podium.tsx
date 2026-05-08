@@ -34,7 +34,7 @@ const PODIUM_CONFIG = {
   1: {
     icon: Crown,
     color: "text-rank-1",
-    bg: "bg-rank-1/10",
+    bg: "bg-rank-1/60",
     ringColor: "ring-rank-1/50",
     height: "h-32",
     heightSm: "h-24",
@@ -43,7 +43,7 @@ const PODIUM_CONFIG = {
   2: {
     icon: Crown,
     color: "text-rank-2",
-    bg: "bg-rank-2/10",
+    bg: "bg-rank-2/30",
     ringColor: "ring-rank-2/50",
     height: "h-24",
     heightSm: "h-20",
@@ -52,7 +52,7 @@ const PODIUM_CONFIG = {
   3: {
     icon: Crown,
     color: "text-rank-3",
-    bg: "bg-rank-3/10",
+    bg: "bg-rank-3/50",
     ringColor: "ring-rank-3/50",
     height: "h-20",
     heightSm: "h-16",
@@ -63,8 +63,8 @@ const PODIUM_CONFIG = {
 // Props
 interface LeaderboardPodiumProps
   extends
-    React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof podiumVariants> {
+  React.HTMLAttributes<HTMLDivElement>,
+  VariantProps<typeof podiumVariants> {
   /** Top 3 rankings (expects at least 1, ideally 3) */
   rankings: LeaderboardRanking[];
   /** Show value below name */
@@ -229,9 +229,9 @@ const LeaderboardPodium = React.forwardRef<
               <div
                 aria-hidden="true"
                 className={cn(
-                  "mt-2 w-20 rounded-t-lg",
-                  size === "sm" && "w-16",
-                  size === "lg" && "w-28",
+                  "mt-2 w-22 rounded-t-lg",
+                  size === "sm" && "w-20",
+                  size === "lg" && "w-24",
                   podiumHeight,
                   config.bg,
                   medalStyle === "modern" && "rounded-t-xl",

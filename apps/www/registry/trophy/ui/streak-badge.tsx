@@ -118,7 +118,7 @@ const StreakBadge = React.forwardRef<HTMLDivElement, StreakBadgeProps>(
             <Flame
               className={cn(
                 iconSize,
-                "shrink-0 text-warning drop-shadow-[0_0_20px_hsl(var(--warning)/0.35)]",
+                "shrink-0 text-primary",
               )}
               aria-hidden="true"
             />

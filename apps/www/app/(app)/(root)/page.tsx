@@ -6,6 +6,7 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-header"
+import { HomeComponentMosaic } from "@/components/home-component-mosaic"
 import { Button } from "@/registry/trophy/ui/button"
 
 const title = "Trophy UI"
@@ -71,6 +72,7 @@ export default function IndexPage() {
             </Button>
           </PageActions>
         </PageHeader>
+        <HomeComponentMosaic />
       </div>
     </div>
   )

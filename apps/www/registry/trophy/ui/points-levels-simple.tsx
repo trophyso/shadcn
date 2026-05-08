@@ -114,7 +114,7 @@ const PointsLevelsSimple = React.forwardRef<HTMLDivElement, PointsLevelsSimplePr
       <div ref={ref} className={cn("w-full rounded-xl border bg-card", className)} {...props}>
         {shouldShowProgressBar && currentLevel && nextLevel ? (
           <div className="space-y-3 border-b px-4 py-4">
-            <p className="text-lg text-foreground">
+            <p className="text-foreground">
               <span className="font-semibold">{format(currentPoints)}</span> points.{" "}
               <span className="font-semibold">{format(pointsUntilNextLevel)}</span> until{" "}
               <span className="font-semibold">{nextLevel.name}</span>
@@ -175,12 +175,14 @@ const PointsLevelsSimple = React.forwardRef<HTMLDivElement, PointsLevelsSimplePr
                   >
                     <Icon className="h-3.5 w-3.5" />
                   </span>
-                  <span className="font-medium tabular-nums text-foreground">
+                  <span className="tabular-nums text-foreground text-sm">
                     {formatRange(level.threshold, nextThreshold, formatPoints)}
                   </span>
                 </div>
 
-                <span className="font-semibold text-foreground">{level.name}</span>
+                <span className="truncate whitespace-nowrap font-semibold text-foreground text-sm">
+                  {level.name}
+                </span>
 
                 <span className="text-sm text-muted-foreground">
                   {currentLevelIndex >= 0 && levels[currentLevelIndex]?.id === level.id ? currentLevelLabel : ""}

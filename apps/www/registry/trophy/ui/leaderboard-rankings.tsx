@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ChevronLeft, ChevronRight, Crown, TrendingDown, TrendingUp } from "lucide-react";
+import { ChevronLeft, ChevronRight, CircleEllipsisIcon, Crown, EllipsisIcon, TrendingDown, TrendingUp } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -112,9 +112,9 @@ const LeaderboardRankings = React.forwardRef<HTMLDivElement, LeaderboardRankings
                   key={row.key}
                   role="listitem"
                   aria-label="Collapsed leaderboard rows"
-                  className="px-4 py-2 text-center text-muted-foreground text-md"
+                  className="flex items-center justify-center px-4 py-2 text-muted-foreground"
                 >
-                  ...
+                  <EllipsisIcon className="h-5 w-5" />
                 </div>
               );
             }
@@ -141,8 +141,8 @@ const LeaderboardRankings = React.forwardRef<HTMLDivElement, LeaderboardRankings
                     : undefined
                 }
                 className={cn(
-                  "flex items-center gap-2 px-4 py-3",
-                  isCurrentUser && "rounded-md border-2 border-primary/70 bg-primary/10",
+                  "flex items-center gap-2 px-2 py-2",
+                  isCurrentUser && "border-2 rounded-md border-primary bg-muted",
                   onUserClick && "cursor-pointer transition-colors hover:bg-muted/40"
                 )}
               >
@@ -157,10 +157,10 @@ const LeaderboardRankings = React.forwardRef<HTMLDivElement, LeaderboardRankings
                   <img
                     src={ranking.avatarUrl}
                     alt={`${ranking.name} avatar`}
-                    className="h-12 w-12 rounded-full object-cover"
+                    className="h-10 w-10 rounded-full object-cover"
                   />
                 ) : (
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted text-sm font-medium text-muted-foreground">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-sm font-medium text-muted-foreground">
                     {ranking.name.charAt(0).toUpperCase()}
                   </div>
                 )}
@@ -175,7 +175,7 @@ const LeaderboardRankings = React.forwardRef<HTMLDivElement, LeaderboardRankings
                     <p
                       className={cn(
                         "inline-flex items-center gap-1 text-xs font-medium",
-                        ranking.rankChange > 0 ? "text-emerald-600" : "text-red-600"
+                        ranking.rankChange > 0 ? "text-success-600" : "text-red-600"
                       )}
                     >
                       {ranking.rankChange > 0 ? (
@@ -186,7 +186,7 @@ const LeaderboardRankings = React.forwardRef<HTMLDivElement, LeaderboardRankings
                       {Math.abs(ranking.rankChange)}
                     </p>
                   ) : null}
-                  <p className="text-xl font-semibold tabular-nums leading-none">
+                  <p className="font-semibold tabular-nums leading-none">
                     {formatTotal(ranking.total)}
                   </p>
                 </div>
@@ -196,7 +196,7 @@ const LeaderboardRankings = React.forwardRef<HTMLDivElement, LeaderboardRankings
         </div>
 
         {showPagination ? (
-          <div className="flex items-center justify-between gap-3 border-t px-4 py-3">
+          <div className="flex items-center justify-between gap-3 border-t pt-3">
             <div className="flex items-center gap-2">
               <label htmlFor="leaderboard-page-size" className="text-sm text-muted-foreground">
                 Show

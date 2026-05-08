@@ -42,8 +42,8 @@ const achievementListVariants = cva("flex flex-col", {
 
 interface AchievementListProps
   extends
-    React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof achievementListVariants> {
+  React.HTMLAttributes<HTMLDivElement>,
+  VariantProps<typeof achievementListVariants> {
   achievements: UserAchievement[];
   badgeSize?: "sm" | "default" | "lg";
   lockedStyle?: "grayscale" | "silhouette" | "hidden";
@@ -106,7 +106,7 @@ const AchievementList = React.forwardRef<HTMLDivElement, AchievementListProps>(
               ? Math.min(100, Math.max(0, achievement.progress ?? 0))
               : 0;
             const progressSize = progressSizeMap[badgeSize];
-            const progressStroke = 6;
+            const progressStroke = 3;
             const progressRadius = (progressSize - progressStroke) / 2;
             const circumference = 2 * Math.PI * progressRadius;
             const dashOffset = circumference - (progress / 100) * circumference;
@@ -120,11 +120,11 @@ const AchievementList = React.forwardRef<HTMLDivElement, AchievementListProps>(
                 onKeyDown={
                   onAchievementClick
                     ? (e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          onAchievementClick(achievement);
-                        }
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        onAchievementClick(achievement);
                       }
+                    }
                     : undefined
                 }
                 className={cn(
@@ -141,8 +141,8 @@ const AchievementList = React.forwardRef<HTMLDivElement, AchievementListProps>(
                       "shrink-0 rounded-xl object-cover",
                       !isUnlocked && lockedStyle === "grayscale" && "grayscale",
                       !isUnlocked &&
-                        lockedStyle === "silhouette" &&
-                        "brightness-0 opacity-30"
+                      lockedStyle === "silhouette" &&
+                      "brightness-0 opacity-30"
                     )}
                   />
                 ) : (
@@ -152,8 +152,8 @@ const AchievementList = React.forwardRef<HTMLDivElement, AchievementListProps>(
                       badgeSizeMap[badgeSize],
                       "flex shrink-0 items-center justify-center rounded-xl",
                       isUnlocked
-                        ? "bg-achievement text-achievement-foreground"
-                        : "bg-muted text-muted-foreground"
+                        ? "bg-muted text-muted-foreground"
+                        : "bg-primary text-primary-foreground"
                     )}
                   >
                     <Trophy className={iconSizeMap[badgeSize]} />
@@ -197,7 +197,7 @@ const AchievementList = React.forwardRef<HTMLDivElement, AchievementListProps>(
                         cy={progressSize / 2}
                         r={progressRadius}
                         fill="none"
-                        stroke="#F97316"
+                        stroke="var(--primary)"
                         strokeLinecap="round"
                         strokeWidth={progressStroke}
                         strokeDasharray={circumference}

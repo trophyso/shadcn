@@ -214,7 +214,7 @@ function AchievementUnlockedPreview() {
         onClick={() => setOpen(true)}
         className="rounded-lg border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
       >
-        Show achievement unlocked
+        Unlock achievement
       </button>
 
       <AchievementUnlocked
@@ -1101,7 +1101,7 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
   onClick={() => setOpen(true)}
   className="rounded-lg border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
 >
-  Show achievement unlocked
+  Unlock achievement
 </button>
 
 <AchievementUnlocked
@@ -1617,7 +1617,7 @@ const datasets = {
   title={\`Your points · \${periodLabel}\`}
   data={datasets[period]}
   headerRight={
-    <select value={period} onChange={(event) => setPeriod(event.target.value)}>
+    <select value={period} onChange={(event) => setPeriod(event.target.value)} className="rounded-md border bg-background px-2 py-1 text-xs text-foreground">
       <option value="last-7-days">Last 7 days</option>
       <option value="last-4-weeks">Last 4 weeks</option>
       <option value="last-3-months">Last 3 months</option>

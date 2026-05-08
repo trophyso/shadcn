@@ -4,6 +4,7 @@ import * as React from "react";
 import { ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { Button } from "./button";
 
 interface PointsBoostCta {
   link: string;
@@ -58,19 +59,19 @@ const PointsBoost = React.forwardRef<HTMLDivElement, PointsBoostProps>(
       <div
         ref={ref}
         className={cn(
-          "flex items-center justify-between gap-4 rounded-xl border bg-card px-4 py-3 text-foreground shadow-sm",
+          "flex items-center justify-between gap-4 rounded-xl border bg-card px-4 py-3 text-foreground",
           className
         )}
         {...props}
       >
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold">
+        <div className="min-w-0 flex-1 flex flex-col gap-1">
+          <p className="font-semibold">
             {boost.name}{" "}
-            <span className="rounded-full bg-primary/10 px-2 py-0.5 text-primary">
+            <span className="rounded-full bg-muted-foreground/10 px-2 py-0.5 text-primary">
               x{boost.multiplier}
             </span>
           </p>
-          <p className="text-xs leading-snug text-muted-foreground">
+          <p className="text-sm leading-snug text-muted-foreground">
             {boost.description}
           </p>
         </div>
@@ -79,13 +80,12 @@ const PointsBoost = React.forwardRef<HTMLDivElement, PointsBoostProps>(
           {countdownLabel ? (
             <span className="text-xs font-medium text-muted-foreground">{countdownLabel}</span>
           ) : null}
-          <a
-            href={boost.cta.link}
-            className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            {boost.cta.text}
-            <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
-          </a>
+          <Button asChild size="sm">
+            <a href={boost.cta.link}>
+              {boost.cta.text}
+              <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
+          </Button>
         </div>
       </div>
     );

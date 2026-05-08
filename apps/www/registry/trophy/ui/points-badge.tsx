@@ -75,27 +75,29 @@ const PointsBadge = React.forwardRef<HTMLDivElement, PointsBadgeProps>(
         className={cn(pointsBadgeVariants({ size }), "border bg-card p-4", className)}
         {...props}
       >
-        {points.badgeUrl ? (
-          <img
-            src={points.badgeUrl}
-            alt=""
-            aria-hidden="true"
-            className={cn("rounded object-contain shrink-0", badgeSize)}
-          />
-        ) : (
-          <div
-            aria-hidden="true"
-            className={cn(
-              "flex items-center justify-center rounded-full bg-primary/10 shrink-0",
-              badgeSize,
-            )}
-          >
-            <Icon className={cn(iconSize, "text-primary")} />
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          {points.badgeUrl ? (
+            <div>
+              <img
+                src={points.badgeUrl}
+                alt=""
+                aria-hidden="true"
+                className={cn("rounded object-contain shrink-0", badgeSize)}
+              />
+            </div>
+          ) : (
+            <div
+              aria-hidden="true"
+              className={cn(
+                "flex items-center justify-center rounded-full bg-primary/10 shrink-0",
+                badgeSize,
+              )}
+            >
+              <Icon className={cn(iconSize, "text-primary")} />
+            </div>
+          )}
 
-        <div className="flex min-w-0 flex-col">
-          <div className="flex items-baseline gap-2">
+          <div>
             <span
               className={cn(
                 "font-bold tabular-nums",
@@ -106,8 +108,11 @@ const PointsBadge = React.forwardRef<HTMLDivElement, PointsBadgeProps>(
             >
               {displayValue}
             </span>
-            <span className="truncate text-muted-foreground">{points.name}</span>
           </div>
+        </div>
+
+        <div>
+          <span className="truncate text-muted-foreground">{points.name}</span>
         </div>
       </div>
     );
