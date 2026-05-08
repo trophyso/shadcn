@@ -129,7 +129,7 @@ const PointsAwards = React.forwardRef<HTMLDivElement, PointsAwardsProps>(
                           <TooltipTrigger asChild>
                             <span
                               aria-label={actionTooltip}
-                              className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-foreground text-background"
+                              className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-muted text-foreground"
                             >
                               <Icon className="h-3 w-3" aria-hidden="true" />
                             </span>

@@ -17,6 +17,7 @@ import { PointsBadge } from "@/registry/trophy/ui/points-badge"
 import { PointsChart } from "@/registry/trophy/ui/points-chart"
 import { PointsAwards } from "@/registry/trophy/ui/points-awards"
 import { PointsLevels } from "@/registry/trophy/ui/points-levels"
+import { PointsLevelsSimple } from "@/registry/trophy/ui/points-levels-simple"
 import { PointsBoost } from "@/registry/trophy/ui/points-boost"
 
 function formatDateKey(date: Date) {
@@ -1701,100 +1702,232 @@ const datasets = {
   ]}
 />`,
   },
+  "points-levels-simple": {
+    component: (
+      <div className="w-full max-w-6xl">
+        <PointsLevelsSimple
+          levels={[
+            { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
+            { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
+            { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
+            { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
+            { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
+            { id: "master", threshold: 10000, name: "Master", iconType: "master" },
+            { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
+            { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+          ]}
+        />
+      </div>
+    ),
+    code: `<PointsLevelsSimple
+  levels={[
+    { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
+    { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
+    { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", threshold: 10000, name: "Master", iconType: "master" },
+    { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+  ]}
+/>`,
+  },
+  "points-levels-simple-current-level": {
+    component: (
+      <div className="w-full max-w-6xl">
+        <PointsLevelsSimple
+          currentPoints={6200}
+          levels={[
+            { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
+            { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
+            { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
+            { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
+            { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
+            { id: "master", threshold: 10000, name: "Master", iconType: "master" },
+            { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
+            { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+          ]}
+        />
+      </div>
+    ),
+    code: `<PointsLevelsSimple
+  currentPoints={6200}
+  levels={[
+    { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
+    { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
+    { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", threshold: 10000, name: "Master", iconType: "master" },
+    { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+  ]}
+/>`,
+  },
+  "points-levels-simple-progress": {
+    component: (
+      <div className="w-full max-w-6xl">
+        <PointsLevelsSimple
+          currentPoints={6200}
+          showProgressBar
+          levels={[
+            { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
+            { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
+            { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
+            { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
+            { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
+            { id: "master", threshold: 10000, name: "Master", iconType: "master" },
+            { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
+            { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+          ]}
+        />
+      </div>
+    ),
+    code: `<PointsLevelsSimple
+  currentPoints={6200}
+  showProgressBar
+  levels={[
+    { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
+    { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
+    { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", threshold: 10000, name: "Master", iconType: "master" },
+    { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+  ]}
+/>`,
+  },
   "points-levels": {
     component: (
       <div className="w-full max-w-6xl">
         <PointsLevels
           levels={[
-            { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
-            { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
-            { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
-            { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
-            { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
-            { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
-            { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
-            { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+            { id: "bronze", name: "Bronze", threshold: 75 },
+            { id: "silver", name: "Silver", threshold: 150 },
+            { id: "gold", name: "Gold", threshold: 275 },
           ]}
         />
       </div>
     ),
     code: `<PointsLevels
   levels={[
-    { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
-    { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
-    { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
-    { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
-    { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
-    { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
-    { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
-    { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+    { id: "bronze", name: "Bronze", threshold: 75 },
+    { id: "silver", name: "Silver", threshold: 150 },
+    { id: "gold", name: "Gold", threshold: 275 },
   ]}
 />`,
   },
-  "points-levels-current-level": {
+  "points-levels-sub-levels": {
     component: (
       <div className="w-full max-w-6xl">
         <PointsLevels
           levels={[
-            { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
-            { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
-            { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
-            { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
-            { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
-            { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
-            { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
-            { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+            {
+              id: "bronze",
+              name: "Bronze",
+              threshold: 75,
+              subLevels: [
+                { name: "Bronze III", threshold: 75 },
+                { name: "Bronze II", threshold: 100 },
+                { name: "Bronze I", threshold: 125 },
+              ],
+            },
+            {
+              id: "silver",
+              name: "Silver",
+              threshold: 150,
+              subLevels: [
+                { name: "Silver III", threshold: 150 },
+                { name: "Silver II", threshold: 190 },
+                { name: "Silver I", threshold: 230 },
+              ],
+            },
           ]}
-          currentLevelId="grand-master"
         />
       </div>
     ),
     code: `<PointsLevels
   levels={[
-    { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
-    { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
-    { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
-    { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
-    { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
-    { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
-    { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
-    { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+    {
+      id: "bronze",
+      name: "Bronze",
+      threshold: 75,
+      subLevels: [
+        { name: "Bronze III", threshold: 75 },
+        { name: "Bronze II", threshold: 100 },
+        { name: "Bronze I", threshold: 125 },
+      ],
+    },
+    {
+      id: "silver",
+      name: "Silver",
+      threshold: 150,
+      subLevels: [
+        { name: "Silver III", threshold: 150 },
+        { name: "Silver II", threshold: 190 },
+        { name: "Silver I", threshold: 230 },
+      ],
+    },
   ]}
-  currentLevelId="grand-master"
 />`,
   },
-  "points-levels-progress-bar": {
+  "points-levels-progress-tracking": {
     component: (
       <div className="w-full max-w-6xl">
         <PointsLevels
+          currentPoints={136}
           levels={[
-            { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
-            { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
-            { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
-            { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
-            { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
-            { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
-            { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
-            { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+            {
+              id: "bronze",
+              name: "Bronze",
+              threshold: 75,
+              subLevels: [
+                { name: "Bronze III", threshold: 75 },
+                { name: "Bronze II", threshold: 100 },
+                { name: "Bronze I", threshold: 125 },
+              ],
+            },
+            {
+              id: "silver",
+              name: "Silver",
+              threshold: 150,
+              subLevels: [
+                { name: "Silver III", threshold: 150 },
+                { name: "Silver II", threshold: 190 },
+                { name: "Silver I", threshold: 230 },
+              ],
+            },
+            { id: "gold", name: "Gold", threshold: 275 },
           ]}
-          currentLevelId="grand-master"
-          currentPoints={32100}
         />
       </div>
     ),
     code: `<PointsLevels
+  currentPoints={136}
   levels={[
-    { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
-    { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
-    { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
-    { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
-    { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
-    { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
-    { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
-    { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+    {
+      id: "bronze",
+      name: "Bronze",
+      threshold: 75,
+      subLevels: [
+        { name: "Bronze III", threshold: 75 },
+        { name: "Bronze II", threshold: 100 },
+        { name: "Bronze I", threshold: 125 },
+      ],
+    },
+    {
+      id: "silver",
+      name: "Silver",
+      threshold: 150,
+      subLevels: [
+        { name: "Silver III", threshold: 150 },
+        { name: "Silver II", threshold: 190 },
+        { name: "Silver I", threshold: 230 },
+      ],
+    },
+    { id: "gold", name: "Gold", threshold: 275 },
   ]}
-  currentLevelId="grand-master"
-  currentPoints={32100}
 />`,
   },
   "points-boost": {

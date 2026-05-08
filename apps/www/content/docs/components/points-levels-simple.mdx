@@ -1,0 +1,122 @@
+---
+title: Points Levels (Simple)
+description: A compact points levels table with optional current-level label and progress header.
+---
+
+<ComponentPreview name="points-levels-simple" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/points-levels-simple.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="points-levels-simple" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PointsLevelsSimple } from "@/components/ui/points-levels-simple"
+```
+
+```tsx
+<PointsLevelsSimple
+  levels={[
+    { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
+    { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
+    { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", threshold: 10000, name: "Master", iconType: "master" },
+    { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+  ]}
+/>
+```
+
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="points-levels-simple" />
+
+```tsx
+<PointsLevelsSimple
+  levels={[
+    { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
+    { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
+    { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", threshold: 10000, name: "Master", iconType: "master" },
+    { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+  ]}
+/>
+```
+
+### Current Level
+
+<ComponentPreview name="points-levels-simple-current-level" />
+
+```tsx
+<PointsLevelsSimple
+  currentPoints={6200}
+  levels={[
+    { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
+    { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
+    { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", threshold: 10000, name: "Master", iconType: "master" },
+    { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+  ]}
+/>
+```
+
+### With Progress
+
+<ComponentPreview name="points-levels-simple-progress" />
+
+```tsx
+<PointsLevelsSimple
+  currentPoints={6200}
+  showProgressBar
+  levels={[
+    { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
+    { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
+    { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", threshold: 10000, name: "Master", iconType: "master" },
+    { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+  ]}
+/>
+```

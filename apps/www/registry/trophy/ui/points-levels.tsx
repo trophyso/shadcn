@@ -1,62 +1,40 @@
 "use client";
 
 import * as React from "react";
-import {
-  BadgeCheck,
-  Medal,
-  Shield,
-  ShieldCheck,
-  ShieldHalf,
-  Sparkles,
-  Trophy,
-  type LucideIcon,
-} from "lucide-react";
+import { Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-type PointsLevelIconType =
-  | "beginner"
-  | "novice"
-  | "intermediate"
-  | "professional"
-  | "expert"
-  | "master"
-  | "grand-master"
-  | "enlightened";
+interface PointsSubLevel {
+  name: string;
+  threshold: number;
+}
 
 interface PointsLevel {
   id: string;
-  minPoints: number;
-  maxPoints: number | null;
   name: string;
-  iconType?: PointsLevelIconType;
+  threshold: number;
+  summary?: string;
+  subLevels?: PointsSubLevel[];
 }
 
 interface PointsLevelsProps extends React.HTMLAttributes<HTMLDivElement> {
   levels: PointsLevel[];
-  currentLevelId?: string;
   currentPoints?: number;
   currentLevelLabel?: string;
   formatPoints?: (value: number) => string;
 }
 
-const pointsLevelIconMap: Record<PointsLevelIconType, LucideIcon> = {
-  beginner: Shield,
-  novice: ShieldHalf,
-  intermediate: BadgeCheck,
-  professional: ShieldCheck,
-  expert: Medal,
-  master: Trophy,
-  "grand-master": Trophy,
-  enlightened: Sparkles,
-};
-
-function formatRange(level: PointsLevel, formatPoints?: (value: number) => string) {
+function formatRangeLabel(
+  threshold: number,
+  nextThreshold: number | null | undefined,
+  formatPoints?: (value: number) => string
+) {
   const format = formatPoints ?? ((value: number) => value.toLocaleString());
-  if (level.maxPoints === null) {
-    return `${format(level.minPoints)}+`;
+  if (typeof nextThreshold === "number") {
+    return `${format(threshold)} - ${format(nextThreshold - 1)} XP`;
   }
-  return `${format(level.minPoints)}-${format(level.maxPoints)}`;
+  return `${format(threshold)}+ XP`;
 }
 
 const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
@@ -64,113 +42,127 @@ const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
     {
       className,
       levels,
-      currentLevelId,
       currentPoints,
-      currentLevelLabel = "Your current level",
+      currentLevelLabel = "Current",
       formatPoints,
       ...props
     },
     ref
   ) => {
-    const currentLevelIndex = currentLevelId
-      ? levels.findIndex((level) => level.id === currentLevelId)
-      : -1;
-    const currentLevel = currentLevelIndex >= 0 ? levels[currentLevelIndex] : undefined;
-    const nextLevel =
-      currentLevelIndex >= 0 && currentLevelIndex < levels.length - 1
-        ? levels[currentLevelIndex + 1]
-        : undefined;
-    const showProgressBar =
-      typeof currentPoints === "number" && Boolean(currentLevel && nextLevel);
+    const hasTracking = typeof currentPoints === "number";
+    const safeTotalPoints = hasTracking ? Math.max(0, currentPoints) : null;
 
-    let progressPercent = 0;
-    let pointsUntilNextLevel = 0;
-    if (showProgressBar && currentLevel && nextLevel) {
-      const start = currentLevel.minPoints;
-      const end = nextLevel.minPoints;
-      const ratio = end > start ? (currentPoints - start) / (end - start) : 1;
-      progressPercent = Math.max(0, Math.min(ratio * 100, 100));
-      pointsUntilNextLevel = Math.max(0, end - currentPoints);
-    }
+    const currentLevelIndex = React.useMemo(() => {
+      if (!hasTracking || safeTotalPoints === null || levels.length === 0) return -1;
+      for (let i = levels.length - 1; i >= 0; i -= 1) {
+        if (safeTotalPoints >= levels[i].threshold) return i;
+      }
+      return -1;
+    }, [hasTracking, levels, safeTotalPoints]);
 
-    const format = formatPoints ?? ((value: number) => value.toLocaleString());
+    const clampedCurrentProgress = React.useMemo(() => {
+      if (currentLevelIndex < 0 || safeTotalPoints === null) return 0;
+      if (levels.length <= 1 || currentLevelIndex >= levels.length - 1) return 100;
+
+      const currentThreshold = levels[currentLevelIndex].threshold;
+      const nextThreshold = levels[currentLevelIndex + 1].threshold;
+      const segmentSize = Math.max(1, nextThreshold - currentThreshold);
+      const progressInSegment = safeTotalPoints - currentThreshold;
+      return Math.max(0, Math.min((progressInSegment / segmentSize) * 100, 100));
+    }, [currentLevelIndex, levels, safeTotalPoints]);
+
+    const progressHeightPercent = React.useMemo(() => {
+      if (currentLevelIndex < 0) return 0;
+      if (levels.length <= 1) return 100;
+      const segmentCount = levels.length - 1;
+      if (currentLevelIndex >= levels.length - 1) return 100;
+      const completedSegments = Math.max(0, currentLevelIndex);
+      const currentSegmentFraction = clampedCurrentProgress / 100;
+      return Math.max(
+        0,
+        Math.min(((completedSegments + currentSegmentFraction) / segmentCount) * 100, 100)
+      );
+    }, [clampedCurrentProgress, currentLevelIndex, levels.length]);
 
     return (
-      <div ref={ref} className={cn("w-full rounded-xl border bg-card", className)} {...props}>
-        {showProgressBar && currentLevel && nextLevel ? (
-          <div className="space-y-3 border-b px-4 py-4">
-            <p className="text-lg text-foreground">
-              <span className="font-semibold">{format(currentPoints)}</span> points.{" "}
-              <span className="font-semibold">{format(pointsUntilNextLevel)}</span> until{" "}
-              <span className="font-semibold">{nextLevel.name}</span>
-            </p>
-            <div className="flex items-center gap-3">
-              <span
-                aria-hidden="true"
-                className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-foreground text-background"
-              >
-                {React.createElement(pointsLevelIconMap[currentLevel.iconType ?? "beginner"], {
-                  className: "h-4 w-4",
-                })}
-              </span>
-              <div
-                className="h-2 flex-1 overflow-hidden rounded-full bg-muted"
-                role="progressbar"
-                aria-label={`Progress from ${currentLevel.name} to ${nextLevel.name}`}
-                aria-valuenow={Math.round(progressPercent)}
-                aria-valuemin={0}
-                aria-valuemax={100}
-              >
-                <div
-                  className="h-full rounded-full bg-primary transition-all duration-300"
-                  style={{ width: `${progressPercent}%` }}
-                />
-              </div>
-              <span
-                aria-hidden="true"
-                className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-foreground"
-              >
-                {React.createElement(pointsLevelIconMap[nextLevel.iconType ?? "beginner"], {
-                  className: "h-4 w-4",
-                })}
-              </span>
-            </div>
-          </div>
-        ) : null}
-        <div role="list" aria-label="Points levels" className="divide-y divide-border">
-          {levels.map((level) => {
-            const Icon = pointsLevelIconMap[level.iconType ?? "beginner"];
-            const isCompletedOrInProgress = currentPoints && currentPoints >= level.minPoints;
+      <div ref={ref} className={cn("w-full rounded-xl border bg-card p-4", className)} {...props}>
+        <div className="relative">
+          <div
+            aria-hidden="true"
+            className="absolute bottom-8 left-[17px] top-8 w-1 rounded-full bg-muted"
+          />
+          {hasTracking && currentLevelIndex >= 0 ? (
+            <div
+              aria-hidden="true"
+              className="absolute left-[17px] top-8 w-1 rounded-full bg-primary transition-all duration-300"
+              style={{ height: `calc((100% - 4rem) * ${progressHeightPercent / 100})` }}
+            />
+          ) : null}
 
-            return (
-              <div
-                key={level.id}
-                role="listitem"
-                className="grid grid-cols-[14rem_1fr_12rem] items-center gap-4 px-4 py-3"
-              >
-                <div className="flex items-center gap-3">
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      "inline-flex h-6 w-6 items-center justify-center rounded-full",
-                      !currentLevelId || isCompletedOrInProgress ? "bg-primary text-background" : "bg-muted text-foreground"
+          <div role="list" aria-label="Points levels" className="space-y-6">
+            {levels.map((level, index) => {
+              const isCurrent = currentLevelIndex === index;
+              const isUnlocked = currentLevelIndex >= 0 && index <= currentLevelIndex;
+
+              return (
+                <div key={level.id} role="listitem" className="grid grid-cols-[2.5rem_minmax(0,1fr)_auto] gap-4">
+                  <div className="relative flex justify-center">
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        "z-10 inline-flex h-9 w-9 items-center justify-center rounded-full border-2",
+                        isUnlocked
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border bg-muted text-muted-foreground"
+                      )}
+                    >
+                      <Star className="h-4 w-4" />
+                    </span>
+                  </div>
+
+                  <div className="min-w-0 space-y-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-lg font-semibold text-foreground">{level.name}</h3>
+                      {isCurrent ? (
+                        <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
+                          {currentLevelLabel}
+                        </span>
+                      ) : null}
+                    </div>
+                    {level.summary ? (
+                      <p className="text-sm text-muted-foreground">{level.summary}</p>
+                    ) : null}
+                    {level.subLevels && level.subLevels.length > 0 ? (
+                      <div className="space-y-1 pt-1">
+                        {level.subLevels.map((subLevel, subIndex) => {
+                          const nextSubLevelThreshold =
+                            subIndex < level.subLevels!.length - 1
+                              ? level.subLevels![subIndex + 1].threshold
+                              : index < levels.length - 1
+                                ? levels[index + 1].threshold
+                                : null;
+                          return (
+                          <p key={`${level.id}-${subLevel.name}`} className="text-sm text-muted-foreground">
+                            <span className="font-medium text-foreground">{subLevel.name}</span>{" "}
+                            {formatRangeLabel(subLevel.threshold, nextSubLevelThreshold, formatPoints)}
+                          </p>
+                          );
+                        })}
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <p className="whitespace-nowrap pt-1 text-lg font-semibold text-muted-foreground">
+                    {formatRangeLabel(
+                      level.threshold,
+                      index < levels.length - 1 ? levels[index + 1].threshold : null,
+                      formatPoints
                     )}
-                  >
-                    <Icon className="h-3.5 w-3.5" />
-                  </span>
-                  <span className="font-medium tabular-nums text-foreground">
-                    {formatRange(level, formatPoints)}
-                  </span>
+                  </p>
                 </div>
-
-                <span className="font-semibold text-foreground">{level.name}</span>
-
-                <span className="text-sm text-muted-foreground">
-                  {currentLevelId === level.id ? currentLevelLabel : ""}
-                </span>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     );
@@ -180,4 +172,4 @@ const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
 PointsLevels.displayName = "PointsLevels";
 
 export { PointsLevels };
-export type { PointsLevel, PointsLevelIconType, PointsLevelsProps };
+export type { PointsLevel, PointsSubLevel, PointsLevelsProps };

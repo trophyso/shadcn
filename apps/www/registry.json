@@ -231,6 +231,19 @@
       ]
     },
     {
+      "name": "points-levels-simple",
+      "type": "registry:ui",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/trophy/ui/points-levels-simple.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "points-boost",
       "type": "registry:ui",
       "dependencies": [

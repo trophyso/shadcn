@@ -87,10 +87,19 @@ const componentPreviewConfig: Record<string, ComponentPreviewConfig> = {
   "points-levels": {
     showCard: false,
   },
-  "points-levels-current-level": {
+  "points-levels-simple": {
     showCard: false,
   },
-  "points-levels-progress-bar": {
+  "points-levels-simple-current-level": {
+    showCard: false,
+  },
+  "points-levels-simple-progress": {
+    showCard: false,
+  },
+  "points-levels-sub-levels": {
+    showCard: false,
+  },
+  "points-levels-progress-tracking": {
     showCard: false,
   },
   "points-boost": {
