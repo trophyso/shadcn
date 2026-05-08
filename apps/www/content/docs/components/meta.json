@@ -13,6 +13,9 @@
     "leaderboard-podium",
     "leaderboard-card",
     "points-badge",
-    "points-chart"
+    "points-chart",
+    "points-awards",
+    "points-levels",
+    "points-boost"
   ]
 }

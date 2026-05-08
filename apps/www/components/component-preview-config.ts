@@ -81,6 +81,24 @@ const componentPreviewConfig: Record<string, ComponentPreviewConfig> = {
   "points-chart-period-selector": {
     showCard: false,
   },
+  "points-awards": {
+    showCard: false,
+  },
+  "points-levels": {
+    showCard: false,
+  },
+  "points-levels-current-level": {
+    showCard: false,
+  },
+  "points-levels-progress-bar": {
+    showCard: false,
+  },
+  "points-boost": {
+    showCard: false,
+  },
+  "points-boost-countdown": {
+    showCard: false,
+  },
   "leaderboard-card": {
     showCard: false,
   },

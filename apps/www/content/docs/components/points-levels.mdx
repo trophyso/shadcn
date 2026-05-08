@@ -1,0 +1,158 @@
+---
+title: Points Levels
+description: A tier list showing point ranges, level names, and the current level marker.
+---
+
+<ComponentPreview name="points-levels" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/points-levels.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="points-levels" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+Import the component:
+
+```tsx
+import { PointsLevels } from "@/components/ui/points-levels"
+```
+
+```tsx
+<PointsLevels
+  levels={[
+    { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
+    { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
+    { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+  ]}
+/>
+```
+
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="points-levels" />
+
+```tsx
+<PointsLevels
+  levels={[
+    { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
+    { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
+    { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
+    { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
+    { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
+    { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+  ]}
+/>
+```
+
+### Current Level
+
+Set `currentLevelId` to display the current level marker for a specific row.
+
+<ComponentPreview name="points-levels-current-level" />
+
+```tsx
+<PointsLevels
+  levels={[
+    { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
+    { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
+    { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
+    { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
+    { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
+    { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+  ]}
+  currentLevelId="grand-master"
+/>
+```
+
+### Progress Bar
+
+Add `currentPoints` together with `currentLevelId` to show a progress bar above the levels list, from the current level badge (left) to the next level badge (right).
+
+<ComponentPreview name="points-levels-progress-bar" />
+
+```tsx
+<PointsLevels
+  levels={[
+    { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
+    { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
+    { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
+    { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
+    { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
+    { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+  ]}
+  currentLevelId="grand-master"
+  currentPoints={32100}
+/>
+```
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `levels` | `PointsLevel[]` | Required | List of levels to display |
+| `currentLevelId` | `string` | - | Level `id` that should display the current level label |
+| `currentPoints` | `number` | - | Current points value used to render progress toward the next level when `currentLevelId` is set |
+| `currentLevelLabel` | `string` | `"Your current level"` | Label displayed for the row matching `currentLevelId` |
+| `formatPoints` | `(value: number) => string` | - | Optional formatter for range values |
+
+### Types
+
+```ts
+type PointsLevelIconType =
+  | "beginner"
+  | "novice"
+  | "intermediate"
+  | "professional"
+  | "expert"
+  | "master"
+  | "grand-master"
+  | "enlightened"
+
+interface PointsLevel {
+  id: string
+  minPoints: number
+  maxPoints: number | null
+  name: string
+  iconType?: PointsLevelIconType
+}
+```

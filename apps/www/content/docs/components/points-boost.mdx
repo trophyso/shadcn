@@ -1,0 +1,127 @@
+---
+title: Points Boost
+description: A promotional callout for points multipliers with optional countdown timer.
+---
+
+<ComponentPreview name="points-boost" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/points-boost.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="points-boost" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+Import the component:
+
+```tsx
+import { PointsBoost } from "@/components/ui/points-boost"
+```
+
+```tsx
+<PointsBoost
+  boost={{
+    name: "Double Points Weekend",
+    description: "Earn extra points for all tracked actions",
+    multiplier: 2,
+    cta: {
+      link: "#",
+      text: "Activate boost",
+    },
+  }}
+/>
+```
+
+## Examples
+
+### Basic
+
+<ComponentPreview name="points-boost" />
+
+```tsx
+<PointsBoost
+  boost={{
+    name: "Double Points Weekend",
+    description: "Earn extra points for all tracked actions",
+    multiplier: 2,
+    cta: {
+      link: "#",
+      text: "Activate boost",
+    },
+  }}
+/>
+```
+
+### Countdown
+
+Pass `endDate` to enable the countdown label.
+
+<ComponentPreview name="points-boost-countdown" />
+
+```tsx
+<PointsBoost
+  boost={{
+    name: "Limited-Time Points Boost",
+    description: "Boost expires soon, activate now to maximize your points",
+    multiplier: 3,
+    cta: {
+      link: "#",
+      text: "Activate now",
+    },
+    endDate: new Date(Date.now() + 1000 * 60 * 60 * 11 + 1000 * 60 * 29 + 1000 * 36).toISOString(),
+  }}
+/>
+```
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `boost` | `PointsBoostData` | Required | Boost content configuration |
+
+### Types
+
+```ts
+interface PointsBoostCta {
+  link: string
+  text: string
+}
+
+interface PointsBoostData {
+  name: string
+  description: string
+  multiplier: number
+  cta: PointsBoostCta
+  endDate?: string | Date
+}
+```

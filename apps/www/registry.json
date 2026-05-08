@@ -202,6 +202,46 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "points-awards",
+      "type": "registry:ui",
+      "dependencies": [
+        "@radix-ui/react-tooltip",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/trophy/ui/points-awards.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "points-levels",
+      "type": "registry:ui",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/trophy/ui/points-levels.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "points-boost",
+      "type": "registry:ui",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/trophy/ui/points-boost.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,131 @@
+---
+title: Points Awards
+description: A points activity feed showing when points were awarded and which actions granted them.
+---
+
+<ComponentPreview name="points-awards" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/r/points-awards.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="points-awards" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+Import the component:
+
+```tsx
+import { PointsAwards } from "@/components/ui/points-awards"
+```
+
+```tsx
+<PointsAwards
+  rows={[
+    {
+      id: "2026-05-08",
+      date: "2026-05-08",
+      totalPoints: 20176,
+      actions: [
+        { type: "lesson-completed", points: 5 },
+        { type: "quiz-passed", points: 4 },
+        { type: "assignment-submitted", points: 4 },
+      ],
+    },
+  ]}
+/>
+```
+
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="points-awards" />
+
+```tsx
+<PointsAwards
+  rows={[
+    {
+      id: "2026-05-08",
+      date: "2026-05-08",
+      totalPoints: 20176,
+      actions: [
+        { type: "lesson-completed", points: 5 },
+        { type: "quiz-passed", points: 4 },
+        { type: "assignment-submitted", points: 4 },
+      ],
+    },
+    {
+      id: "2026-05-07",
+      date: "2026-05-07",
+      totalPoints: 20163,
+      actions: [
+        { type: "lesson-completed", points: 2 },
+        { type: "quiz-passed", points: 1 },
+      ],
+    },
+  ]}
+/>
+```
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `rows` | `PointsAwardRow[]` | Required | Award history rows sorted however you prefer (often most recent first) |
+| `formatTotalPoints` | `(value: number) => string` | - | Optional formatter for each row's total points value |
+| `formatAwardedPoints` | `(value: number) => string` | - | Optional formatter for each row's awarded delta (sum of action points) |
+
+### Types
+
+```ts
+type PointsAwardActionType =
+  | "lesson-completed"
+  | "quiz-passed"
+  | "assignment-submitted"
+  | "streak-maintained"
+  | "discussion-contribution"
+  | "flashcards-reviewed"
+
+interface PointsAwardAction {
+  type: PointsAwardActionType
+  points: number
+  label?: string
+}
+
+interface PointsAwardRow {
+  id: string
+  date: string
+  totalPoints: number
+  actions: PointsAwardAction[]
+}
+```

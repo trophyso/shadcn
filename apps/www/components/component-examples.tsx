@@ -15,6 +15,9 @@ import { LeaderboardPodium } from "@/registry/trophy/ui/leaderboard-podium"
 import { LeaderboardCard } from "@/registry/trophy/ui/leaderboard-card"
 import { PointsBadge } from "@/registry/trophy/ui/points-badge"
 import { PointsChart } from "@/registry/trophy/ui/points-chart"
+import { PointsAwards } from "@/registry/trophy/ui/points-awards"
+import { PointsLevels } from "@/registry/trophy/ui/points-levels"
+import { PointsBoost } from "@/registry/trophy/ui/points-boost"
 
 function formatDateKey(date: Date) {
   const year = date.getFullYear()
@@ -1623,6 +1626,233 @@ const datasets = {
       <option value="all-time">All time</option>
     </select>
   }
+/>`,
+  },
+  "points-awards": {
+    component: (
+      <div className="w-full max-w-6xl">
+        <PointsAwards
+          rows={[
+            {
+              id: "2026-05-08",
+              date: "2026-05-08",
+              totalPoints: 20176,
+              actions: [
+                { type: "lesson-completed", points: 5 },
+                { type: "quiz-passed", points: 4 },
+                { type: "assignment-submitted", points: 4 },
+              ],
+            },
+            {
+              id: "2026-05-07-1",
+              date: "2026-05-07",
+              totalPoints: 20163,
+              actions: [
+                { type: "lesson-completed", points: 2 },
+                { type: "quiz-passed", points: 1 },
+              ],
+            },
+            {
+              id: "2026-05-07-2",
+              date: "2026-05-07",
+              totalPoints: 20160,
+              actions: [
+                { type: "streak-maintained", points: 12 },
+                { type: "flashcards-reviewed", points: 8 },
+                { type: "discussion-contribution", points: 6 },
+              ],
+            },
+            {
+              id: "2026-05-06",
+              date: "2026-05-06",
+              totalPoints: 20122,
+              actions: [
+                { type: "lesson-completed", points: 4 },
+                { type: "quiz-passed", points: 4 },
+                { type: "assignment-submitted", points: 3 },
+                { type: "discussion-contribution", points: 2 },
+              ],
+            },
+          ]}
+        />
+      </div>
+    ),
+    code: `<PointsAwards
+  rows={[
+    {
+      id: "2026-05-08",
+      date: "2026-05-08",
+      totalPoints: 20176,
+      actions: [
+        { type: "lesson-completed", points: 5 },
+        { type: "quiz-passed", points: 4 },
+        { type: "assignment-submitted", points: 4 },
+      ],
+    },
+    {
+      id: "2026-05-07-1",
+      date: "2026-05-07",
+      totalPoints: 20163,
+      actions: [
+        { type: "lesson-completed", points: 2 },
+        { type: "quiz-passed", points: 1 },
+      ],
+    },
+  ]}
+/>`,
+  },
+  "points-levels": {
+    component: (
+      <div className="w-full max-w-6xl">
+        <PointsLevels
+          levels={[
+            { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
+            { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
+            { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
+            { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
+            { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
+            { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
+            { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
+            { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+          ]}
+        />
+      </div>
+    ),
+    code: `<PointsLevels
+  levels={[
+    { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
+    { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
+    { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
+    { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
+    { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
+    { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+  ]}
+/>`,
+  },
+  "points-levels-current-level": {
+    component: (
+      <div className="w-full max-w-6xl">
+        <PointsLevels
+          levels={[
+            { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
+            { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
+            { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
+            { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
+            { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
+            { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
+            { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
+            { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+          ]}
+          currentLevelId="grand-master"
+        />
+      </div>
+    ),
+    code: `<PointsLevels
+  levels={[
+    { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
+    { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
+    { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
+    { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
+    { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
+    { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+  ]}
+  currentLevelId="grand-master"
+/>`,
+  },
+  "points-levels-progress-bar": {
+    component: (
+      <div className="w-full max-w-6xl">
+        <PointsLevels
+          levels={[
+            { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
+            { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
+            { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
+            { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
+            { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
+            { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
+            { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
+            { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+          ]}
+          currentLevelId="grand-master"
+          currentPoints={32100}
+        />
+      </div>
+    ),
+    code: `<PointsLevels
+  levels={[
+    { id: "beginner", minPoints: 0, maxPoints: 499, name: "Beginner", iconType: "beginner" },
+    { id: "novice", minPoints: 500, maxPoints: 2499, name: "Novice", iconType: "novice" },
+    { id: "intermediate", minPoints: 2500, maxPoints: 4999, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", minPoints: 5000, maxPoints: 7499, name: "Professional", iconType: "professional" },
+    { id: "expert", minPoints: 7500, maxPoints: 9999, name: "Expert", iconType: "expert" },
+    { id: "master", minPoints: 10000, maxPoints: 19999, name: "Master", iconType: "master" },
+    { id: "grand-master", minPoints: 20000, maxPoints: 49999, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", minPoints: 50000, maxPoints: null, name: "Enlightened", iconType: "enlightened" },
+  ]}
+  currentLevelId="grand-master"
+  currentPoints={32100}
+/>`,
+  },
+  "points-boost": {
+    component: (
+      <div className="w-full max-w-6xl">
+        <PointsBoost
+          boost={{
+            name: "Double Points Weekend",
+            description: "Earn extra points for all tracked actions",
+            multiplier: 2,
+            cta: {
+              link: "#",
+              text: "Activate boost",
+            },
+          }}
+        />
+      </div>
+    ),
+    code: `<PointsBoost
+  boost={{
+    name: "Double Points Weekend",
+    description: "Earn extra points for all tracked actions",
+    multiplier: 2,
+    cta: {
+      link: "#",
+      text: "Activate boost",
+    },
+  }}
+/>`,
+  },
+  "points-boost-countdown": {
+    component: (
+      <div className="w-full max-w-6xl">
+        <PointsBoost
+          boost={{
+            name: "Limited-Time Points Boost",
+            description: "Boost expires soon, activate now to maximize your points",
+            multiplier: 3,
+            cta: {
+              link: "#",
+              text: "Activate now",
+            },
+            endDate: new Date(Date.now() + 1000 * 60 * 60 * 11 + 1000 * 60 * 29 + 1000 * 36).toISOString(),
+          }}
+        />
+      </div>
+    ),
+    code: `<PointsBoost
+  boost={{
+    name: "Limited-Time Points Boost",
+    description: "Boost expires soon, activate now to maximize your points",
+    multiplier: 3,
+    cta: {
+      link: "#",
+      text: "Activate now",
+    },
+    endDate: new Date(Date.now() + 1000 * 60 * 60 * 11 + 1000 * 60 * 29 + 1000 * 36).toISOString(),
+  }}
 />`,
   },
 }
