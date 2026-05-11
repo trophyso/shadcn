@@ -56,16 +56,16 @@ import { LeaderboardCard } from "@/components/ui/leaderboard-card"
     { userId: "u-3", userName: "Rowan Elijah", rank: 3, value: 238300 },
   ]}
   rankings={[
-    { userId: "u-1", rank: 1, name: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", total: 289400, displayed: true },
-    { userId: "u-2", rank: 2, name: "Leo Harrison", byline: "Level 39 - Platinum", total: 251800, displayed: true },
-    { userId: "u-3", rank: 3, name: "Rowan Elijah", byline: "Level 37 - Platinum", total: 238300, displayed: true },
-    { userId: "u-4", rank: 4, name: "Mia Sophia Bennett", byline: "Level 34 - Gold", total: 221700, displayed: false },
-    { userId: "u-5", rank: 5, name: "Olivia Reed", byline: "Level 32 - Gold", total: 210900, displayed: true },
-    { userId: "u-6", rank: 6, name: "William Turner", byline: "Level 31 - Gold", total: 199500, displayed: false },
-    { userId: "u-7", rank: 7, name: "Ruby Claire", byline: "Level 29 - Silver", total: 198300, displayed: false },
-    { userId: "u-8", rank: 8, name: "Ethan Brooks", byline: "Level 28 - Silver", total: 187200, displayed: true },
-    { userId: "u-9", rank: 9, name: "Chloe Madison", byline: "Level 27 - Silver", total: 176800, displayed: true },
-    { userId: "u-10", rank: 10, name: "Noah Bennett", byline: "Level 26 - Silver", total: 169300, displayed: false },
+    { userId: "u-1", rank: 1, userName: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", value: 289400, displayed: true },
+    { userId: "u-2", rank: 2, userName: "Leo Harrison", byline: "Level 39 - Platinum", value: 251800, displayed: true },
+    { userId: "u-3", rank: 3, userName: "Rowan Elijah", byline: "Level 37 - Platinum", value: 238300, displayed: true },
+    { userId: "u-4", rank: 4, userName: "Mia Sophia Bennett", byline: "Level 34 - Gold", value: 221700, displayed: false },
+    { userId: "u-5", rank: 5, userName: "Olivia Reed", byline: "Level 32 - Gold", value: 210900, displayed: true },
+    { userId: "u-6", rank: 6, userName: "William Turner", byline: "Level 31 - Gold", value: 199500, displayed: false },
+    { userId: "u-7", rank: 7, userName: "Ruby Claire", byline: "Level 29 - Silver", value: 198300, displayed: false },
+    { userId: "u-8", rank: 8, userName: "Ethan Brooks", byline: "Level 28 - Silver", value: 187200, displayed: true },
+    { userId: "u-9", rank: 9, userName: "Chloe Madison", byline: "Level 27 - Silver", value: 176800, displayed: true },
+    { userId: "u-10", rank: 10, userName: "Noah Bennett", byline: "Level 26 - Silver", value: 169300, displayed: false },
   ]}
 />
 ```
@@ -128,8 +128,8 @@ Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to f
 Then pass and transform the response into `LeaderboardCard` props in your UI layer:
 
 ```tsx
-const podiumRankings = (response.rankings ?? []).slice(0, 3)
 const rankings = response.rankings ?? []
+const podiumRankings = rankings.slice(0, 3)
 
 <LeaderboardCard
   title={response.name}

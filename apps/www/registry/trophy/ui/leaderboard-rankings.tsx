@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils";
 
 interface LeaderboardRankingItem {
   userId: string;
+  userName: string | null;
   rank: number;
-  name: string;
-  byline: string;
-  total: number;
+  value: number;
+  byline?: string | null;
   avatarUrl?: string | null;
   rankChange?: number;
   displayed?: boolean;
@@ -34,10 +34,10 @@ const pageSizeOptions = [10, 25, 50, 100] as const;
 
 type LeaderboardRow = { type: "ranking"; ranking: LeaderboardRankingItem } | { type: "ellipsis"; key: string };
 
-function formatTotal(total: number) {
-  if (total >= 1000000) return `${(total / 1000000).toFixed(1)}m`;
-  if (total >= 1000) return `${(total / 1000).toFixed(1)}k`;
-  return total.toLocaleString();
+function formatLeaderboardValue(value: number) {
+  if (value >= 1000000) return `${(value / 1000000).toFixed(1)}m`;
+  if (value >= 1000) return `${(value / 1000).toFixed(1)}k`;
+  return value.toLocaleString();
 }
 
 const LeaderboardRankings = React.forwardRef<HTMLDivElement, LeaderboardRankingsProps>(
@@ -120,6 +120,8 @@ const LeaderboardRankings = React.forwardRef<HTMLDivElement, LeaderboardRankings
             }
 
             const ranking = row.ranking;
+            const displayName =
+              ranking.userName || `User ${ranking.userId.slice(0, 6)}`;
             const showCrown = ranking.rank <= 3;
             const crownColor = crownColorMap[ranking.rank as 1 | 2 | 3];
             const isCurrentUser = currentUserId === ranking.userId;
@@ -156,18 +158,20 @@ const LeaderboardRankings = React.forwardRef<HTMLDivElement, LeaderboardRankings
                 {ranking.avatarUrl ? (
                   <img
                     src={ranking.avatarUrl}
-                    alt={`${ranking.name} avatar`}
+                    alt={`${displayName} avatar`}
                     className="h-10 w-10 rounded-full object-cover"
                   />
                 ) : (
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-sm font-medium text-muted-foreground">
-                    {ranking.name.charAt(0).toUpperCase()}
+                    {(ranking.userName ?? ranking.userId).charAt(0).toUpperCase()}
                   </div>
                 )}
 
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-foreground font-medium">{ranking.name}</p>
-                  <p className="truncate text-sm text-muted-foreground">{ranking.byline}</p>
+                  <p className="truncate text-foreground font-medium">{displayName}</p>
+                  {ranking.byline ? (
+                    <p className="truncate text-sm text-muted-foreground">{ranking.byline}</p>
+                  ) : null}
                 </div>
 
                 <div className="flex items-center gap-2 text-right">
@@ -187,7 +191,7 @@ const LeaderboardRankings = React.forwardRef<HTMLDivElement, LeaderboardRankings
                     </p>
                   ) : null}
                   <p className="font-semibold tabular-nums leading-none">
-                    {formatTotal(ranking.total)}
+                    {formatLeaderboardValue(ranking.value)}
                   </p>
                 </div>
               </div>
