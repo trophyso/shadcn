@@ -4,6 +4,7 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { CodeBlock, InlineCode } from "@/components/code-block"
 import { CodeTabs } from "@/components/code-tabs"
+import { OpenApiCodeSamples } from "@/components/openapi-code-samples"
 import { ComponentPreviewWrapper } from "@/components/component-preview-wrapper"
 import { ComponentSource } from "@/components/component-source"
 import { ThemeSource } from "@/components/theme-source"
@@ -201,6 +202,7 @@ export const mdxComponents = {
     <div className={cn(className)} {...props} />
   ),
   CodeTabs,
+  OpenApiCodeSamples,
   ComponentPreview: ({ name }: { name: string }) => (
     <ComponentPreviewWrapper name={name} />
   ),

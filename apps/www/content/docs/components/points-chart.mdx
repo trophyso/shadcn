@@ -117,6 +117,12 @@ const [period, setPeriod] = useState("last-7-days")
 />
 ```
 
+## With Trophy
+
+Fetch time-series points events from Trophy and map each returned period into the chart data passed to `PointsChart`.
+
+<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}/event-summary" />
+
 ## API Reference
 
 ### Props

@@ -55,10 +55,10 @@ export default function IndexPage() {
           <PageHeaderHeading className="max-w-4xl">
             <span className="flex items-baseline gap-2 sm:gap-3">
               <span className="leading-[0.95] font-bold tracking-[-0.03em]">
-                Trophy
+                Gamification UI Kit
               </span>
               <span className="font-normal tracking-[-0.02em] opacity-90">
-                UI
+                from Trophy
               </span>
             </span>
           </PageHeaderHeading>

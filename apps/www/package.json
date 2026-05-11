@@ -12,8 +12,9 @@
     "typecheck": "tsc --noEmit",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
+    "openapi:build": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/build-openapi-code-samples.mts",
     "registry:build": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/build-registry.mts && prettier --log-level silent --write \"registry/**/*.{ts,tsx,json,mdx}\" --cache",
-    "postinstall": "fumadocs-mdx"
+    "postinstall": "fumadocs-mdx && pnpm openapi:build"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.2",
@@ -43,7 +44,8 @@
     "react-syntax-highlighter": "^16.1.0",
     "recharts": "^3.8.1",
     "shiki": "3.22.0",
-    "tailwind-merge": "^3.0.1"
+    "tailwind-merge": "^3.0.1",
+    "yaml": "^2.8.2"
   },
   "prettier": {
     "endOfLine": "lf",

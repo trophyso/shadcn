@@ -120,3 +120,50 @@ import { PointsLevelsSimple } from "@/components/ui/points-levels-simple"
   ]}
 />
 ```
+
+## With Trophy
+
+Use two Trophy endpoints together to power `PointsLevelsSimple`: fetch the user's current points total, then fetch the points system level definitions and thresholds.
+
+<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}" />
+
+<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/points/{key}/levels" />
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `levels` | `PointsLevelSimple[]` | Required | Ordered level definitions used to render thresholds and labels |
+| `currentPoints` | `number` | - | User points total used to determine current level and progress |
+| `showProgressBar` | `boolean` | `false` | Shows a progress header toward the next level when `currentPoints` is available |
+| `currentLevelLabel` | `string` | `"Your current level"` | Label shown on the active row |
+| `formatPoints` | `(value: number) => string` | - | Optional formatter for threshold and progress values |
+
+### Types
+
+```ts
+type PointsLevelSimpleIconType =
+  | "beginner"
+  | "novice"
+  | "intermediate"
+  | "professional"
+  | "expert"
+  | "master"
+  | "grand-master"
+  | "enlightened"
+
+interface PointsSubLevelSimple {
+  name: string
+  threshold: number
+}
+
+interface PointsLevelSimple {
+  id: string
+  threshold: number
+  name: string
+  iconType?: PointsLevelSimpleIconType
+  subLevels?: PointsSubLevelSimple[]
+}
+```

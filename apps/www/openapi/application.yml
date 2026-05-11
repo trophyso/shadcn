@@ -1,0 +1,5531 @@
+openapi: 3.1.0
+info:
+  title: Trophy
+  version: '1.7.0'
+paths:
+  /achievements:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get all achievements and their completion stats.
+      operationId: achievements_all
+      x-fern-server-name: api
+      tags:
+        - Achievements
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.achievements.all();
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.achievements.all()
+      parameters:
+        - name: userAttributes
+          in: query
+          description: Optional colon-delimited user attributes in the format attribute:value,attribute:value. Only achievements accessible to a user with the provided attributes will be returned.
+          required: false
+          schema:
+            type: string
+          example: plan-type:premium,region:us-east
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AchievementWithStatsResponse'
+              examples:
+                Successful operation:
+                  value:
+                    - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                      trigger: api
+                      name: Finish onboarding
+                      description: Complete the onboarding process.
+                      badgeUrl: https://example.com/badge.png
+                      key: finish-onboarding
+                      completions: 8
+                      rarity: 80
+                    - id: 5100fe51-6bce-6j44-b0hs-bddc4e123683
+                      trigger: metric
+                      name: 500 words written
+                      description: Write 500 words in the app.
+                      badgeUrl: https://example.com/badge.png
+                      metricId: 5100fe51-6bce-6j44-b0hs-bddc4e123683
+                      metricName: words written
+                      metricValue: 500
+                      completions: 6
+                      rarity: 60
+                      userAttributes:
+                        - key: plan-type
+                          value: premium
+                        - key: region
+                          value: us-east
+                      eventAttribute:
+                        key: source
+                        value: mobile-app
+                      eventAttributes:
+                        - key: source
+                          value: mobile-app
+                        - key: plan
+                          value: premium
+                    - id: 5100fe51-6bce-6j44-b0hs-bddc4e123684
+                      trigger: streak
+                      name: 10 days of exercise
+                      description: Exercise at least once a day for 10 days in a row.
+                      badgeUrl: https://example.com/badge.png
+                      streakLength: 10
+                      completions: 2
+                      rarity: 20
+                      userAttributes:
+                        - key: plan-type
+                          value: premium
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get all achievements and their completion stats
+      security:
+        - ApiKeyAuth: []
+  /achievements/{key}/complete:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    post:
+      description: Mark an achievement as completed for a user.
+      operationId: achievements_complete
+      x-fern-server-name: api
+      tags:
+        - Achievements
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.achievements.complete("achievement-key", {
+              user: {
+                id: "user-id",
+              }
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            user = UpsertedUser(id="123")
+
+            response = client.achievements.complete("achievement-key", user=user)
+      parameters:
+        - name: key
+          in: path
+          description: Unique reference of the achievement as set when created.
+          required: true
+          schema:
+            type: string
+          example: finish-onboarding
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AchievementCompletionResponse'
+              examples:
+                Successful operation:
+                  value:
+                    completionId: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    achievement:
+                      id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                      trigger: api
+                      name: Finish onboarding
+                      description: Complete the onboarding process.
+                      badgeUrl: https://example.com/badge.png
+                      key: finish-onboarding
+                      achievedAt: '2021-01-01T00:00:00Z'
+                    points:
+                      points-system-key:
+                        id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        name: XP
+                        description: null
+                        badgeUrl: null
+                        total: 10
+                        added: 10
+                        awards:
+                          - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                            awarded: 10
+                            date: '2021-01-01T00:00:00Z'
+                            total: 10
+                            trigger:
+                              id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                              type: achievement
+                              achievementName: Finish onboarding
+                              points: 10
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Achievement Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Mark an achievement as completed
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  $ref: '#/components/schemas/UpsertedUser'
+                  description: The user that completed the achievement.
+              required:
+                - user
+            examples:
+              Successful operation:
+                value:
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+  /metrics/{key}/event:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    post:
+      description: Increment or decrement the value of a metric for a user.
+      operationId: metrics_event
+      x-fern-server-name: api
+      tags:
+        - Metrics
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.metrics.event(
+              "words-written",
+              {
+                user: {
+                  id: 'user-id',
+                  email: 'user@example.com',
+                  tz: 'Europe/London',
+                  subscribedToEmails: true,
+                  attributes: {
+                    department: 'engineering',
+                    role: 'developer'
+                  }
+                },
+                value: 750,
+                attributes: {
+                  category: 'writing',
+                  source: 'mobile-app'
+                }
+              }
+            );
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            user = UpsertedUser(
+              id="123",
+              email="user@example.com",
+              tz="Europe/London",
+              subscribedToEmails=True,
+              attributes={
+                "department": "engineering",
+                "role": "developer"
+              }
+            )
+
+            response = client.metrics.event(
+              "words-written",
+              user=user,
+              value=750,
+              attributes={
+                "category": "writing",
+                "source": "mobile-app"
+            })
+      parameters:
+        - name: key
+          in: path
+          description: Unique reference of the metric as set when created.
+          required: true
+          schema:
+            type: string
+          example: words-written
+        - name: Idempotency-Key
+          in: header
+          description: The idempotency key for the event.
+          required: false
+          schema:
+            type: string
+          example: e4296e4b-8493-4bd1-9c30-5a1a9ac4d78f
+      responses:
+        '201':
+          description: Created event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+              examples:
+                Successful operation:
+                  value:
+                    metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                    eventId: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    total: 750
+                    achievements:
+                      - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                        trigger: metric
+                        metricId: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                        metricName: words written
+                        metricValue: 500
+                        name: 500 words written
+                        description: Write 500 words in the app.
+                        achievedAt: '2020-01-01T00:00:00Z'
+                    currentStreak:
+                      length: 1
+                      frequency: daily
+                      started: '2025-04-02'
+                      periodStart: '2025-03-31'
+                      periodEnd: '2025-04-05'
+                      expires: '2025-04-12'
+                    points:
+                      xp:
+                        id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        name: XP
+                        description: null
+                        badgeUrl: null
+                        total: 10
+                        level:
+                          id: 1140fe51-6bce-4b44-b0ad-bddc4e123534
+                          key: bronze
+                          name: Bronze
+                          description: Starting level
+                          badgeUrl: null
+                          points: 0
+                        added: 10
+                        awards:
+                          - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                            awarded: 10
+                            date: '2021-01-01T00:00:00Z'
+                            total: 10
+                            trigger:
+                              id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                              type: metric
+                              metricName: words written
+                              metricThreshold: 100
+                              points: 10
+                    leaderboards:
+                      all-time:
+                        id: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                        key: all-time
+                        name: All-Time Leaderboard
+                        description: null
+                        rankBy: metric
+                        runUnit: null
+                        runInterval: null
+                        maxParticipants: 100
+                        breakdownAttribute: null
+                        metricName: words written
+                        metricKey: words-written
+                        threshold: 10
+                        start: '2025-01-01'
+                        end: null
+                        previousRank: null
+                        rank: 100
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Send a metric change event
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  $ref: '#/components/schemas/UpsertedUser'
+                  description: The user that triggered the event.
+                value:
+                  type: number
+                  format: double
+                  description: >-
+                    The value to add to the user's current total for the given
+                    metric.
+                  example: 750
+                attributes:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: Event attributes as key-value pairs. Keys must match existing event attributes set up in the Trophy dashboard.
+                  example:
+                    category: writing
+                    source: mobile-app
+              required:
+                - user
+                - value
+            examples:
+              Successful operation:
+                value:
+                  user:
+                    email: user@example.com
+                    tz: Europe/London
+                    id: '18'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  value: 750
+                  attributes:
+                    category: writing
+                    source: mobile-app
+  /users:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    post:
+      description: Create a new user.
+      operationId: users_create
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.create({
+              id: 'user-id',
+              email: 'user@example.com',
+              tz: 'Europe/London',
+              subscribedToEmails: true,
+              attributes: {
+                department: 'engineering',
+                role: 'developer'
+              }
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.create(
+              id="123",
+              email="user@example.com",
+              tz="Europe/London",
+              subscribedToEmails=True,
+              attributes={
+                "department": "engineering",
+                "role": "developer"
+              }
+            )
+      summary: Create a new user
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertedUser'
+      responses:
+        '201':
+          description: Identified user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Successful operation:
+                  value:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /users/{id}:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a single user.
+      operationId: users_get
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.get("user-id");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.get("user-id")
+      summary: Get a single user
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user to get.
+          required: true
+          schema:
+            type: string
+          example: userId
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Found user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Successful operation:
+                  value:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+    put:
+      description: Identify a user.
+      operationId: users_identify
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.identify("user-id", {
+              email: 'user@example.com',
+              tz: 'Europe/London',
+              attributes: {
+                department: 'engineering',
+                role: 'developer'
+              }
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.identify(
+              id="123",
+              email="user@example.com",
+              tz="Europe/London",
+              subscribedToEmails=True,
+              attributes={
+                "department": "engineering",
+                "role": "developer"
+              }
+            )
+      summary: Identify a user
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user to identify.
+          required: true
+          schema:
+            type: string
+          example: id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatedUser'
+              description: The user object.
+            example:
+              email: user@example.com
+              tz: Europe/London
+              attributes:
+                department: engineering
+                role: developer
+      responses:
+        '200':
+          description: Upserted user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+    patch:
+      description: Update a user.
+      operationId: users_update
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.update("user-id", {
+              email: 'user@example.com',
+              tz: 'Europe/London',
+              attributes: {
+                department: 'engineering',
+                role: 'developer'
+              }
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.update(
+              id="123",
+              email="user@example.com",
+              tz="Europe/London",
+              subscribedToEmails=True,
+              attributes={
+                "department": "engineering",
+                "role": "developer"
+              }
+            )
+      summary: Update a user
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user to update.
+          required: true
+          schema:
+            type: string
+          example: id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatedUser'
+              description: The user object.
+            example:
+              id: user-id
+              email: user@example.com
+              tz: Europe/London
+              attributes:
+                department: engineering
+                role: developer
+      responses:
+        '200':
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'User Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /users/{id}/preferences:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a user's notification preferences.
+      operationId: users_get_preferences
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.getPreferences("user-123");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.get_preferences(id="user-123")
+      parameters:
+        - name: id
+          in: path
+          description: The user's ID in your database.
+          required: true
+          schema:
+            type: string
+          example: user-123
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferencesResponse'
+              examples:
+                Successful operation:
+                  value:
+                    notifications:
+                      achievement_completed:
+                        - email
+                        - push
+                      recap:
+                        - email
+                      reactivation:
+                        - push
+                      streak_reminder:
+                        - email
+                        - push
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'User not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's preferences
+      security:
+        - ApiKeyAuth: []
+    patch:
+      description: Update a user's notification preferences.
+      operationId: users_update_preferences
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.updatePreferences("user-123", {
+              notifications: {
+                recap: ["email"],
+                streak_reminder: []
+              }
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.update_preferences(
+              id="user-123",
+              notifications={
+                "recap": ["email"],
+                "streak_reminder": []
+              }
+            )
+      parameters:
+        - name: id
+          in: path
+          description: The user's ID in your database.
+          required: true
+          schema:
+            type: string
+          example: user-123
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferencesResponse'
+              examples:
+                Successful operation:
+                  value:
+                    notifications:
+                      achievement_completed:
+                        - email
+                        - push
+                      recap:
+                        - email
+                      reactivation:
+                        - email
+                        - push
+                      streak_reminder: []
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'User not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Update a user's preferences
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserPreferencesRequest'
+            examples:
+              Disable streak reminders:
+                value:
+                  notifications:
+                    streak_reminder: []
+              Email only for recaps:
+                value:
+                  notifications:
+                    recap:
+                      - email
+              Enable all for achievements:
+                value:
+                  notifications:
+                    achievement_completed:
+                      - email
+                      - push
+  /users/{id}/metrics:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a single user's progress against all active metrics.
+      operationId: users_all_metrics
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.allMetrics("user-id");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.all_metrics("user-id")
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+          example: userId
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MetricResponse'
+              examples:
+                Successful operation:
+                  value:
+                    - id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                      key: words-written
+                      name: Words written
+                      current: 4500
+                      achievements:
+                        - id: abe3120f-5ca9-4344-92c8-5b891643a04b
+                          trigger: metric
+                          name: Novice Writer
+                          description: 'null'
+                          metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                          metricValue: 500
+                          achievedAt: '2021-01-01T00:00:00Z'
+                          badgeUrl: https://example.com/badge1.png
+                        - id: 8a07f2d0-9c72-4de1-bf92-9530ae82b4b6
+                          trigger: metric
+                          name: Intermediate Writer
+                          description: 'null'
+                          metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                          metricValue: 1000
+                          achievedAt: '2021-01-02T00:00:00Z'
+                          badgeUrl: https://example.com/badge2.png
+                        - id: 2090d038-aa04-4048-ab2e-e2b7bf2d3b9f
+                          trigger: metric
+                          name: Expert Writer
+                          description: 'null'
+                          metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                          metricValue: 2000
+                          achievedAt: null
+                          badgeUrl: 'null'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'User Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get all metrics for a user
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/metrics/{key}:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a user's progress against a single active metric.
+      operationId: users_single_metric
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.singleMetric("user-id", "words-written");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.single_metric(id="user-id", key="words-written")
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - name: key
+          in: path
+          description: Unique key of the metric.
+          required: true
+          schema:
+            type: string
+          example: key
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResponse'
+              examples:
+                Successful operation:
+                  value:
+                    id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                    key: words-written
+                    name: Words written
+                    current: 1500
+                    achievements:
+                      - id: abe3120f-5ca9-4344-92c8-5b891643a04b
+                        trigger: metric
+                        name: Novice Writer
+                        metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                        metricValue: 500
+                        achievedAt: '2021-01-01T00:00:00Z'
+                      - id: 8a07f2d0-9c72-4de1-bf92-9530ae82b4b6
+                        trigger: metric
+                        name: Intermediate Writer
+                        metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                        metricValue: 1000
+                        achievedAt: '2021-01-02T00:00:00Z'
+                      - id: 2090d038-aa04-4048-ab2e-e2b7bf2d3b9f
+                        trigger: metric
+                        name: Expert Writer
+                        metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                        metricValue: 2000
+                        achievedAt: null
+                        badgeUrl: https://example.com/badge.png
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a single metric for a user
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/metrics/{key}/event-summary:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a summary of metric events over time for a user.
+      operationId: users_metric_event_summary
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.metricEventSummary("user-id", "words-written", {
+              aggregation: "daily",
+              startDate: "2024-01-01",
+              endDate: "2024-01-31"
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.metric_event_summary(
+              id="user-id",
+              key="words-written",
+              aggregation="daily",
+              start_date="2024-01-01",
+              end_date="2024-01-31"
+            )
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - name: key
+          in: path
+          description: Unique key of the metric.
+          required: true
+          schema:
+            type: string
+          example: words-written
+        - name: aggregation
+          in: query
+          description: The time period over which to aggregate the event data.
+          required: true
+          schema:
+            type: string
+            enum:
+              - daily
+              - weekly
+              - monthly
+          example: daily
+        - name: startDate
+          in: query
+          description: The start date for the data range in YYYY-MM-DD format. The startDate must be before the endDate, and the date range must not exceed 400 days.
+          required: true
+          schema:
+            type: string
+            format: date
+          example: '2024-01-01'
+        - name: endDate
+          in: query
+          description: The end date for the data range in YYYY-MM-DD format. The endDate must be after the startDate, and the date range must not exceed 400 days.
+          required: true
+          schema:
+            type: string
+            format: date
+          example: '2024-01-31'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                      description: The date of the data point. For weekly or monthly aggregations, this is the first date of the period.
+                      example: '2024-01-01'
+                    total:
+                      type: number
+                      format: double
+                      description: The user's total for this metric at the end of this date.
+                      example: 100
+                    change:
+                      type: number
+                      format: double
+                      description: The change in the user's total for this metric during this period.
+                      example: 50
+                  required:
+                    - date
+                    - total
+                    - change
+              examples:
+                Successful operation:
+                  value:
+                    - date: '2024-01-01'
+                      total: 100
+                      change: 100
+                    - date: '2024-01-02'
+                      total: 300
+                      change: 200
+                    - date: '2024-01-03'
+                      total: 600
+                      change: 300
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a summary of metric events over time
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/achievements:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a user's achievements.
+      operationId: users_achievements
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          label: Get a user's completed achievements
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.achievements("user-id");
+        - lang: javascript
+          label: Get a user's achievements (include incomplete)
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.achievements("user-id", {
+              includeIncomplete: true
+            });
+        - lang: python
+          label: Get a user's completed achievements
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.achievements(id="user-id")
+        - lang: python
+          label: Get a user's achievements (include incomplete)
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.achievements(id="user-id", include_incomplete="true")
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - name: includeIncomplete
+          in: query
+          description: When set to 'true', returns both completed and incomplete achievements for the user. When omitted or set to any other value, returns only completed achievements.
+          required: false
+          schema:
+            type: string
+            enum: ['true']
+          example: 'true'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserAchievementWithStatsResponse'
+              examples:
+                Successful operation:
+                  value:
+                    - id: d01dcbcb-d51e-4c12-b054-dc811dcdc625
+                      name: Completed Onboarding
+                      trigger: api
+                      key: completed-onboarding
+                      achievedAt: '2021-01-01T00:00:00Z'
+                      badgeUrl: https://example.com/badge2.png
+                      completions: 100
+                      rarity: 50
+                    - id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                      trigger: metric
+                      key: novice-writer
+                      metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc619
+                      metricValue: 500
+                      metricName: words written
+                      name: Novice Writer
+                      achievedAt: '2021-02-01T00:00:00Z'
+                      badgeUrl: https://example.com/badge1.png
+                      completions: 100
+                      rarity: 50
+                    - id: d01dcbcb-d51e-4c12-b054-dc811dcdc624
+                      trigger: streak
+                      key: 3-day-streak
+                      streakLength: 3
+                      name: 3-Day Streak
+                      achievedAt: '2021-03-01T00:00:00Z'
+                      badgeUrl: https://example.com/badge2.png
+                      completions: 100
+                      rarity: 50
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's achievements
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/streak:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a user's streak data.
+      operationId: users_streak
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.streak("user-id", {
+              historyPeriods: 14
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.streak(id="user-id", history_periods=14)
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - in: query
+          name: historyPeriods
+          schema:
+            type: integer
+            default: 7
+          description: >-
+            The number of past streak periods to include in the streakHistory field of the 
+            response.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreakResponse'
+              examples:
+                Successful operation:
+                  value:
+                    length: 1
+                    frequency: weekly
+                    started: '2025-04-02'
+                    periodStart: '2025-03-31'
+                    periodEnd: '2025-04-05'
+                    expires: '2025-04-12'
+                    rank: 5
+                    streakHistory:
+                      - periodStart: '2025-03-30'
+                        periodEnd: '2025-04-05'
+                        length: 1
+                      - periodStart: '2025-04-06'
+                        periodEnd: '2025-04-12'
+                        length: 2
+                      - periodStart: '2025-04-13'
+                        periodEnd: '2025-04-19'
+                        length: 3
+                      - periodStart: '2025-04-20'
+                        periodEnd: '2025-04-26'
+                        length: 0
+                      - periodStart: '2025-04-27'
+                        periodEnd: '2025-05-03'
+                        length: 1
+                      - periodStart: '2025-05-04'
+                        periodEnd: '2025-05-10'
+                        length: 2
+                      - periodStart: '2025-05-11'
+                        periodEnd: '2025-05-17'
+                        length: 3
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's streak status
+      security:
+        - ApiKeyAuth: []
+  /streaks:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get the streak lengths of a list of users, ranked by streak length from longest to shortest.
+      operationId: streaks_list
+      x-fern-server-name: api
+      tags:
+        - Streaks
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const response = await trophy.streaks.list({
+              userIds: ['user-123', 'user-456', 'user-789']
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.streaks.list(user_ids=["user-123", "user-456", "user-789"])
+      parameters:
+        - name: userIds
+          in: query
+          description: A list of up to 100 user IDs.
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+          example: 'user-123,user-456,user-789'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkStreakResponse'
+              examples:
+                Successful operation:
+                  value:
+                    - userId: user-123
+                      streakLength: 15
+                      extended: '2025-01-01T05:03:00Z'
+                    - userId: user-456
+                      streakLength: 12
+                      extended: '2025-01-01T08:43:00Z'
+                    - userId: user-789
+                      streakLength: 0
+                      extended: null
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get the streak lengths of a list of users
+      security:
+        - ApiKeyAuth: []
+  /streaks/rankings:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get the top users by streak length (active or longest).
+      operationId: streaks_rankings
+      x-fern-server-name: api
+      tags:
+        - Streaks
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.streaks.rankings({
+              limit: 20,
+              type: 'active'
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.streaks.rankings(limit=20, type="active")
+      parameters:
+        - name: limit
+          in: query
+          description: Number of users to return. Must be between 1 and 100.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          example: 20
+        - name: type
+          in: query
+          description: Whether to rank users by active streaks or longest streaks ever achieved.
+          required: false
+          schema:
+            type: string
+            enum: ['active', 'longest']
+            default: 'active'
+          example: 'active'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StreakRankingUser'
+              examples:
+                Successful operation:
+                  value:
+                    - userId: user-123
+                      name: Alice Johnson
+                      streakLength: 15
+                    - userId: user-456
+                      name: Bob Smith
+                      streakLength: 12
+                    - userId: user-789
+                      name: Charlie Brown
+                      streakLength: 8
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get top users by streak length
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/points/{key}:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a user's points for a specific points system.
+      operationId: users_points
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.points("user-id", "points-system-key");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.points(id="user-id", key="points-system-key")
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+        - in: query
+          name: awards
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+          description: The number of recent point awards to return.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserPointsResponse'
+              examples:
+                Successful operation:
+                  value:
+                    id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    key: xp
+                    name: XP
+                    description: null
+                    badgeUrl: null
+                    maxPoints: null
+                    total: 100
+                    level:
+                      id: 1140fe51-6bce-4b44-b0ad-bddc4e123534
+                      key: silver
+                      name: Silver
+                      description: Mid-tier level
+                      badgeUrl: null
+                      points: 50
+                    awards:
+                      - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        awarded: 10
+                        date: '2021-01-01T00:00:00Z'
+                        total: 100
+                        trigger:
+                          id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                          type: metric
+                          points: 10
+                          metricName: words written
+                          metricThreshold: 1000
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's points data
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/points/{key}/boosts:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get active points boosts for a user in a specific points system. Returns both global boosts the user is eligible for and user-specific boosts.
+      operationId: users_points_boosts
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.pointsBoosts("user-id", "points-system-key");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.points_boosts(id="user-id", key="points-system-key")
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PointsBoost'
+              examples:
+                Successful operation:
+                  value:
+                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                      name: Double XP Weekend
+                      status: active
+                      start: '2025-01-01'
+                      end: '2025-01-03'
+                      multiplier: 2
+                      rounding: 'down'
+                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                      name: VIP Bonus
+                      status: active
+                      start: '2025-01-01'
+                      end: null
+                      multiplier: 1.5
+                      rounding: 'nearest'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's active points boosts
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/points/{key}/event-summary:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a summary of points awards over time for a user for a specific points system.
+      operationId: users_points_event_summary
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.pointsEventSummary("user-id", "points-system-key", {
+              aggregation: "daily",
+              startDate: "2024-01-01",
+              endDate: "2024-01-31"
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.points_event_summary(
+              id="user-id",
+              key="points-system-key",
+              aggregation="daily",
+              start_date="2024-01-01",
+              end_date="2024-01-31"
+            )
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+        - name: aggregation
+          in: query
+          description: The time period over which to aggregate the event data.
+          required: true
+          schema:
+            type: string
+            enum:
+              - daily
+              - weekly
+              - monthly
+          example: daily
+        - name: startDate
+          in: query
+          description: The start date for the data range in YYYY-MM-DD format. The startDate must be before the endDate, and the date range must not exceed 400 days.
+          required: true
+          schema:
+            type: string
+            format: date
+          example: '2024-01-01'
+        - name: endDate
+          in: query
+          description: The end date for the data range in YYYY-MM-DD format. The endDate must be after the startDate, and the date range must not exceed 400 days.
+          required: true
+          schema:
+            type: string
+            format: date
+          example: '2024-01-31'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                      description: The date of the data point. For weekly or monthly aggregations, this is the first date of the period.
+                      example: '2024-01-01'
+                    total:
+                      type: number
+                      format: double
+                      description: The user's total points at the end of this date.
+                      example: 100
+                    change:
+                      type: number
+                      format: double
+                      description: The change in the user's total points during this period.
+                      example: 50
+                  required:
+                    - date
+                    - total
+                    - change
+              examples:
+                Successful operation:
+                  value:
+                    - date: '2024-01-01'
+                      total: 100
+                      change: 100
+                    - date: '2024-01-02'
+                      total: 300
+                      change: 200
+                    - date: '2024-01-03'
+                      total: 600
+                      change: 300
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a summary of points events over time
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/leaderboards/{key}:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a user's rank, value, and history for a specific leaderboard.
+      operationId: users_leaderboard
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.leaderboards("user-123", "weekly-words", {
+              run: "2025-01-15"
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.leaderboards(
+              user_id="user-123",
+              key="weekly-words",
+              run="2025-01-15"
+            )
+      parameters:
+        - name: id
+          in: path
+          description: The user's ID in your database.
+          required: true
+          schema:
+            type: string
+          example: user-123
+        - name: key
+          in: path
+          description: Unique key of the leaderboard as set when created.
+          required: true
+          schema:
+            type: string
+          example: weekly-words
+        - name: run
+          in: query
+          description: Specific run date in YYYY-MM-DD format. If not provided, returns the current run.
+          required: false
+          schema:
+            type: string
+            format: date
+          example: '2025-01-15'
+        - name: numEvents
+          in: query
+          description: The number of events to return in the history array.
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+          example: 10
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLeaderboardResponseWithHistory'
+              examples:
+                Successful operation:
+                  value:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    description: Compete weekly to see who writes the most words
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    breakdownAttribute: null
+                    runUnit: day
+                    runInterval: 7
+                    rank: 2
+                    value: 4500
+                    history:
+                      - timestamp: '2025-01-15T10:30:00Z'
+                        previousRank: null
+                        rank: 5
+                        previousValue: null
+                        value: 1000
+                      - timestamp: '2025-01-15T14:15:00Z'
+                        previousRank: 5
+                        rank: 3
+                        previousValue: 1000
+                        value: 3000
+                      - timestamp: '2025-01-15T18:45:00Z'
+                        previousRank: 3
+                        rank: 2
+                        previousValue: 3000
+                        value: 4500
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'User or leaderboard not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's leaderboard data
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/wrapped:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a user's year-in-review wrapped data.
+      operationId: users_wrapped
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.wrapped("user-123", {
+              year: 2024
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.wrapped(id="user-123", year=2024)
+      parameters:
+        - name: id
+          in: path
+          description: The user's ID in your database.
+          required: true
+          schema:
+            type: string
+          example: user-123
+        - name: year
+          in: query
+          description: The year to get wrapped data for. Defaults to the current year. Must be an integer between 1 and the current year.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+          example: 2024
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WrappedResponse'
+              examples:
+                Successful operation:
+                  value:
+                    user:
+                      id: user-123
+                      email: user@example.com
+                      name: John Doe
+                      tz: America/New_York
+                      subscribeToEmails: true
+                      created: '2024-01-15T10:30:00Z'
+                      updated: '2024-06-20T14:45:00Z'
+                      control: false
+                      attributes:
+                        plan-type: premium
+                        region: us-east
+                    activity:
+                      daysActive: 156
+                      weeksActive: 42
+                      monthsActive: 11
+                      mostActiveDay:
+                        date: '2024-03-15'
+                        metrics:
+                          words-written:
+                            name: Words Written
+                            units: words
+                            currentTotal: 15000
+                            changeThisPeriod: 2500
+                            percentChange: 20
+                            byAttribute: {}
+                        points:
+                          xp-system:
+                            name: Experience Points
+                            description: Points earned through activity
+                            currentTotal: 5000
+                            changeThisPeriod: 500
+                            percentChange: 11.1
+                        achievements:
+                          - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                            name: 500 Words Written
+                            trigger: metric
+                            description: Write 500 words in a single day
+                            badgeUrl: https://example.com/badge.png
+                            key: 500-words
+                            metricId: metric-123
+                            metricValue: 500
+                            metricName: Words Written
+                            achievedAt: '2024-03-15T14:30:00Z'
+                            completions: 150
+                            rarity: 15
+                        leaderboards:
+                          weekly-words:
+                            id: leaderboard-123
+                            name: Weekly Word Count
+                            key: weekly-words
+                            rankBy: metric
+                            metricKey: words-written
+                            metricName: Words Written
+                            description: Weekly writing competition
+                            start: '2024-03-11'
+                            end: '2024-03-17'
+                            maxParticipants: 100
+                            runUnit: day
+                            runInterval: 7
+                            rank: 3
+                            value: 2500
+                      mostActiveWeek:
+                        start: '2024-03-11'
+                        end: '2024-03-17'
+                        metrics:
+                          words-written:
+                            name: Words Written
+                            units: words
+                            currentTotal: 15000
+                            changeThisPeriod: 8500
+                            percentChange: 130
+                            percentileThisPeriod: 95
+                            byAttribute: {}
+                        points:
+                          xp-system:
+                            name: Experience Points
+                            description: Points earned through activity
+                            currentTotal: 5000
+                            changeThisPeriod: 1200
+                            percentChange: 31.5
+                            percentileThisPeriod: 88
+                        achievements: []
+                        leaderboards: {}
+                      mostActiveMonth:
+                        month: 2
+                        metrics:
+                          words-written:
+                            name: Words Written
+                            units: words
+                            currentTotal: 15000
+                            changeThisPeriod: 12000
+                            percentChange: 400
+                            percentileThisPeriod: 92
+                            byAttribute: {}
+                        points:
+                          xp-system:
+                            name: Experience Points
+                            description: Points earned through activity
+                            currentTotal: 5000
+                            changeThisPeriod: 2000
+                            percentChange: 66.6
+                            percentileThisPeriod: 85
+                        achievements: []
+                        leaderboards: {}
+                      entireYear:
+                        metrics:
+                          words-written:
+                            name: Words Written
+                            units: words
+                            currentTotal: 150000
+                            changeThisPeriod: 150000
+                            percentChange: 100
+                            percentileThisPeriod: 78
+                            byAttribute: {}
+                        points:
+                          xp-system:
+                            name: Experience Points
+                            description: Points earned through activity
+                            currentTotal: 25000
+                            changeThisPeriod: 25000
+                            percentChange: 100
+                            percentileThisPeriod: 82
+                        achievements:
+                          - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                            name: 500 Words Written
+                            trigger: metric
+                            description: Write 500 words in a single day
+                            badgeUrl: https://example.com/badge.png
+                            key: 500-words
+                            metricId: metric-123
+                            metricValue: 500
+                            metricName: Words Written
+                            achievedAt: '2024-03-15T14:30:00Z'
+                            completions: 150
+                            rarity: 15
+                        leaderboards: {}
+                        longestStreak:
+                          length: 45
+                          frequency: daily
+                          periodStart: '2024-02-01'
+                          periodEnd: '2024-03-17'
+                          started: '2024-02-01'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'User not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's wrapped data
+      security:
+        - ApiKeyAuth: []
+  /points/{key}/summary:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a breakdown of the number of users with points in each range.
+      operationId: points_summary
+      x-fern-server-name: api
+      tags:
+        - Points
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.points.summary("points-system-key", {
+              userAttributes: "plan-type:premium,region:us-east"
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.points.summary(
+              key="points-system-key",
+              user_attributes="plan-type:premium,region:us-east"
+            )
+      parameters:
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+        - name: userAttributes
+          in: query
+          description: Optional colon-delimited user attribute filters in the format attribute:value,attribute:value. Only users matching ALL specified attributes will be included in the points breakdown.
+          required: false
+          schema:
+            type: string
+          example: plan-type:premium,region:us-east
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointsSummaryResponse'
+              examples:
+                Successful operation:
+                  value:
+                    - from: 0
+                      to: 0
+                      users: 5012
+                    - from: 1
+                      to: 100
+                      users: 1501
+                    - from: 101
+                      to: 200
+                      users: 1007
+                    - from: 201
+                      to: 300
+                      users: 584
+                    - from: 301
+                      to: 400
+                      users: 201
+                    - from: 401
+                      to: 500
+                      users: 102
+                    - from: 501
+                      to: 600
+                      users: 25
+                    - from: 601
+                      to: 700
+                      users: 0
+                    - from: 701
+                      to: 800
+                      users: 0
+                    - from: 801
+                      to: 900
+                      users: 0
+                    - from: 901
+                      to: 1000
+                      users: 0
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a breakdown of users by points
+      security:
+        - ApiKeyAuth: []
+  /points/{key}:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a points system with its triggers.
+      operationId: points_system
+      x-fern-server-name: api
+      tags:
+        - Points
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.points.system("points-system-key");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.points.system(key="points-system-key")
+      parameters:
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointsSystemResponse'
+              examples:
+                Successful operation:
+                  value:
+                    id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    name: XP System
+                    description: Experience points for user engagement
+                    badgeUrl: https://example.com/badge.png
+                    maxPoints: null
+                    triggers:
+                      - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        type: metric
+                        points: 10
+                        status: active
+                        metricId: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        metricName: words written
+                        metricThreshold: 1000
+                        userAttributes:
+                          - key: plan-type
+                            value: premium
+                          - key: region
+                            value: us-east
+                        eventAttribute:
+                          key: source
+                          value: mobile-app
+                        eventAttributes:
+                          - key: source
+                            value: mobile-app
+                          - key: plan
+                            value: premium
+                        created: '2021-01-01T00:00:00Z'
+                        updated: '2021-01-01T00:00:00Z'
+                      - id: 0040fe51-6bce-4b44-b0ad-bddc4e123536
+                        type: streak
+                        points: 10
+                        status: active
+                        streakLengthThreshold: 7
+                        created: '2021-01-01T00:00:00Z'
+                        updated: '2021-01-01T00:00:00Z'
+                      - id: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                        type: achievement
+                        points: 50
+                        status: active
+                        achievementId: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                        achievementName: finish onboarding
+                        userAttributes:
+                          - key: plan-type
+                            value: premium
+                        created: '2021-01-01T00:00:00Z'
+                        updated: '2021-01-01T00:00:00Z'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Points system not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a points system with its triggers
+      security:
+        - ApiKeyAuth: []
+  /points/{key}/boosts:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get all global boosts for a points system. Finished boosts are excluded by default.
+      operationId: points_boosts
+      x-fern-server-name: api
+      tags:
+        - Points
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.points.boosts("points-system-key");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.points.boosts(key="points-system-key")
+      parameters:
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+        - name: includeFinished
+          in: query
+          description: When set to 'true', boosts that have finished (past their end date) will be included in the response. By default, finished boosts are excluded.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PointsBoost'
+              examples:
+                Successful operation:
+                  value:
+                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123537
+                      name: Double XP Weekend
+                      status: active
+                      start: '2025-01-01'
+                      end: '2025-01-03'
+                      multiplier: 2
+                      rounding: 'down'
+                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123538
+                      name: Holiday Bonus
+                      status: finished
+                      start: '2024-12-25'
+                      end: '2024-12-31'
+                      multiplier: 1.5
+                      rounding: 'nearest'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Points system not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get boosts for a points system
+      security:
+        - ApiKeyAuth: []
+  /points/{key}/levels:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get all levels for a points system.
+      operationId: points_levels
+      x-fern-server-name: api
+      tags:
+        - Points
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.points.levels("points-system-key");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.points.levels(key="points-system-key")
+      parameters:
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PointsLevel'
+              examples:
+                Successful operation:
+                  value:
+                    - id: 1140fe51-6bce-4b44-b0ad-bddc4e123534
+                      key: bronze
+                      name: Bronze
+                      description: Starting level
+                      badgeUrl: https://example.com/bronze.png
+                      points: 0
+                    - id: 2240fe51-6bce-4b44-b0ad-bddc4e123534
+                      key: silver
+                      name: Silver
+                      description: Mid-tier level
+                      badgeUrl: null
+                      points: 50
+                    - id: 3340fe51-6bce-4b44-b0ad-bddc4e123534
+                      key: gold
+                      name: Gold
+                      description: Top level
+                      badgeUrl: https://example.com/gold.png
+                      points: 200
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Points system not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get levels for a points system
+      security:
+        - ApiKeyAuth: []
+  /points/{key}/level-summary:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a breakdown of the number of users at each level in a points system.
+      operationId: points_level_summary
+      x-fern-server-name: api
+      tags:
+        - Points
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.points.levelSummary("points-system-key");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.points.level_summary(key="points-system-key")
+      parameters:
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointsLevelSummaryResponse'
+              examples:
+                Successful operation:
+                  value:
+                    - level:
+                        id: 1140fe51-6bce-4b44-b0ad-bddc4e123534
+                        key: bronze
+                        name: Bronze
+                        description: Starting level
+                        badgeUrl: https://example.com/bronze.png
+                        points: 0
+                      users: 5012
+                    - level:
+                        id: 2240fe51-6bce-4b44-b0ad-bddc4e123534
+                        key: silver
+                        name: Silver
+                        description: Mid-tier level
+                        badgeUrl: null
+                        points: 50
+                      users: 1501
+                    - level:
+                        id: 3340fe51-6bce-4b44-b0ad-bddc4e123534
+                        key: gold
+                        name: Gold
+                        description: Top level
+                        badgeUrl: https://example.com/gold.png
+                        points: 200
+                      users: 102
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Points system not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'No levels configured on the points system'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get level summary for a points system
+      security:
+        - ApiKeyAuth: []
+  /leaderboards:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get all leaderboards for your organization. Finished leaderboards are excluded by default.
+      operationId: leaderboards_all
+      x-fern-server-name: api
+      tags:
+        - Leaderboards
+      parameters:
+        - name: includeFinished
+          in: query
+          description: When set to 'true', leaderboards with status 'finished' will be included in the response. By default, finished leaderboards are excluded.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.leaderboards.all();
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.leaderboards.all()
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/LeaderboardResponse'
+                    - type: object
+                      properties:
+                        status:
+                          type: string
+                          enum: ['active', 'scheduled', 'finished']
+                          description: The status of the leaderboard.
+                          example: active
+                      required:
+                        - status
+              examples:
+                Successful operation:
+                  value:
+                    - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                      name: Weekly Word Count Challenge
+                      key: weekly-words
+                      rankBy: metric
+                      metricKey: words-written
+                      metricName: Words Written
+                      description: Compete weekly to see who writes the most words
+                      status: active
+                      start: '2025-01-01'
+                      end: null
+                      maxParticipants: 100
+                      breakdownAttribute: null
+                      breakdownAttributes:
+                        - country
+                        - plan
+                      runUnit: day
+                      runInterval: 7
+                    - id: 5100fe51-6bce-6j44-b0hs-bddc4e123683
+                      name: XP Leaderboard
+                      key: xp-board
+                      rankBy: points
+                      pointsSystemKey: xp-system
+                      pointsSystemName: Experience Points
+                      description: Overall ranking by XP earned
+                      status: active
+                      start: '2025-01-01'
+                      end: null
+                      maxParticipants: 50
+                      breakdownAttribute: null
+                      breakdownAttributes: []
+                      runUnit: null
+                      runInterval: null
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get all leaderboards
+      security:
+        - ApiKeyAuth: []
+  /leaderboards/{key}:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a specific leaderboard by its key.
+      operationId: leaderboards_get
+      x-fern-server-name: api
+      tags:
+        - Leaderboards
+      x-codeSamples:
+        - lang: javascript
+          label: Get rankings
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.leaderboards.get("weekly-words", {
+              offset: 0,
+              limit: 10,
+              run: "2025-01-15"
+            });
+        - lang: javascript
+          label: Get rankings by user attribute
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.leaderboards.get("weekly-words", {
+              offset: 0,
+              limit: 10,
+              run: "2025-01-15",
+              userAttributes: "city:london"
+            });
+        - lang: python
+          label: Get rankings
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.leaderboards.get(
+              key="weekly-words",
+              offset=0,
+              limit=10,
+              run="2025-01-15"
+            )
+        - lang: python
+          label: Get rankings by user attribute
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.leaderboards.get(
+              key="weekly-words",
+              offset=0,
+              limit=10,
+              run="2025-01-15",
+              user_attributes="city:london"
+            )
+      parameters:
+        - name: key
+          in: path
+          description: Unique key of the leaderboard as set when created.
+          required: true
+          schema:
+            type: string
+          example: weekly-words
+        - name: offset
+          in: query
+          description: Number of rankings to skip for pagination.
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          example: 20
+        - name: limit
+          in: query
+          description: Maximum number of rankings to return. Cannot be greater than the size of the leaderboard.
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 10
+          example: 50
+        - name: run
+          in: query
+          description: Specific run date in YYYY-MM-DD format. If not provided, returns the current run.
+          required: false
+          schema:
+            type: string
+            format: date
+          example: '2025-01-15'
+        - name: userId
+          in: query
+          description: When provided, offset is relative to this user's position on the leaderboard. If the user is not found in the leaderboard, returns empty rankings array.
+          required: false
+          schema:
+            type: string
+          example: 'user-123'
+        - name: userAttributes
+          in: query
+          description: Attribute key and value to filter the rankings by, separated by a colon. For example, `city:London`. This parameter is required, and only valid for leaderboards with a breakdown attribute.
+          required: false
+          schema:
+            type: string
+          example: city:London
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaderboardResponseWithRankings'
+              examples:
+                Successful operation:
+                  value:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    pointsSystemKey: null
+                    pointsSystemName: null
+                    description: Compete weekly to see who writes the most words
+                    status: active
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    breakdownAttribute: null
+                    runUnit: day
+                    runInterval: 7
+                    rankings:
+                      - userId: user-123
+                        userName: Alice Johnson
+                        rank: 1
+                        value: 5000
+                      - userId: user-456
+                        userName: Bob Smith
+                        rank: 2
+                        value: 4500
+                      - userId: user-789
+                        userName: Charlie Brown
+                        rank: 3
+                        value: 4200
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Leaderboard not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a single leaderboard
+      security:
+        - ApiKeyAuth: []
+webhooks:
+  achievement.completed:
+    post:
+      summary: Achievement completed
+      operationId: webhooks_achievement_completed
+      description: Triggered when a user completes an achievement.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['achievement.completed']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user who completed the achievement.
+                achievement:
+                  $ref: '#/components/schemas/UserAchievementResponse'
+                  description: The achievement completion that occurred.
+              required:
+                - type
+                - user
+                - achievement
+            examples:
+              Achievement completed:
+                value:
+                  type: achievement.completed
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  achievement:
+                    id: d01dcbcb-d51e-4c12-b054-dc811dcdc625
+                    name: Completed Onboarding
+                    trigger: api
+                    description: null
+                    key: completed-onboarding
+                    achievedAt: '2021-01-01T00:00:00Z'
+                    badgeUrl: https://example.com/badge2.png
+
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  streak.started:
+    post:
+      summary: Streak started
+      operationId: webhooks_streak_started
+      description: Triggered when a user starts a streak.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['streak.started']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user who started the streak.
+                streak:
+                  $ref: '#/components/schemas/BaseStreakResponse'
+                  description: The streak that was started.
+              required:
+                - type
+                - user
+                - streak
+            examples:
+              Streak started:
+                value:
+                  type: streak.started
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  streak:
+                    length: 1
+                    frequency: daily
+                    periodStart: '2025-04-02'
+                    periodEnd: '2025-04-02'
+                    started: '2025-04-02'
+                    expires: '2025-04-03'
+                    freezes: 0
+                    maxFreezes: 3
+                    freezeAutoEarnInterval: 7
+                    freezeAutoEarnAmount: 1
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  streak.extended:
+    post:
+      summary: Streak extended
+      operationId: webhooks_streak_extended
+      description: Triggered when a user extends an existing active streak.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['streak.extended']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user who extended the streak.
+                streak:
+                  $ref: '#/components/schemas/BaseStreakResponse'
+                  description: The streak that was extended.
+              required:
+                - type
+                - user
+                - streak
+            examples:
+              Streak extended:
+                value:
+                  type: streak.extended
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  streak:
+                    length: 2
+                    frequency: daily
+                    periodStart: '2025-04-03'
+                    periodEnd: '2025-04-03'
+                    started: '2025-04-02'
+                    expires: '2025-04-05'
+                    freezes: 0
+                    maxFreezes: 3
+                    freezeAutoEarnInterval: 7
+                    freezeAutoEarnAmount: 1
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  streak.lost:
+    post:
+      summary: Streak lost
+      operationId: webhooks_streak_lost
+      description: Triggered when a user loses their streak.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['streak.lost']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user who lost the streak.
+                length:
+                  type: integer
+                  description: The length of the streak that was lost.
+              required:
+                - type
+                - user
+                - length
+            examples:
+              Streak lost:
+                value:
+                  type: streak.lost
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  length: 7
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  streak.freeze_consumed:
+    post:
+      summary: Streak freeze consumed
+      operationId: webhooks_streak_freeze_consumed
+      description: Triggered when a user consumes a streak freeze.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['streak.freeze_consumed']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user whose streak freeze was consumed.
+                consumed:
+                  type: integer
+                  description: The number of freezes consumed.
+                freezes:
+                  type: integer
+                  description: The total number of freezes the user has left after the consumption.
+              required:
+                - type
+                - user
+                - consumed
+                - freezes
+            examples:
+              Streak freeze consumed:
+                value:
+                  type: streak.freeze_consumed
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  consumed: 1
+                  freezes: 2
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  streak.freeze_earned:
+    post:
+      summary: Streak freeze earned
+      operationId: webhooks_streak_freeze_earned
+      description: Triggered when a user earns streak freezes.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['streak.freeze_earned']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user who earned streak freezes.
+                earned:
+                  type: integer
+                  description: The number of freezes earned.
+                freezes:
+                  type: integer
+                  description: The total number of freezes the user has after the event.
+              required:
+                - type
+                - user
+                - earned
+                - freezes
+            examples:
+              Streak freeze earned:
+                value:
+                  type: streak.freeze_earned
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  earned: 1
+                  freezes: 2
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  points.changed:
+    post:
+      summary: Points changed
+      operationId: webhooks_points_changed
+      description: Triggered when a user is awarded or loses points. This event is fired a maximum of once per user per points system per minute.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['points.changed']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user whose points increased or decreased.
+                points:
+                  $ref: '#/components/schemas/MetricEventPointsResponse'
+                  description: The user's points after the event (includes added amount for this event).
+              required:
+                - type
+                - user
+                - points
+            examples:
+              Points changed:
+                value:
+                  type: points.changed
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  points:
+                    id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    key: xp
+                    name: XP
+                    description: null
+                    badgeUrl: null
+                    maxPoints: null
+                    total: 100
+                    added: 10
+                    awards:
+                      - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        awarded: 10
+                        date: '2021-01-01T00:00:00Z'
+                        total: 100
+                        trigger:
+                          id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                          type: metric
+                          points: 10
+                          metricName: words written
+                          metricThreshold: 1000
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  points.level_changed:
+    post:
+      summary: Points level changed
+      operationId: webhooks_points_level_changed
+      description: Triggered when a user's level changes within a points system as a result of earning or losing points.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['points.level_changed']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user whose level changed.
+                points:
+                  description: The points system in which the level changed.
+                  allOf:
+                    - $ref: '#/components/schemas/PointsResponse'
+                    - type: object
+                      properties:
+                        total:
+                          type: integer
+                          description: The user's total points in this system.
+                      required:
+                        - total
+                previousLevel:
+                  description: The user's previous level, or null if the user had no level.
+                  oneOf:
+                    - $ref: '#/components/schemas/PointsLevel'
+                    - type: 'null'
+                newLevel:
+                  description: The user's new level, or null if the user no longer has a level.
+                  oneOf:
+                    - $ref: '#/components/schemas/PointsLevel'
+                    - type: 'null'
+              required:
+                - type
+                - user
+                - points
+                - previousLevel
+                - newLevel
+            examples:
+              Level changed:
+                value:
+                  type: points.level_changed
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  points:
+                    id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    key: xp
+                    name: XP
+                    description: Experience points
+                    badgeUrl: null
+                    maxPoints: null
+                    total: 100
+                  previousLevel:
+                    id: 1140fe51-6bce-4b44-b0ad-bddc4e123534
+                    key: bronze
+                    name: Bronze
+                    description: Starting level
+                    badgeUrl: https://example.com/bronze.png
+                    points: 0
+                  newLevel:
+                    id: 2240fe51-6bce-4b44-b0ad-bddc4e123534
+                    key: silver
+                    name: Silver
+                    description: Mid-tier level
+                    badgeUrl: null
+                    points: 50
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  points.boost_started:
+    post:
+      summary: Points boost started
+      operationId: webhooks_points_boost_started
+      description: Triggered when a points boost goes live (its start time has been reached).
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['points.boost_started']
+                  description: The webhook event type.
+                timestamp:
+                  type: string
+                  format: date-time
+                  description: When the event occurred (ISO 8601).
+                boost:
+                  $ref: '#/components/schemas/PointsBoostWebhookPayload'
+                  description: The points boost that started.
+              required:
+                - type
+                - timestamp
+                - boost
+            examples:
+              Points boost started:
+                value:
+                  type: points.boost_started
+                  timestamp: '2025-01-15T00:00:00Z'
+                  boost:
+                    id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    name: Double XP Weekend
+                    status: active
+                    userId: null
+                    pointsSystemId: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                    pointsSystemKey: xp
+                    pointsSystemName: XP
+                    start: '2025-01-15'
+                    end: '2025-01-17'
+                    multiplier: 2
+                    rounding: down
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  points.boost_finished:
+    post:
+      summary: Points boost finished
+      operationId: webhooks_points_boost_finished
+      description: Triggered when a points boost ends (its end time has been reached).
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['points.boost_finished']
+                  description: The webhook event type.
+                timestamp:
+                  type: string
+                  format: date-time
+                  description: When the event occurred (ISO 8601).
+                boost:
+                  $ref: '#/components/schemas/PointsBoostWebhookPayload'
+                  description: The points boost that finished.
+              required:
+                - type
+                - timestamp
+                - boost
+            examples:
+              Points boost finished:
+                value:
+                  type: points.boost_finished
+                  timestamp: '2025-01-17T23:59:59Z'
+                  boost:
+                    id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    name: Double XP Weekend
+                    status: finished
+                    userId: null
+                    pointsSystemId: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                    pointsSystemKey: xp
+                    pointsSystemName: XP
+                    start: '2025-01-15'
+                    end: '2025-01-17'
+                    multiplier: 2
+                    rounding: down
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  leaderboard.started:
+    post:
+      summary: Leaderboard started
+      operationId: webhooks_leaderboard_started
+      description: Triggered when a run of a leaderboard begins.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['leaderboard.started']
+                  description: The webhook event type.
+                leaderboard:
+                  $ref: '#/components/schemas/LeaderboardResponseWithRankings'
+                  description: The leaderboard run that started and its initial rankings.
+              required:
+                - type
+                - leaderboard
+            examples:
+              Leaderboard started:
+                value:
+                  type: leaderboard.started
+                  leaderboard:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    pointsSystemKey: null
+                    pointsSystemName: null
+                    description: Compete weekly to see who writes the most words
+                    status: active
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    breakdownAttribute: null
+                    runUnit: day
+                    runInterval: 7
+                    rankings:
+                      - userId: user-123
+                        userName: Alice Johnson
+                        rank: 1
+                        value: 1
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  leaderboard.changed:
+    post:
+      summary: Leaderboard changed
+      operationId: webhooks_leaderboard_changed
+      description: Triggered when leaderboard rankings change.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['leaderboard.changed']
+                  description: The webhook event type.
+                leaderboard:
+                  $ref: '#/components/schemas/LeaderboardResponseWithRankings'
+                  description: The leaderboard run that changed.
+              required:
+                - type
+                - leaderboard
+            examples:
+              Leaderboard changed:
+                value:
+                  type: leaderboard.changed
+                  leaderboard:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    pointsSystemKey: null
+                    pointsSystemName: null
+                    description: Compete weekly to see who writes the most words
+                    status: active
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    breakdownAttribute: null
+                    runUnit: day
+                    runInterval: 7
+                    rankings:
+                      - userId: user-123
+                        userName: Alice Johnson
+                        rank: 1
+                        value: 10
+                      - userId: user-456
+                        userName: Bob Smith
+                        rank: 2
+                        value: 6
+                      - userId: user-789
+                        userName: Charlie Brown
+                        rank: 3
+                        value: 4
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  leaderboard.finished:
+    post:
+      summary: Leaderboard finished
+      operationId: webhooks_leaderboard_finished
+      description: Triggered when a run of a leaderboard finishes.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['leaderboard.finished']
+                  description: The webhook event type.
+                leaderboard:
+                  $ref: '#/components/schemas/LeaderboardResponseWithRankings'
+                  description: The leaderboard run that finished and its final rankings.
+              required:
+                - type
+                - leaderboard
+            examples:
+              Leaderboard finished:
+                value:
+                  type: leaderboard.finished
+                  leaderboard:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    pointsSystemKey: null
+                    pointsSystemName: null
+                    description: Compete weekly to see who writes the most words
+                    status: active
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    breakdownAttribute: null
+                    runUnit: day
+                    runInterval: 7
+                    rankings:
+                      - userId: user-123
+                        userName: Alice Johnson
+                        rank: 1
+                        value: 10
+                      - userId: user-456
+                        userName: Bob Smith
+                        rank: 2
+                        value: 6
+                      - userId: user-789
+                        userName: Charlie Brown
+                        rank: 3
+                        value: 4
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  leaderboard.rank_changed:
+    post:
+      summary: Leaderboard rank changed
+      operationId: webhooks_leaderboard_rank_changed
+      description: Triggered when a user's leaderboard rank changes.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['leaderboard.rank_changed']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user whose rank changed.
+                leaderboard:
+                  $ref: '#/components/schemas/WebhookUserLeaderboardResponse'
+                  description: The user's leaderboard data that changed.
+              required:
+                - type
+                - user
+                - leaderboard
+            examples:
+              Leaderboard rank changed:
+                value:
+                  type: leaderboard.rank_changed
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  leaderboard:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    description: Compete weekly to see who writes the most words
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    breakdownAttribute: null
+                    runUnit: day
+                    runInterval: 7
+                    rank: 2
+                    value: 4500
+                    previousRank: 1
+                    previousValue: 4500
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+components:
+  schemas:
+    StreakFrequency:
+      title: StreakFrequency
+      type: string
+      enum:
+        - daily
+        - weekly
+        - monthly
+    BaseStreakResponse:
+      title: Streak Response
+      type: object
+      properties:
+        length:
+          type: integer
+          description: The length of the user's current streak.
+        frequency:
+          $ref: '#/components/schemas/StreakFrequency'
+          description: The frequency of the streak.
+        started:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The date the streak started.
+        periodStart:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The start date of the current streak period.
+        periodEnd:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The end date of the current streak period.
+        expires:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The date the streak will expire if the user does not increment a metric.
+        freezes:
+          type: integer
+          description: The number of available streak freezes. Only present if the organization has enabled streak freezes.
+        maxFreezes:
+          type: integer
+          description: The maximum number of streak freezes a user can have. Only present if the organization has enabled streak freezes.
+        freezeAutoEarnInterval:
+          type: integer
+          description: The interval at which the user will earn streak freezes, in days. Only present if the organization has enabled streak freeze auto-earn.
+        freezeAutoEarnAmount:
+          type: integer
+          description: The amount of streak freezes the user will earn per interval. Only present if the organization has enabled streak freeze auto-earn.
+      required:
+        - length
+        - frequency
+        - started
+        - periodStart
+        - periodEnd
+        - expires
+    BulkStreakResponse:
+      title: Bulk Streak Response
+      type: array
+      items:
+        properties:
+          userId:
+            type: string
+            description: The ID of the user.
+          streakLength:
+            type: integer
+            description: The length of the user's streak.
+          extended:
+            type:
+              - string
+              - 'null'
+            description: The timestamp the streak was extended, as a string. Null if the streak is not active.
+        required:
+          - userId
+          - streakLength
+          - extended
+    MetricEventStreakResponse:
+      title: Streak Response (Metric Event)
+      type: object
+      description: An object representing the user's streak after sending a metric event.
+      allOf:
+        - $ref: '#/components/schemas/BaseStreakResponse'
+        - type: object
+          properties:
+            extended:
+              type: boolean
+              description: Whether this metric event increased the user's streak length.
+          required:
+            - extended
+    StreakResponse:
+      title: Streak Response
+      type: object
+      description: An object representing the user's streak.
+      allOf:
+        - $ref: '#/components/schemas/BaseStreakResponse'
+        - type: object
+          properties:
+            streakHistory:
+              type: array
+              description: >-
+                A list of the user's past streak periods up through the current period. Each
+                period includes the start and end dates and the length of the streak.
+              items:
+                type: object
+                description: >-
+                  An object representing a past streak period.
+                properties:
+                  periodStart:
+                    type: string
+                    format: date
+                    description: The date this streak period started.
+                    example: '2025-03-31'
+                  periodEnd:
+                    type: string
+                    format: date
+                    description: The date this streak period ended.
+                    example: '2025-04-05'
+                  length:
+                    type: integer
+                    description: The length of the user's streak during this period.
+                    example: 1
+                  usedFreeze:
+                    type: boolean
+                    description: Whether the user used a streak freeze during this period. Only present if the organization has enabled streak freezes.
+                    example: false
+                required:
+                  - periodStart
+                  - periodEnd
+                  - length
+            rank:
+              type:
+                - integer
+                - 'null'
+              description: Deprecated. The user's rank across all users. Null if the user has no active streak.
+              deprecated: true
+              example: 5
+          required:
+            - rank
+    PointsTrigger:
+      title: PointsTrigger
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the trigger
+        type:
+          type: string
+          description: The type of trigger
+          enum: ['metric', 'achievement', 'streak', 'time', 'user_creation']
+        points:
+          type: integer
+          description: The points awarded by this trigger.
+        status:
+          type: string
+          enum: ['active', 'inactive', 'archived']
+          description: The status of the trigger.
+        achievementId:
+          type: string
+          description: The unique ID of the achievement associated with this trigger, if the trigger is an achievement.
+        metricId:
+          type: string
+          description: The unique ID of the metric associated with this trigger, if the trigger is a metric.
+        metricName:
+          type: string
+          description: If the trigger has type 'metric', the name of the metric
+        metricThreshold:
+          type: integer
+          description: If the trigger has type 'metric', the threshold of the metric that triggers the points
+        streakLengthThreshold:
+          type: integer
+          description: If the trigger has type 'streak', the threshold of the streak that triggers the points
+        achievementName:
+          type: string
+          description: If the trigger has type 'achievement', the name of the achievement
+        timeUnit:
+          type: string
+          enum: ['hour', 'day']
+          description: If the trigger has type 'time', the unit of time after which to award points
+        timeInterval:
+          type: integer
+          description: If the trigger has type 'time', the numer of units of timeUnit after which to award points
+        userAttributes:
+          type: array
+          description: User attribute filters that must be met for this trigger to award points. Empty when the trigger has no user attribute filters configured.
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                description: The key of the user attribute.
+                example: plan-type
+              value:
+                type: string
+                description: The required value of the user attribute.
+                example: premium
+            required:
+              - key
+              - value
+        eventAttribute:
+          type: object
+          description: Deprecated. Event attribute filter that must be met for this trigger to award points. Only present if the trigger has an event filter configured.
+          deprecated: true
+          properties:
+            key:
+              type: string
+              description: The key of the event attribute.
+              example: source
+            value:
+              type: string
+              description: The required value of the event attribute.
+              example: mobile-app
+          required:
+            - key
+            - value
+        eventAttributes:
+          type: array
+          description: If the trigger has type 'metric', the event attributes that must match for the trigger to award points. Empty when the trigger is metric-based and has no event attribute filters. Omitted for non-metric triggers.
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                description: The key of the event attribute.
+                example: source
+              value:
+                type: string
+                description: The required value of the event attribute.
+                example: mobile-app
+            required:
+              - key
+              - value
+        created:
+          type: string
+          format: date-time
+          description: The date and time the trigger was created, in ISO 8601 format.
+        updated:
+          type: string
+          format: date-time
+          description: The date and time the trigger was last updated, in ISO 8601 format.
+      required:
+        - id
+        - type
+        - points
+        - status
+        - userAttributes
+        - created
+        - updated
+    PointsAward:
+      title: PointsAward
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the trigger award
+        awarded:
+          type: integer
+          description: The points awarded by this trigger
+        date:
+          type: string
+          description: The date these points were awarded, in ISO 8601 format.
+        total:
+          type: integer
+          description: The user's total points after this award occurred.
+        trigger:
+          $ref: '#/components/schemas/PointsTrigger'
+        boosts:
+          type: array
+          description: Array of points boosts that applied to this award.
+          items:
+            $ref: '#/components/schemas/PointsBoost'
+    PointsBoost:
+      title: PointsBoost
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the points boost
+        name:
+          type: string
+          description: The name of the points boost
+        status:
+          type: string
+          enum: ['active', 'scheduled', 'finished']
+          description: The status of the points boost
+        start:
+          type: string
+          description: The start date of the points boost
+        end:
+          type:
+            - string
+            - 'null'
+          description: The end date of the points boost
+        multiplier:
+          type: number
+          description: The multiplier of the points boost
+        rounding:
+          type: string
+          enum: ['down', 'up', 'nearest']
+          description: The rounding method of the points boost
+      required:
+        - id
+        - name
+        - status
+        - start
+        - end
+        - multiplier
+        - rounding
+    PointsBoostWebhookPayload:
+      title: PointsBoostWebhookPayload
+      type: object
+      description: Points boost payload sent in points.boost_started and points.boost_finished webhook events.
+      properties:
+        id:
+          type: string
+          description: The ID of the points boost.
+        name:
+          type: string
+          description: The name of the points boost.
+        status:
+          type: string
+          enum: ['active', 'finished']
+          description: The status of the points boost.
+        userId:
+          type:
+            - string
+            - 'null'
+          description: The customer-facing user ID that the boost is scoped to, or null for global boosts.
+        pointsSystemId:
+          type: string
+          description: The ID of the points system this boost applies to.
+        pointsSystemKey:
+          type: string
+          description: The key of the points system this boost applies to.
+        pointsSystemName:
+          type: string
+          description: The name of the points system this boost applies to.
+        start:
+          type: string
+          format: date
+          description: The start date of the points boost (YYYY-MM-DD).
+        end:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The end date of the points boost (YYYY-MM-DD), or null if open-ended.
+        multiplier:
+          type: number
+          description: The multiplier applied to points during the boost.
+        rounding:
+          type: string
+          enum: ['down', 'up', 'nearest']
+          description: The rounding method applied to boosted points.
+      required:
+        - id
+        - name
+        - status
+        - userId
+        - pointsSystemId
+        - pointsSystemKey
+        - pointsSystemName
+        - start
+        - end
+        - multiplier
+        - rounding
+    PointsResponse:
+      title: PointsResponse
+      type: object
+      description: Base points system fields shared across responses.
+      properties:
+        id:
+          type: string
+          description: The ID of the points system
+        key:
+          type: string
+          description: The key of the points system
+        name:
+          type: string
+          description: The name of the points system
+        description:
+          type:
+            - string
+            - 'null'
+          description: The description of the points system
+        badgeUrl:
+          type:
+            - string
+            - 'null'
+          description: The URL of the badge image for the points system
+        maxPoints:
+          type:
+            - number
+            - 'null'
+          description: The maximum number of points a user can be awarded in this points system
+      required:
+        - id
+        - key
+        - name
+        - description
+        - badgeUrl
+        - maxPoints
+    GetUserPointsResponse:
+      title: GetUserPointsResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/PointsResponse'
+        - type: object
+          properties:
+            total:
+              type: integer
+              description: The user's total points
+            level:
+              description: The user's current level in this points system, or null if no levels are configured or the user hasn't reached any level yet.
+              oneOf:
+                - $ref: '#/components/schemas/PointsLevel'
+                - type: 'null'
+            awards:
+              type: array
+              description: Array of trigger awards that added points.
+              items:
+                $ref: '#/components/schemas/PointsAward'
+          required:
+            - total
+            - level
+            - awards
+    PointsLevelSummaryResponse:
+      title: PointsLevelSummaryResponse
+      type: array
+      description: A breakdown of users by level in a points system.
+      items:
+        type: object
+        properties:
+          level:
+            $ref: '#/components/schemas/PointsLevel'
+          users:
+            type: integer
+            description: The number of users currently at this level
+        required:
+          - level
+          - users
+    PointsLevel:
+      title: PointsLevel
+      type: object
+      description: A level within a points system.
+      properties:
+        id:
+          type: string
+          description: The ID of the level
+        key:
+          type: string
+          description: The unique key of the level
+        name:
+          type: string
+          description: The name of the level
+        description:
+          type: string
+          description: The description of the level
+        badgeUrl:
+          type:
+            - string
+            - 'null'
+          description: The URL of the badge image for the level
+        points:
+          type: integer
+          description: The points threshold required to reach this level
+      required:
+        - id
+        - key
+        - name
+        - description
+        - badgeUrl
+        - points
+    LeaderboardResponse:
+      title: LeaderboardResponse
+      type: object
+      description: A leaderboard with its configuration details.
+      properties:
+        id:
+          type: string
+          description: The unique ID of the leaderboard.
+          example: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+        name:
+          type: string
+          description: The user-facing name of the leaderboard.
+          example: Weekly Word Count Challenge
+        key:
+          type: string
+          description: The unique key used to reference the leaderboard in APIs.
+          example: weekly-words
+        rankBy:
+          type: string
+          enum: ['points', 'streak', 'metric']
+          description: What the leaderboard ranks by.
+          example: metric
+        breakdownAttribute:
+          type:
+            - string
+            - 'null'
+          description: Deprecated. The key of the attribute to break down this leaderboard by.
+          deprecated: true
+          example: country
+        breakdownAttributes:
+          type: array
+          description: The user attribute keys that this leaderboard is broken down by.
+          items:
+            type: string
+            description: The key of a user attribute in this leaderboard breakdown.
+            example: country
+        metricKey:
+          type: string
+          description: The key of the metric to rank by, if rankBy is 'metric'.
+          example: words-written
+        metricName:
+          type: string
+          description: The name of the metric to rank by, if rankBy is 'metric'.
+          example: Words Written
+        pointsSystemKey:
+          type: string
+          description: The key of the points system to rank by, if rankBy is 'points'.
+          example: xp-system
+        pointsSystemName:
+          type: string
+          description: The name of the points system to rank by, if rankBy is 'points'.
+          example: Experience Points
+        description:
+          type:
+            - string
+            - 'null'
+          description: The user-facing description of the leaderboard.
+          example: Compete weekly to see who writes the most words
+        start:
+          type: string
+          format: date
+          description: The start date of the leaderboard in YYYY-MM-DD format.
+          example: '2025-01-01'
+        end:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The end date of the leaderboard in YYYY-MM-DD format, or null if it runs forever.
+          example: '2025-12-31'
+        maxParticipants:
+          type: integer
+          description: The maximum number of participants in the leaderboard.
+          example: 100
+        runUnit:
+          type:
+            - string
+            - 'null'
+          enum: ['day', 'month', 'year', null]
+          description: The repetition type for recurring leaderboards, or null for one-time leaderboards.
+          example: day
+        runInterval:
+          type:
+            - integer
+            - 'null'
+          description: The interval between repetitions, relative to the start date and repetition type. Null for one-time leaderboards.
+          example: 7
+      required:
+        - id
+        - name
+        - key
+        - status
+        - description
+        - rankBy
+        - breakdownAttribute
+        - breakdownAttributes
+        - start
+        - end
+        - maxParticipants
+        - runUnit
+        - runInterval
+    LeaderboardResponseWithRankings:
+      title: LeaderboardResponseWithRankings
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/LeaderboardResponse'
+        - type: object
+          properties:
+            status:
+              type: string
+              enum: ['active', 'scheduled', 'finished']
+              description: The status of the leaderboard.
+              example: active
+            rankings:
+              type: array
+              description: Array of user rankings for the leaderboard.
+              items:
+                $ref: '#/components/schemas/LeaderboardRanking'
+          required:
+            - rankings
+            - status
+    MetricEventPointsResponse:
+      title: MetricEventPointsResponse
+      type: object
+      description: Points system response for metric events and achievement completions.
+      allOf:
+        - $ref: '#/components/schemas/PointsResponse'
+        - type: object
+          properties:
+            total:
+              type: integer
+              description: The user's total points
+            level:
+              description: The user's new level, included only when the level changed as a result of this event.
+              oneOf:
+                - $ref: '#/components/schemas/PointsLevel'
+                - type: 'null'
+            added:
+              type: integer
+              description: The points added by this event.
+              example: 10
+            awards:
+              type: array
+              description: Array of trigger awards that added points.
+              items:
+                $ref: '#/components/schemas/PointsAward'
+          required:
+            - total
+            - added
+            - awards
+    MetricEventLeaderboardResponse:
+      title: MetricEventLeaderboardResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/LeaderboardResponse'
+        - type: object
+          properties:
+            start:
+              type: string
+              format: date
+              description: The start date of the current run of the leaderboard.
+              example: '2025-01-01'
+            end:
+              type:
+                - string
+                - 'null'
+              format: date
+              description: The end date of the current run of the leaderboard, or null if the run never ends.
+              example: '2025-12-31'
+            rank:
+              type:
+                - integer
+                - 'null'
+              description: The user's rank in the leaderboard, or null if the user is not on the leaderboard.
+              example: 100
+            previousRank:
+              type:
+                - integer
+                - 'null'
+              description: The user's rank in the leaderboard before the event, or null if the user was not on the leaderboard before the event.
+              example: 100
+            threshold:
+              type: integer
+              description: The minimum value required to enter the leaderboard according to its current rankings.
+              example: 25000
+            breakdownAttributeValue:
+              type: string
+              description: Deprecated. For leaderboards with a single breakdown attribute, the value of that attribute for the user.
+              deprecated: true
+              example: USA
+            breakdownAttributeValues:
+              type: array
+              description: For leaderboards with breakdown attributes, the user's values for each breakdown attribute.
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    description: The key of the breakdown attribute.
+                    example: country
+                  value:
+                    type: string
+                    description: The user's value for the breakdown attribute.
+                    example: USA
+                required:
+                  - key
+                  - value
+          required:
+            - start
+            - end
+            - threshold
+            - rank
+            - previousRank
+    AchievementResponse:
+      title: AchievementResponse
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the achievement.
+        name:
+          type: string
+          description: The name of this achievement.
+        trigger:
+          type: string
+          enum: ['metric', 'streak', 'api', 'achievement']
+          description: The trigger of the achievement.
+        description:
+          type:
+            - string
+            - 'null'
+          description: The description of this achievement.
+        badgeUrl:
+          type:
+            - string
+            - 'null'
+          description: >-
+            The URL of the badge image for the achievement, if one has been
+            uploaded.
+        key:
+          type: string
+          description: The key used to reference this achievement in the API (only applicable if trigger = 'api')
+        streakLength:
+          type: integer
+          description: The length of the streak required to complete the achievement (only applicable if trigger = 'streak')
+        achievementIds:
+          type: array
+          items:
+            type: string
+          description: The IDs of the prerequisite achievements that must be completed to earn this achievement (only applicable if trigger = 'achievement')
+        metricId:
+          type: string
+          description: The ID of the metric associated with this achievement (only applicable if trigger = 'metric')
+        metricValue:
+          type: number
+          format: double
+          description: >-
+            The value of the metric required to complete the achievement (only applicable if trigger = 'metric')
+        metricName:
+          type: string
+          description: The name of the metric associated with this achievement (only applicable if trigger = 'metric')
+        userAttributes:
+          type: array
+          description: User attribute filters that must be met for this achievement to be completed.
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                description: The key of the user attribute.
+                example: plan-type
+              value:
+                type: string
+                description: The value of the user attribute.
+                example: premium
+            required:
+              - key
+              - value
+        eventAttribute:
+          type: object
+          description: Deprecated. Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
+          deprecated: true
+          properties:
+            key:
+              type: string
+              description: The key of the event attribute.
+              example: source
+            value:
+              type: string
+              description: The value of the event attribute.
+              example: mobile-app
+          required:
+            - key
+            - value
+        eventAttributes:
+          type: array
+          description: Event attribute filters that must be met for this achievement to be completed. Omitted for non-metric achievements.
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                description: The key of the event attribute.
+                example: source
+              value:
+                type: string
+                description: The value of the event attribute.
+                example: mobile-app
+            required:
+              - key
+              - value
+      required:
+        - id
+        - name
+        - trigger
+        - description
+        - badgeUrl
+        - userAttributes
+    UserAchievementResponse:
+      title: UserAchievementResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/AchievementResponse'
+        - type: object
+          properties:
+            achievedAt:
+              type:
+                - string
+                - 'null'
+              format: date-time
+              description: The date and time the achievement was completed, in ISO 8601 format. Null if the achievement has not been completed.
+          required:
+            - achievedAt
+    UserAchievementWithStatsResponse:
+      title: UserAchievementWithStatsResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/AchievementWithStatsResponse'
+        - type: object
+          properties:
+            achievedAt:
+              type:
+                - string
+                - 'null'
+              format: date-time
+              description: The date and time the achievement was completed, in ISO 8601 format. Null if the achievement has not been completed.
+          required:
+            - achievedAt
+    AchievementWithStatsResponse:
+      title: AchievementWithStatsResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/AchievementResponse'
+        - type: object
+          properties:
+            completions:
+              type: integer
+              description: The number of users who have completed this achievement.
+            rarity:
+              type: number
+              format: double
+              description: The percentage of all users who have completed this achievement.
+          required:
+            - completions
+            - rarity
+    MetricResponse:
+      title: MetricResponse
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the metric.
+          example: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+        key:
+          type: string
+          description: The unique key of the metric.
+          example: words-written
+        name:
+          type: string
+          description: The name of the metric.
+          example: Words written
+        current:
+          type: number
+          format: double
+          description: The user's current total for the metric.
+          example: 1500
+        achievements:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAchievementResponse'
+          description: >-
+            A list of the metric's achievements and the user's progress towards
+            each.
+      required:
+        - id
+        - key
+        - name
+        - current
+        - achievements
+    UpdatedUser:
+      title: Updated User
+      type: object
+      description: An object with editable user fields.
+      properties:
+        email:
+          type: string
+          description: The user's email address. Required if subscribeToEmails is true.
+          example: user@example.com
+        name:
+          type: string
+          description: The name to refer to the user by in emails.
+          example: User
+        tz:
+          type:
+            - string
+            - 'null'
+          description: The user's timezone (used for email scheduling).
+          example: Europe/London
+        deviceTokens:
+          type:
+            - array
+            - 'null'
+          description: The user's device tokens, used for push notifications.
+          items:
+            type: string
+            description: The device token.
+          example: ['token1', 'token2']
+        subscribeToEmails:
+          type: boolean
+          default: true
+          description: Whether the user should receive Trophy-powered emails. If false, Trophy will not store the user's email address.
+          example: true
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: User attributes as key-value pairs. Keys must match existing user attributes set up in the Trophy dashboard.
+          example:
+            department: engineering
+            role: developer
+    UpsertedUser:
+      title: Upserted User
+      type: object
+      description: An object with editable user fields.
+      allOf:
+        - $ref: '#/components/schemas/UpdatedUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the user in your database. Must be a string.
+              example: user-id
+          required:
+            - id
+    User:
+      title: User
+      type: object
+      description: A user of your application.
+      properties:
+        id:
+          type: string
+          description: The ID of the user in your database. Must be a string.
+          example: user-id
+        email:
+          type:
+            - string
+            - 'null'
+          description: The user's email address.
+          example: user@example.com
+        name:
+          type:
+            - string
+            - 'null'
+          description: The name of the user.
+          example: John Doe
+        tz:
+          type:
+            - string
+            - 'null'
+          description: The user's timezone.
+          example: Europe/London
+        deviceTokens:
+          type:
+            - array
+            - 'null'
+          description: The user's device tokens.
+          items:
+            type: string
+            description: The device token.
+          example: ['token1', 'token2']
+        subscribeToEmails:
+          type: boolean
+          description: Whether the user is opted into receiving Trophy-powered emails.
+          example: true
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: User attributes as key-value pairs. Keys must match existing user attributes set up in the Trophy dashboard.
+          example:
+            department: engineering
+            role: developer
+        control:
+          type: boolean
+          description: Whether the user is in the control group, meaning they do not receive emails or other communications from Trophy.
+          example: false
+        created:
+          type: string
+          format: date-time
+          description: The date and time the user was created, in ISO 8601 format.
+          example: '2021-01-01T00:00:00Z'
+        updated:
+          type: string
+          format: date-time
+          description: The date and time the user was last updated, in ISO 8601 format.
+          example: '2021-01-01T00:00:00Z'
+      required:
+        - id
+        - email
+        - name
+        - tz
+        - subscribeToEmails
+        - attributes
+        - control
+        - created
+        - updated
+    NotificationChannel:
+      title: NotificationChannel
+      type: string
+      enum:
+        - email
+        - push
+      description: A notification delivery channel.
+    NotificationPreferences:
+      title: NotificationPreferences
+      type: object
+      description: Notification preferences for each notification type.
+      properties:
+        achievement_completed:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationChannel'
+          description: Channels to receive achievement completion notifications on.
+        recap:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationChannel'
+          description: Channels to receive recap notifications on.
+        reactivation:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationChannel'
+          description: Channels to receive reactivation notifications on.
+        streak_reminder:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationChannel'
+          description: Channels to receive streak reminder notifications on.
+    UserPreferencesResponse:
+      title: UserPreferencesResponse
+      type: object
+      description: A user's preferences.
+      properties:
+        notifications:
+          $ref: '#/components/schemas/NotificationPreferences'
+      required:
+        - notifications
+    UpdateUserPreferencesRequest:
+      title: UpdateUserPreferencesRequest
+      type: object
+      description: Request body for updating user preferences.
+      properties:
+        notifications:
+          $ref: '#/components/schemas/NotificationPreferences'
+    ErrorBody:
+      title: ErrorBody
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+    AchievementCompletionResponse:
+      title: AchievementCompletionResponse
+      type: object
+      properties:
+        completionId:
+          type: string
+          description: The unique ID of the completion.
+          example: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+        achievement:
+          $ref: '#/components/schemas/UserAchievementResponse'
+        points:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MetricEventPointsResponse'
+          description: >-
+            A map of points systems by key that were affected by this achievement completion.
+      required:
+        - completionId
+        - achievement
+        - points
+    EventResponse:
+      title: EventResponse
+      type: object
+      properties:
+        eventId:
+          type: string
+          description: The unique ID of the event.
+          example: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+        metricId:
+          type: string
+          description: The unique ID of the metric that was updated.
+          example: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+        total:
+          type: number
+          format: double
+          description: The user's new total progress against the metric.
+          example: 750
+        achievements:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAchievementResponse'
+          description: Achievements completed as a result of this event.
+        currentStreak:
+          $ref: '#/components/schemas/MetricEventStreakResponse'
+          description: >-
+            The user's current streak.
+        points:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MetricEventPointsResponse'
+          description: >-
+            A map of points systems by key. Only contains points systems that were affected by the event.
+        leaderboards:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MetricEventLeaderboardResponse'
+          description: >-
+            A map of leaderboards by key. Only contains leaderboards that were affected by the event.
+        idempotencyKey:
+          type: string
+          description: The idempotency key used for the event, if one was provided.
+        idempotentReplayed:
+          type: boolean
+          description: Whether the event was replayed due to idempotency.
+      required:
+        - eventId
+        - metricId
+        - total
+        - achievements
+        - currentStreak
+        - points
+        - leaderboards
+    PointsRange:
+      title: PointsRange
+      type: object
+      properties:
+        from:
+          type: integer
+          description: The start of the points range. Inclusive.
+        to:
+          type: integer
+          description: The end of the points range. Inclusive.
+        users:
+          type: integer
+          description: The number of users in this points range.
+      required:
+        - from
+        - to
+        - users
+    PointsSummaryResponse:
+      title: PointsSummaryResponse
+      type: array
+      description: >-
+        A list of eleven points ranges, with the first starting and ending at 0,
+        and the remaining 10 being calculated as 10 equally sized ranges from 1
+        to the greatest number of points a user has, rounded up to the nearest
+        power of 10.
+      items:
+        $ref: '#/components/schemas/PointsRange'
+    PointsSystemResponse:
+      title: PointsSystemResponse
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the points system.
+        name:
+          type: string
+          description: The name of the points system.
+        description:
+          type:
+            - string
+            - 'null'
+          description: The description of the points system.
+        badgeUrl:
+          type:
+            - string
+            - 'null'
+          description: The URL of the badge image for the points system, if one has been uploaded.
+        maxPoints:
+          type:
+            - number
+            - 'null'
+          description: The maximum number of points a user can be awarded in this points system
+        triggers:
+          type: array
+          description: Array of active triggers for this points system.
+          items:
+            $ref: '#/components/schemas/PointsTrigger'
+      required:
+        - id
+        - name
+        - description
+        - badgeUrl
+        - maxPoints
+        - triggers
+    StreakRankingUser:
+      title: StreakRankingUser
+      type: object
+      description: A user with their streak length in the rankings.
+      properties:
+        userId:
+          type: string
+          description: The ID of the user.
+          example: user-123
+        name:
+          type:
+            - string
+            - 'null'
+          description: The name of the user. May be null if no name is set.
+          example: Alice Johnson
+        streakLength:
+          type: integer
+          description: The user's streak length (active or longest depending on query parameter).
+          example: 15
+      required:
+        - userId
+        - name
+        - streakLength
+    LeaderboardRanking:
+      title: LeaderboardRanking
+      type: object
+      description: A user's ranking in a leaderboard.
+      properties:
+        userId:
+          type: string
+          description: The ID of the user.
+          example: user-123
+        userName:
+          type:
+            - string
+            - 'null'
+          description: The name of the user. May be null if no name is set.
+          example: Alice Johnson
+        rank:
+          type: integer
+          description: The user's rank in the leaderboard.
+          example: 1
+        value:
+          type: integer
+          description: The user's value for this leaderboard (points, metric value, etc.).
+          example: 5000
+      required:
+        - userId
+        - userName
+        - rank
+        - value
+    LeaderboardEvent:
+      title: LeaderboardEvent
+      type: object
+      description: A leaderboard event representing a change in a user's rank or value.
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: The timestamp when the event occurred.
+          example: '2025-01-15T10:30:00Z'
+        previousRank:
+          type:
+            - integer
+            - 'null'
+          description: The user's rank before this event, or null if they were not on the leaderboard.
+          example: 5
+        rank:
+          type:
+            - integer
+            - 'null'
+          description: The user's rank after this event, or null if they are no longer on the leaderboard.
+          example: 3
+        previousValue:
+          type:
+            - integer
+            - 'null'
+          description: The user's value before this event, or null if they were not on the leaderboard.
+          example: 1000
+        value:
+          type:
+            - integer
+            - 'null'
+          description: The user's value after this event, or null if they are no longer on the leaderboard.
+          example: 3000
+      required:
+        - time
+        - previousRank
+        - rank
+        - previousValue
+        - value
+    UserLeaderboardResponse:
+      title: UserLeaderboardResponse
+      type: object
+      description: A user's data for a specific leaderboard including rank, value, and history.
+      allOf:
+        - $ref: '#/components/schemas/LeaderboardResponse'
+        - type: object
+          properties:
+            rank:
+              type:
+                - integer
+                - 'null'
+              description: The user's current rank in this leaderboard. Null if the user is not on the leaderboard.
+              example: 2
+            value:
+              type:
+                - integer
+                - 'null'
+              description: The user's current value in this leaderboard. Null if the user is not on the leaderboard.
+              example: 4500
+          required:
+            - rank
+            - value
+    UserLeaderboardResponseWithHistory:
+      title: UserLeaderboardResponseWithHistory
+      type: object
+      description: A user's data for a specific leaderboard including rank, value, and history.
+      allOf:
+        - $ref: '#/components/schemas/UserLeaderboardResponse'
+        - type: object
+          properties:
+            history:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardEvent'
+              description: An array of events showing the user's rank and value changes over time.
+          required:
+            - history
+    WebhookUserLeaderboardResponse:
+      title: WebhookUserLeaderboardResponse
+      type: object
+      description: A user's data for a specific leaderboard including rank, value, and history.
+      allOf:
+        - $ref: '#/components/schemas/UserLeaderboardResponse'
+        - type: object
+          properties:
+            previousRank:
+              type:
+                - integer
+                - 'null'
+              description: The user's rank before this event, or null if they were not on the leaderboard.
+              example: 5
+            previousValue:
+              type:
+                - integer
+                - 'null'
+              description: The user's value before this event, or null if they were not on the leaderboard.
+              example: 1000
+          required:
+            - previousRank
+            - previousValue
+    WrappedMetric:
+      title: WrappedMetric
+      type: object
+      description: A user's metric data for a wrapped period.
+      properties:
+        name:
+          type: string
+          description: The name of the metric.
+          example: Words Written
+        units:
+          type:
+            - string
+            - 'null'
+          description: The units of the metric.
+          example: words
+        currentTotal:
+          type: number
+          description: The user's current total for the metric.
+          example: 15000
+        changeThisPeriod:
+          type: number
+          description: The change in the metric value during the period.
+          example: 2500
+        percentChange:
+          type: number
+          description: The percentage change in the metric value during the period.
+          example: 20
+        percentileThisPeriod:
+          type: number
+          description: The user's percentile rank for this metric during the period. Only included for weekly, monthly, and yearly aggregation periods.
+          example: 85
+        byAttribute:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the metric.
+                units:
+                  type:
+                    - string
+                    - 'null'
+                  description: The units of the metric.
+                currentTotal:
+                  type: number
+                  description: The current total for this attribute value.
+                changeThisPeriod:
+                  type: number
+                  description: The change during the period for this attribute value.
+                percentChange:
+                  type: number
+                  description: The percentage change for this attribute value.
+                percentileThisPeriod:
+                  type: number
+                  description: The user's percentile rank for this attribute value during the period.
+          description: Metric data broken down by attribute key and value.
+      required:
+        - name
+        - currentTotal
+        - changeThisPeriod
+        - percentChange
+        - byAttribute
+    WrappedPoints:
+      title: WrappedPoints
+      type: object
+      description: A user's points data for a wrapped period.
+      properties:
+        name:
+          type: string
+          description: The name of the points system.
+          example: Experience Points
+        description:
+          type:
+            - string
+            - 'null'
+          description: The description of the points system.
+          example: Points earned through activity
+        currentTotal:
+          type: number
+          description: The user's current total points.
+          example: 5000
+        changeThisPeriod:
+          type: number
+          description: The change in points during the period.
+          example: 500
+        percentChange:
+          type: number
+          description: The percentage change in points during the period.
+          example: 11.1
+        percentileThisPeriod:
+          type: number
+          description: The user's percentile rank for this points system during the period. Only included for weekly, monthly, and yearly aggregation periods.
+          example: 88
+      required:
+        - name
+        - currentTotal
+        - changeThisPeriod
+        - percentChange
+    WrappedStreak:
+      title: WrappedStreak
+      type: object
+      description: The user's longest streak during the wrapped period.
+      properties:
+        length:
+          type: integer
+          description: The length of the streak.
+          example: 45
+        frequency:
+          $ref: '#/components/schemas/StreakFrequency'
+          description: The frequency of the streak.
+        periodStart:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The start date of the streak period.
+          example: '2024-02-01'
+        periodEnd:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The end date of the streak period.
+          example: '2024-03-17'
+        started:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The date the streak started.
+          example: '2024-02-01'
+      required:
+        - length
+        - frequency
+        - periodStart
+        - periodEnd
+        - started
+    WrappedActivityPeriod:
+      title: WrappedActivityPeriod
+      type: object
+      description: Activity data for a specific period (day, week, month, or year).
+      properties:
+        metrics:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/WrappedMetric'
+          description: The user's metrics during this period, keyed by metric key.
+        points:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/WrappedPoints'
+          description: The user's points during this period, keyed by points system key.
+        achievements:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAchievementResponse'
+          description: Achievements completed during this period.
+        leaderboards:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/UserLeaderboardResponse'
+          description: The user's best leaderboard rankings during this period, keyed by leaderboard key.
+      required:
+        - metrics
+        - points
+        - achievements
+        - leaderboards
+    WrappedMostActiveDay:
+      title: WrappedMostActiveDay
+      type: object
+      description: The user's most active day during the year.
+      allOf:
+        - $ref: '#/components/schemas/WrappedActivityPeriod'
+        - type: object
+          properties:
+            date:
+              type: string
+              format: date
+              description: The date of the most active day in YYYY-MM-DD format.
+              example: '2024-03-15'
+          required:
+            - date
+    WrappedMostActiveWeek:
+      title: WrappedMostActiveWeek
+      type: object
+      description: The user's most active week during the year.
+      allOf:
+        - $ref: '#/components/schemas/WrappedActivityPeriod'
+        - type: object
+          properties:
+            start:
+              type: string
+              format: date
+              description: The start date of the most active week in YYYY-MM-DD format.
+              example: '2024-03-11'
+            end:
+              type: string
+              format: date
+              description: The end date of the most active week in YYYY-MM-DD format.
+              example: '2024-03-17'
+          required:
+            - start
+            - end
+    WrappedMostActiveMonth:
+      title: WrappedMostActiveMonth
+      type: object
+      description: The user's most active month during the year.
+      allOf:
+        - $ref: '#/components/schemas/WrappedActivityPeriod'
+        - type: object
+          properties:
+            month:
+              type: integer
+              minimum: 0
+              maximum: 11
+              description: The month number (0-11, where 0 is January).
+              example: 2
+          required:
+            - month
+    WrappedEntireYear:
+      title: WrappedEntireYear
+      type: object
+      description: The user's activity data for the entire year.
+      allOf:
+        - $ref: '#/components/schemas/WrappedActivityPeriod'
+        - type: object
+          properties:
+            longestStreak:
+              $ref: '#/components/schemas/WrappedStreak'
+              description: The user's longest streak during the year.
+          required:
+            - longestStreak
+    WrappedActivity:
+      title: WrappedActivity
+      type: object
+      description: The user's activity summary for the wrapped year.
+      properties:
+        daysActive:
+          type: integer
+          description: The number of days the user was active during the year.
+          example: 156
+        weeksActive:
+          type: integer
+          description: The number of weeks the user was active during the year.
+          example: 42
+        monthsActive:
+          type: integer
+          description: The number of months the user was active during the year.
+          example: 11
+        mostActiveDay:
+          $ref: '#/components/schemas/WrappedMostActiveDay'
+          description: Data about the user's most active day.
+        mostActiveWeek:
+          $ref: '#/components/schemas/WrappedMostActiveWeek'
+          description: Data about the user's most active week.
+        mostActiveMonth:
+          $ref: '#/components/schemas/WrappedMostActiveMonth'
+          description: Data about the user's most active month.
+        entireYear:
+          $ref: '#/components/schemas/WrappedEntireYear'
+          description: Data about the user's activity for the entire year.
+      required:
+        - daysActive
+        - weeksActive
+        - monthsActive
+        - mostActiveDay
+        - mostActiveWeek
+        - mostActiveMonth
+        - entireYear
+    WrappedResponse:
+      title: WrappedResponse
+      type: object
+      description: A user's year-in-review wrapped data including activity summaries, metrics, points, achievements, streaks, and leaderboard rankings.
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+          description: The user's profile information.
+        activity:
+          $ref: '#/components/schemas/WrappedActivity'
+          description: The user's activity data for the wrapped year.
+      required:
+        - user
+        - activity
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+servers:
+  - x-fern-server-name: Application API
+    url: https://api.trophy.so/v1
+    description: Application API

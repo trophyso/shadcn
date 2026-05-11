@@ -104,6 +104,12 @@ const [open, setOpen] = useState(false)
 />
 ```
 
+## With Trophy
+
+Send a metric event to Trophy, then open `AchievementUnlocked` when the API response includes one or more achievements.
+
+<OpenApiCodeSamples spec="application.yml" method="post" endpoint="/metrics/{key}/event" />
+
 ## API Reference
 
 ### AchievementUnlocked

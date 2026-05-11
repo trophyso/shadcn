@@ -35,6 +35,8 @@ function extractTextContent(node: React.ReactNode): string {
 interface CodeBlockProps extends React.HTMLAttributes<HTMLElement> {
   code?: string
   language?: string
+  languageLabel?: string
+  languageControl?: React.ReactNode
   "data-language"?: string
   children?: React.ReactNode
 }
@@ -43,6 +45,8 @@ export function CodeBlock({
   children,
   code,
   language,
+  languageLabel,
+  languageControl,
   className,
   "data-language": dataLanguage,
   ...props
@@ -52,7 +56,7 @@ export function CodeBlock({
 
   const lang = language || dataLanguage
   const codeText = code || extractTextContent(children)
-  const displayLanguage = lang ? languageLabels[lang] || lang : null
+  const displayLanguage = languageLabel || (lang ? languageLabels[lang] || lang : null)
 
   React.useEffect(() => {
     if (code) {
@@ -77,7 +81,7 @@ export function CodeBlock({
     >
       {displayLanguage && (
         <figcaption className="flex items-center justify-between bg-muted/50 px-4 py-2 text-xs font-medium text-muted-foreground">
-          <span>{displayLanguage}</span>
+          {languageControl ?? <span>{displayLanguage}</span>}
           <Button
             variant="ghost"
             size="sm"

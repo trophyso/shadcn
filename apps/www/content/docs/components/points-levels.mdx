@@ -126,6 +126,14 @@ import { PointsLevels } from "@/components/ui/points-levels"
 />
 ```
 
+## With Trophy
+
+Use two Trophy endpoints together to power `PointsLevels`: fetch the user's current points total, then fetch the points system level definitions and thresholds.
+
+<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}" />
+
+<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/points/{key}/levels" />
+
 ## API Reference
 
 ### Props
