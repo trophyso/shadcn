@@ -97,9 +97,34 @@ import { PointsAwards } from "@/components/ui/points-awards"
 
 ## With Trophy
 
-Fetch a user's points data from Trophy and map the response into the award rows shown by `PointsAwards`.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch the user's points data server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}" />
+
+Then aggregate and pass the response into `PointsAwards` props in your UI layer:
+
+```tsx
+const rows = (response.awards ?? []).reduce((acc, award) => {
+  const date = award.date.slice(0, 10)
+  const existing = acc.get(date) ?? {
+    id: date,
+    date,
+    totalPoints: award.total,
+    actions: [],
+  }
+
+  existing.actions.push({
+    type: award.trigger.type,
+    points: award.awarded,
+    label: award.trigger.metricName,
+  })
+
+  acc.set(date, existing)
+  return acc
+}, new Map())
+
+<PointsAwards rows={Array.from(rows.values())} />
+```
 
 ## API Reference
 

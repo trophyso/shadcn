@@ -123,11 +123,32 @@ import { PointsLevelsSimple } from "@/components/ui/points-levels-simple"
 
 ## With Trophy
 
-Use two Trophy endpoints together to power `PointsLevelsSimple`: fetch the user's current points total, then fetch the points system level definitions and thresholds.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch user progress and system levels server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}" />
 
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch points system level definitions server-side:
+
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/points/{key}/levels" />
+
+Then aggregate both responses and pass them into `PointsLevelsSimple` props in your UI layer:
+
+```tsx
+const currentPoints = userPointsResponse.total
+
+const levels = (pointsLevelsResponse.levels ?? []).map((level) => ({
+  id: level.key,
+  name: level.name,
+  threshold: level.points,
+  iconType: level.key,
+}))
+
+<PointsLevelsSimple
+  levels={levels}
+  currentPoints={currentPoints}
+  showProgressBar
+/>
+```
 
 ## API Reference
 

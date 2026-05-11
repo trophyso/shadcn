@@ -92,9 +92,17 @@ Works with fewer than 3 users:
 
 ## With Trophy
 
-Fetch partial leaderboard results from Trophy and pass the top-ranked users into `LeaderboardPodium`.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch leaderboard data server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/leaderboards/{key}" />
+
+Then pass the response into `LeaderboardPodium` props in your UI layer:
+
+```tsx
+const rankings = (response.rankings ?? []).slice(0, 3)
+
+<LeaderboardPodium rankings={rankings} />
+```
 
 ## API Reference
 

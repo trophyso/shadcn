@@ -106,9 +106,20 @@ const [open, setOpen] = useState(false)
 
 ## With Trophy
 
-Send a metric event to Trophy, then open `AchievementUnlocked` when the API response includes one or more achievements.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to send a metric event server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="post" endpoint="/metrics/{key}/event" />
+
+Then pass and transform the response into `AchievementUnlocked` props in your UI layer:
+
+```tsx
+const unlockedAchievement = response.achievements?.[0]
+const shouldOpen = Boolean(unlockedAchievement)
+
+{unlockedAchievement ? (
+  <AchievementUnlocked achievement={unlockedAchievement} open={shouldOpen} />
+) : null}
+```
 
 ## API Reference
 

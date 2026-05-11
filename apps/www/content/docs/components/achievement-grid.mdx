@@ -189,9 +189,15 @@ import { AchievementGrid } from "@/components/ui/achievement-grid"
 
 ## With Trophy
 
-Fetch a user's achievements from Trophy, then pass the returned array to `AchievementGrid`.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch a user's achievements server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/achievements" />
+
+Then pass the response into `AchievementGrid` props in your UI layer:
+
+```tsx
+<AchievementGrid achievements={response} />
+```
 
 ## API Reference
 

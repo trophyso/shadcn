@@ -170,9 +170,17 @@ import { LeaderboardRankings } from "@/components/ui/leaderboard-rankings"
 
 ## With Trophy
 
-Fetch leaderboard rankings from Trophy and pass the response rows into `LeaderboardRankings`.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch leaderboard data server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/leaderboards/{key}" />
+
+Then pass the response into `LeaderboardRankings` props in your UI layer:
+
+```tsx
+const rankings = response.rankings ?? []
+
+<LeaderboardRankings rankings={rankings} />
+```
 
 ## API Reference
 

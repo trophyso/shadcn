@@ -144,9 +144,21 @@ import { AchievementCard } from "@/components/ui/achievement-card"
 
 ## With Trophy
 
-Fetch a user's achievements from Trophy and map the response into the featured and list sections rendered by `AchievementCard`.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch a user's achievements server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/achievements" />
+
+Then pass and transform the response into `AchievementCard` props in your UI layer:
+
+```tsx
+const achievements = response
+const highlightedAchievements = achievements.slice(0, 3)
+
+<AchievementCard
+  highlightedAchievements={highlightedAchievements}
+  achievements={achievements}
+/>
+```
 
 ## API Reference
 

@@ -127,9 +127,22 @@ const streak = [
 
 ## With Trophy
 
-Fetch a user's streak history from Trophy, then pass the periods into `StreakCalendar`.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch streak data server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/streak" />
+
+Then pass and transform the response into `StreakCalendar` props in your UI layer:
+
+```tsx
+const streakPeriods =
+  response.streakHistory?.map((period) => ({
+    periodStart: period.periodStart,
+    periodEnd: period.periodEnd,
+    usedFreeze: period.usedFreeze,
+  })) ?? []
+
+<StreakCalendar streak={streakPeriods} />
+```
 
 ## API Reference
 

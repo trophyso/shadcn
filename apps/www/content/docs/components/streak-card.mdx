@@ -70,9 +70,30 @@ const streak = [
 
 ## With Trophy
 
-Fetch a user's streak data from Trophy and pass the response into `StreakCard`.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch streak data server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/streak" />
+
+Then pass and aggregate the response into `StreakCard` props in your UI layer:
+
+```tsx
+const streakPeriods = response.streakHistory ?? []
+const currentStreak = response.length
+const longestStreak = Math.max(
+  currentStreak,
+  ...streakPeriods.map((period) => period.length ?? 0)
+)
+const totalActivePeriods = streakPeriods.filter(
+  (period) => (period.length ?? 0) > 0
+).length
+
+<StreakCard
+  streak={streakPeriods}
+  currentStreak={currentStreak}
+  longestStreak={longestStreak}
+  total={totalActivePeriods}
+/>
+```
 
 ## API Reference
 

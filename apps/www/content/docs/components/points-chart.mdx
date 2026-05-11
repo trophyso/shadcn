@@ -119,9 +119,20 @@ const [period, setPeriod] = useState("last-7-days")
 
 ## With Trophy
 
-Fetch time-series points events from Trophy and map each returned period into the chart data passed to `PointsChart`.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch points time-series data server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}/event-summary" />
+
+Then transform and pass the response into `PointsChart` props in your UI layer:
+
+```tsx
+const chartData = (response.periods ?? []).map((period) => ({
+  date: period.periodStart,
+  points: period.total ?? 0,
+}))
+
+<PointsChart data={chartData} />
+```
 
 ## API Reference
 

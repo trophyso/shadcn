@@ -103,9 +103,28 @@ Pass `endDate` to enable the countdown label.
 
 ## With Trophy
 
-Fetch all boosts for a points system from Trophy (including active or scheduled boosts), then map each returned boost into the `PointsBoost` UI.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch boosts for a points system server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/points/{key}/boosts" />
+
+Then pass and transform the response into `PointsBoost` props in your UI layer:
+
+```tsx
+const activeOrScheduledBoost = (response.boosts ?? [])[0]
+
+const boost = activeOrScheduledBoost && {
+  name: activeOrScheduledBoost.name,
+  description: activeOrScheduledBoost.description,
+  multiplier: activeOrScheduledBoost.multiplier,
+  endDate: activeOrScheduledBoost.endDate,
+  cta: {
+    link: "/rewards",
+    text: "View boost",
+  },
+}
+
+{boost ? <PointsBoost boost={boost} /> : null}
+```
 
 ## API Reference
 

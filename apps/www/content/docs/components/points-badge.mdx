@@ -72,9 +72,21 @@ Available in three sizes: `sm`, `default`, and `lg`.
 
 ## With Trophy
 
-Fetch a user's points total from Trophy and pass the result into `PointsBadge`.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch the user's points total server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}" />
+
+Then pass the response into `PointsBadge` props in your UI layer:
+
+```tsx
+const pointsData = {
+  name: response.name,
+  badgeUrl: response.badgeUrl,
+  total: response.total,
+}
+
+<PointsBadge points={pointsData} />
+```
 
 ## API Reference
 

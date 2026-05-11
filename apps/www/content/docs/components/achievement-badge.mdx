@@ -208,9 +208,17 @@ import { AchievementBadge } from "@/components/ui/achievement-badge"
 
 ## With Trophy
 
-Fetch a user's achievements from Trophy, then pass each item into `AchievementBadge`.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch a user's achievements server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/achievements" />
+
+Then pass the response into `AchievementBadge` props in your UI layer:
+
+```tsx
+const achievement = response[0]
+
+<AchievementBadge achievement={achievement} />
+```
 
 ## API Reference
 

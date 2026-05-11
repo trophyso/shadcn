@@ -121,9 +121,24 @@ const selectedRun = runs[selectedRunId] ?? runs["this-week"]
 
 ## With Trophy
 
-Fetch leaderboard data from Trophy, then pass the response into `LeaderboardCard` for rankings display.
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch leaderboard data server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/leaderboards/{key}" />
+
+Then pass and transform the response into `LeaderboardCard` props in your UI layer:
+
+```tsx
+const podiumRankings = (response.rankings ?? []).slice(0, 3)
+const rankings = response.rankings ?? []
+
+<LeaderboardCard
+  title={response.name}
+  fromDate={response.start}
+  toDate={response.end}
+  podiumRankings={podiumRankings}
+  rankings={rankings}
+/>
+```
 
 ## API Reference
 
