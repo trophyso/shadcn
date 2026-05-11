@@ -25,12 +25,6 @@ interface PointsBoostProps extends React.HTMLAttributes<HTMLDivElement> {
   boost: PointsBoostData;
 }
 
-const statusLabel: Record<PointsBoostStatus, string> = {
-  active: "Active",
-  scheduled: "Scheduled",
-  finished: "Finished",
-};
-
 function formatCountdown(ms: number) {
   const totalSeconds = Math.max(0, Math.floor(ms / 1000));
   const hours = Math.floor(totalSeconds / 3600);
@@ -77,16 +71,6 @@ const PointsBoost = React.forwardRef<HTMLDivElement, PointsBoostProps>(
             <span className="min-w-0 truncate">{boost.name}</span>
             <span className="shrink-0 rounded-full bg-muted-foreground/10 px-2 py-0.5 text-primary">
               x{boost.multiplier}
-            </span>
-            <span
-              className={cn(
-                "shrink-0 rounded-full px-2 py-0.5 text-xs font-medium capitalize",
-                boost.status === "active" && "bg-primary/10 text-primary",
-                boost.status === "scheduled" && "border border-border bg-muted/50 text-muted-foreground",
-                boost.status === "finished" && "bg-muted text-muted-foreground"
-              )}
-            >
-              {statusLabel[boost.status]}
             </span>
           </p>
         </div>
