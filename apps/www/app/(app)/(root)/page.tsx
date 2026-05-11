@@ -53,12 +53,12 @@ export default function IndexPage() {
         />
         <PageHeader className="relative z-10">
           <PageHeaderHeading className="max-w-4xl">
-            <span className="flex items-baseline gap-2 sm:gap-3">
+            <span className="flex items-baseline gap-2 sm:gap-3 font-montserrat">
               <span className="leading-[0.95] font-bold tracking-[-0.03em]">
                 Gamification UI Kit
               </span>
               <span className="font-normal tracking-[-0.02em] opacity-90">
-                from Trophy
+                from <a href="https://trophy.so" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Trophy</a>
               </span>
             </span>
           </PageHeaderHeading>

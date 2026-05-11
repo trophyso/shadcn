@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google"
+import { Geist, Geist_Mono, Montserrat } from "next/font/google"
 
 import { cn } from "@/lib/utils"
 
@@ -13,7 +13,13 @@ const fontMono = Geist_Mono({
   weight: ["400"],
 })
 
+const fontMontserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat"
+})
+
 export const fontVariables = cn(
   fontSans.variable,
   fontMono.variable,
+  fontMontserrat.variable,
 )
