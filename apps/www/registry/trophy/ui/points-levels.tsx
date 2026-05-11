@@ -5,27 +5,18 @@ import { Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-/** Optional tier breakdown within a level; Trophy does not return these — use `[]` when integrating. */
 export interface PointsSubLevel {
   name: string;
-  /** Points threshold for this sub-tier (same meaning as `PointsLevel.points`). */
   points: number;
 }
 
-/**
- * One level from Trophy `GET /points/{key}/levels`, plus optional UI-only `subLevels`.
- * @see https://docs.trophy.so — `points` is the threshold to reach the level; `description` is the level copy.
- */
 export interface PointsLevel {
   id: string;
-  /** Trophy level key (stable identifier). */
   key?: string;
   name: string;
   description?: string;
   badgeUrl?: string | null;
-  /** Points required to reach this level (Trophy `points`). */
   points: number;
-  /** Not returned by Trophy; omit or pass `[]` for API-driven data. */
   subLevels?: PointsSubLevel[];
 }
 
@@ -153,10 +144,10 @@ const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
                                 ? levels[index + 1].points
                                 : null;
                           return (
-                          <p key={`${level.id}-${subLevel.name}`} className="text-sm text-muted-foreground">
-                            <span className="font-medium text-foreground">{subLevel.name}</span>{" "}
-                            {formatRangeLabel(subLevel.points, nextSubLevelPoints, formatPoints)}
-                          </p>
+                            <p key={`${level.id}-${subLevel.name}`} className="text-sm text-muted-foreground">
+                              <span className="font-medium text-foreground">{subLevel.name}</span>{" "}
+                              {formatRangeLabel(subLevel.points, nextSubLevelPoints, formatPoints)}
+                            </p>
                           );
                         })}
                       </div>

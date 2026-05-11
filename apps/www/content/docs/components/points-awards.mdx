@@ -1,6 +1,6 @@
 ---
 title: Points Awards
-description: A points activity feed aligned with Trophy award rows — date, totals, and a per-award trigger (with metric names in tooltips).
+description: A points activity feed with date, totals, and dynamic trigger types
 ---
 
 <ComponentPreview name="points-awards" />
@@ -138,7 +138,7 @@ Icon tooltips use **`trigger.metricName`** (and optional **`metricThreshold`**) 
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `awards` | `PointsAward[]` | Required | Award rows from Trophy `points.awards` (order is up to you; often most recent first) |
+| `awards` | `PointsAward[]` | Required | Events that awarded points |
 | `formatTotalPoints` | `(value: number) => string` | - | Optional formatter for each row's cumulative `total` |
 | `formatAwardedPoints` | `(value: number) => string` | - | Optional formatter for each row's `awarded` delta |
 | `formatDate` | `(isoDate: string) => string` | - | Optional formatter for each row's `date` (ISO string) |

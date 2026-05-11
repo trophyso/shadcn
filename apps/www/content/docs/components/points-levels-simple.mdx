@@ -131,9 +131,7 @@ Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to f
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/points/{key}/levels" />
 
-Then aggregate both responses and pass them into `PointsLevelsSimple` props in your UI layer. Level rows from `GET /points/{key}/levels` match Trophy’s **`PointsLevel`** shape (`points`, `description`, …). Trophy does not return **`subLevels`**; use **`[]`** (or omit) unless you define sub-tiers locally.
-
-**`iconType`** is UI-only and is not part of the Trophy response. If you want preset Lucide icons, map from `level.key` (or another field) to a `PointsLevelSimpleIconType` value in your app.
+Then aggregate both responses and pass them into `PointsLevelsSimple` props in your UI layer. Trophy does not support sub-levels yet.
 
 ```tsx
 const currentPoints = userPointsResponse.total

@@ -24,26 +24,19 @@ export type PointsLevelSimpleIconType =
   | "grand-master"
   | "enlightened";
 
-/** Optional sub-tier row; Trophy does not return these — use `[]` when integrating. */
 export interface PointsSubLevelSimple {
   name: string;
   points: number;
 }
 
-/**
- * Level row for the simple table. Aligns with Trophy `PointsLevel` (`points`, `description`, …)
- * plus optional **`iconType`** for which Lucide icon to show.
- */
 export interface PointsLevelSimple {
   id: string;
   key?: string;
   name: string;
   description?: string;
   badgeUrl?: string | null;
-  /** Points required to reach this level (Trophy `points`). */
   points: number;
   iconType?: PointsLevelSimpleIconType;
-  /** Not returned by Trophy; omit or pass `[]` for API-driven data. */
   subLevels?: PointsSubLevelSimple[];
 }
 

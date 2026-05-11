@@ -15,7 +15,6 @@ import { Star } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-/** Matches Trophy points event-summary / chart period rows (`date`, cumulative `total`, period `change`). */
 interface PointsChartDataPoint {
   date: string
   total: number
