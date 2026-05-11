@@ -277,37 +277,20 @@ const levels = [
   { id: "l-8", threshold: 3500, name: "Enlightened", iconType: "enlightened" as const }
 ]
 
-// Randomising totalPoints (always increasing over time), actions (1–3 random actions per row, points match to increment)
-// Points are highest in the most recent (first) entry, decreasing over rows
+// Mock `points.awards`-shaped rows (Trophy GET user points). One `trigger` per row; recent first, totals descending.
 const awardsRows = (() => {
-  const actionTypes = [
-    { type: "lesson-completed" as const, label: "Lesson completed", pointsRange: [40, 70] },
-    { type: "quiz-passed" as const, label: "Quiz passed", pointsRange: [20, 60] },
-    { type: "assignment-submitted" as const, label: "Assignment submitted", pointsRange: [15, 50] },
-    { type: "streak-maintained" as const, label: "Streak maintained", pointsRange: [10, 30] },
-    { type: "discussion-contribution" as const, label: "Discussion contribution", pointsRange: [10, 25] },
-    { type: "flashcards-reviewed" as const, label: "Flashcards reviewed", pointsRange: [10, 20] },
-  ];
-
-  // Helper to return N days ago in ISO string (YYYY-MM-DD)
-  const dateAgo = (days: number) => new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-
-  // The date gaps, more recent at index 0 (descending order)
   const dateOffsets = [0, 1, 7, 28, 90, 150, 210, 260];
+  const dateIso = (days: number) =>
+    new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
 
-  // Deterministic randomness for SSR/CSR
   let seed = 654321;
   const random = () => {
-    // Simple LCG PRNG
     seed = (seed * 9301 + 49297) % 233280;
     return seed / 233280;
   };
 
-  // Work backward: last row's total should be lowest, first is highest
-  // So, generate increments in reverse order, then use running total from lowest up
-  let increments = dateOffsets.map(() => 70 + Math.floor(random() * 70));
-  let totals = [];
-  // Pick random base minimum for first row (lowest), then cumulative sums
+  const increments = dateOffsets.map(() => 70 + Math.floor(random() * 70));
+  const totals: number[] = [];
   let base = 1100 + Math.floor(random() * 40);
   let running = base;
   for (let i = increments.length - 1; i >= 0; i--) {
@@ -315,46 +298,95 @@ const awardsRows = (() => {
     totals[i] = running;
   }
 
-  // Now build rows in reverse order so recent date has highest points
-  return dateOffsets.map((offset, rowIdx) => {
-    // Map index so 0 is most recent/highest points, ... last is oldest/lowest points
-    const i = rowIdx;
-    const totalPoints = totals[i];
-    // Make up the increment for this data point by difference with previous (or previous - 1 if first)
+  const metricNames = [
+    "words written",
+    "lessons completed",
+    "quiz questions",
+    "study minutes",
+    "assignments submitted",
+  ];
+  const achievementNames = ["Early bird", "Week warrior", "Perfect week"];
+
+  const kindForRow = (row: number) => {
+    const cycle = ["metric", "metric", "achievement", "streak", "time", "user_creation"] as const;
+    return cycle[row % cycle.length];
+  };
+
+  return dateOffsets.map((offset, i) => {
+    const total = totals[i];
     const prevTotal = i === 0 ? 0 : totals[i - 1];
-    const increment = totalPoints - prevTotal;
+    const awarded = total - prevTotal;
+    const triggerId = `trigger-${i}`;
+    const kind = kindForRow(i);
 
-    // For the row, pick action count (1–3), shuffle action types, no repeats in a row
-    const actionCount = 1 + Math.floor(random() * 3);
-
-    // Shuffle the allowed types for each row to prevent duplicates
-    const shuffledTypes = [...actionTypes].sort(() => random() - 0.5).slice(0, actionCount);
-
-    // Split the increment among actions, adding up to exactly increment
-    let incrementLeft = increment;
-    let actions = [];
-    for (let j = 0; j < shuffledTypes.length; j++) {
-      const { type, pointsRange } = shuffledTypes[j];
-      let actionPoints: number;
-      if (j === shuffledTypes.length - 1) {
-        actionPoints = incrementLeft;
-      } else {
-        // min this action can take is pointsRange[0]
-        // max is min(pointsRange[1], left-(remaining actions * min-range))
-        const min = pointsRange[0];
-        const minLeft = (shuffledTypes.length - j - 1) * pointsRange[0];
-        const max = Math.min(pointsRange[1], incrementLeft - minLeft);
-        actionPoints = min + Math.floor(random() * (max - min + 1));
-        incrementLeft -= actionPoints;
-      }
-      actions.push({ type, points: actionPoints });
+    if (kind === "metric") {
+      return {
+        id: `award-${i + 1}`,
+        awarded,
+        date: dateIso(offset),
+        total,
+        trigger: {
+          id: triggerId,
+          type: "metric",
+          points: awarded,
+          metricName: metricNames[i % metricNames.length],
+          metricThreshold: 500 + Math.floor(random() * 2000),
+        },
+      };
     }
-
+    if (kind === "achievement") {
+      return {
+        id: `award-${i + 1}`,
+        awarded,
+        date: dateIso(offset),
+        total,
+        trigger: {
+          id: triggerId,
+          type: "achievement",
+          points: awarded,
+          achievementName: achievementNames[i % achievementNames.length],
+        },
+      };
+    }
+    if (kind === "streak") {
+      return {
+        id: `award-${i + 1}`,
+        awarded,
+        date: dateIso(offset),
+        total,
+        trigger: {
+          id: triggerId,
+          type: "streak",
+          points: awarded,
+          streakLengthThreshold: 7 + (i % 5),
+        },
+      };
+    }
+    if (kind === "time") {
+      return {
+        id: `award-${i + 1}`,
+        awarded,
+        date: dateIso(offset),
+        total,
+        trigger: {
+          id: triggerId,
+          type: "time",
+          points: awarded,
+          timeUnit: "day" as const,
+          timeInterval: 1 + (i % 3),
+        },
+      };
+    }
     return {
-      id: `r-${i + 1}`,
-      date: dateAgo(offset),
-      totalPoints,
-      actions,
+      id: `award-${i + 1}`,
+      awarded,
+      date: dateIso(offset),
+      total,
+      trigger: {
+        id: triggerId,
+        type: "user_creation",
+        points: awarded,
+      },
     };
   });
 })();
@@ -438,7 +470,7 @@ export function HomeComponentMosaic() {
             />
             <div className="grid auto-rows-[minmax(180px,auto)] gap-4 md:grid-cols-12">
               <div className="rounded-2xl border bg-card/60 p-4 backdrop-blur md:col-span-7">
-                <PointsAwards rows={awardsRows} className="h-full border-0 bg-transparent" />
+                <PointsAwards awards={awardsRows} className="h-full border-0 bg-transparent" />
               </div>
               <div className="md:col-span-5 flex flex-col gap-4">
                 <div className="overflow-hidden rounded-2xl border bg-card/60 p-4 backdrop-blur flex justify-center">

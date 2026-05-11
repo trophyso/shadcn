@@ -1,6 +1,6 @@
 ---
 title: Points Awards
-description: A points activity feed showing when points were awarded and which actions granted them.
+description: A points activity feed aligned with Trophy award rows — date, totals, and a per-award trigger (with metric names in tooltips).
 ---
 
 <ComponentPreview name="points-awards" />
@@ -48,16 +48,19 @@ import { PointsAwards } from "@/components/ui/points-awards"
 
 ```tsx
 <PointsAwards
-  rows={[
+  awards={[
     {
-      id: "2026-05-08",
-      date: "2026-05-08",
-      totalPoints: 20176,
-      actions: [
-        { type: "lesson-completed", points: 5 },
-        { type: "quiz-passed", points: 4 },
-        { type: "assignment-submitted", points: 4 },
-      ],
+      id: "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+      awarded: 10,
+      date: "2021-01-01T00:00:00Z",
+      total: 100,
+      trigger: {
+        id: "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+        type: "metric",
+        points: 10,
+        metricName: "words written",
+        metricThreshold: 1000,
+      },
     },
   ]}
 />
@@ -71,25 +74,43 @@ import { PointsAwards } from "@/components/ui/points-awards"
 
 ```tsx
 <PointsAwards
-  rows={[
+  awards={[
     {
-      id: "2026-05-08",
-      date: "2026-05-08",
-      totalPoints: 20176,
-      actions: [
-        { type: "lesson-completed", points: 5 },
-        { type: "quiz-passed", points: 4 },
-        { type: "assignment-submitted", points: 4 },
-      ],
+      id: "1",
+      awarded: 13,
+      date: "2026-05-08T18:22:00.000Z",
+      total: 20176,
+      trigger: {
+        id: "t-1",
+        type: "metric",
+        points: 13,
+        metricName: "words written",
+        metricThreshold: 1000,
+      },
     },
     {
-      id: "2026-05-07",
-      date: "2026-05-07",
-      totalPoints: 20163,
-      actions: [
-        { type: "lesson-completed", points: 2 },
-        { type: "quiz-passed", points: 1 },
-      ],
+      id: "2",
+      awarded: 15,
+      date: "2026-05-07T12:00:00.000Z",
+      total: 20163,
+      trigger: {
+        id: "t-2",
+        type: "achievement",
+        points: 15,
+        achievementName: "Week warrior",
+      },
+    },
+    {
+      id: "3",
+      awarded: 12,
+      date: "2026-05-07T09:15:00.000Z",
+      total: 20148,
+      trigger: {
+        id: "t-3",
+        type: "streak",
+        points: 12,
+        streakLengthThreshold: 14,
+      },
     },
   ]}
 />
@@ -101,30 +122,15 @@ Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to f
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}" />
 
-Then aggregate and pass the response into `PointsAwards` props in your UI layer:
+Pass the response into `PointsAwards` props in your UI layer:
 
 ```tsx
-const rows = (response.awards ?? []).reduce((acc, award) => {
-  const date = award.date.slice(0, 10)
-  const existing = acc.get(date) ?? {
-    id: date,
-    date,
-    totalPoints: award.total,
-    actions: [],
-  }
+const awards = response.awards ?? []
 
-  existing.actions.push({
-    type: award.trigger.type,
-    points: award.awarded,
-    label: award.trigger.metricName,
-  })
-
-  acc.set(date, existing)
-  return acc
-}, new Map())
-
-<PointsAwards rows={Array.from(rows.values())} />
+<PointsAwards awards={awards} />
 ```
+
+Icon tooltips use **`trigger.metricName`** (and optional **`metricThreshold`**) for metric awards; **`achievementName`**, streak thresholds, **`trigger.type`** or custom types to cover other types of awards.
 
 ## API Reference
 
@@ -132,31 +138,31 @@ const rows = (response.awards ?? []).reduce((acc, award) => {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `rows` | `PointsAwardRow[]` | Required | Award history rows sorted however you prefer (often most recent first) |
-| `formatTotalPoints` | `(value: number) => string` | - | Optional formatter for each row's total points value |
-| `formatAwardedPoints` | `(value: number) => string` | - | Optional formatter for each row's awarded delta (sum of action points) |
+| `awards` | `PointsAward[]` | Required | Award rows from Trophy `points.awards` (order is up to you; often most recent first) |
+| `formatTotalPoints` | `(value: number) => string` | - | Optional formatter for each row's cumulative `total` |
+| `formatAwardedPoints` | `(value: number) => string` | - | Optional formatter for each row's `awarded` delta |
+| `formatDate` | `(isoDate: string) => string` | - | Optional formatter for each row's `date` (ISO string) |
 
 ### Types
 
 ```ts
-type PointsAwardActionType =
-  | "lesson-completed"
-  | "quiz-passed"
-  | "assignment-submitted"
-  | "streak-maintained"
-  | "discussion-contribution"
-  | "flashcards-reviewed"
-
-interface PointsAwardAction {
-  type: PointsAwardActionType
+interface PointsAwardTrigger {
+  id: string
+  type: string
   points: number
-  label?: string
+  metricName?: string | null
+  metricThreshold?: number | null
+  achievementName?: string | null
+  streakLengthThreshold?: number | null
+  timeUnit?: "hour" | "day"
+  timeInterval?: number | null
 }
 
-interface PointsAwardRow {
+interface PointsAward {
   id: string
+  awarded: number
   date: string
-  totalPoints: number
-  actions: PointsAwardAction[]
+  total: number
+  trigger: PointsAwardTrigger
 }
 ```

@@ -1627,71 +1627,99 @@ const datasets = {
     component: (
       <div className="w-full max-w-6xl">
         <PointsAwards
-          rows={[
+          awards={[
             {
-              id: "2026-05-08",
-              date: "2026-05-08",
-              totalPoints: 20176,
-              actions: [
-                { type: "lesson-completed", points: 5 },
-                { type: "quiz-passed", points: 4 },
-                { type: "assignment-submitted", points: 4 },
-              ],
+              id: "row-1",
+              awarded: 13,
+              date: "2026-05-08T18:22:00.000Z",
+              total: 20176,
+              trigger: {
+                id: "tr-m-1",
+                type: "metric",
+                points: 13,
+                metricName: "words written",
+                metricThreshold: 1000,
+              },
             },
             {
-              id: "2026-05-07-1",
-              date: "2026-05-07",
-              totalPoints: 20163,
-              actions: [
-                { type: "lesson-completed", points: 2 },
-                { type: "quiz-passed", points: 1 },
-              ],
+              id: "row-2",
+              awarded: 15,
+              date: "2026-05-07T16:40:00.000Z",
+              total: 20163,
+              trigger: {
+                id: "tr-a-1",
+                type: "achievement",
+                points: 15,
+                achievementName: "Week warrior",
+              },
             },
             {
-              id: "2026-05-07-2",
-              date: "2026-05-07",
-              totalPoints: 20160,
-              actions: [
-                { type: "streak-maintained", points: 12 },
-                { type: "flashcards-reviewed", points: 8 },
-                { type: "discussion-contribution", points: 6 },
-              ],
+              id: "row-3",
+              awarded: 12,
+              date: "2026-05-07T09:15:00.000Z",
+              total: 20148,
+              trigger: {
+                id: "tr-s-1",
+                type: "streak",
+                points: 12,
+                streakLengthThreshold: 14,
+              },
             },
             {
-              id: "2026-05-06",
-              date: "2026-05-06",
-              totalPoints: 20122,
-              actions: [
-                { type: "lesson-completed", points: 4 },
-                { type: "quiz-passed", points: 4 },
-                { type: "assignment-submitted", points: 3 },
-                { type: "discussion-contribution", points: 2 },
-              ],
+              id: "row-4",
+              awarded: 20,
+              date: "2026-05-06T11:00:00.000Z",
+              total: 20136,
+              trigger: {
+                id: "tr-t-1",
+                type: "time",
+                points: 20,
+                timeUnit: "day",
+                timeInterval: 1,
+              },
+            },
+            {
+              id: "row-5",
+              awarded: 8,
+              date: "2026-05-05T20:00:00.000Z",
+              total: 20116,
+              trigger: {
+                id: "tr-uc-1",
+                type: "user_creation",
+                points: 8,
+              },
+            },
+            {
+              id: "row-6",
+              awarded: 10,
+              date: "2026-05-04T08:30:00.000Z",
+              total: 20108,
+              trigger: {
+                id: "tr-m-2",
+                type: "metric",
+                points: 10,
+                metricName: "lessons completed",
+                metricThreshold: 5,
+              },
             },
           ]}
         />
       </div>
     ),
     code: `<PointsAwards
-  rows={[
+  awards={[
     {
-      id: "2026-05-08",
-      date: "2026-05-08",
-      totalPoints: 20176,
-      actions: [
-        { type: "lesson-completed", points: 5 },
-        { type: "quiz-passed", points: 4 },
-        { type: "assignment-submitted", points: 4 },
-      ],
-    },
-    {
-      id: "2026-05-07-1",
-      date: "2026-05-07",
-      totalPoints: 20163,
-      actions: [
-        { type: "lesson-completed", points: 2 },
-        { type: "quiz-passed", points: 1 },
-      ],
+      id: "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+      awarded: 10,
+      date: "2021-01-01T00:00:00Z",
+      total: 100,
+      trigger: {
+        id: "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+        type: "metric",
+        points: 10,
+        metricName: "words written",
+        metricThreshold: 1000,
+      },
     },
   ]}
 />`,
