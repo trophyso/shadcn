@@ -75,13 +75,9 @@ Use the Trophy SDK to fetch streak data for a particular user server-side:
 Then pass response fields into `StreakBadge` in your UI layer:
 
 ```tsx
-const streakLength = streakResponse.length
-const streakFrequency = streakResponse.frequency
-const shouldShowFrequency = streakFrequency === "daily"
-
 <StreakBadge
   length={response.length}
-  showFrequency={response.frequency === "daily"}
+  frequency={response.frequency}
 />
 ```
 
@@ -91,11 +87,9 @@ const shouldShowFrequency = streakFrequency === "daily"
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `streak` | `StreakResponse` | - | Streak data object |
-| `length` | `number` | - | Manual streak length (alternative to streak prop) |
+| `length` | `number` | - | Streak length value |
+| `frequency` | `"daily" \| "weekly" \| "monthly"` | `"daily"` | Frequency label used to render streak description |
 | `size` | `"sm" \| "default" \| "lg"` | `"default"` | Badge size |
-| `showFrequency` | `boolean` | `false` | Show frequency label (e.g., "7 days") |
-| `showFlame` | `boolean` | `true` | Show the flame icon |
 | `icon` | `ReactNode` | - | Custom icon to replace flame |
 
 ### Types

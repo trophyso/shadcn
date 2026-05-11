@@ -615,24 +615,24 @@ type ComponentExampleConfig = {
 
 export const componentExamples: Record<string, ComponentExampleConfig> = {
   "streak-badge": {
-    component: <StreakBadge length={7} />,
-    code: `<StreakBadge length={7} />`,
+    component: <StreakBadge length={7} frequency="daily" />,
+    code: `<StreakBadge length={7} frequency="daily" />`,
   },
   "streak-badge-basic": {
-    component: <StreakBadge length={7} />,
-    code: `<StreakBadge length={7} />`,
+    component: <StreakBadge length={7} frequency="daily" />,
+    code: `<StreakBadge length={7} frequency="daily" />`,
   },
   "streak-badge-sizes": {
     component: (
       <div className="flex flex-wrap items-center gap-4">
-        <StreakBadge length={7} size="sm" />
-        <StreakBadge length={7} size="default" />
-        <StreakBadge length={7} size="lg" />
+        <StreakBadge length={7} frequency="daily" size="sm" />
+        <StreakBadge length={7} frequency="daily" size="default" />
+        <StreakBadge length={7} frequency="daily" size="lg" />
       </div>
     ),
-    code: `<StreakBadge length={7} size="sm" />
-<StreakBadge length={7} size="default" />
-<StreakBadge length={7} size="lg" />`,
+    code: `<StreakBadge length={7} frequency="daily" size="sm" />
+<StreakBadge length={7} frequency="daily" size="default" />
+<StreakBadge length={7} frequency="daily" size="lg" />`,
   },
   "streak-calendar": {
     component: (

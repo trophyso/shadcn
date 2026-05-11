@@ -360,7 +360,7 @@ export function HomeComponentMosaic() {
               <StreakBadge
                 size="sm"
                 length={12}
-                showFrequency
+                frequency="daily"
                 className="w-full rounded-xl border-border"
               />
               <AchievementGrid
