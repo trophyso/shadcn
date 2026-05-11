@@ -20,6 +20,7 @@ const chartData7Days = (() => {
   const days = 7;
   const data = [];
   let base = 50;
+  let prevTotal = base;
   const today = new Date();
   for (let i = days - 1; i >= 0; i--) {
     const date = new Date(today);
@@ -46,7 +47,9 @@ const chartData7Days = (() => {
       increment = Math.floor(35 + Math.random() * 175); // 35-209
     }
     base += increment;
-    data.push({ date: label, points: base });
+    const change = base - prevTotal;
+    prevTotal = base;
+    data.push({ date: label, total: base, change });
   }
   return data;
 })()
@@ -56,6 +59,7 @@ const chartData4Weeks = (() => {
   const days = 28;
   const data = [];
   let base = 180;
+  let prevTotal = base;
   const today = new Date();
   for (let i = days - 1; i >= 0; i--) {
     const date = new Date(today);
@@ -80,8 +84,9 @@ const chartData4Weeks = (() => {
     }
 
     base += increment;
-
-    data.push({ date: label, points: base });
+    const change = base - prevTotal;
+    prevTotal = base;
+    data.push({ date: label, total: base, change });
   }
   return data;
 })()
@@ -91,6 +96,7 @@ const chartData3Months = (() => {
   const weeks = 12;
   const data = [];
   let base = 300;
+  let prevTotal = base;
   const today = new Date();
   // Start with the oldest week
   for (let i = weeks - 1; i >= 0; i--) {
@@ -99,7 +105,9 @@ const chartData3Months = (() => {
     const label = date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
     // Increase base by a random value, e.g. 70~180 per week
     base += Math.floor(10 + Math.random() * 220);
-    data.push({ date: label, points: base });
+    const change = base - prevTotal;
+    prevTotal = base;
+    data.push({ date: label, total: base, change });
   }
   return data;
 })()
@@ -109,6 +117,7 @@ const chartData6Months = (() => {
   const months = 6;
   const data = [];
   let base = 220;
+  let prevTotal = base;
   const today = new Date();
   for (let i = months - 1; i >= 0; i--) {
     const date = new Date(today);
@@ -120,7 +129,9 @@ const chartData6Months = (() => {
     });
     // Increase base by 70~220 per month
     base += Math.floor(70 + Math.random() * 150);
-    data.push({ date: label, points: base });
+    const change = base - prevTotal;
+    prevTotal = base;
+    data.push({ date: label, total: base, change });
   }
   return data;
 })()
@@ -130,6 +141,7 @@ const chartData12Months = (() => {
   const months = 12;
   const data = [];
   let base = 220;
+  let prevTotal = base;
   const today = new Date();
   for (let i = months - 1; i >= 0; i--) {
     const date = new Date(today);
@@ -141,7 +153,9 @@ const chartData12Months = (() => {
     });
     // Increase base by 70~220 per month (same as 6 months logic)
     base += Math.floor(70 + Math.random() * 150);
-    data.push({ date: label, points: base });
+    const change = base - prevTotal;
+    prevTotal = base;
+    data.push({ date: label, total: base, change });
   }
   return data;
 })()
@@ -354,9 +368,7 @@ export function HomeComponentMosaic() {
         <div className="grid auto-rows-[minmax(180px,auto)] gap-4 md:grid-cols-12">
           <div className="md:col-span-3">
             <div className="flex h-full flex-col gap-4">
-              <PointsBadge
-                points={{ name: "XP", badgeUrl: null, total: 19845 }}
-              />
+              <PointsBadge name="XP" total={19845} />
               <StreakBadge
                 size="sm"
                 length={12}

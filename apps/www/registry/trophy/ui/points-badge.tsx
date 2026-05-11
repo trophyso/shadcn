@@ -6,12 +6,6 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-interface PointsBadgeData {
-  name: string;
-  badgeUrl: string | null;
-  total: number;
-}
-
 const pointsBadgeVariants = cva(
   "flex items-center gap-3 rounded-lg transition-colors",
   {
@@ -32,7 +26,10 @@ interface PointsBadgeProps
   extends
   React.HTMLAttributes<HTMLDivElement>,
   VariantProps<typeof pointsBadgeVariants> {
-  points: PointsBadgeData;
+  name: string;
+  total: number;
+  /** When omitted or `null`, the default icon is shown instead of an image. */
+  badgeUrl?: string | null;
   icon?: React.ComponentType<{ className?: string }>;
   formatValue?: (value: number) => string;
 }
@@ -42,7 +39,9 @@ const PointsBadge = React.forwardRef<HTMLDivElement, PointsBadgeProps>(
     {
       className,
       size,
-      points,
+      name,
+      badgeUrl,
+      total,
       icon: CustomIcon,
       formatValue,
       ...props
@@ -50,9 +49,7 @@ const PointsBadge = React.forwardRef<HTMLDivElement, PointsBadgeProps>(
     ref,
   ) => {
     const Icon = CustomIcon ?? Sparkle;
-    const displayValue = formatValue
-      ? formatValue(points.total)
-      : points.total.toLocaleString();
+    const displayValue = formatValue ? formatValue(total) : total.toLocaleString();
 
     const iconSize = {
       sm: "h-4 w-4",
@@ -65,7 +62,7 @@ const PointsBadge = React.forwardRef<HTMLDivElement, PointsBadgeProps>(
       default: "h-8 w-8",
       lg: "h-10 w-10",
     }[size ?? "default"];
-    const statusLabel = `${displayValue} ${points.name}`;
+    const statusLabel = `${displayValue} ${name}`;
 
     return (
       <div
@@ -76,10 +73,10 @@ const PointsBadge = React.forwardRef<HTMLDivElement, PointsBadgeProps>(
         {...props}
       >
         <div className="flex items-center gap-2">
-          {points.badgeUrl ? (
+          {badgeUrl ? (
             <div>
               <img
-                src={points.badgeUrl}
+                src={badgeUrl}
                 alt=""
                 aria-hidden="true"
                 className={cn("rounded object-contain shrink-0", badgeSize)}
@@ -112,7 +109,7 @@ const PointsBadge = React.forwardRef<HTMLDivElement, PointsBadgeProps>(
         </div>
 
         <div>
-          <span className="truncate text-muted-foreground">{points.name}</span>
+          <span className="truncate text-muted-foreground">{name}</span>
         </div>
       </div>
     );
@@ -121,4 +118,4 @@ const PointsBadge = React.forwardRef<HTMLDivElement, PointsBadgeProps>(
 PointsBadge.displayName = "PointsBadge";
 
 export { PointsBadge, pointsBadgeVariants };
-export type { PointsBadgeProps, PointsBadgeData };
+export type { PointsBadgeProps };

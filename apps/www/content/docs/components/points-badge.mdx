@@ -53,9 +53,7 @@ import { PointsBadge } from "@/components/ui/points-badge"
 <ComponentPreview name="points-badge" />
 
 ```tsx
-<PointsBadge
-  points={{ name: "XP", total: 2500, badgeUrl: null }}
-/>
+<PointsBadge name="XP" total={2500} />
 ```
 
 ### Sizes
@@ -65,9 +63,9 @@ Available in three sizes: `sm`, `default`, and `lg`.
 <ComponentPreview name="points-badge-sizes" />
 
 ```tsx
-<PointsBadge points={points} size="sm" />
-<PointsBadge points={points} size="default" />
-<PointsBadge points={points} size="lg" />
+<PointsBadge name="XP" total={1250} size="sm" />
+<PointsBadge name="XP" total={1250} size="default" />
+<PointsBadge name="XP" total={1250} size="lg" />
 ```
 
 ## With Trophy
@@ -79,13 +77,11 @@ Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to f
 Then pass the response into `PointsBadge` props in your UI layer:
 
 ```tsx
-const pointsData = {
-  name: response.name,
-  badgeUrl: response.badgeUrl,
-  total: response.total,
-}
-
-<PointsBadge points={pointsData} />
+<PointsBadge
+  name={response.name}
+  badgeUrl={response.badgeUrl}
+  total={response.total}
+/>
 ```
 
 ## API Reference
@@ -94,17 +90,10 @@ const pointsData = {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `points` | `PointsBadgeData` | Required | Points data object |
+| `name` | `string` | Required | Label for the points (e.g. currency name) |
+| `badgeUrl` | `string \| null` | - | Optional badge image URL; omit or pass `null` to show the default icon |
+| `total` | `number` | Required | Points total to display |
 | `size` | `"sm" \| "default" \| "lg"` | `"default"` | Component size |
 | `icon` | `ComponentType` | - | Custom icon component when no badge image is available |
 | `formatValue` | `(value: number) => string` | - | Custom value formatter |
 
-### Types
-
-```ts
-interface PointsBadgeData {
-  name: string
-  badgeUrl: string | null
-  total: number
-}
-```

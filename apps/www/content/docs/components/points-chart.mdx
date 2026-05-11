@@ -55,13 +55,13 @@ import { PointsChart } from "@/components/ui/points-chart"
 ```tsx
 <PointsChart
   data={[
-    { date: "Fri", points: 0 },
-    { date: "Sat", points: 125 },
-    { date: "Sun", points: 290 },
-    { date: "Mon", points: 420 },
-    { date: "Tue", points: 680 },
-    { date: "Wed", points: 940 },
-    { date: "Thu", points: 1250 },
+    { date: "Fri", total: 0, change: 0 },
+    { date: "Sat", total: 125, change: 125 },
+    { date: "Sun", total: 290, change: 165 },
+    { date: "Mon", total: 420, change: 130 },
+    { date: "Tue", total: 680, change: 260 },
+    { date: "Wed", total: 940, change: 260 },
+    { date: "Thu", total: 1250, change: 310 },
   ]}
 />
 ```
@@ -75,13 +75,13 @@ Add bronze, silver, and gold level markers on the Y-axis with matching dashed th
 ```tsx
 <PointsChart
   data={[
-    { date: "Fri", points: 120 },
-    { date: "Sat", points: 260 },
-    { date: "Sun", points: 520 },
-    { date: "Mon", points: 710 },
-    { date: "Tue", points: 890 },
-    { date: "Wed", points: 1120 },
-    { date: "Thu", points: 1320 },
+    { date: "Fri", total: 120, change: 120 },
+    { date: "Sat", total: 260, change: 140 },
+    { date: "Sun", total: 520, change: 260 },
+    { date: "Mon", total: 710, change: 190 },
+    { date: "Tue", total: 890, change: 180 },
+    { date: "Wed", total: 1120, change: 230 },
+    { date: "Thu", total: 1320, change: 200 },
   ]}
   levels={[
     { value: 250, color: "#CD7F32" },
@@ -123,15 +123,10 @@ Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to f
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}/event-summary" />
 
-Then transform and pass the response into `PointsChart` props in your UI layer:
+Then pass the response into `PointsChart` props in your UI layer:
 
 ```tsx
-const chartData = (response.periods ?? []).map((period) => ({
-  date: period.periodStart,
-  points: period.total ?? 0,
-}))
-
-<PointsChart data={chartData} />
+<PointsChart data={response} />
 ```
 
 ## API Reference
@@ -152,7 +147,8 @@ const chartData = (response.periods ?? []).map((period) => ({
 ```ts
 interface PointsChartDataPoint {
   date: string
-  points: number
+  total: number
+  change: number
 }
 
 interface PointsChartLevel {

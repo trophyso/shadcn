@@ -110,6 +110,7 @@ function buildPointsChartData(
 ) {
   const now = new Date()
   let lastPoints = Math.max(0, Math.round(startValue))
+  let previousTotal = 0
 
   return Array.from({ length: count }, (_, index) => {
     const date = new Date(now)
@@ -128,12 +129,15 @@ function buildPointsChartData(
     const zigzag = ((index % 3) - 1) * stepValue * 0.25
     const variance = wave + zigzag
     const rawPoints = Math.max(0, Math.round(startValue + index * stepValue + variance))
-    const points = index === 0 ? rawPoints : Math.max(lastPoints, rawPoints)
-    lastPoints = points
+    const total = index === 0 ? rawPoints : Math.max(lastPoints, rawPoints)
+    const change = total - previousTotal
+    previousTotal = total
+    lastPoints = total
 
     return {
       date: formatPointsChartLabel(date, granularity),
-      points,
+      total,
+      change,
     }
   })
 }
@@ -173,7 +177,10 @@ function PointsChartPeriodSelectorPreview() {
         label: "All time",
         data: buildPointsChartData(24, "month", 50, 45),
       },
-    } satisfies Record<PointsChartPeriodId, { label: string; data: Array<{ date: string; points: number }> }>
+    } satisfies Record<
+      PointsChartPeriodId,
+      { label: string; data: Array<{ date: string; total: number; change: number }> }
+    >
   }, [])
 
   const selected = datasets[period]
@@ -1504,60 +1511,47 @@ const selectedRun = runs[selectedRunId] ?? runs["this-week"]
   },
   "points-badge": {
     component: (
-      <PointsBadge
-        points={{ name: "XP", total: 2500, badgeUrl: null }}
-      />
+      <PointsBadge name="XP" total={2500} />
     ),
-    code: `<PointsBadge
-  points={{ name: "XP", total: 2500, badgeUrl: null }}
-/>`,
+    code: `<PointsBadge name="XP" total={2500} />`,
   },
   "points-badge-sizes": {
     component: (
       <div className="flex flex-wrap items-center gap-4">
-        <PointsBadge
-          points={{ name: "XP", total: 1250, badgeUrl: null }}
-          size="sm"
-        />
-        <PointsBadge
-          points={{ name: "XP", total: 1250, badgeUrl: null }}
-          size="default"
-        />
-        <PointsBadge
-          points={{ name: "XP", total: 1250, badgeUrl: null }}
-          size="lg"
-        />
+        <PointsBadge name="XP" total={1250} size="sm" />
+        <PointsBadge name="XP" total={1250} size="default" />
+        <PointsBadge name="XP" total={1250} size="lg" />
       </div>
     ),
-    code: `<PointsBadge points={points} size="sm" />
-<PointsBadge points={points} size="default" />
-<PointsBadge points={points} size="lg" />`,
+    code: `<PointsBadge name="XP" total={1250} size="sm" />
+<PointsBadge name="XP" total={1250} size="default" />
+<PointsBadge name="XP" total={1250} size="lg" />`,
   },
   "points-chart": {
     component: (
       <div className="w-full max-w-2xl">
         <PointsChart
           data={[
-            { date: "Fri", points: 0 },
-            { date: "Sat", points: 160 },
-            { date: "Sun", points: 240 },
-            { date: "Mon", points: 430 },
-            { date: "Tue", points: 590 },
-            { date: "Wed", points: 910 },
-            { date: "Thu", points: 1180 },
+            { date: "Fri", total: 0, change: 0 },
+            { date: "Sat", total: 160, change: 160 },
+            { date: "Sun", total: 240, change: 80 },
+            { date: "Mon", total: 430, change: 190 },
+            { date: "Tue", total: 590, change: 160 },
+            { date: "Wed", total: 910, change: 320 },
+            { date: "Thu", total: 1180, change: 270 },
           ]}
         />
       </div>
     ),
     code: `<PointsChart
   data={[
-    { date: "Fri", points: 0 },
-    { date: "Sat", points: 160 },
-    { date: "Sun", points: 240 },
-    { date: "Mon", points: 430 },
-    { date: "Tue", points: 590 },
-    { date: "Wed", points: 910 },
-    { date: "Thu", points: 1180 },
+    { date: "Fri", total: 0, change: 0 },
+    { date: "Sat", total: 160, change: 160 },
+    { date: "Sun", total: 240, change: 80 },
+    { date: "Mon", total: 430, change: 190 },
+    { date: "Tue", total: 590, change: 160 },
+    { date: "Wed", total: 910, change: 320 },
+    { date: "Thu", total: 1180, change: 270 },
   ]}
 />`,
   },
@@ -1566,13 +1560,13 @@ const selectedRun = runs[selectedRunId] ?? runs["this-week"]
       <div className="w-full max-w-2xl">
         <PointsChart
           data={[
-            { date: "Fri", points: 120 },
-            { date: "Sat", points: 240 },
-            { date: "Sun", points: 480 },
-            { date: "Mon", points: 620 },
-            { date: "Tue", points: 860 },
-            { date: "Wed", points: 1010 },
-            { date: "Thu", points: 1290 },
+            { date: "Fri", total: 120, change: 120 },
+            { date: "Sat", total: 240, change: 120 },
+            { date: "Sun", total: 480, change: 240 },
+            { date: "Mon", total: 620, change: 140 },
+            { date: "Tue", total: 860, change: 240 },
+            { date: "Wed", total: 1010, change: 150 },
+            { date: "Thu", total: 1290, change: 280 },
           ]}
           levels={[
             { value: 250, color: "#CD7F32" },
@@ -1584,13 +1578,13 @@ const selectedRun = runs[selectedRunId] ?? runs["this-week"]
     ),
     code: `<PointsChart
   data={[
-    { date: "Fri", points: 120 },
-    { date: "Sat", points: 240 },
-    { date: "Sun", points: 480 },
-    { date: "Mon", points: 620 },
-    { date: "Tue", points: 860 },
-    { date: "Wed", points: 1010 },
-    { date: "Thu", points: 1290 },
+    { date: "Fri", total: 120, change: 120 },
+    { date: "Sat", total: 240, change: 120 },
+    { date: "Sun", total: 480, change: 240 },
+    { date: "Mon", total: 620, change: 140 },
+    { date: "Tue", total: 860, change: 240 },
+    { date: "Wed", total: 1010, change: 150 },
+    { date: "Thu", total: 1290, change: 280 },
   ]}
   levels={[
     { value: 250, color: "#CD7F32" },

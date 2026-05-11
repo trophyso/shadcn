@@ -15,9 +15,11 @@ import { Star } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/** Matches Trophy points event-summary / chart period rows (`date`, cumulative `total`, period `change`). */
 interface PointsChartDataPoint {
   date: string
-  points: number
+  total: number
+  change: number
 }
 
 interface PointsChartLevel {
@@ -79,7 +81,7 @@ function PointsChart({
 }: PointsChartProps) {
   const yDomain = React.useMemo<[number, number]>(() => {
     const values = [
-      ...data.map((item) => item.points),
+      ...data.map((item) => item.total),
       ...(levels?.map((level) => level.value) ?? []),
     ]
 
@@ -153,19 +155,32 @@ function PointsChart({
             ))}
             <Tooltip
               cursor={{ stroke: "var(--primary)", strokeDasharray: "4 4" }}
-              contentStyle={{
-                backgroundColor: "var(--popover)",
-                borderColor: "var(--border)",
-                borderRadius: "0.5rem",
-                color: "var(--popover-foreground)",
+              content={({ active, payload, label }) => {
+                if (!active || !payload?.length) return null
+                const row = payload[0].payload as PointsChartDataPoint
+                const changePrefix = row.change > 0 ? "+" : ""
+                return (
+                  <div
+                    className="rounded-lg border bg-popover px-3 py-2 text-sm text-popover-foreground shadow-md"
+                    style={{
+                      borderColor: "var(--border)",
+                    }}
+                  >
+                    <p className="mb-1 text-muted-foreground">{label}</p>
+                    <p className="font-medium tabular-nums">
+                      Total {formatValue(row.total)}
+                    </p>
+                    <p className="tabular-nums text-muted-foreground text-xs">
+                      {changePrefix}
+                      {formatValue(row.change)}
+                    </p>
+                  </div>
+                )
               }}
-              itemStyle={{ color: "var(--popover-foreground)" }}
-              labelStyle={{ color: "var(--muted-foreground)" }}
-              formatter={(value) => formatValue(Number(value))}
             />
             <Line
               type="monotone"
-              dataKey="points"
+              dataKey="total"
               stroke="var(--primary)"
               strokeWidth={2}
               connectNulls
