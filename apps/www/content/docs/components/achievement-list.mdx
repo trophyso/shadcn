@@ -98,63 +98,14 @@ import { AchievementList } from "@/components/ui/achievement-list"
 
 ## With Trophy
 
-Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch a user's achievements server-side (include incomplete achievements so locked tiers appear in the list):
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch a user's achievements server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/achievements" />
 
-For **metric** series (e.g. novice → intermediate tiers), compute each row’s `progress` (0–100) from the full list: use the user’s current cumulative **`total`** for that metric against each tier’s **`metricValue`**, and treat the **highest `metricValue`** among tiers the user has already completed (`achievedAt` set) as the floor you’ve cleared. A single tier from the API looks like:
-
-```json
-{
-  "id": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
-  "trigger": "metric",
-  "key": "novice-writer",
-  "metricId": "d01dcbcb-d51e-4c12-b054-dc811dcdc619",
-  "metricValue": 500,
-  "metricName": "words written",
-  "name": "Novice Writer",
-  "achievedAt": "2021-02-01T00:00:00Z",
-  "badgeUrl": "https://example.com/badge1.png",
-  "completions": 100,
-  "rarity": 50
-}
-```
-
-Then merge that derived `progress` into each achievement and pass the list into `AchievementList`:
+Then pass the response into `AchievementList` props in your UI layer:
 
 ```tsx
-const SERIES_METRIC_ID = "d01dcbcb-d51e-4c12-b054-dc811dcdc619"
-const userMetricTotal = 750
-
-const series = response.filter(
-  (a) => a.trigger === "metric" && a.metricId === SERIES_METRIC_ID
-)
-const highestCompletedValue = Math.max(
-  0,
-  ...series.filter((a) => a.achievedAt).map((a) => a.metricValue ?? 0)
-)
-const nextTier = [...series]
-  .filter((a) => !a.achievedAt)
-  .sort((a, b) => (a.metricValue ?? 0) - (b.metricValue ?? 0))[0]
-
-const progressToNext =
-  nextTier?.metricValue != null && nextTier.metricValue > highestCompletedValue
-    ? Math.min(
-        100,
-        Math.max(
-          0,
-          ((userMetricTotal - highestCompletedValue) /
-            (nextTier.metricValue - highestCompletedValue)) *
-            100
-        )
-      )
-    : 100
-
-const achievements = series.map((a) =>
-  a.id === nextTier?.id ? { ...a, progress: progressToNext } : a
-)
-
-<AchievementList achievements={achievements} />
+<AchievementList achievements={response} />
 ```
 
 ## API Reference
