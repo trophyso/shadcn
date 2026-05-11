@@ -68,9 +68,22 @@ Available in three sizes: `sm`, `default`, and `lg`.
 
 ## With Trophy
 
-Use Trophy's streak endpoint to fetch a user's current streak, then pass `response.length` to the `StreakBadge` component.
+Use the Trophy SDK to fetch streak data for a particular user server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/streak" />
+
+Then pass response fields into `StreakBadge` in your UI layer:
+
+```tsx
+const streakLength = streakResponse.length
+const streakFrequency = streakResponse.frequency
+const shouldShowFrequency = streakFrequency === "daily"
+
+<StreakBadge
+  length={response.length}
+  showFrequency={response.frequency === "daily"}
+/>
+```
 
 ## API Reference
 
