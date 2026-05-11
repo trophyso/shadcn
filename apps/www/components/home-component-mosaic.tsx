@@ -470,7 +470,7 @@ export function HomeComponentMosaic() {
               }}
             />
             <div className="grid auto-rows-[minmax(180px,auto)] gap-4 md:grid-cols-12">
-              <div className="rounded-2xl border bg-card/60 p-4 backdrop-blur md:col-span-7">
+              <div className="rounded-2xl border bg-card/60 backdrop-blur md:col-span-7">
                 <PointsAwards awards={awardsRows} className="h-full border-0 bg-transparent" />
               </div>
               <div className="md:col-span-5 flex flex-col gap-4">

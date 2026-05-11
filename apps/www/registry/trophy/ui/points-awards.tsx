@@ -162,7 +162,7 @@ const PointsAwards = React.forwardRef<HTMLDivElement, PointsAwardsProps>(
                 <div
                   key={award.id}
                   role="listitem"
-                  className="grid grid-cols-[7rem_minmax(0,1fr)_minmax(0,1fr)] items-center gap-4 py-3"
+                  className="grid grid-cols-[7rem_minmax(0,1fr)_minmax(0,1fr)] items-center gap-4 py-3 px-3"
                 >
                   <span className="truncate text-muted-foreground text-sm">
                     {formatRowDate(award.date)}
