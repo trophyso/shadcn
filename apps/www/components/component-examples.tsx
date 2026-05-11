@@ -1959,6 +1959,7 @@ const datasets = {
           boost={{
             name: "Double Points Weekend",
             status: "active",
+            description: "Earn extra points for all tracked actions",
             multiplier: 2,
             cta: {
               link: "#",
@@ -1972,6 +1973,7 @@ const datasets = {
   boost={{
     name: "Double Points Weekend",
     status: "active",
+    description: "Earn extra points for all tracked actions",
     multiplier: 2,
     cta: {
       link: "#",
@@ -1987,6 +1989,7 @@ const datasets = {
           boost={{
             name: "Limited-Time Points Boost",
             status: "active",
+            description: "Boost expires soon, activate now to maximize your points",
             multiplier: 3,
             cta: {
               link: "#",
@@ -2001,6 +2004,7 @@ const datasets = {
   boost={{
     name: "Limited-Time Points Boost",
     status: "active",
+    description: "Boost expires soon, activate now to maximize your points",
     multiplier: 3,
     cta: {
       link: "#",

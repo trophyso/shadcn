@@ -463,6 +463,7 @@ export function HomeComponentMosaic() {
               boost={{
                 name: "Double XP Weekend",
                 status: "active",
+                description: "Enjoy double XP on all activity this weekend.",
                 multiplier: 2,
                 cta: { link: "#", text: "Do something" },
                 endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2).toISOString(),

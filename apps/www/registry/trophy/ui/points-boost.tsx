@@ -16,6 +16,8 @@ interface PointsBoostCta {
 interface PointsBoostData {
   name: string;
   status: PointsBoostStatus;
+  /** Optional subtitle below the title row. */
+  description?: string;
   multiplier: number;
   cta: PointsBoostCta;
   endDate?: string | Date;
@@ -66,13 +68,16 @@ const PointsBoost = React.forwardRef<HTMLDivElement, PointsBoostProps>(
         )}
         {...props}
       >
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1 flex flex-col gap-.5">
           <p className="flex flex-wrap items-center gap-2 font-semibold">
             <span className="min-w-0 truncate">{boost.name}</span>
             <span className="shrink-0 rounded-full bg-muted-foreground/10 px-2 py-0.5 text-primary">
               x{boost.multiplier}
             </span>
           </p>
+          {boost.description ? (
+            <p className="text-sm leading-snug text-muted-foreground">{boost.description}</p>
+          ) : null}
         </div>
 
         <div className="ml-4 flex shrink-0 items-center gap-3 self-center">

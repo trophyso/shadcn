@@ -51,6 +51,7 @@ import { PointsBoost } from "@/components/ui/points-boost"
   boost={{
     name: "Double Points Weekend",
     status: "active",
+    description: "Earn extra points for all tracked actions",
     multiplier: 2,
     cta: {
       link: "#",
@@ -71,6 +72,7 @@ import { PointsBoost } from "@/components/ui/points-boost"
   boost={{
     name: "Double Points Weekend",
     status: "active",
+    description: "Earn extra points for all tracked actions",
     multiplier: 2,
     cta: {
       link: "#",
@@ -91,6 +93,7 @@ Pass `endDate` to enable the countdown label.
   boost={{
     name: "Limited-Time Points Boost",
     status: "active",
+    description: "Boost expires soon — activate now to maximize your points.",
     multiplier: 3,
     cta: {
       link: "#",
@@ -147,6 +150,7 @@ interface PointsBoostCta {
 interface PointsBoostData {
   name: string
   status: PointsBoostStatus
+  description?: string
   multiplier: number
   cta: PointsBoostCta
   endDate?: string | Date
