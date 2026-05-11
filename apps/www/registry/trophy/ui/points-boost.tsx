@@ -6,6 +6,8 @@ import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
 
+export type PointsBoostStatus = "active" | "scheduled" | "finished";
+
 interface PointsBoostCta {
   link: string;
   text: string;
@@ -13,7 +15,7 @@ interface PointsBoostCta {
 
 interface PointsBoostData {
   name: string;
-  description: string;
+  status: PointsBoostStatus;
   multiplier: number;
   cta: PointsBoostCta;
   endDate?: string | Date;
@@ -22,6 +24,12 @@ interface PointsBoostData {
 interface PointsBoostProps extends React.HTMLAttributes<HTMLDivElement> {
   boost: PointsBoostData;
 }
+
+const statusLabel: Record<PointsBoostStatus, string> = {
+  active: "Active",
+  scheduled: "Scheduled",
+  finished: "Finished",
+};
 
 function formatCountdown(ms: number) {
   const totalSeconds = Math.max(0, Math.floor(ms / 1000));
@@ -64,15 +72,22 @@ const PointsBoost = React.forwardRef<HTMLDivElement, PointsBoostProps>(
         )}
         {...props}
       >
-        <div className="min-w-0 flex-1 flex flex-col gap-1">
-          <p className="font-semibold">
-            {boost.name}{" "}
-            <span className="rounded-full bg-muted-foreground/10 px-2 py-0.5 text-primary">
+        <div className="min-w-0 flex-1">
+          <p className="flex flex-wrap items-center gap-2 font-semibold">
+            <span className="min-w-0 truncate">{boost.name}</span>
+            <span className="shrink-0 rounded-full bg-muted-foreground/10 px-2 py-0.5 text-primary">
               x{boost.multiplier}
             </span>
-          </p>
-          <p className="text-sm leading-snug text-muted-foreground">
-            {boost.description}
+            <span
+              className={cn(
+                "shrink-0 rounded-full px-2 py-0.5 text-xs font-medium capitalize",
+                boost.status === "active" && "bg-primary/10 text-primary",
+                boost.status === "scheduled" && "border border-border bg-muted/50 text-muted-foreground",
+                boost.status === "finished" && "bg-muted text-muted-foreground"
+              )}
+            >
+              {statusLabel[boost.status]}
+            </span>
           </p>
         </div>
 

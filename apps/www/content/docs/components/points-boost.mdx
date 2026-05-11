@@ -50,7 +50,7 @@ import { PointsBoost } from "@/components/ui/points-boost"
 <PointsBoost
   boost={{
     name: "Double Points Weekend",
-    description: "Earn extra points for all tracked actions",
+    status: "active",
     multiplier: 2,
     cta: {
       link: "#",
@@ -70,7 +70,7 @@ import { PointsBoost } from "@/components/ui/points-boost"
 <PointsBoost
   boost={{
     name: "Double Points Weekend",
-    description: "Earn extra points for all tracked actions",
+    status: "active",
     multiplier: 2,
     cta: {
       link: "#",
@@ -90,7 +90,7 @@ Pass `endDate` to enable the countdown label.
 <PointsBoost
   boost={{
     name: "Limited-Time Points Boost",
-    description: "Boost expires soon, activate now to maximize your points",
+    status: "active",
     multiplier: 3,
     cta: {
       link: "#",
@@ -107,16 +107,16 @@ Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to f
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/points/{key}/boosts" />
 
-Then pass and transform the response into `PointsBoost` props in your UI layer:
+Then pass and transform the response into `PointsBoost` props in your UI layer. Trophy’s **`status`** field (`active`, `scheduled`, or `finished`) tells you whether the boost is live, upcoming, or over; map **`end`** to this component’s optional **`endDate`** for the countdown.
 
 ```tsx
 const activeOrScheduledBoost = (response.boosts ?? [])[0]
 
 const boost = activeOrScheduledBoost && {
   name: activeOrScheduledBoost.name,
-  description: activeOrScheduledBoost.description,
+  status: activeOrScheduledBoost.status,
   multiplier: activeOrScheduledBoost.multiplier,
-  endDate: activeOrScheduledBoost.endDate,
+  endDate: activeOrScheduledBoost.end ?? undefined,
   cta: {
     link: "/rewards",
     text: "View boost",
@@ -137,6 +137,8 @@ const boost = activeOrScheduledBoost && {
 ### Types
 
 ```ts
+type PointsBoostStatus = "active" | "scheduled" | "finished"
+
 interface PointsBoostCta {
   link: string
   text: string
@@ -144,7 +146,7 @@ interface PointsBoostCta {
 
 interface PointsBoostData {
   name: string
-  description: string
+  status: PointsBoostStatus
   multiplier: number
   cta: PointsBoostCta
   endDate?: string | Date

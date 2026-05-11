@@ -5,16 +5,27 @@ import { Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-interface PointsSubLevel {
+/** Optional tier breakdown within a level; Trophy does not return these — use `[]` when integrating. */
+export interface PointsSubLevel {
   name: string;
-  threshold: number;
+  /** Points threshold for this sub-tier (same meaning as `PointsLevel.points`). */
+  points: number;
 }
 
-interface PointsLevel {
+/**
+ * One level from Trophy `GET /points/{key}/levels`, plus optional UI-only `subLevels`.
+ * @see https://docs.trophy.so — `points` is the threshold to reach the level; `description` is the level copy.
+ */
+export interface PointsLevel {
   id: string;
+  /** Trophy level key (stable identifier). */
+  key?: string;
   name: string;
-  threshold: number;
-  summary?: string;
+  description?: string;
+  badgeUrl?: string | null;
+  /** Points required to reach this level (Trophy `points`). */
+  points: number;
+  /** Not returned by Trophy; omit or pass `[]` for API-driven data. */
   subLevels?: PointsSubLevel[];
 }
 
@@ -26,15 +37,15 @@ interface PointsLevelsProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 function formatRangeLabel(
-  threshold: number,
-  nextThreshold: number | null | undefined,
+  points: number,
+  nextLevelPoints: number | null | undefined,
   formatPoints?: (value: number) => string
 ) {
   const format = formatPoints ?? ((value: number) => value.toLocaleString());
-  if (typeof nextThreshold === "number") {
-    return `${format(threshold)} - ${format(nextThreshold - 1)} XP`;
+  if (typeof nextLevelPoints === "number") {
+    return `${format(points)} - ${format(nextLevelPoints - 1)} XP`;
   }
-  return `${format(threshold)}+ XP`;
+  return `${format(points)}+ XP`;
 }
 
 const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
@@ -55,7 +66,7 @@ const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
     const currentLevelIndex = React.useMemo(() => {
       if (!hasTracking || safeTotalPoints === null || levels.length === 0) return -1;
       for (let i = levels.length - 1; i >= 0; i -= 1) {
-        if (safeTotalPoints >= levels[i].threshold) return i;
+        if (safeTotalPoints >= levels[i].points) return i;
       }
       return -1;
     }, [hasTracking, levels, safeTotalPoints]);
@@ -64,10 +75,10 @@ const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
       if (currentLevelIndex < 0 || safeTotalPoints === null) return 0;
       if (levels.length <= 1 || currentLevelIndex >= levels.length - 1) return 100;
 
-      const currentThreshold = levels[currentLevelIndex].threshold;
-      const nextThreshold = levels[currentLevelIndex + 1].threshold;
-      const segmentSize = Math.max(1, nextThreshold - currentThreshold);
-      const progressInSegment = safeTotalPoints - currentThreshold;
+      const currentPointsThreshold = levels[currentLevelIndex].points;
+      const nextPointsThreshold = levels[currentLevelIndex + 1].points;
+      const segmentSize = Math.max(1, nextPointsThreshold - currentPointsThreshold);
+      const progressInSegment = safeTotalPoints - currentPointsThreshold;
       return Math.max(0, Math.min((progressInSegment / segmentSize) * 100, 100));
     }, [currentLevelIndex, levels, safeTotalPoints]);
 
@@ -129,22 +140,22 @@ const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
                         </span>
                       ) : null}
                     </div>
-                    {level.summary ? (
-                      <p className="text-sm text-muted-foreground">{level.summary}</p>
+                    {level.description ? (
+                      <p className="text-sm text-muted-foreground">{level.description}</p>
                     ) : null}
                     {level.subLevels && level.subLevels.length > 0 ? (
                       <div className="space-y-1 pt-1">
                         {level.subLevels.map((subLevel, subIndex) => {
-                          const nextSubLevelThreshold =
+                          const nextSubLevelPoints =
                             subIndex < level.subLevels!.length - 1
-                              ? level.subLevels![subIndex + 1].threshold
+                              ? level.subLevels![subIndex + 1].points
                               : index < levels.length - 1
-                                ? levels[index + 1].threshold
+                                ? levels[index + 1].points
                                 : null;
                           return (
                           <p key={`${level.id}-${subLevel.name}`} className="text-sm text-muted-foreground">
                             <span className="font-medium text-foreground">{subLevel.name}</span>{" "}
-                            {formatRangeLabel(subLevel.threshold, nextSubLevelThreshold, formatPoints)}
+                            {formatRangeLabel(subLevel.points, nextSubLevelPoints, formatPoints)}
                           </p>
                           );
                         })}
@@ -154,8 +165,8 @@ const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
 
                   <p className="whitespace-nowrap pt-1 text-lg font-semibold text-muted-foreground">
                     {formatRangeLabel(
-                      level.threshold,
-                      index < levels.length - 1 ? levels[index + 1].threshold : null,
+                      level.points,
+                      index < levels.length - 1 ? levels[index + 1].points : null,
                       formatPoints
                     )}
                   </p>
@@ -172,4 +183,4 @@ const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
 PointsLevels.displayName = "PointsLevels";
 
 export { PointsLevels };
-export type { PointsLevel, PointsSubLevel, PointsLevelsProps };
+export type { PointsLevelsProps };

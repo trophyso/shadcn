@@ -55,9 +55,9 @@ import { PointsLevels } from "@/components/ui/points-levels"
 ```tsx
 <PointsLevels
   levels={[
-    { id: "bronze", name: "Bronze", threshold: 75 },
-    { id: "silver", name: "Silver", threshold: 150 },
-    { id: "gold", name: "Gold", threshold: 275 },
+    { id: "bronze", name: "Bronze", points: 75 },
+    { id: "silver", name: "Silver", points: 150 },
+    { id: "gold", name: "Gold", points: 275 },
   ]}
 />
 ```
@@ -72,21 +72,21 @@ import { PointsLevels } from "@/components/ui/points-levels"
     {
       id: "bronze",
       name: "Bronze",
-      threshold: 75,
+      points: 75,
       subLevels: [
-        { name: "Bronze III", threshold: 75 },
-        { name: "Bronze II", threshold: 100 },
-        { name: "Bronze I", threshold: 125 },
+        { name: "Bronze III", points: 75 },
+        { name: "Bronze II", points: 100 },
+        { name: "Bronze I", points: 125 },
       ],
     },
     {
       id: "silver",
       name: "Silver",
-      threshold: 150,
+      points: 150,
       subLevels: [
-        { name: "Silver III", threshold: 150 },
-        { name: "Silver II", threshold: 190 },
-        { name: "Silver I", threshold: 230 },
+        { name: "Silver III", points: 150 },
+        { name: "Silver II", points: 190 },
+        { name: "Silver I", points: 230 },
       ],
     },
   ]}
@@ -104,31 +104,31 @@ import { PointsLevels } from "@/components/ui/points-levels"
     {
       id: "bronze",
       name: "Bronze",
-      threshold: 75,
+      points: 75,
       subLevels: [
-        { name: "Bronze III", threshold: 75 },
-        { name: "Bronze II", threshold: 100 },
-        { name: "Bronze I", threshold: 125 },
+        { name: "Bronze III", points: 75 },
+        { name: "Bronze II", points: 100 },
+        { name: "Bronze I", points: 125 },
       ],
     },
     {
       id: "silver",
       name: "Silver",
-      threshold: 150,
+      points: 150,
       subLevels: [
-        { name: "Silver III", threshold: 150 },
-        { name: "Silver II", threshold: 190 },
-        { name: "Silver I", threshold: 230 },
+        { name: "Silver III", points: 150 },
+        { name: "Silver II", points: 190 },
+        { name: "Silver I", points: 230 },
       ],
     },
-    { id: "gold", name: "Gold", threshold: 275 },
+    { id: "gold", name: "Gold", points: 275 },
   ]}
 />
 ```
 
 ## With Trophy
 
-Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch user progress and system levels server-side:
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch user progress server-side:
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}" />
 
@@ -136,20 +136,14 @@ Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to f
 
 <OpenApiCodeSamples spec="application.yml" method="get" endpoint="/points/{key}/levels" />
 
-Then aggregate both responses and pass them into `PointsLevels` props in your UI layer:
+Then aggregate both responses and pass them into `PointsLevels` props in your UI layer. Trophy does not support sub-levels yet.
 
 ```tsx
 const currentPoints = userPointsResponse.total
 
 const levels = (pointsLevelsResponse.levels ?? []).map((level) => ({
-  id: level.key,
-  name: level.name,
-  threshold: level.points,
-  summary: level.description,
-  subLevels: level.subLevels?.map((subLevel) => ({
-    name: subLevel.name,
-    threshold: subLevel.points,
-  })),
+  ...level,
+  subLevels: [],
 }))
 
 <PointsLevels levels={levels} currentPoints={currentPoints} />
@@ -171,14 +165,16 @@ const levels = (pointsLevelsResponse.levels ?? []).map((level) => ({
 ```ts
 interface PointsSubLevel {
   name: string
-  threshold: number
+  points: number
 }
 
 interface PointsLevel {
   id: string
+  key?: string
   name: string
-  threshold: number
-  summary?: string
+  description?: string
+  badgeUrl?: string | null
+  points: number
   subLevels?: PointsSubLevel[]
 }
 ```

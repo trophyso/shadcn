@@ -1729,28 +1729,28 @@ const datasets = {
       <div className="w-full max-w-6xl">
         <PointsLevelsSimple
           levels={[
-            { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
-            { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
-            { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
-            { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
-            { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
-            { id: "master", threshold: 10000, name: "Master", iconType: "master" },
-            { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
-            { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+            { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+            { id: "novice", points: 500, name: "Novice", iconType: "novice" },
+            { id: "intermediate", points: 2500, name: "Intermediate", iconType: "intermediate" },
+            { id: "professional", points: 5000, name: "Professional", iconType: "professional" },
+            { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
+            { id: "master", points: 10000, name: "Master", iconType: "master" },
+            { id: "grand-master", points: 20000, name: "Grand Master", iconType: "grand-master" },
+            { id: "enlightened", points: 50000, name: "Enlightened", iconType: "enlightened" },
           ]}
         />
       </div>
     ),
     code: `<PointsLevelsSimple
   levels={[
-    { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
-    { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
-    { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
-    { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
-    { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
-    { id: "master", threshold: 10000, name: "Master", iconType: "master" },
-    { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
-    { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+    { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", points: 500, name: "Novice", iconType: "novice" },
+    { id: "intermediate", points: 2500, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", points: 5000, name: "Professional", iconType: "professional" },
+    { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", points: 10000, name: "Master", iconType: "master" },
+    { id: "grand-master", points: 20000, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", points: 50000, name: "Enlightened", iconType: "enlightened" },
   ]}
 />`,
   },
@@ -1760,14 +1760,14 @@ const datasets = {
         <PointsLevelsSimple
           currentPoints={6200}
           levels={[
-            { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
-            { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
-            { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
-            { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
-            { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
-            { id: "master", threshold: 10000, name: "Master", iconType: "master" },
-            { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
-            { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+            { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+            { id: "novice", points: 500, name: "Novice", iconType: "novice" },
+            { id: "intermediate", points: 2500, name: "Intermediate", iconType: "intermediate" },
+            { id: "professional", points: 5000, name: "Professional", iconType: "professional" },
+            { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
+            { id: "master", points: 10000, name: "Master", iconType: "master" },
+            { id: "grand-master", points: 20000, name: "Grand Master", iconType: "grand-master" },
+            { id: "enlightened", points: 50000, name: "Enlightened", iconType: "enlightened" },
           ]}
         />
       </div>
@@ -1775,14 +1775,14 @@ const datasets = {
     code: `<PointsLevelsSimple
   currentPoints={6200}
   levels={[
-    { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
-    { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
-    { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
-    { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
-    { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
-    { id: "master", threshold: 10000, name: "Master", iconType: "master" },
-    { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
-    { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+    { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", points: 500, name: "Novice", iconType: "novice" },
+    { id: "intermediate", points: 2500, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", points: 5000, name: "Professional", iconType: "professional" },
+    { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", points: 10000, name: "Master", iconType: "master" },
+    { id: "grand-master", points: 20000, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", points: 50000, name: "Enlightened", iconType: "enlightened" },
   ]}
 />`,
   },
@@ -1793,14 +1793,14 @@ const datasets = {
           currentPoints={6200}
           showProgressBar
           levels={[
-            { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
-            { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
-            { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
-            { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
-            { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
-            { id: "master", threshold: 10000, name: "Master", iconType: "master" },
-            { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
-            { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+            { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+            { id: "novice", points: 500, name: "Novice", iconType: "novice" },
+            { id: "intermediate", points: 2500, name: "Intermediate", iconType: "intermediate" },
+            { id: "professional", points: 5000, name: "Professional", iconType: "professional" },
+            { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
+            { id: "master", points: 10000, name: "Master", iconType: "master" },
+            { id: "grand-master", points: 20000, name: "Grand Master", iconType: "grand-master" },
+            { id: "enlightened", points: 50000, name: "Enlightened", iconType: "enlightened" },
           ]}
         />
       </div>
@@ -1809,14 +1809,14 @@ const datasets = {
   currentPoints={6200}
   showProgressBar
   levels={[
-    { id: "beginner", threshold: 0, name: "Beginner", iconType: "beginner" },
-    { id: "novice", threshold: 500, name: "Novice", iconType: "novice" },
-    { id: "intermediate", threshold: 2500, name: "Intermediate", iconType: "intermediate" },
-    { id: "professional", threshold: 5000, name: "Professional", iconType: "professional" },
-    { id: "expert", threshold: 7500, name: "Expert", iconType: "expert" },
-    { id: "master", threshold: 10000, name: "Master", iconType: "master" },
-    { id: "grand-master", threshold: 20000, name: "Grand Master", iconType: "grand-master" },
-    { id: "enlightened", threshold: 50000, name: "Enlightened", iconType: "enlightened" },
+    { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", points: 500, name: "Novice", iconType: "novice" },
+    { id: "intermediate", points: 2500, name: "Intermediate", iconType: "intermediate" },
+    { id: "professional", points: 5000, name: "Professional", iconType: "professional" },
+    { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", points: 10000, name: "Master", iconType: "master" },
+    { id: "grand-master", points: 20000, name: "Grand Master", iconType: "grand-master" },
+    { id: "enlightened", points: 50000, name: "Enlightened", iconType: "enlightened" },
   ]}
 />`,
   },
@@ -1825,18 +1825,18 @@ const datasets = {
       <div className="w-full max-w-6xl">
         <PointsLevels
           levels={[
-            { id: "bronze", name: "Bronze", threshold: 75 },
-            { id: "silver", name: "Silver", threshold: 150 },
-            { id: "gold", name: "Gold", threshold: 275 },
+            { id: "bronze", name: "Bronze", points: 75 },
+            { id: "silver", name: "Silver", points: 150 },
+            { id: "gold", name: "Gold", points: 275 },
           ]}
         />
       </div>
     ),
     code: `<PointsLevels
   levels={[
-    { id: "bronze", name: "Bronze", threshold: 75 },
-    { id: "silver", name: "Silver", threshold: 150 },
-    { id: "gold", name: "Gold", threshold: 275 },
+    { id: "bronze", name: "Bronze", points: 75 },
+    { id: "silver", name: "Silver", points: 150 },
+    { id: "gold", name: "Gold", points: 275 },
   ]}
 />`,
   },
@@ -1848,21 +1848,21 @@ const datasets = {
             {
               id: "bronze",
               name: "Bronze",
-              threshold: 75,
+              points: 75,
               subLevels: [
-                { name: "Bronze III", threshold: 75 },
-                { name: "Bronze II", threshold: 100 },
-                { name: "Bronze I", threshold: 125 },
+                { name: "Bronze III", points: 75 },
+                { name: "Bronze II", points: 100 },
+                { name: "Bronze I", points: 125 },
               ],
             },
             {
               id: "silver",
               name: "Silver",
-              threshold: 150,
+              points: 150,
               subLevels: [
-                { name: "Silver III", threshold: 150 },
-                { name: "Silver II", threshold: 190 },
-                { name: "Silver I", threshold: 230 },
+                { name: "Silver III", points: 150 },
+                { name: "Silver II", points: 190 },
+                { name: "Silver I", points: 230 },
               ],
             },
           ]}
@@ -1874,21 +1874,21 @@ const datasets = {
     {
       id: "bronze",
       name: "Bronze",
-      threshold: 75,
+      points: 75,
       subLevels: [
-        { name: "Bronze III", threshold: 75 },
-        { name: "Bronze II", threshold: 100 },
-        { name: "Bronze I", threshold: 125 },
+        { name: "Bronze III", points: 75 },
+        { name: "Bronze II", points: 100 },
+        { name: "Bronze I", points: 125 },
       ],
     },
     {
       id: "silver",
       name: "Silver",
-      threshold: 150,
+      points: 150,
       subLevels: [
-        { name: "Silver III", threshold: 150 },
-        { name: "Silver II", threshold: 190 },
-        { name: "Silver I", threshold: 230 },
+        { name: "Silver III", points: 150 },
+        { name: "Silver II", points: 190 },
+        { name: "Silver I", points: 230 },
       ],
     },
   ]}
@@ -1903,24 +1903,24 @@ const datasets = {
             {
               id: "bronze",
               name: "Bronze",
-              threshold: 75,
+              points: 75,
               subLevels: [
-                { name: "Bronze III", threshold: 75 },
-                { name: "Bronze II", threshold: 100 },
-                { name: "Bronze I", threshold: 125 },
+                { name: "Bronze III", points: 75 },
+                { name: "Bronze II", points: 100 },
+                { name: "Bronze I", points: 125 },
               ],
             },
             {
               id: "silver",
               name: "Silver",
-              threshold: 150,
+              points: 150,
               subLevels: [
-                { name: "Silver III", threshold: 150 },
-                { name: "Silver II", threshold: 190 },
-                { name: "Silver I", threshold: 230 },
+                { name: "Silver III", points: 150 },
+                { name: "Silver II", points: 190 },
+                { name: "Silver I", points: 230 },
               ],
             },
-            { id: "gold", name: "Gold", threshold: 275 },
+            { id: "gold", name: "Gold", points: 275 },
           ]}
         />
       </div>
@@ -1931,24 +1931,24 @@ const datasets = {
     {
       id: "bronze",
       name: "Bronze",
-      threshold: 75,
+      points: 75,
       subLevels: [
-        { name: "Bronze III", threshold: 75 },
-        { name: "Bronze II", threshold: 100 },
-        { name: "Bronze I", threshold: 125 },
+        { name: "Bronze III", points: 75 },
+        { name: "Bronze II", points: 100 },
+        { name: "Bronze I", points: 125 },
       ],
     },
     {
       id: "silver",
       name: "Silver",
-      threshold: 150,
+      points: 150,
       subLevels: [
-        { name: "Silver III", threshold: 150 },
-        { name: "Silver II", threshold: 190 },
-        { name: "Silver I", threshold: 230 },
+        { name: "Silver III", points: 150 },
+        { name: "Silver II", points: 190 },
+        { name: "Silver I", points: 230 },
       ],
     },
-    { id: "gold", name: "Gold", threshold: 275 },
+    { id: "gold", name: "Gold", points: 275 },
   ]}
 />`,
   },
@@ -1958,7 +1958,7 @@ const datasets = {
         <PointsBoost
           boost={{
             name: "Double Points Weekend",
-            description: "Earn extra points for all tracked actions",
+            status: "active",
             multiplier: 2,
             cta: {
               link: "#",
@@ -1971,7 +1971,7 @@ const datasets = {
     code: `<PointsBoost
   boost={{
     name: "Double Points Weekend",
-    description: "Earn extra points for all tracked actions",
+    status: "active",
     multiplier: 2,
     cta: {
       link: "#",
@@ -1986,7 +1986,7 @@ const datasets = {
         <PointsBoost
           boost={{
             name: "Limited-Time Points Boost",
-            description: "Boost expires soon, activate now to maximize your points",
+            status: "active",
             multiplier: 3,
             cta: {
               link: "#",
@@ -2000,7 +2000,7 @@ const datasets = {
     code: `<PointsBoost
   boost={{
     name: "Limited-Time Points Boost",
-    description: "Boost expires soon, activate now to maximize your points",
+    status: "active",
     multiplier: 3,
     cta: {
       link: "#",

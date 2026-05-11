@@ -14,7 +14,7 @@ import {
 
 import { cn } from "@/lib/utils";
 
-type PointsLevelSimpleIconType =
+export type PointsLevelSimpleIconType =
   | "beginner"
   | "novice"
   | "intermediate"
@@ -24,17 +24,27 @@ type PointsLevelSimpleIconType =
   | "grand-master"
   | "enlightened";
 
-interface PointsLevelSimple {
-  id: string;
-  threshold: number;
+/** Optional sub-tier row; Trophy does not return these — use `[]` when integrating. */
+export interface PointsSubLevelSimple {
   name: string;
-  iconType?: PointsLevelSimpleIconType;
-  subLevels?: PointsSubLevelSimple[];
+  points: number;
 }
 
-interface PointsSubLevelSimple {
+/**
+ * Level row for the simple table. Aligns with Trophy `PointsLevel` (`points`, `description`, …)
+ * plus optional **`iconType`** for which Lucide icon to show.
+ */
+export interface PointsLevelSimple {
+  id: string;
+  key?: string;
   name: string;
-  threshold: number;
+  description?: string;
+  badgeUrl?: string | null;
+  /** Points required to reach this level (Trophy `points`). */
+  points: number;
+  iconType?: PointsLevelSimpleIconType;
+  /** Not returned by Trophy; omit or pass `[]` for API-driven data. */
+  subLevels?: PointsSubLevelSimple[];
 }
 
 interface PointsLevelsSimpleProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -57,15 +67,15 @@ const pointsLevelSimpleIconMap: Record<PointsLevelSimpleIconType, LucideIcon> = 
 };
 
 function formatRange(
-  threshold: number,
-  nextThreshold: number | null | undefined,
+  points: number,
+  nextLevelPoints: number | null | undefined,
   formatPoints?: (value: number) => string
 ) {
   const format = formatPoints ?? ((value: number) => value.toLocaleString());
-  if (typeof nextThreshold === "number") {
-    return `${format(threshold)}-${format(nextThreshold - 1)}`;
+  if (typeof nextLevelPoints === "number") {
+    return `${format(points)}-${format(nextLevelPoints - 1)}`;
   }
-  return `${format(threshold)}+`;
+  return `${format(points)}+`;
 }
 
 const PointsLevelsSimple = React.forwardRef<HTMLDivElement, PointsLevelsSimpleProps>(
@@ -84,7 +94,7 @@ const PointsLevelsSimple = React.forwardRef<HTMLDivElement, PointsLevelsSimplePr
     const currentLevelIndex =
       typeof currentPoints === "number"
         ? levels.reduce((matchedIndex, level, index) => {
-          if (currentPoints >= level.threshold) {
+          if (currentPoints >= level.points) {
             return index;
           }
           return matchedIndex;
@@ -101,8 +111,8 @@ const PointsLevelsSimple = React.forwardRef<HTMLDivElement, PointsLevelsSimplePr
     let progressPercent = 0;
     let pointsUntilNextLevel = 0;
     if (shouldShowProgressBar && currentLevel && nextLevel) {
-      const start = currentLevel.threshold;
-      const end = nextLevel.threshold;
+      const start = currentLevel.points;
+      const end = nextLevel.points;
       const ratio = end > start ? (currentPoints - start) / (end - start) : 1;
       progressPercent = Math.max(0, Math.min(ratio * 100, 100));
       pointsUntilNextLevel = Math.max(0, end - currentPoints);
@@ -155,7 +165,7 @@ const PointsLevelsSimple = React.forwardRef<HTMLDivElement, PointsLevelsSimplePr
         <div role="list" aria-label="Points levels" className="divide-y divide-border">
           {levels.map((level, index) => {
             const Icon = pointsLevelSimpleIconMap[level.iconType ?? "beginner"];
-            const nextThreshold = index < levels.length - 1 ? levels[index + 1].threshold : null;
+            const nextLevelPoints = index < levels.length - 1 ? levels[index + 1].points : null;
 
             return (
               <div
@@ -168,7 +178,7 @@ const PointsLevelsSimple = React.forwardRef<HTMLDivElement, PointsLevelsSimplePr
                     aria-hidden="true"
                     className={cn(
                       "inline-flex h-6 w-6 items-center justify-center rounded-full",
-                      !currentPoints || (currentPoints && currentPoints >= level.threshold)
+                      !currentPoints || (currentPoints && currentPoints >= level.points)
                         ? "bg-primary text-background"
                         : "bg-muted text-muted-foreground"
                     )}
@@ -176,7 +186,7 @@ const PointsLevelsSimple = React.forwardRef<HTMLDivElement, PointsLevelsSimplePr
                     <Icon className="h-3.5 w-3.5" />
                   </span>
                   <span className="tabular-nums text-foreground text-sm">
-                    {formatRange(level.threshold, nextThreshold, formatPoints)}
+                    {formatRange(level.points, nextLevelPoints, formatPoints)}
                   </span>
                 </div>
 
@@ -199,4 +209,4 @@ const PointsLevelsSimple = React.forwardRef<HTMLDivElement, PointsLevelsSimplePr
 PointsLevelsSimple.displayName = "PointsLevelsSimple";
 
 export { PointsLevelsSimple };
-export type { PointsLevelSimple, PointsSubLevelSimple, PointsLevelSimpleIconType, PointsLevelsSimpleProps };
+export type { PointsLevelsSimpleProps };

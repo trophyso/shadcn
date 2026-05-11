@@ -267,14 +267,14 @@ const achievements = [
 ]
 
 const levels = [
-  { id: "l-1", threshold: 0, name: "Beginner", iconType: "beginner" as const },
-  { id: "l-2", threshold: 500, name: "Novice", iconType: "novice" as const },
-  { id: "l-3", threshold: 1000, name: "Intermediate", iconType: "intermediate" as const },
-  { id: "l-4", threshold: 1500, name: "Professional", iconType: "professional" as const },
-  { id: "l-5", threshold: 2000, name: "Expert", iconType: "expert" as const },
-  { id: "l-6", threshold: 2500, name: "Master", iconType: "master" as const },
-  { id: "l-7", threshold: 3000, name: "Grand Master", iconType: "grand-master" as const },
-  { id: "l-8", threshold: 3500, name: "Enlightened", iconType: "enlightened" as const }
+  { id: "l-1", points: 0, name: "Beginner", iconType: "beginner" as const },
+  { id: "l-2", points: 500, name: "Novice", iconType: "novice" as const },
+  { id: "l-3", points: 1000, name: "Intermediate", iconType: "intermediate" as const },
+  { id: "l-4", points: 1500, name: "Professional", iconType: "professional" as const },
+  { id: "l-5", points: 2000, name: "Expert", iconType: "expert" as const },
+  { id: "l-6", points: 2500, name: "Master", iconType: "master" as const },
+  { id: "l-7", points: 3000, name: "Grand Master", iconType: "grand-master" as const },
+  { id: "l-8", points: 3500, name: "Enlightened", iconType: "enlightened" as const }
 ]
 
 // Mock `points.awards`-shaped rows (Trophy GET user points). One `trigger` per row; recent first, totals descending.
@@ -462,7 +462,7 @@ export function HomeComponentMosaic() {
             <PointsBoost
               boost={{
                 name: "Double XP Weekend",
-                description: "Enjoy double XP on all activity this weekend.",
+                status: "active",
                 multiplier: 2,
                 cta: { link: "#", text: "Do something" },
                 endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2).toISOString(),
