@@ -1,13 +1,20 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import {
+  ChevronLeft,
+  ChevronRight,
+  CircleAlert,
+  GitFork,
+} from "lucide-react"
 import { findNeighbour } from "fumadocs-core/server"
 
 import { mdxComponents } from "@/mdx-components"
+import { DocsCopyPage } from "@/components/docs-copy-page"
 import { DocsSidebarCta } from "@/components/docs-sidebar-cta"
 import { DocsTableOfContents } from "@/components/docs-toc"
-import { source } from "@/lib/source"
 import { siteConfig } from "@/lib/config"
+import { source } from "@/lib/source"
+import { absoluteUrl } from "@/lib/utils"
 import { Button } from "@/registry/trophy/ui/button"
 
 export const revalidate = false
@@ -65,6 +72,8 @@ export default async function DocsPage(props: {
   // @ts-expect-error - fumadocs types
   const MDX = doc.body
   const neighbours = await findNeighbour(source.pageTree, page.url)
+  // @ts-expect-error - fumadocs-mdx DocMethods
+  const pageMarkdown: string = await doc.getText("raw")
 
   return (
     <div className="flex items-stretch text-[1.05rem] sm:text-[15px] xl:w-full">
@@ -76,7 +85,8 @@ export default async function DocsPage(props: {
               <h1 className="scroll-m-20 text-4xl font-semibold tracking-tight sm:text-3xl xl:text-4xl">
                 {doc.title}
               </h1>
-              <div className="flex items-center gap-2">
+              <div className="flex shrink-0 items-center gap-2">
+                <DocsCopyPage page={pageMarkdown} url={absoluteUrl(page.url)} />
                 {neighbours.previous && (
                   <Button
                     variant="secondary"
@@ -140,6 +150,36 @@ export default async function DocsPage(props: {
               </Link>
             </Button>
           )}
+        </div>
+        <div className="mx-auto flex w-full max-w-2xl flex-wrap items-center justify-end gap-2 px-4 pb-8 md:px-0">
+          <Button
+            variant="secondary"
+            size="sm"
+            asChild
+            className="shadow-none"
+          >
+            <Link
+              href={`${siteConfig.links.github}/issues/new`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <CircleAlert className="size-4" /> Raise an issue
+            </Link>
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            asChild
+            className="shadow-none"
+          >
+            <Link
+              href={`${siteConfig.links.github}/fork`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <GitFork className="size-4" /> Suggest a component
+            </Link>
+          </Button>
         </div>
       </div>
       <div className="sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[calc(100svh-var(--footer-height)+2rem)] w-72 flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">

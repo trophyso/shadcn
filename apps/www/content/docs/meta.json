@@ -1,4 +1,9 @@
 {
   "title": "Docs",
-  "pages": ["index", "styling-standards", "...components"]
+  "pages": [
+    "index",
+    "usage",
+    "styles",
+    "...components"
+  ]
 }

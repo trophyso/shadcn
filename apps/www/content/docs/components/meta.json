@@ -1,22 +1,23 @@
 {
   "title": "Components",
   "pages": [
-    "streak-badge",
-    "streak-calendar",
-    "streak-card",
+    "index",
     "achievement-badge",
+    "achievement-card",
     "achievement-grid",
     "achievement-list",
     "achievement-unlocked",
-    "achievement-card",
-    "leaderboard-rankings",
-    "leaderboard-podium",
     "leaderboard-card",
-    "points-badge",
-    "points-chart",
+    "leaderboard-podium",
+    "leaderboard-rankings",
     "points-awards",
+    "points-badge",
+    "points-boost",
+    "points-chart",
     "points-levels",
     "points-levels-simple",
-    "points-boost"
+    "streak-badge",
+    "streak-calendar",
+    "streak-card"
   ]
 }

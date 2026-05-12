@@ -37,6 +37,10 @@ const nextConfig = {
   rewrites() {
     return [
       {
+        source: "/docs.md",
+        destination: "/llm",
+      },
+      {
         source: "/docs/:path*.md",
         destination: "/llm/:path*",
       },

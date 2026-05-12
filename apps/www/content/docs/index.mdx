@@ -3,7 +3,7 @@ title: Introduction
 description: Trophy UI - Gamification components for shadcn/ui
 ---
 
-Trophy UI is a component library built on top of [shadcn/ui](https://ui.shadcn.com) registries that helps you build gamification experiences faster. It provides pre-built components for streaks, achievements, leaderboards, points, and more.
+Trophy UI is a component library built on top of [shadcn/ui](https://ui.shadcn.com) that helps you build gamification experiences faster. It provides pre-built components for streaks, achievements, leaderboards, points, and more.
 
 Components are available via the shadcn CLI:
 
@@ -17,55 +17,28 @@ For example, to install the Streak Badge component:
 npx shadcn@latest add https://ui.trophy.so/r/streak-badge.json
 ```
 
+## Prerequisites
+
+- **React 18+** — Components are client-side React.
+- **Tailwind v4+** — Styling is Tailwind utility classes. Configure Tailwind so those classes compile, and add the [semantic theme tokens](/docs/styles) Trophy expects (or map them to your design system).
+- **shadcn/ui structure** — Maintain a project that already follows the [shadcn/ui](https://ui.shadcn.com/docs/installation) setup (`components.json`, aliases, and optional `src/` layout).
+
 ## All Components
 
-### Streaks
-
-Track and display user streaks with beautiful, animated components:
-
-- **Streak Badge** - Compact badge showing current streak count
-- **Streak Calendar** - Monthly calendar view of streak history
-- **Streak Card** - Composed streak summary card with weekly activity and stats
-- **Streak Freeze Indicator** - Shows available streak freezes
-- **Streak At Risk** - Alert when streak is about to expire
-
-### Achievements
-
-Celebrate user accomplishments with customizable achievement displays:
-
-- **Achievement Badge** - Individual achievement cards with locked/unlocked states
-- **Achievement Grid** - Grid layout for multiple achievements
-- **Achievement List** - Vertical list layout for achievements
-- **Achievement Unlocked** - Celebration animation for new achievements
-- **Achievement Card** - Composed achievements overview card
-
-### Leaderboards
-
-Rank users and drive competition with leaderboard components:
-
-- **Leaderboard Rankings** - Ranked user list with avatars, bylines, totals, and top-3 crowns
-- **Leaderboard Entry** - Individual ranking row
-- **Leaderboard Podium** - Top 3 podium display
-- **Leaderboard Card** - Composed card with leaderboard date range, podium, and rankings list
-- **User Rank** - Compact card showing user's position
-
-### Points
-
-Display and animate point totals:
-
-- **Points Badge** - Show point totals with icons
-- **Points Chart** - Visualize points trends over time
-- **Points Animation** - Animated point changes
-
-## Getting Started
-
-Start with the **Styling Standards** page in the Getting Started section to understand the token contract and copy the minimal default theme.
-
-Then browse the component documentation in the sidebar to learn about each component's features, API, and usage examples.
-
-Each component includes:
-- Live preview
-- Installation command
-- Usage examples
-- Full API reference
-- Accessibility notes
+- [Achievement Badge](/docs/components/achievement-badge)
+- [Achievement Card](/docs/components/achievement-card)
+- [Achievement Grid](/docs/components/achievement-grid)
+- [Achievement List](/docs/components/achievement-list)
+- [Achievement Unlocked](/docs/components/achievement-unlocked)
+- [Leaderboard Card](/docs/components/leaderboard-card)
+- [Leaderboard Podium](/docs/components/leaderboard-podium)
+- [Leaderboard Rankings](/docs/components/leaderboard-rankings)
+- [Points Awards](/docs/components/points-awards)
+- [Points Badge](/docs/components/points-badge)
+- [Points Boost](/docs/components/points-boost)
+- [Points Chart](/docs/components/points-chart)
+- [Points Levels](/docs/components/points-levels)
+- [Points Levels Simple](/docs/components/points-levels-simple)
+- [Streak Badge](/docs/components/streak-badge)
+- [Streak Calendar](/docs/components/streak-calendar)
+- [Streak Card](/docs/components/streak-card)
