@@ -70,27 +70,28 @@ Available in three sizes: `sm`, `default`, and `lg`.
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch streak data for a particular user server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/streak" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/streak"
+/>
 
 Then pass response fields into `StreakBadge` in your UI layer:
 
 ```tsx
-<StreakBadge
-  length={response.length}
-  frequency={response.frequency}
-/>
+<StreakBadge length={response.length} frequency={response.frequency} />
 ```
 
 ## API Reference
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `length` | `number` | - | Streak length value |
-| `frequency` | `"daily" \| "weekly" \| "monthly"` | `"daily"` | Frequency label used to render streak description |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Badge size |
-| `icon` | `ReactNode` | - | Custom icon to replace flame |
+| Prop        | Type                               | Default     | Description                                       |
+| ----------- | ---------------------------------- | ----------- | ------------------------------------------------- |
+| `length`    | `number`                           | -           | Streak length value                               |
+| `frequency` | `"daily" \| "weekly" \| "monthly"` | `"daily"`   | Frequency label used to render streak description |
+| `size`      | `"sm" \| "default" \| "lg"`        | `"default"` | Badge size                                        |
+| `icon`      | `ReactNode`                        | -           | Custom icon to replace flame                      |
 
 ### Types
 

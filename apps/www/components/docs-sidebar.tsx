@@ -24,9 +24,8 @@ function SidebarLink({
     <Link
       href={href}
       className={cn(
-        "text-foreground block rounded-md px-3 py-1.5 text-[0.8rem] transition-colors hover:bg-primary/10 text-primary font-medium",
-        isActive &&
-        "bg-primary/10 text-primary font-medium"
+        "text-foreground hover:bg-primary/10 text-primary block rounded-md px-3 py-1.5 text-[0.8rem] font-medium transition-colors",
+        isActive && "bg-primary/10 text-primary font-medium"
       )}
     >
       {children}
@@ -34,12 +33,20 @@ function SidebarLink({
   )
 }
 
-function SidebarSeparator({ name, isFirst = false }: { name: string; isFirst?: boolean }) {
+function SidebarSeparator({
+  name,
+  isFirst = false,
+}: {
+  name: string
+  isFirst?: boolean
+}) {
   return (
-    <div className={cn(
-      "text-foreground mb-2 px-3 text-xs font-semibold tracking-wide",
-      isFirst ? "mt-3" : "mt-6"
-    )}>
+    <div
+      className={cn(
+        "text-foreground mb-2 px-3 text-xs font-semibold tracking-wide",
+        isFirst ? "mt-3" : "mt-6"
+      )}
+    >
       {name}
     </div>
   )
@@ -73,7 +80,11 @@ function renderNodes(
     if (node.type === "separator") {
       const name = typeof node.name === "string" ? node.name : String(node.name)
       result.push(
-        <SidebarSeparator key={node.$id || name} name={name} isFirst={isFirstSeparator} />
+        <SidebarSeparator
+          key={node.$id || name}
+          name={name}
+          isFirst={isFirstSeparator}
+        />
       )
       isFirstSeparator = false
     } else if (node.type === "page") {
@@ -83,7 +94,8 @@ function renderNodes(
       if (!node.url.startsWith("/docs/components/")) {
         continue
       }
-      const nodeName = typeof node.name === "string" ? node.name : String(node.name)
+      const nodeName =
+        typeof node.name === "string" ? node.name : String(node.name)
       result.push(
         <SidebarLink
           key={node.url}
@@ -128,7 +140,10 @@ export function DocsSidebar({ tree }: { tree: PageTree }) {
             >
               Styles
             </SidebarLink>
-            <SidebarLink href="/docs/usage" isActive={pathname === "/docs/usage"}>
+            <SidebarLink
+              href="/docs/usage"
+              isActive={pathname === "/docs/usage"}
+            >
               Usage
             </SidebarLink>
           </SidebarSection>

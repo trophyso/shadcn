@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import * as React from "react"
+import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import {
   Award,
   Clock,
@@ -10,43 +10,43 @@ import {
   Target,
   UserPlus,
   type LucideIcon,
-} from "lucide-react";
+} from "lucide-react"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 export interface PointsAwardTrigger {
-  id: string;
-  type: string;
-  points: number;
-  metricName?: string | null;
-  metricThreshold?: number | null;
-  achievementName?: string | null;
-  streakLengthThreshold?: number | null;
-  timeUnit?: "hour" | "day";
-  timeInterval?: number | null;
+  id: string
+  type: string
+  points: number
+  metricName?: string | null
+  metricThreshold?: number | null
+  achievementName?: string | null
+  streakLengthThreshold?: number | null
+  timeUnit?: "hour" | "day"
+  timeInterval?: number | null
 }
 
 export interface PointsAward {
-  id: string;
-  awarded: number;
+  id: string
+  awarded: number
   /** ISO 8601 datetime */
-  date: string;
+  date: string
   /** User's total points after this award */
-  total: number;
-  trigger: PointsAwardTrigger;
+  total: number
+  trigger: PointsAwardTrigger
 }
 
 interface PointsAwardsProps extends React.HTMLAttributes<HTMLDivElement> {
-  awards: PointsAward[];
-  formatTotalPoints?: (value: number) => string;
-  formatAwardedPoints?: (value: number) => string;
+  awards: PointsAward[]
+  formatTotalPoints?: (value: number) => string
+  formatAwardedPoints?: (value: number) => string
   /** Format the award `date` for the first column (default: short locale date). */
-  formatDate?: (isoDate: string) => string;
+  formatDate?: (isoDate: string) => string
 }
 
-const TooltipProvider = TooltipPrimitive.Provider;
-const Tooltip = TooltipPrimitive.Root;
-const TooltipTrigger = TooltipPrimitive.Trigger;
+const TooltipProvider = TooltipPrimitive.Provider
+const Tooltip = TooltipPrimitive.Root
+const TooltipTrigger = TooltipPrimitive.Trigger
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
@@ -55,15 +55,15 @@ const TooltipContent = React.forwardRef<
     ref={ref}
     sideOffset={sideOffset}
     className={cn(
-      "z-50 max-w-xs overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-xs text-popover-foreground shadow-md",
+      "bg-popover text-popover-foreground z-50 max-w-xs overflow-hidden rounded-md border px-3 py-1.5 text-xs shadow-md",
       "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
       "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
       className
     )}
     {...props}
   />
-));
-TooltipContent.displayName = TooltipPrimitive.Content.displayName;
+))
+TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
 const triggerIconMap: Record<string, LucideIcon> = {
   metric: Target,
@@ -71,10 +71,10 @@ const triggerIconMap: Record<string, LucideIcon> = {
   streak: Flame,
   time: Clock,
   user_creation: UserPlus,
-};
+}
 
 function triggerIcon(type: string): LucideIcon {
-  return triggerIconMap[type] ?? Sparkles;
+  return triggerIconMap[type] ?? Sparkles
 }
 
 /** Human-readable action line for tooltips — prefers `metricName` when present. */
@@ -84,45 +84,45 @@ function awardActionDescription(trigger: PointsAwardTrigger): string {
       trigger.metricThreshold != null &&
       trigger.metricThreshold !== undefined
     ) {
-      return `${trigger.metricName} · threshold ${Number(trigger.metricThreshold).toLocaleString()}`;
+      return `${trigger.metricName} · threshold ${Number(trigger.metricThreshold).toLocaleString()}`
     }
-    return trigger.metricName;
+    return trigger.metricName
   }
   if (trigger.type === "achievement") {
-    return trigger.achievementName ?? "Achievement";
+    return trigger.achievementName ?? "Achievement"
   }
   if (trigger.type === "streak") {
     return trigger.streakLengthThreshold != null
       ? `Streak · ${trigger.streakLengthThreshold.toLocaleString()}`
-      : "Streak";
+      : "Streak"
   }
   if (
     trigger.type === "time" &&
     trigger.timeInterval != null &&
     trigger.timeUnit
   ) {
-    return `Every ${trigger.timeInterval} ${trigger.timeUnit}(s)`;
+    return `Every ${trigger.timeInterval} ${trigger.timeUnit}(s)`
   }
   if (trigger.type === "user_creation") {
-    return "Account created";
+    return "Account created"
   }
-  return trigger.type.replace(/_/g, " ");
+  return trigger.type.replace(/_/g, " ")
 }
 
 function defaultFormatAwardedPoints(value: number) {
-  return value > 0 ? `+${value.toLocaleString()}` : value.toLocaleString();
+  return value > 0 ? `+${value.toLocaleString()}` : value.toLocaleString()
 }
 
 function defaultFormatAwardDate(iso: string) {
-  const d = new Date(iso);
+  const d = new Date(iso)
   if (Number.isNaN(d.getTime())) {
-    return iso.length >= 10 ? iso.slice(0, 10) : iso;
+    return iso.length >= 10 ? iso.slice(0, 10) : iso
   }
   return d.toLocaleDateString(undefined, {
     month: "short",
     day: "numeric",
     year: "numeric",
-  });
+  })
 }
 
 const PointsAwards = React.forwardRef<HTMLDivElement, PointsAwardsProps>(
@@ -137,42 +137,46 @@ const PointsAwards = React.forwardRef<HTMLDivElement, PointsAwardsProps>(
     },
     ref
   ) => {
-    const formatRowDate = formatDate ?? defaultFormatAwardDate;
+    const formatRowDate = formatDate ?? defaultFormatAwardDate
 
     return (
       <div
         ref={ref}
-        className={cn("w-full rounded-xl border bg-card", className)}
+        className={cn("bg-card w-full rounded-xl border", className)}
         {...props}
       >
         <TooltipProvider>
-          <div role="list" aria-label="Points awards history" className="divide-y divide-border">
+          <div
+            role="list"
+            aria-label="Points awards history"
+            className="divide-border divide-y"
+          >
             {awards.map((award) => {
               const awardedLabel = formatAwardedPoints
                 ? formatAwardedPoints(award.awarded)
-                : defaultFormatAwardedPoints(award.awarded);
+                : defaultFormatAwardedPoints(award.awarded)
               const totalLabel = formatTotalPoints
                 ? formatTotalPoints(award.total)
-                : award.total.toLocaleString();
-              const description = awardActionDescription(award.trigger);
-              const tooltip = `${awardedLabel} — ${description}`;
-              const Icon = triggerIcon(award.trigger.type);
+                : award.total.toLocaleString()
+              const description = awardActionDescription(award.trigger)
+              const tooltip = `${awardedLabel} — ${description}`
+              const Icon = triggerIcon(award.trigger.type)
 
               return (
                 <div
                   key={award.id}
                   role="listitem"
-                  className="grid grid-cols-[7rem_minmax(0,1fr)_minmax(0,1fr)] items-center gap-4 py-3 px-3"
+                  className="grid grid-cols-[7rem_minmax(0,1fr)_minmax(0,1fr)] items-center gap-4 px-3 py-3"
                 >
-                  <span className="truncate text-muted-foreground text-sm">
+                  <span className="text-muted-foreground truncate text-sm">
                     {formatRowDate(award.date)}
                   </span>
 
                   <p className="flex items-center gap-2">
-                    <span className="justify-self-center font-bold tabular-nums text-foreground">
+                    <span className="text-foreground justify-self-center font-bold tabular-nums">
                       {totalLabel}
                     </span>
-                    <span className="font-medium tabular-nums text-success">
+                    <span className="text-success font-medium tabular-nums">
                       {awardedLabel}
                     </span>
                   </p>
@@ -182,7 +186,7 @@ const PointsAwards = React.forwardRef<HTMLDivElement, PointsAwardsProps>(
                       <TooltipTrigger asChild>
                         <span
                           aria-label={tooltip}
-                          className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-muted text-foreground"
+                          className="bg-muted text-foreground inline-flex h-6 w-6 items-center justify-center rounded-full"
                         >
                           <Icon className="h-3 w-3" aria-hidden="true" />
                         </span>
@@ -191,16 +195,16 @@ const PointsAwards = React.forwardRef<HTMLDivElement, PointsAwardsProps>(
                     </Tooltip>
                   </div>
                 </div>
-              );
+              )
             })}
           </div>
         </TooltipProvider>
       </div>
-    );
+    )
   }
-);
+)
 
-PointsAwards.displayName = "PointsAwards";
+PointsAwards.displayName = "PointsAwards"
 
-export { PointsAwards };
-export type { PointsAwardsProps };
+export { PointsAwards }
+export type { PointsAwardsProps }

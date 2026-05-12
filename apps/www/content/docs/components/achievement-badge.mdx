@@ -201,7 +201,11 @@ When `achievement.achievedAt` is `null`, the badge is shown in a locked state.
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch a user's achievements server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/achievements" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/achievements"
+/>
 
 Then pass the response into `AchievementBadge` props in your UI layer:
 
@@ -213,11 +217,11 @@ const achievement = response[0]
 
 ## API Reference
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `achievement` | `UserAchievement` | Required | Achievement data for this badge |
-| `badgeSize` | `"sm" \| "default" \| "lg" \| "xl"` | `"default"` | Badge size |
-| `onAchievementClick` | `(achievement) => void` | - | Click handler |
+| Prop                 | Type                                | Default     | Description                     |
+| -------------------- | ----------------------------------- | ----------- | ------------------------------- |
+| `achievement`        | `UserAchievement`                   | Required    | Achievement data for this badge |
+| `badgeSize`          | `"sm" \| "default" \| "lg" \| "xl"` | `"default"` | Badge size                      |
+| `onAchievementClick` | `(achievement) => void`             | -           | Click handler                   |
 
 ### Types
 

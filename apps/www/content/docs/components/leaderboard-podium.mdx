@@ -47,9 +47,27 @@ import { LeaderboardPodium } from "@/components/ui/leaderboard-podium"
 ```tsx
 <LeaderboardPodium
   rankings={[
-    { userId: "1", userName: "Ava Elizabeth Turner", rank: 1, value: 2500, avatarUrl: "https://i.pravatar.cc/96?img=32" },
-    { userId: "2", userName: "Leo Harrison", rank: 2, value: 2200, avatarUrl: "https://i.pravatar.cc/96?img=12" },
-    { userId: "3", userName: "Rowan Elijah", rank: 3, value: 1800, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+    {
+      userId: "1",
+      userName: "Ava Elizabeth Turner",
+      rank: 1,
+      value: 2500,
+      avatarUrl: "https://i.pravatar.cc/96?img=32",
+    },
+    {
+      userId: "2",
+      userName: "Leo Harrison",
+      rank: 2,
+      value: 2200,
+      avatarUrl: "https://i.pravatar.cc/96?img=12",
+    },
+    {
+      userId: "3",
+      userName: "Rowan Elijah",
+      rank: 3,
+      value: 1800,
+      avatarUrl: "https://i.pravatar.cc/96?img=15",
+    },
   ]}
 />
 ```
@@ -94,7 +112,11 @@ Works with fewer than 3 users:
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch leaderboard data server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/leaderboards/{key}" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/leaderboards/{key}"
+/>
 
 Then pass the response into `LeaderboardPodium` props in your UI layer:
 
@@ -108,13 +130,13 @@ const rankings = (response.rankings ?? []).slice(0, 3)
 
 ### LeaderboardPodium
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `rankings` | `LeaderboardRanking[]` | Required | Top rankings (uses first 3) |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Podium size |
-| `showValue` | `boolean` | `true` | Show score below name |
-| `showAvatar` | `boolean` | `true` | Show avatar images |
-| `medalStyle` | `"classic" \| "modern" \| "minimal"` | `"classic"` | Crown badge display style |
+| Prop         | Type                                 | Default     | Description                 |
+| ------------ | ------------------------------------ | ----------- | --------------------------- |
+| `rankings`   | `LeaderboardRanking[]`               | Required    | Top rankings (uses first 3) |
+| `size`       | `"sm" \| "default" \| "lg"`          | `"default"` | Podium size                 |
+| `showValue`  | `boolean`                            | `true`      | Show score below name       |
+| `showAvatar` | `boolean`                            | `true`      | Show avatar images          |
+| `medalStyle` | `"classic" \| "modern" \| "minimal"` | `"classic"` | Crown badge display style   |
 
 ### LeaderboardRanking
 

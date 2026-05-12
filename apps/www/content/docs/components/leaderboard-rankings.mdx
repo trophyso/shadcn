@@ -133,9 +133,30 @@ import { LeaderboardRankings } from "@/components/ui/leaderboard-rankings"
 <LeaderboardRankings
   showPagination
   rankings={[
-    { userId: "u-1", rank: 1, userName: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", value: 289400, avatarUrl: "https://i.pravatar.cc/96?img=32" },
-    { userId: "u-2", rank: 2, userName: "Leo Harrison", byline: "Level 39 - Platinum", value: 251800, avatarUrl: "https://i.pravatar.cc/96?img=12" },
-    { userId: "u-3", rank: 3, userName: "Rowan Elijah", byline: "Level 37 - Platinum", value: 238300, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+    {
+      userId: "u-1",
+      rank: 1,
+      userName: "Ava Elizabeth Turner",
+      byline: "Level 42 - Diamond",
+      value: 289400,
+      avatarUrl: "https://i.pravatar.cc/96?img=32",
+    },
+    {
+      userId: "u-2",
+      rank: 2,
+      userName: "Leo Harrison",
+      byline: "Level 39 - Platinum",
+      value: 251800,
+      avatarUrl: "https://i.pravatar.cc/96?img=12",
+    },
+    {
+      userId: "u-3",
+      rank: 3,
+      userName: "Rowan Elijah",
+      byline: "Level 37 - Platinum",
+      value: 238300,
+      avatarUrl: "https://i.pravatar.cc/96?img=15",
+    },
     // ...more rows
   ]}
 />
@@ -149,21 +170,112 @@ import { LeaderboardRankings } from "@/components/ui/leaderboard-rankings"
 <LeaderboardRankings
   currentUserId="u-20"
   rankings={[
-    { userId: "u-1", rank: 1, userName: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", value: 289400, displayed: true },
-    { userId: "u-2", rank: 2, userName: "Leo Harrison", byline: "Level 39 - Platinum", value: 251800, displayed: true },
-    { userId: "u-3", rank: 3, userName: "Rowan Elijah", byline: "Level 37 - Platinum", value: 238300, displayed: true },
-    { userId: "u-4", rank: 4, userName: "Mia Sophia Bennett", byline: "Level 34 - Gold", value: 221700, displayed: false },
+    {
+      userId: "u-1",
+      rank: 1,
+      userName: "Ava Elizabeth Turner",
+      byline: "Level 42 - Diamond",
+      value: 289400,
+      displayed: true,
+    },
+    {
+      userId: "u-2",
+      rank: 2,
+      userName: "Leo Harrison",
+      byline: "Level 39 - Platinum",
+      value: 251800,
+      displayed: true,
+    },
+    {
+      userId: "u-3",
+      rank: 3,
+      userName: "Rowan Elijah",
+      byline: "Level 37 - Platinum",
+      value: 238300,
+      displayed: true,
+    },
+    {
+      userId: "u-4",
+      rank: 4,
+      userName: "Mia Sophia Bennett",
+      byline: "Level 34 - Gold",
+      value: 221700,
+      displayed: false,
+    },
     // ... hidden rows collapse into "..."
-    { userId: "u-19", rank: 19, userName: "Grace Coleman", byline: "Level 22 - Bronze", value: 130600, displayed: true },
-    { userId: "u-20", rank: 20, userName: "Olivia Reed", byline: "Level 22 - Bronze", value: 129900, displayed: true },
-    { userId: "u-21", rank: 21, userName: "Evan Knight", byline: "Level 21 - Bronze", value: 129300, displayed: true },
-    { userId: "u-22", rank: 22, userName: "Ivy Brooks", byline: "Level 20 - Bronze", value: 128700, displayed: false },
+    {
+      userId: "u-19",
+      rank: 19,
+      userName: "Grace Coleman",
+      byline: "Level 22 - Bronze",
+      value: 130600,
+      displayed: true,
+    },
+    {
+      userId: "u-20",
+      rank: 20,
+      userName: "Olivia Reed",
+      byline: "Level 22 - Bronze",
+      value: 129900,
+      displayed: true,
+    },
+    {
+      userId: "u-21",
+      rank: 21,
+      userName: "Evan Knight",
+      byline: "Level 21 - Bronze",
+      value: 129300,
+      displayed: true,
+    },
+    {
+      userId: "u-22",
+      rank: 22,
+      userName: "Ivy Brooks",
+      byline: "Level 20 - Bronze",
+      value: 128700,
+      displayed: false,
+    },
     // ... another collapsed block
-    { userId: "u-40", rank: 40, userName: "Nora Ellis", byline: "Level 14 - Rookie", value: 110300, displayed: true },
-    { userId: "u-41", rank: 41, userName: "Owen Ward", byline: "Level 14 - Rookie", value: 109800, displayed: true },
-    { userId: "u-42", rank: 42, userName: "Paige Hudson", byline: "Level 13 - Rookie", value: 109200, displayed: true },
-    { userId: "u-43", rank: 43, userName: "Quinn Tate", byline: "Level 13 - Rookie", value: 108600, displayed: true },
-    { userId: "u-44", rank: 44, userName: "Riley James", byline: "Level 12 - Rookie", value: 107900, displayed: true },
+    {
+      userId: "u-40",
+      rank: 40,
+      userName: "Nora Ellis",
+      byline: "Level 14 - Rookie",
+      value: 110300,
+      displayed: true,
+    },
+    {
+      userId: "u-41",
+      rank: 41,
+      userName: "Owen Ward",
+      byline: "Level 14 - Rookie",
+      value: 109800,
+      displayed: true,
+    },
+    {
+      userId: "u-42",
+      rank: 42,
+      userName: "Paige Hudson",
+      byline: "Level 13 - Rookie",
+      value: 109200,
+      displayed: true,
+    },
+    {
+      userId: "u-43",
+      rank: 43,
+      userName: "Quinn Tate",
+      byline: "Level 13 - Rookie",
+      value: 108600,
+      displayed: true,
+    },
+    {
+      userId: "u-44",
+      rank: 44,
+      userName: "Riley James",
+      byline: "Level 12 - Rookie",
+      value: 107900,
+      displayed: true,
+    },
   ]}
 />
 ```
@@ -172,7 +284,11 @@ import { LeaderboardRankings } from "@/components/ui/leaderboard-rankings"
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch leaderboard data server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/leaderboards/{key}" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/leaderboards/{key}"
+/>
 
 Then pass the response into `LeaderboardRankings` props in your UI layer:
 
@@ -184,13 +300,13 @@ const rankings = response.rankings ?? []
 
 ## API Reference
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `rankings` | `LeaderboardRankingItem[]` | Required | Rows to render in ranking order |
-| `onUserClick` | `(ranking) => void` | - | Optional row click handler |
-| `currentUserId` | `string` | - | Highlights the matching row with a stronger border style |
-| `showPagination` | `boolean` | `false` | Show page controls and page size selector |
-| `defaultPageSize` | `10 \| 25 \| 50 \| 100` | `10` | Initial number of rankings shown per page |
+| Prop              | Type                       | Default  | Description                                              |
+| ----------------- | -------------------------- | -------- | -------------------------------------------------------- |
+| `rankings`        | `LeaderboardRankingItem[]` | Required | Rows to render in ranking order                          |
+| `onUserClick`     | `(ranking) => void`        | -        | Optional row click handler                               |
+| `currentUserId`   | `string`                   | -        | Highlights the matching row with a stronger border style |
+| `showPagination`  | `boolean`                  | `false`  | Show page controls and page size selector                |
+| `defaultPageSize` | `10 \| 25 \| 50 \| 100`    | `10`     | Initial number of rankings shown per page                |
 
 ### LeaderboardRankingItem
 

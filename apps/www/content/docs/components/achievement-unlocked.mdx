@@ -108,7 +108,11 @@ const [open, setOpen] = useState(false)
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to send a metric event server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="post" endpoint="/metrics/{key}/event" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="post"
+  endpoint="/metrics/{key}/event"
+/>
 
 Then pass and transform the response into `AchievementUnlocked` props in your UI layer:
 
@@ -116,24 +120,26 @@ Then pass and transform the response into `AchievementUnlocked` props in your UI
 const unlockedAchievement = response.achievements?.[0]
 const shouldOpen = Boolean(unlockedAchievement)
 
-{unlockedAchievement ? (
-  <AchievementUnlocked achievement={unlockedAchievement} open={shouldOpen} />
-) : null}
+{
+  unlockedAchievement ? (
+    <AchievementUnlocked achievement={unlockedAchievement} open={shouldOpen} />
+  ) : null
+}
 ```
 
 ## API Reference
 
 ### AchievementUnlocked
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `achievement` | `Achievement` | Required | The achievement to display |
-| `open` | `boolean` | Required | Controls dialog visibility |
-| `onOpenChange` | `(open: boolean) => void` | Required | Called when open state changes |
-| `secondaryActionLabel` | `string` | `"Share"` | Label for the secondary action button |
-| `onSecondaryActionClick` | `() => void` | - | Secondary button click handler for social share or custom actions |
-| `onShare` | `() => void` | - | Deprecated alias for `onSecondaryActionClick` |
-| `className` | `string` | - | Additional classes for the dialog |
+| Prop                     | Type                      | Default   | Description                                                       |
+| ------------------------ | ------------------------- | --------- | ----------------------------------------------------------------- |
+| `achievement`            | `Achievement`             | Required  | The achievement to display                                        |
+| `open`                   | `boolean`                 | Required  | Controls dialog visibility                                        |
+| `onOpenChange`           | `(open: boolean) => void` | Required  | Called when open state changes                                    |
+| `secondaryActionLabel`   | `string`                  | `"Share"` | Label for the secondary action button                             |
+| `onSecondaryActionClick` | `() => void`              | -         | Secondary button click handler for social share or custom actions |
+| `onShare`                | `() => void`              | -         | Deprecated alias for `onSecondaryActionClick`                     |
+| `className`              | `string`                  | -         | Additional classes for the dialog                                 |
 
 ### Achievement
 

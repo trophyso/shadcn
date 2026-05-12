@@ -4,11 +4,11 @@
   "homepage": "https://ui.trophy.so",
   "items": [
     {
-      "name": "streak-card",
+      "name": "achievement-badge",
       "type": "registry:ui"
     },
     {
-      "name": "achievement-badge",
+      "name": "achievement-card",
       "type": "registry:ui"
     },
     {
@@ -24,7 +24,23 @@
       "type": "registry:ui"
     },
     {
-      "name": "achievement-card",
+      "name": "button",
+      "type": "registry:ui"
+    },
+    {
+      "name": "command",
+      "type": "registry:ui"
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui"
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui"
+    },
+    {
+      "name": "leaderboard-card",
       "type": "registry:ui"
     },
     {
@@ -36,11 +52,55 @@
       "type": "registry:ui"
     },
     {
+      "name": "points-awards",
+      "type": "registry:ui"
+    },
+    {
+      "name": "points-badge",
+      "type": "registry:ui"
+    },
+    {
+      "name": "points-boost",
+      "type": "registry:ui"
+    },
+    {
+      "name": "points-chart",
+      "type": "registry:ui"
+    },
+    {
+      "name": "points-levels-simple",
+      "type": "registry:ui"
+    },
+    {
+      "name": "points-levels",
+      "type": "registry:ui"
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui"
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui"
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui"
+    },
+    {
       "name": "streak-badge",
       "type": "registry:ui"
     },
     {
       "name": "streak-calendar",
+      "type": "registry:ui"
+    },
+    {
+      "name": "streak-card",
+      "type": "registry:ui"
+    },
+    {
+      "name": "tabs",
       "type": "registry:ui"
     }
   ]

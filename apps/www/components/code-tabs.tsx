@@ -4,8 +4,12 @@ import * as React from "react"
 
 import { Tabs } from "@/registry/trophy/ui/tabs"
 
-export function CodeTabs({ children, ...props }: React.ComponentProps<typeof Tabs>) {
-  const hasExplicitValue = props.value !== undefined || props.defaultValue !== undefined
+export function CodeTabs({
+  children,
+  ...props
+}: React.ComponentProps<typeof Tabs>) {
+  const hasExplicitValue =
+    props.value !== undefined || props.defaultValue !== undefined
 
   const tabsProps = hasExplicitValue
     ? props

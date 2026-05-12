@@ -25,12 +25,12 @@ export function ComponentPreview({
   return (
     <div
       className={cn(
-        "my-6 overflow-hidden rounded-lg border border-border bg-background",
+        "border-border bg-background my-6 overflow-hidden rounded-lg border",
         className
       )}
       {...props}
     >
-      <div className="flex items-center justify-between border-b border-border bg-muted/30 px-4 py-2">
+      <div className="border-border bg-muted/30 flex items-center justify-between border-b px-4 py-2">
         <div className="flex gap-1">
           <Button
             variant={view === "preview" ? "secondary" : "ghost"}
@@ -56,7 +56,7 @@ export function ComponentPreview({
       {view === "preview" ? (
         <div className="flex min-h-[200px] items-center justify-center bg-[repeating-linear-gradient(45deg,var(--muted)_0,var(--muted)_1px,transparent_0,transparent_50%)] bg-[size:8px_8px] p-8">
           {showPreviewCard ? (
-            <div className="flex flex-wrap items-center justify-center gap-4 rounded-lg bg-background p-6 shadow-sm">
+            <div className="bg-background flex flex-wrap items-center justify-center gap-4 rounded-lg p-6 shadow-sm">
               {children}
             </div>
           ) : (

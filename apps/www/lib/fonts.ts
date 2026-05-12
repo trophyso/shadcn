@@ -15,11 +15,11 @@ const fontMono = Geist_Mono({
 
 const fontMontserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-montserrat"
+  variable: "--font-montserrat",
 })
 
 export const fontVariables = cn(
   fontSans.variable,
   fontMono.variable,
-  fontMontserrat.variable,
+  fontMontserrat.variable
 )

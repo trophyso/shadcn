@@ -116,6 +116,8 @@ const componentPreviewConfig: Record<string, ComponentPreviewConfig> = {
   },
 }
 
-export function getComponentPreviewConfig(name: string): ComponentPreviewConfig | undefined {
+export function getComponentPreviewConfig(
+  name: string
+): ComponentPreviewConfig | undefined {
   return componentPreviewConfig[name]
 }

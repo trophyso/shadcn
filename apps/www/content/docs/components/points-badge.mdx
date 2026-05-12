@@ -72,7 +72,11 @@ Available in three sizes: `sm`, `default`, and `lg`.
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch the user's points total server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/points/{key}"
+/>
 
 Then pass the response into `PointsBadge` props in your UI layer:
 
@@ -88,12 +92,11 @@ Then pass the response into `PointsBadge` props in your UI layer:
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `name` | `string` | Required | Label for the points (e.g. currency name) |
-| `badgeUrl` | `string \| null` | - | Optional badge image URL; omit or pass `null` to show the default icon |
-| `total` | `number` | Required | Points total to display |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Component size |
-| `icon` | `ComponentType` | - | Custom icon component when no badge image is available |
-| `formatValue` | `(value: number) => string` | - | Custom value formatter |
-
+| Prop          | Type                        | Default     | Description                                                            |
+| ------------- | --------------------------- | ----------- | ---------------------------------------------------------------------- |
+| `name`        | `string`                    | Required    | Label for the points (e.g. currency name)                              |
+| `badgeUrl`    | `string \| null`            | -           | Optional badge image URL; omit or pass `null` to show the default icon |
+| `total`       | `number`                    | Required    | Points total to display                                                |
+| `size`        | `"sm" \| "default" \| "lg"` | `"default"` | Component size                                                         |
+| `icon`        | `ComponentType`             | -           | Custom icon component when no badge image is available                 |
+| `formatValue` | `(value: number) => string` | -           | Custom value formatter                                                 |

@@ -27,7 +27,7 @@ export function CodeCollapsibleWrapper({
       >
         {children}
       </CollapsiblePrimitive.CollapsibleContent>
-      <CollapsiblePrimitive.CollapsibleTrigger className="from-code/30 to-code text-muted-foreground absolute inset-x-0 -bottom-2 flex h-20 items-center justify-center rounded-b-lg bg-gradient-to-b text-sm group-data-[state=open]/collapsible:hidden cursor-pointer">
+      <CollapsiblePrimitive.CollapsibleTrigger className="from-code/30 to-code text-muted-foreground absolute inset-x-0 -bottom-2 flex h-20 cursor-pointer items-center justify-center rounded-b-lg bg-gradient-to-b text-sm group-data-[state=open]/collapsible:hidden">
         {isOpened ? "Collapse" : "Expand"}
       </CollapsiblePrimitive.CollapsibleTrigger>
     </CollapsiblePrimitive.Root>

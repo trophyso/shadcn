@@ -130,11 +130,19 @@ import { PointsLevels } from "@/components/ui/points-levels"
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch user progress server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/points/{key}"
+/>
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch points system level definitions server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/points/{key}/levels" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/points/{key}/levels"
+/>
 
 Then aggregate both responses and pass them into `PointsLevels` props in your UI layer. Trophy does not support sub-levels yet.
 
@@ -153,12 +161,12 @@ const levels = (pointsLevelsResponse.levels ?? []).map((level) => ({
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `levels` | `PointsLevel[]` | Required | Vertical list of levels |
-| `currentPoints` | `number` | - | User total used to derive current level and progress |
-| `currentLevelLabel` | `string` | `"Current"` | Label shown next to the current level |
-| `formatPoints` | `(value: number) => string` | - | Optional formatter used when rendering computed ranges |
+| Prop                | Type                        | Default     | Description                                            |
+| ------------------- | --------------------------- | ----------- | ------------------------------------------------------ |
+| `levels`            | `PointsLevel[]`             | Required    | Vertical list of levels                                |
+| `currentPoints`     | `number`                    | -           | User total used to derive current level and progress   |
+| `currentLevelLabel` | `string`                    | `"Current"` | Label shown next to the current level                  |
+| `formatPoints`      | `(value: number) => string` | -           | Optional formatter used when rendering computed ranges |
 
 ### Types
 

@@ -1,20 +1,15 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import {
-  ChevronLeft,
-  ChevronRight,
-  CircleAlert,
-  GitFork,
-} from "lucide-react"
-import { findNeighbour } from "fumadocs-core/server"
-
 import { mdxComponents } from "@/mdx-components"
-import { DocsCopyPage } from "@/components/docs-copy-page"
-import { DocsSidebarCta } from "@/components/docs-sidebar-cta"
-import { DocsTableOfContents } from "@/components/docs-toc"
+import { findNeighbour } from "fumadocs-core/server"
+import { ChevronLeft, ChevronRight, CircleAlert, GitFork } from "lucide-react"
+
 import { siteConfig } from "@/lib/config"
 import { source } from "@/lib/source"
 import { absoluteUrl } from "@/lib/utils"
+import { DocsCopyPage } from "@/components/docs-copy-page"
+import { DocsSidebarCta } from "@/components/docs-sidebar-cta"
+import { DocsTableOfContents } from "@/components/docs-toc"
 import { Button } from "@/registry/trophy/ui/button"
 
 export const revalidate = false
@@ -152,12 +147,7 @@ export default async function DocsPage(props: {
           )}
         </div>
         <div className="mx-auto flex w-full max-w-2xl flex-wrap items-center justify-end gap-2 px-4 pb-8 md:px-0">
-          <Button
-            variant="secondary"
-            size="sm"
-            asChild
-            className="shadow-none"
-          >
+          <Button variant="secondary" size="sm" asChild className="shadow-none">
             <Link
               href={`${siteConfig.links.github}/issues/new`}
               target="_blank"
@@ -166,12 +156,7 @@ export default async function DocsPage(props: {
               <CircleAlert className="size-4" /> Raise an issue
             </Link>
           </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            asChild
-            className="shadow-none"
-          >
+          <Button variant="secondary" size="sm" asChild className="shadow-none">
             <Link
               href={`${siteConfig.links.github}/fork`}
               target="_blank"

@@ -87,7 +87,7 @@ const streak = [
   { periodStart: "2024-01-03", periodEnd: "2024-01-03" },
 ]
 
-<StreakCalendar 
+<StreakCalendar
   streak={streak}
   view="month"
   month={new Date(2024, 0, 1)}
@@ -105,8 +105,8 @@ const streak = [
   { periodStart: "2024-01-03", periodEnd: "2024-01-03" },
 ]
 
-<StreakCalendar 
-  streak={streak} 
+<StreakCalendar
+  streak={streak}
   view="year"
 />
 ```
@@ -129,7 +129,11 @@ const streak = [
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch streak data server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/streak" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/streak"
+/>
 
 Then pass and transform the response into `StreakCalendar` props in your UI layer:
 
@@ -148,15 +152,15 @@ const streakPeriods =
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `streak` | `StreakPeriod[]` | Required | Streak data as periods array |
-| `view` | `"week" \| "month" \| "year"` | `"week"` | Calendar layout style |
-| `month` | `Date` | Current month | Month to display |
-| `referenceDate` | `Date` | Today | Anchor date for week view |
-| `showFreezes` | `boolean` | `true` | Show freeze indicators on days |
-| `startOfWeek` | `0 \| 1` | `0` | Week start: 0 = Sunday, 1 = Monday |
-| `onDayClick` | `(date: Date, wasActive: boolean) => void` | - | Callback when day is clicked |
+| Prop            | Type                                       | Default       | Description                        |
+| --------------- | ------------------------------------------ | ------------- | ---------------------------------- |
+| `streak`        | `StreakPeriod[]`                           | Required      | Streak data as periods array       |
+| `view`          | `"week" \| "month" \| "year"`              | `"week"`      | Calendar layout style              |
+| `month`         | `Date`                                     | Current month | Month to display                   |
+| `referenceDate` | `Date`                                     | Today         | Anchor date for week view          |
+| `showFreezes`   | `boolean`                                  | `true`        | Show freeze indicators on days     |
+| `startOfWeek`   | `0 \| 1`                                   | `0`           | Week start: 0 = Sunday, 1 = Monday |
+| `onDayClick`    | `(date: Date, wasActive: boolean) => void` | -             | Callback when day is clicked       |
 
 ### Types
 

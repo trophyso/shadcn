@@ -1,30 +1,30 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { Star } from "lucide-react";
+import * as React from "react"
+import { Star } from "lucide-react"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 export interface PointsSubLevel {
-  name: string;
-  points: number;
+  name: string
+  points: number
 }
 
 export interface PointsLevel {
-  id: string;
-  key?: string;
-  name: string;
-  description?: string;
-  badgeUrl?: string | null;
-  points: number;
-  subLevels?: PointsSubLevel[];
+  id: string
+  key?: string
+  name: string
+  description?: string
+  badgeUrl?: string | null
+  points: number
+  subLevels?: PointsSubLevel[]
 }
 
 interface PointsLevelsProps extends React.HTMLAttributes<HTMLDivElement> {
-  levels: PointsLevel[];
-  currentPoints?: number;
-  currentLevelLabel?: string;
-  formatPoints?: (value: number) => string;
+  levels: PointsLevel[]
+  currentPoints?: number
+  currentLevelLabel?: string
+  formatPoints?: (value: number) => string
 }
 
 function formatRangeLabel(
@@ -32,11 +32,11 @@ function formatRangeLabel(
   nextLevelPoints: number | null | undefined,
   formatPoints?: (value: number) => string
 ) {
-  const format = formatPoints ?? ((value: number) => value.toLocaleString());
+  const format = formatPoints ?? ((value: number) => value.toLocaleString())
   if (typeof nextLevelPoints === "number") {
-    return `${format(points)} - ${format(nextLevelPoints - 1)} XP`;
+    return `${format(points)} - ${format(nextLevelPoints - 1)} XP`
   }
-  return `${format(points)}+ XP`;
+  return `${format(points)}+ XP`
 }
 
 const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
@@ -51,63 +51,82 @@ const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
     },
     ref
   ) => {
-    const hasTracking = typeof currentPoints === "number";
-    const safeTotalPoints = hasTracking ? Math.max(0, currentPoints) : null;
+    const hasTracking = typeof currentPoints === "number"
+    const safeTotalPoints = hasTracking ? Math.max(0, currentPoints) : null
 
     const currentLevelIndex = React.useMemo(() => {
-      if (!hasTracking || safeTotalPoints === null || levels.length === 0) return -1;
+      if (!hasTracking || safeTotalPoints === null || levels.length === 0)
+        return -1
       for (let i = levels.length - 1; i >= 0; i -= 1) {
-        if (safeTotalPoints >= levels[i].points) return i;
+        if (safeTotalPoints >= levels[i].points) return i
       }
-      return -1;
-    }, [hasTracking, levels, safeTotalPoints]);
+      return -1
+    }, [hasTracking, levels, safeTotalPoints])
 
     const clampedCurrentProgress = React.useMemo(() => {
-      if (currentLevelIndex < 0 || safeTotalPoints === null) return 0;
-      if (levels.length <= 1 || currentLevelIndex >= levels.length - 1) return 100;
+      if (currentLevelIndex < 0 || safeTotalPoints === null) return 0
+      if (levels.length <= 1 || currentLevelIndex >= levels.length - 1)
+        return 100
 
-      const currentPointsThreshold = levels[currentLevelIndex].points;
-      const nextPointsThreshold = levels[currentLevelIndex + 1].points;
-      const segmentSize = Math.max(1, nextPointsThreshold - currentPointsThreshold);
-      const progressInSegment = safeTotalPoints - currentPointsThreshold;
-      return Math.max(0, Math.min((progressInSegment / segmentSize) * 100, 100));
-    }, [currentLevelIndex, levels, safeTotalPoints]);
+      const currentPointsThreshold = levels[currentLevelIndex].points
+      const nextPointsThreshold = levels[currentLevelIndex + 1].points
+      const segmentSize = Math.max(
+        1,
+        nextPointsThreshold - currentPointsThreshold
+      )
+      const progressInSegment = safeTotalPoints - currentPointsThreshold
+      return Math.max(0, Math.min((progressInSegment / segmentSize) * 100, 100))
+    }, [currentLevelIndex, levels, safeTotalPoints])
 
     const progressHeightPercent = React.useMemo(() => {
-      if (currentLevelIndex < 0) return 0;
-      if (levels.length <= 1) return 100;
-      const segmentCount = levels.length - 1;
-      if (currentLevelIndex >= levels.length - 1) return 100;
-      const completedSegments = Math.max(0, currentLevelIndex);
-      const currentSegmentFraction = clampedCurrentProgress / 100;
+      if (currentLevelIndex < 0) return 0
+      if (levels.length <= 1) return 100
+      const segmentCount = levels.length - 1
+      if (currentLevelIndex >= levels.length - 1) return 100
+      const completedSegments = Math.max(0, currentLevelIndex)
+      const currentSegmentFraction = clampedCurrentProgress / 100
       return Math.max(
         0,
-        Math.min(((completedSegments + currentSegmentFraction) / segmentCount) * 100, 100)
-      );
-    }, [clampedCurrentProgress, currentLevelIndex, levels.length]);
+        Math.min(
+          ((completedSegments + currentSegmentFraction) / segmentCount) * 100,
+          100
+        )
+      )
+    }, [clampedCurrentProgress, currentLevelIndex, levels.length])
 
     return (
-      <div ref={ref} className={cn("w-full rounded-xl border bg-card p-4", className)} {...props}>
+      <div
+        ref={ref}
+        className={cn("bg-card w-full rounded-xl border p-4", className)}
+        {...props}
+      >
         <div className="relative">
           <div
             aria-hidden="true"
-            className="absolute bottom-8 left-[17px] top-8 w-1 rounded-full bg-muted"
+            className="bg-muted absolute top-8 bottom-8 left-[17px] w-1 rounded-full"
           />
           {hasTracking && currentLevelIndex >= 0 ? (
             <div
               aria-hidden="true"
-              className="absolute left-[17px] top-8 w-1 rounded-full bg-primary transition-all duration-300"
-              style={{ height: `calc((100% - 4rem) * ${progressHeightPercent / 100})` }}
+              className="bg-primary absolute top-8 left-[17px] w-1 rounded-full transition-all duration-300"
+              style={{
+                height: `calc((100% - 4rem) * ${progressHeightPercent / 100})`,
+              }}
             />
           ) : null}
 
           <div role="list" aria-label="Points levels" className="space-y-6">
             {levels.map((level, index) => {
-              const isCurrent = currentLevelIndex === index;
-              const isUnlocked = currentLevelIndex >= 0 && index <= currentLevelIndex;
+              const isCurrent = currentLevelIndex === index
+              const isUnlocked =
+                currentLevelIndex >= 0 && index <= currentLevelIndex
 
               return (
-                <div key={level.id} role="listitem" className="grid grid-cols-[2.5rem_minmax(0,1fr)_auto] gap-4">
+                <div
+                  key={level.id}
+                  role="listitem"
+                  className="grid grid-cols-[2.5rem_minmax(0,1fr)_auto] gap-4"
+                >
                   <div className="relative flex justify-center">
                     <span
                       aria-hidden="true"
@@ -124,15 +143,19 @@ const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
 
                   <div className="min-w-0 space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-lg font-semibold text-foreground">{level.name}</h3>
+                      <h3 className="text-foreground text-lg font-semibold">
+                        {level.name}
+                      </h3>
                       {isCurrent ? (
-                        <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
+                        <span className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm font-medium">
                           {currentLevelLabel}
                         </span>
                       ) : null}
                     </div>
                     {level.description ? (
-                      <p className="text-sm text-muted-foreground">{level.description}</p>
+                      <p className="text-muted-foreground text-sm">
+                        {level.description}
+                      </p>
                     ) : null}
                     {level.subLevels && level.subLevels.length > 0 ? (
                       <div className="space-y-1 pt-1">
@@ -142,36 +165,47 @@ const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
                               ? level.subLevels![subIndex + 1].points
                               : index < levels.length - 1
                                 ? levels[index + 1].points
-                                : null;
+                                : null
                           return (
-                            <p key={`${level.id}-${subLevel.name}`} className="text-sm text-muted-foreground">
-                              <span className="font-medium text-foreground">{subLevel.name}</span>{" "}
-                              {formatRangeLabel(subLevel.points, nextSubLevelPoints, formatPoints)}
+                            <p
+                              key={`${level.id}-${subLevel.name}`}
+                              className="text-muted-foreground text-sm"
+                            >
+                              <span className="text-foreground font-medium">
+                                {subLevel.name}
+                              </span>{" "}
+                              {formatRangeLabel(
+                                subLevel.points,
+                                nextSubLevelPoints,
+                                formatPoints
+                              )}
                             </p>
-                          );
+                          )
                         })}
                       </div>
                     ) : null}
                   </div>
 
-                  <p className="whitespace-nowrap pt-1 text-lg font-semibold text-muted-foreground">
+                  <p className="text-muted-foreground pt-1 text-lg font-semibold whitespace-nowrap">
                     {formatRangeLabel(
                       level.points,
-                      index < levels.length - 1 ? levels[index + 1].points : null,
+                      index < levels.length - 1
+                        ? levels[index + 1].points
+                        : null,
                       formatPoints
                     )}
                   </p>
                 </div>
-              );
+              )
             })}
           </div>
         </div>
       </div>
-    );
+    )
   }
-);
+)
 
-PointsLevels.displayName = "PointsLevels";
+PointsLevels.displayName = "PointsLevels"
 
-export { PointsLevels };
-export type { PointsLevelsProps };
+export { PointsLevels }
+export type { PointsLevelsProps }

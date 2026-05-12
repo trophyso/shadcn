@@ -121,7 +121,11 @@ const [period, setPeriod] = useState("last-7-days")
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch points time-series data server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}/event-summary" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/points/{key}/event-summary"
+/>
 
 Then pass the response into `PointsChart` props in your UI layer:
 
@@ -133,14 +137,14 @@ Then pass the response into `PointsChart` props in your UI layer:
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `data` | `PointsChartDataPoint[]` | Required | Time-series points values |
-| `height` | `number` | `260` | Chart container height in pixels |
-| `title` | `string` | `"Your points"` | Chart title text |
-| `headerRight` | `ReactNode` | - | Optional right-side header content, such as a period selector |
-| `yAxisLabel` | `string` | - | Optional Y-axis label text |
-| `levels` | `PointsChartLevel[]` | - | Optional level thresholds with star markers and dashed lines |
+| Prop          | Type                     | Default         | Description                                                   |
+| ------------- | ------------------------ | --------------- | ------------------------------------------------------------- |
+| `data`        | `PointsChartDataPoint[]` | Required        | Time-series points values                                     |
+| `height`      | `number`                 | `260`           | Chart container height in pixels                              |
+| `title`       | `string`                 | `"Your points"` | Chart title text                                              |
+| `headerRight` | `ReactNode`              | -               | Optional right-side header content, such as a period selector |
+| `yAxisLabel`  | `string`                 | -               | Optional Y-axis label text                                    |
+| `levels`      | `PointsChartLevel[]`     | -               | Optional level thresholds with star markers and dashed lines  |
 
 ### Types
 

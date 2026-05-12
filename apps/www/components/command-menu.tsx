@@ -144,11 +144,13 @@ export function CommandMenu({
       </DialogTrigger>
       <DialogContent
         showCloseButton={false}
-        className="rounded-xl border-none bg-clip-padding p-2 pb-11 shadow-2xl ring-4 ring-border/80 bg-popover"
+        className="ring-border/80 bg-popover rounded-xl border-none bg-clip-padding p-2 pb-11 shadow-2xl ring-4"
       >
         <DialogHeader className="sr-only">
           <DialogTitle>Search documentation...</DialogTitle>
-          <DialogDescription>Search for a page to navigate to.</DialogDescription>
+          <DialogDescription>
+            Search for a page to navigate to.
+          </DialogDescription>
         </DialogHeader>
         <Command
           className="**:data-[slot=command-input-wrapper]:bg-input/50 **:data-[slot=command-input-wrapper]:border-input rounded-none bg-transparent **:data-[slot=command-input]:!h-9 **:data-[slot=command-input]:py-0 **:data-[slot=command-input-wrapper]:mb-0 **:data-[slot=command-input-wrapper]:!h-9 **:data-[slot=command-input-wrapper]:rounded-md **:data-[slot=command-input-wrapper]:border"
@@ -185,29 +187,31 @@ export function CommandMenu({
               </CommandGroup>
             ) : null}
 
-            {Array.from(new Set(pages.map((page) => page.group))).map((group) => (
-              <CommandGroup
-                key={group}
-                heading={group}
-                className="!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1"
-              >
-                {pages
-                  .filter((page) => page.group === group)
-                  .map((page) => (
-                    <CommandMenuItem
-                      key={page.url}
-                      value={`${group} ${page.name}`}
-                      onSelect={() => {
-                        setOpen(false)
-                        router.push(page.url)
-                      }}
-                    >
-                      <ChevronRight />
-                      {page.name}
-                    </CommandMenuItem>
-                  ))}
-              </CommandGroup>
-            ))}
+            {Array.from(new Set(pages.map((page) => page.group))).map(
+              (group) => (
+                <CommandGroup
+                  key={group}
+                  heading={group}
+                  className="!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1"
+                >
+                  {pages
+                    .filter((page) => page.group === group)
+                    .map((page) => (
+                      <CommandMenuItem
+                        key={page.url}
+                        value={`${group} ${page.name}`}
+                        onSelect={() => {
+                          setOpen(false)
+                          router.push(page.url)
+                        }}
+                      >
+                        <ChevronRight />
+                        {page.name}
+                      </CommandMenuItem>
+                    ))}
+                </CommandGroup>
+              )
+            )}
           </CommandList>
         </Command>
       </DialogContent>

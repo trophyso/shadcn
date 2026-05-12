@@ -72,7 +72,11 @@ const streak = [
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch streak data server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/streak" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/streak"
+/>
 
 Then pass and aggregate the response into `StreakCard` props in your UI layer:
 
@@ -99,16 +103,16 @@ const totalActivePeriods = streakPeriods.filter(
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `streak` | `StreakPeriod[]` | Required | Streak periods used by the embedded week calendar |
-| `currentStreak` | `number` | Required | Current streak in days |
-| `longestStreak` | `number` | Required | Longest streak in days |
-| `total` | `number` | Required | Secondary total metric value |
-| `title` | `string` | `"Streak"` | Card heading |
-| `actionLabel` | `string` | `"View Details"` | Text for the top-right action button |
-| `onActionClick` | `() => void` | - | Callback for action button |
-| `showHowItWorks` | `boolean` | `true` | Show the bottom "How streaks work" dropdown |
-| `howItWorksTitle` | `string` | `"How do streaks work?"` | Dropdown trigger title |
-| `howItWorksItems` | `string[]` | Built-in defaults | Rows rendered in the expanded panel |
-| `defaultHowItWorksOpen` | `boolean` | `false` | Initial open state of dropdown |
+| Prop                    | Type             | Default                  | Description                                       |
+| ----------------------- | ---------------- | ------------------------ | ------------------------------------------------- |
+| `streak`                | `StreakPeriod[]` | Required                 | Streak periods used by the embedded week calendar |
+| `currentStreak`         | `number`         | Required                 | Current streak in days                            |
+| `longestStreak`         | `number`         | Required                 | Longest streak in days                            |
+| `total`                 | `number`         | Required                 | Secondary total metric value                      |
+| `title`                 | `string`         | `"Streak"`               | Card heading                                      |
+| `actionLabel`           | `string`         | `"View Details"`         | Text for the top-right action button              |
+| `onActionClick`         | `() => void`     | -                        | Callback for action button                        |
+| `showHowItWorks`        | `boolean`        | `true`                   | Show the bottom "How streaks work" dropdown       |
+| `howItWorksTitle`       | `string`         | `"How do streaks work?"` | Dropdown trigger title                            |
+| `howItWorksItems`       | `string[]`       | Built-in defaults        | Rows rendered in the expanded panel               |
+| `defaultHowItWorksOpen` | `boolean`        | `false`                  | Initial open state of dropdown                    |

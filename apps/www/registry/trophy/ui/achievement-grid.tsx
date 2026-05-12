@@ -1,23 +1,23 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from "@/lib/utils";
-import { AchievementBadge } from "@/registry/trophy/ui/achievement-badge";
+import { cn } from "@/lib/utils"
+import { AchievementBadge } from "@/registry/trophy/ui/achievement-badge"
 
 // Types (inlined - only fields used by this component)
 interface Achievement {
-  id: string;
-  name: string;
-  trigger: "metric" | "api" | "streak";
-  badgeUrl?: string | null;
-  progress?: number;
-  rarity?: number;
+  id: string
+  name: string
+  trigger: "metric" | "api" | "streak"
+  badgeUrl?: string | null
+  progress?: number
+  rarity?: number
 }
 
 interface UserAchievement extends Achievement {
-  achievedAt: string | null; // null = locked
+  achievedAt: string | null // null = locked
 }
 
 // Variants
@@ -39,7 +39,7 @@ const achievementGridVariants = cva("grid", {
     columns: "auto",
     gap: "default",
   },
-});
+})
 
 // Badge size mapping
 // Props
@@ -48,11 +48,11 @@ interface AchievementGridProps
     React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof achievementGridVariants> {
   /** Array of achievements */
-  achievements: UserAchievement[];
+  achievements: UserAchievement[]
   /** Size of achievement badges */
-  badgeSize?: "sm" | "default" | "lg";
+  badgeSize?: "sm" | "default" | "lg"
   /** Callback when achievement clicked */
-  onAchievementClick?: (achievement: UserAchievement) => void;
+  onAchievementClick?: (achievement: UserAchievement) => void
 }
 
 const AchievementGrid = React.forwardRef<HTMLDivElement, AchievementGridProps>(
@@ -66,7 +66,7 @@ const AchievementGrid = React.forwardRef<HTMLDivElement, AchievementGridProps>(
       onAchievementClick,
       ...props
     },
-    ref,
+    ref
   ) => {
     return (
       <div
@@ -84,13 +84,13 @@ const AchievementGrid = React.forwardRef<HTMLDivElement, AchievementGridProps>(
               badgeSize={badgeSize}
               onAchievementClick={onAchievementClick}
             />
-          );
+          )
         })}
       </div>
-    );
-  },
-);
-AchievementGrid.displayName = "AchievementGrid";
+    )
+  }
+)
+AchievementGrid.displayName = "AchievementGrid"
 
-export { AchievementGrid, achievementGridVariants };
-export type { AchievementGridProps, Achievement, UserAchievement };
+export { AchievementGrid, achievementGridVariants }
+export type { AchievementGridProps, Achievement, UserAchievement }

@@ -1,18 +1,22 @@
 import { promises as fs } from "node:fs"
 import path from "node:path"
 
-import {
-  ComponentExample,
-} from "@/components/component-examples"
-import { getComponentPreviewConfig } from "@/components/component-preview-config"
+import { ComponentExample } from "@/components/component-examples"
 import { ComponentPreview } from "@/components/component-preview"
+import { getComponentPreviewConfig } from "@/components/component-preview-config"
 
 async function getComponentSource(name: string): Promise<string | undefined> {
   const segments = name.split("-")
 
   for (let i = segments.length; i > 0; i--) {
     const candidate = segments.slice(0, i).join("-")
-    const filePath = path.join(process.cwd(), "registry", "trophy", "ui", `${candidate}.tsx`)
+    const filePath = path.join(
+      process.cwd(),
+      "registry",
+      "trophy",
+      "ui",
+      `${candidate}.tsx`
+    )
 
     try {
       return await fs.readFile(filePath, "utf8")

@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { Star } from "lucide-react"
 import {
   CartesianGrid,
   Line,
@@ -11,7 +12,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts"
-import { Star } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -100,17 +100,17 @@ function PointsChart({
   }, [data, levels])
 
   return (
-    <div
-      className={cn("rounded-2xl border bg-card p-4", className)}
-      {...props}
-    >
+    <div className={cn("bg-card rounded-2xl border p-4", className)} {...props}>
       <div className="mb-3 flex items-center justify-between gap-3">
-        <p className="text-md font-semibold text-foreground">{title}</p>
+        <p className="text-md text-foreground font-semibold">{title}</p>
         {headerRight ? <div className="shrink-0">{headerRight}</div> : null}
       </div>
       <div style={{ height }}>
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={{ top: 12, right: 12, left: 0, bottom: 4 }}>
+          <LineChart
+            data={data}
+            margin={{ top: 12, right: 12, left: 0, bottom: 4 }}
+          >
             <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" />
             <XAxis
               dataKey="date"
@@ -125,14 +125,18 @@ function PointsChart({
               tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
               tickFormatter={formatValue}
               width={64}
-              label={yAxisLabel ? {
-                value: yAxisLabel,
-                angle: -90,
-                position: "insideLeft",
-                fill: "var(--muted-foreground)",
-                fontSize: 12,
-                dx: -18,
-              } : undefined}
+              label={
+                yAxisLabel
+                  ? {
+                      value: yAxisLabel,
+                      angle: -90,
+                      position: "insideLeft",
+                      fill: "var(--muted-foreground)",
+                      fontSize: 12,
+                      dx: -18,
+                    }
+                  : undefined
+              }
             />
             {levels?.map((level) => (
               <ReferenceLine
@@ -145,7 +149,12 @@ function PointsChart({
                   position: "left",
                   content: (labelProps: { viewBox?: unknown }) => (
                     <LevelReferenceStarLabel
-                      viewBox={(labelProps.viewBox as { x?: number; y?: number } | null) ?? null}
+                      viewBox={
+                        (labelProps.viewBox as {
+                          x?: number
+                          y?: number
+                        } | null) ?? null
+                      }
                       color={level.color}
                     />
                   ),
@@ -160,16 +169,16 @@ function PointsChart({
                 const changePrefix = row.change > 0 ? "+" : ""
                 return (
                   <div
-                    className="rounded-lg border bg-popover px-3 py-2 text-sm text-popover-foreground shadow-md"
+                    className="bg-popover text-popover-foreground rounded-lg border px-3 py-2 text-sm shadow-md"
                     style={{
                       borderColor: "var(--border)",
                     }}
                   >
-                    <p className="mb-1 text-muted-foreground">{label}</p>
+                    <p className="text-muted-foreground mb-1">{label}</p>
                     <p className="font-medium tabular-nums">
                       Total {formatValue(row.total)}
                     </p>
-                    <p className="tabular-nums text-muted-foreground text-xs">
+                    <p className="text-muted-foreground text-xs tabular-nums">
                       {changePrefix}
                       {formatValue(row.change)}
                     </p>

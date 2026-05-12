@@ -99,7 +99,9 @@ Pass `endDate` to enable the countdown label.
       link: "#",
       text: "Activate now",
     },
-    endDate: new Date(Date.now() + 1000 * 60 * 60 * 11 + 1000 * 60 * 29 + 1000 * 36).toISOString(),
+    endDate: new Date(
+      Date.now() + 1000 * 60 * 60 * 11 + 1000 * 60 * 29 + 1000 * 36
+    ).toISOString(),
   }}
 />
 ```
@@ -108,7 +110,11 @@ Pass `endDate` to enable the countdown label.
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch boosts for a points system server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/points/{key}/boosts" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/points/{key}/boosts"
+/>
 
 Then pass and transform the response into `PointsBoost` props in your UI layer. Trophy’s **`status`** field (`active`, `scheduled`, or `finished`) tells you whether the boost is live, upcoming, or over; map **`end`** to this component’s optional **`endDate`** for the countdown.
 
@@ -126,15 +132,17 @@ const boost = activeOrScheduledBoost && {
   },
 }
 
-{boost ? <PointsBoost boost={boost} /> : null}
+{
+  boost ? <PointsBoost boost={boost} /> : null
+}
 ```
 
 ## API Reference
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
+| Prop    | Type              | Default  | Description                 |
+| ------- | ----------------- | -------- | --------------------------- |
 | `boost` | `PointsBoostData` | Required | Boost content configuration |
 
 ### Types

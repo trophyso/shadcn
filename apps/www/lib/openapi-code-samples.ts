@@ -18,9 +18,8 @@ export interface OpenApiCodeSamplesIndex {
 
 type MethodRefKey = keyof typeof rawCodeSamples
 
-export type OpenApiSpec = MethodRefKey extends `${infer Spec} ${string} ${string}`
-  ? Spec
-  : never
+export type OpenApiSpec =
+  MethodRefKey extends `${infer Spec} ${string} ${string}` ? Spec : never
 
 export type OpenApiMethod =
   MethodRefKey extends `${string} ${infer Method} ${string}` ? Method : never
@@ -90,4 +89,3 @@ export function resolveOpenApiMethodSamples(
     key: parsed.key,
   }
 }
-

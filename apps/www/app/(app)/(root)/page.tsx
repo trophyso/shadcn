@@ -1,17 +1,18 @@
 import { Metadata } from "next"
 import Link from "next/link"
+
+import { siteConfig } from "@/lib/config"
+import { HomeComponentMosaic } from "@/components/home-component-mosaic"
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-header"
-import { HomeComponentMosaic } from "@/components/home-component-mosaic"
 import { Button } from "@/registry/trophy/ui/button"
-import { siteConfig } from "@/lib/config"
 
-export const dynamic = "force-static";
-export const revalidate = false;
+export const dynamic = "force-static"
+export const revalidate = false
 
 export const metadata: Metadata = {
   title: {
@@ -25,11 +26,11 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     siteName: siteConfig.title,
     images: [{ url: siteConfig.ogImage }],
-    locale: 'en_US',
-    type: 'website',
+    locale: "en_US",
+    type: "website",
   },
   metadataBase: new URL(siteConfig.url),
-};
+}
 
 export default function IndexPage() {
   return (
@@ -44,7 +45,7 @@ export default function IndexPage() {
         />
         <PageHeader className="relative z-10">
           <PageHeaderHeading className="max-w-4xl">
-            <span className="flex items-baseline gap-2 sm:gap-3 font-montserrat">
+            <span className="font-montserrat flex items-baseline gap-2 sm:gap-3">
               <span className="leading-[0.95] font-bold tracking-[-0.03em]">
                 Trophy
               </span>

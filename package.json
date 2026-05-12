@@ -14,7 +14,6 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "build:registry": "pnpm --filter=www build:registry && pnpm lint:fix && pnpm format:write -- --loglevel silent",
     "registry:build": "pnpm --filter=www registry:build && pnpm lint:fix && pnpm format:write -- --loglevel silent",
     "dev": "turbo run dev",
     "lint": "turbo run lint",

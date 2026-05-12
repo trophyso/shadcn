@@ -1,28 +1,28 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { Trophy } from "lucide-react";
+import * as React from "react"
+import { Trophy } from "lucide-react"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 interface Achievement {
-  id: string;
-  name: string;
-  trigger: "metric" | "api" | "streak";
-  badgeUrl?: string | null;
-  progress?: number;
-  rarity?: number;
+  id: string
+  name: string
+  trigger: "metric" | "api" | "streak"
+  badgeUrl?: string | null
+  progress?: number
+  rarity?: number
 }
 
 interface UserAchievement extends Achievement {
   /** ISO date when earned, or `null` if locked */
-  achievedAt: string | null;
+  achievedAt: string | null
 }
 
 interface AchievementBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
-  achievement: UserAchievement;
-  badgeSize?: "sm" | "default" | "lg" | "xl";
-  onAchievementClick?: (achievement: UserAchievement) => void;
+  achievement: UserAchievement
+  badgeSize?: "sm" | "default" | "lg" | "xl"
+  onAchievementClick?: (achievement: UserAchievement) => void
 }
 
 const badgeSizeMap = {
@@ -30,23 +30,26 @@ const badgeSizeMap = {
   default: "h-16 w-16",
   lg: "h-20 w-20",
   xl: "h-28 w-28",
-} as const;
+} as const
 
 const iconSizeMap = {
   sm: "h-8 w-8",
   default: "h-10 w-10",
   lg: "h-12 w-12",
   xl: "h-16 w-16",
-} as const;
+} as const
 
 const progressRingSizeMap = {
   sm: 72,
   default: 88,
   lg: 104,
   xl: 136,
-} as const;
+} as const
 
-const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>(
+const AchievementBadge = React.forwardRef<
+  HTMLDivElement,
+  AchievementBadgeProps
+>(
   (
     {
       className,
@@ -57,25 +60,25 @@ const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>
     },
     ref
   ) => {
-    const isUnlocked = achievement.achievedAt !== null;
+    const isUnlocked = achievement.achievedAt !== null
 
-    const hasProgress = isUnlocked && typeof achievement.progress === "number";
+    const hasProgress = isUnlocked && typeof achievement.progress === "number"
     const progress = hasProgress
       ? Math.min(100, Math.max(0, achievement.progress ?? 0))
-      : 0;
-    const hasRarity = typeof achievement.rarity === "number";
+      : 0
+    const hasRarity = typeof achievement.rarity === "number"
     const rarity = hasRarity
       ? Math.min(100, Math.max(1, Math.round(achievement.rarity ?? 1)))
-      : null;
-    const ringSize = progressRingSizeMap[badgeSize];
-    const ringStrokeWidth = 4;
-    const ringRadius = (ringSize - ringStrokeWidth) / 2;
-    const ringCircumference = 2 * Math.PI * ringRadius;
+      : null
+    const ringSize = progressRingSizeMap[badgeSize]
+    const ringStrokeWidth = 4
+    const ringRadius = (ringSize - ringStrokeWidth) / 2
+    const ringCircumference = 2 * Math.PI * ringRadius
     const ringDashoffset =
-      ringCircumference - (progress / 100) * ringCircumference;
+      ringCircumference - (progress / 100) * ringCircumference
 
-    const statusLabel = isUnlocked ? "Earned" : "Locked";
-    const itemLabel = `${achievement.name} - ${statusLabel}`;
+    const statusLabel = isUnlocked ? "Earned" : "Locked"
+    const itemLabel = `${achievement.name} - ${statusLabel}`
 
     return (
       <div
@@ -87,15 +90,15 @@ const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>
         onKeyDown={
           onAchievementClick
             ? (e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                onAchievementClick(achievement);
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault()
+                  onAchievementClick(achievement)
+                }
               }
-            }
             : undefined
         }
         className={cn(
-          "flex flex-col items-center justify-center gap-2 rounded-lg border bg-card p-4",
+          "bg-card flex flex-col items-center justify-center gap-2 rounded-lg border p-4",
           onAchievementClick && "cursor-pointer",
           !isUnlocked && "opacity-50",
           className
@@ -164,17 +167,17 @@ const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>
 
         <span
           className={cn(
-            "text-center text-sm font-bold leading-tight",
+            "text-center text-sm leading-tight font-bold",
             !isUnlocked && "text-muted-foreground"
           )}
         >
           {achievement.name}
         </span>
       </div>
-    );
+    )
   }
-);
-AchievementBadge.displayName = "AchievementBadge";
+)
+AchievementBadge.displayName = "AchievementBadge"
 
-export { AchievementBadge };
-export type { AchievementBadgeProps, Achievement, UserAchievement };
+export { AchievementBadge }
+export type { AchievementBadgeProps, Achievement, UserAchievement }

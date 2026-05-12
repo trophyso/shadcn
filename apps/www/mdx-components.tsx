@@ -4,9 +4,9 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { CodeBlock, InlineCode } from "@/components/code-block"
 import { CodeTabs } from "@/components/code-tabs"
-import { OpenApiCodeSamples } from "@/components/openapi-code-samples"
 import { ComponentPreviewWrapper } from "@/components/component-preview-wrapper"
 import { ComponentSource } from "@/components/component-source"
+import { OpenApiCodeSamples } from "@/components/openapi-code-samples"
 import { ThemeSource } from "@/components/theme-source"
 import {
   Tabs,

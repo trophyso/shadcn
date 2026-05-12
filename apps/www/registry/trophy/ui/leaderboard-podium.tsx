@@ -1,18 +1,18 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { Crown } from "lucide-react";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { Crown } from "lucide-react"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 // Types (inlined)
 interface LeaderboardRanking {
-  userId: string;
-  userName: string | null;
-  rank: number;
-  value: number;
-  avatarUrl?: string | null;
+  userId: string
+  userName: string | null
+  rank: number
+  value: number
+  avatarUrl?: string | null
 }
 
 // Variants
@@ -27,7 +27,7 @@ const podiumVariants = cva("flex items-end justify-center gap-4", {
   defaultVariants: {
     size: "default",
   },
-});
+})
 
 // Podium styles for each position
 const PODIUM_CONFIG = {
@@ -58,21 +58,21 @@ const PODIUM_CONFIG = {
     heightSm: "h-16",
     heightLg: "h-28",
   },
-} as const;
+} as const
 
 // Props
 interface LeaderboardPodiumProps
   extends
-  React.HTMLAttributes<HTMLDivElement>,
-  VariantProps<typeof podiumVariants> {
+    React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof podiumVariants> {
   /** Top 3 rankings (expects at least 1, ideally 3) */
-  rankings: LeaderboardRanking[];
+  rankings: LeaderboardRanking[]
   /** Show value below name */
-  showValue?: boolean;
+  showValue?: boolean
   /** Show avatar */
-  showAvatar?: boolean;
+  showAvatar?: boolean
   /** Crown badge style variant */
-  medalStyle?: "classic" | "modern" | "minimal";
+  medalStyle?: "classic" | "modern" | "minimal"
 }
 
 const LeaderboardPodium = React.forwardRef<
@@ -89,37 +89,37 @@ const LeaderboardPodium = React.forwardRef<
       medalStyle = "classic",
       ...props
     },
-    ref,
+    ref
   ) => {
     // Get top 3, reorder for podium display: 2nd, 1st, 3rd
-    const top3 = rankings.slice(0, 3);
+    const top3 = rankings.slice(0, 3)
     const podiumOrder = [
       top3.find((r) => r.rank === 2),
       top3.find((r) => r.rank === 1),
       top3.find((r) => r.rank === 3),
-    ].filter(Boolean) as LeaderboardRanking[];
+    ].filter(Boolean) as LeaderboardRanking[]
 
     if (podiumOrder.length === 0) {
-      return null;
+      return null
     }
 
     const avatarSize = {
       sm: "h-10 w-10 text-sm",
       default: "h-14 w-14 text-lg",
       lg: "h-20 w-20 text-2xl",
-    }[size ?? "default"];
+    }[size ?? "default"]
 
     const iconSize = {
       sm: "h-4 w-4",
       default: "h-5 w-5",
       lg: "h-6 w-6",
-    }[size ?? "default"];
+    }[size ?? "default"]
 
     const textSize = {
       sm: "text-xs",
       default: "text-sm",
       lg: "text-base",
-    }[size ?? "default"];
+    }[size ?? "default"]
 
     return (
       <div
@@ -130,21 +130,21 @@ const LeaderboardPodium = React.forwardRef<
         {...props}
       >
         {podiumOrder.map((ranking) => {
-          const config = PODIUM_CONFIG[ranking.rank as 1 | 2 | 3];
-          if (!config) return null;
+          const config = PODIUM_CONFIG[ranking.rank as 1 | 2 | 3]
+          if (!config) return null
 
           const displayName =
-            ranking.userName || `User ${ranking.userId.slice(0, 6)}`;
+            ranking.userName || `User ${ranking.userId.slice(0, 6)}`
           const avatarSrc =
             ranking.avatarUrl ??
-            `https://i.pravatar.cc/96?u=${encodeURIComponent(ranking.userId)}`;
+            `https://i.pravatar.cc/96?u=${encodeURIComponent(ranking.userId)}`
           const podiumHeight = {
             sm: config.heightSm,
             default: config.height,
             lg: config.heightLg,
-          }[size ?? "default"];
+          }[size ?? "default"]
 
-          const itemLabel = `Rank ${ranking.rank}: ${displayName}${showValue ? `, ${ranking.value.toLocaleString()}` : ""}`;
+          const itemLabel = `Rank ${ranking.rank}: ${displayName}${showValue ? `, ${ranking.value.toLocaleString()}` : ""}`
 
           return (
             <div
@@ -159,17 +159,14 @@ const LeaderboardPodium = React.forwardRef<
                   <img
                     src={avatarSrc}
                     alt={`${displayName} avatar`}
-                    className={cn(
-                      "rounded-full object-cover",
-                      avatarSize
-                    )}
+                    className={cn("rounded-full object-cover", avatarSize)}
                   />
                 ) : (
                   <div
                     className={cn(
                       "flex items-center justify-center rounded-full",
                       avatarSize,
-                      config.bg,
+                      config.bg
                     )}
                   >
                     <config.icon className={cn(iconSize, config.color)} />
@@ -180,12 +177,12 @@ const LeaderboardPodium = React.forwardRef<
                 {medalStyle !== "minimal" && (
                   <div
                     className={cn(
-                      "absolute -bottom-1 -right-1 flex items-center justify-center rounded-full bg-background shadow-sm",
+                      "bg-background absolute -right-1 -bottom-1 flex items-center justify-center rounded-full shadow-sm",
                       size === "sm"
                         ? "h-5 w-5"
                         : size === "lg"
                           ? "h-8 w-8"
-                          : "h-6 w-6",
+                          : "h-6 w-6"
                     )}
                   >
                     <config.icon
@@ -195,7 +192,7 @@ const LeaderboardPodium = React.forwardRef<
                           ? "h-3 w-3"
                           : size === "lg"
                             ? "h-5 w-5"
-                            : "h-4 w-4",
+                            : "h-4 w-4"
                       )}
                     />
                   </div>
@@ -205,8 +202,8 @@ const LeaderboardPodium = React.forwardRef<
               {/* Name */}
               <span
                 className={cn(
-                  "font-medium text-center max-w-20 truncate",
-                  textSize,
+                  "max-w-20 truncate text-center font-medium",
+                  textSize
                 )}
                 title={displayName}
               >
@@ -218,7 +215,7 @@ const LeaderboardPodium = React.forwardRef<
                 <span
                   className={cn(
                     "text-muted-foreground tabular-nums",
-                    size === "sm" ? "text-xs" : "text-sm",
+                    size === "sm" ? "text-xs" : "text-sm"
                   )}
                 >
                   {ranking.value.toLocaleString()}
@@ -234,26 +231,26 @@ const LeaderboardPodium = React.forwardRef<
                   size === "lg" && "w-24",
                   podiumHeight,
                   config.bg,
-                  medalStyle === "modern" && "rounded-t-xl",
+                  medalStyle === "modern" && "rounded-t-xl"
                 )}
               >
                 <div
                   className={cn(
                     "flex h-8 items-center justify-center font-bold",
-                    config.color,
+                    config.color
                   )}
                 >
                   {ranking.rank}
                 </div>
               </div>
             </div>
-          );
+          )
         })}
       </div>
-    );
-  },
-);
-LeaderboardPodium.displayName = "LeaderboardPodium";
+    )
+  }
+)
+LeaderboardPodium.displayName = "LeaderboardPodium"
 
-export { LeaderboardPodium, podiumVariants };
-export type { LeaderboardPodiumProps, LeaderboardRanking };
+export { LeaderboardPodium, podiumVariants }
+export type { LeaderboardPodiumProps, LeaderboardRanking }

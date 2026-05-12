@@ -1,6 +1,8 @@
 import Link from "next/link"
+
 import { cn } from "@/lib/utils"
 import { Button } from "@/registry/trophy/ui/button"
+
 import { Icons } from "./icons"
 
 export function DocsSidebarCta({ className }: React.ComponentProps<"div">) {
@@ -16,7 +18,8 @@ export function DocsSidebarCta({ className }: React.ComponentProps<"div">) {
         Power Gamification with Trophy
       </div>
       <div className="text-foreground relative z-10">
-        Trophy powers the infrastructure you need to ship reliable gamification features at scale.
+        Trophy powers the infrastructure you need to ship reliable gamification
+        features at scale.
       </div>
       <Button size="sm" className="relative z-10 mt-2 w-fit">
         Get Started

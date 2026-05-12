@@ -120,7 +120,11 @@ import { PointsAwards } from "@/components/ui/points-awards"
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch the user's points data server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/points/{key}" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/points/{key}"
+/>
 
 Pass the response into `PointsAwards` props in your UI layer:
 
@@ -136,12 +140,12 @@ Icon tooltips use **`trigger.metricName`** (and optional **`metricThreshold`**) 
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `awards` | `PointsAward[]` | Required | Events that awarded points |
-| `formatTotalPoints` | `(value: number) => string` | - | Optional formatter for each row's cumulative `total` |
-| `formatAwardedPoints` | `(value: number) => string` | - | Optional formatter for each row's `awarded` delta |
-| `formatDate` | `(isoDate: string) => string` | - | Optional formatter for each row's `date` (ISO string) |
+| Prop                  | Type                          | Default  | Description                                           |
+| --------------------- | ----------------------------- | -------- | ----------------------------------------------------- |
+| `awards`              | `PointsAward[]`               | Required | Events that awarded points                            |
+| `formatTotalPoints`   | `(value: number) => string`   | -        | Optional formatter for each row's cumulative `total`  |
+| `formatAwardedPoints` | `(value: number) => string`   | -        | Optional formatter for each row's `awarded` delta     |
+| `formatDate`          | `(isoDate: string) => string` | -        | Optional formatter for each row's `date` (ISO string) |
 
 ### Types
 

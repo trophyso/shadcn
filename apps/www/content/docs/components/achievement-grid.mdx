@@ -47,9 +47,24 @@ import { AchievementGrid } from "@/components/ui/achievement-grid"
 ```tsx
 <AchievementGrid
   achievements={[
-    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
-    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
-    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+    {
+      id: "1",
+      name: "Early Bird",
+      trigger: "api",
+      achievedAt: "2024-01-01T00:00:00Z",
+    },
+    {
+      id: "2",
+      name: "First Steps",
+      trigger: "streak",
+      achievedAt: "2024-01-03T00:00:00Z",
+    },
+    {
+      id: "3",
+      name: "Task Master",
+      trigger: "metric",
+      achievedAt: "2024-01-02T00:00:00Z",
+    },
   ]}
 />
 ```
@@ -63,9 +78,24 @@ import { AchievementGrid } from "@/components/ui/achievement-grid"
 ```tsx
 <AchievementGrid
   achievements={[
-    { id: "1", name: "Early Bird", trigger: "api", achievedAt: "2024-01-01T00:00:00Z" },
-    { id: "2", name: "First Steps", trigger: "streak", achievedAt: "2024-01-03T00:00:00Z" },
-    { id: "3", name: "Task Master", trigger: "metric", achievedAt: "2024-01-02T00:00:00Z" },
+    {
+      id: "1",
+      name: "Early Bird",
+      trigger: "api",
+      achievedAt: "2024-01-01T00:00:00Z",
+    },
+    {
+      id: "2",
+      name: "First Steps",
+      trigger: "streak",
+      achievedAt: "2024-01-03T00:00:00Z",
+    },
+    {
+      id: "3",
+      name: "Task Master",
+      trigger: "metric",
+      achievedAt: "2024-01-02T00:00:00Z",
+    },
   ]}
 />
 ```
@@ -191,7 +221,11 @@ import { AchievementGrid } from "@/components/ui/achievement-grid"
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch a user's achievements server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/achievements" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/achievements"
+/>
 
 Then pass the response into `AchievementGrid` props in your UI layer:
 
@@ -203,13 +237,13 @@ Then pass the response into `AchievementGrid` props in your UI layer:
 
 ### AchievementGrid
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `achievements` | `UserAchievement[]` | Required | Array of achievements to display |
-| `columns` | `2 \| 3 \| 4 \| "auto"` | `"auto"` | Number of grid columns |
-| `gap` | `"sm" \| "default" \| "lg"` | `"default"` | Gap between grid items |
-| `badgeSize` | `"sm" \| "default" \| "lg"` | `"default"` | Size of achievement badges |
-| `onAchievementClick` | `(achievement) => void` | - | Click handler for achievements |
+| Prop                 | Type                        | Default     | Description                      |
+| -------------------- | --------------------------- | ----------- | -------------------------------- |
+| `achievements`       | `UserAchievement[]`         | Required    | Array of achievements to display |
+| `columns`            | `2 \| 3 \| 4 \| "auto"`     | `"auto"`    | Number of grid columns           |
+| `gap`                | `"sm" \| "default" \| "lg"` | `"default"` | Gap between grid items           |
+| `badgeSize`          | `"sm" \| "default" \| "lg"` | `"default"` | Size of achievement badges       |
+| `onAchievementClick` | `(achievement) => void`     | -           | Click handler for achievements   |
 
 ### Types
 

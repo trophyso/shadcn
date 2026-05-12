@@ -2,23 +2,23 @@
 
 import * as React from "react"
 
-import { StreakBadge } from "@/registry/trophy/ui/streak-badge"
-import { StreakCalendar } from "@/registry/trophy/ui/streak-calendar"
-import { StreakCard } from "@/registry/trophy/ui/streak-card"
 import { AchievementBadge } from "@/registry/trophy/ui/achievement-badge"
 import { AchievementCard } from "@/registry/trophy/ui/achievement-card"
 import { AchievementGrid } from "@/registry/trophy/ui/achievement-grid"
 import { AchievementList } from "@/registry/trophy/ui/achievement-list"
 import { AchievementUnlocked } from "@/registry/trophy/ui/achievement-unlocked"
-import { LeaderboardRankings } from "@/registry/trophy/ui/leaderboard-rankings"
-import { LeaderboardPodium } from "@/registry/trophy/ui/leaderboard-podium"
 import { LeaderboardCard } from "@/registry/trophy/ui/leaderboard-card"
-import { PointsBadge } from "@/registry/trophy/ui/points-badge"
-import { PointsChart } from "@/registry/trophy/ui/points-chart"
+import { LeaderboardPodium } from "@/registry/trophy/ui/leaderboard-podium"
+import { LeaderboardRankings } from "@/registry/trophy/ui/leaderboard-rankings"
 import { PointsAwards } from "@/registry/trophy/ui/points-awards"
+import { PointsBadge } from "@/registry/trophy/ui/points-badge"
+import { PointsBoost } from "@/registry/trophy/ui/points-boost"
+import { PointsChart } from "@/registry/trophy/ui/points-chart"
 import { PointsLevels } from "@/registry/trophy/ui/points-levels"
 import { PointsLevelsSimple } from "@/registry/trophy/ui/points-levels-simple"
-import { PointsBoost } from "@/registry/trophy/ui/points-boost"
+import { StreakBadge } from "@/registry/trophy/ui/streak-badge"
+import { StreakCalendar } from "@/registry/trophy/ui/streak-calendar"
+import { StreakCard } from "@/registry/trophy/ui/streak-card"
 
 function formatDateKey(date: Date) {
   const year = date.getFullYear()
@@ -95,11 +95,17 @@ type PointsChartPeriodId =
   | "year-to-date"
   | "all-time"
 
-function formatPointsChartLabel(date: Date, granularity: "day" | "week" | "month") {
+function formatPointsChartLabel(
+  date: Date,
+  granularity: "day" | "week" | "month"
+) {
   if (granularity === "month") {
     return new Intl.DateTimeFormat("en-US", { month: "short" }).format(date)
   }
-  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(date)
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+  }).format(date)
 }
 
 function buildPointsChartData(
@@ -128,7 +134,10 @@ function buildPointsChartData(
     const wave = Math.sin(index * 1.35) * stepValue * 0.55
     const zigzag = ((index % 3) - 1) * stepValue * 0.25
     const variance = wave + zigzag
-    const rawPoints = Math.max(0, Math.round(startValue + index * stepValue + variance))
+    const rawPoints = Math.max(
+      0,
+      Math.round(startValue + index * stepValue + variance)
+    )
     const total = index === 0 ? rawPoints : Math.max(lastPoints, rawPoints)
     const change = total - previousTotal
     previousTotal = total
@@ -179,7 +188,10 @@ function PointsChartPeriodSelectorPreview() {
       },
     } satisfies Record<
       PointsChartPeriodId,
-      { label: string; data: Array<{ date: string; total: number; change: number }> }
+      {
+        label: string
+        data: Array<{ date: string; total: number; change: number }>
+      }
     >
   }, [])
 
@@ -193,8 +205,10 @@ function PointsChartPeriodSelectorPreview() {
         headerRight={
           <select
             value={period}
-            onChange={(event) => setPeriod(event.target.value as PointsChartPeriodId)}
-            className="rounded-md border bg-background px-2 py-1 text-xs text-foreground"
+            onChange={(event) =>
+              setPeriod(event.target.value as PointsChartPeriodId)
+            }
+            className="bg-background text-foreground rounded-md border px-2 py-1 text-xs"
             aria-label="Select points chart period"
           >
             <option value="last-7-days">Last 7 days</option>
@@ -219,7 +233,7 @@ function AchievementUnlockedPreview() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="rounded-lg border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+        className="bg-background text-foreground hover:bg-muted rounded-lg border px-4 py-2 text-sm font-medium transition-colors"
       >
         Unlock achievement
       </button>
@@ -234,7 +248,7 @@ function AchievementUnlockedPreview() {
         open={open}
         onOpenChange={setOpen}
         secondaryActionLabel="Share"
-        onSecondaryActionClick={() => { }}
+        onSecondaryActionClick={() => {}}
       />
     </div>
   )
@@ -254,89 +268,482 @@ function LeaderboardCardWithPreviousRunsPreview() {
         fromDate: "2026-04-24",
         toDate: "2026-04-30",
         podiumRankings: [
-          { userId: "2", userName: "Leo Harrison", rank: 1, value: 1320, avatarUrl: "https://i.pravatar.cc/96?img=12" },
-          { userId: "1", userName: "Ava Elizabeth Turner", rank: 2, value: 1260, avatarUrl: "https://i.pravatar.cc/96?img=32" },
-          { userId: "3", userName: "Rowan Elijah", rank: 3, value: 1010, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+          {
+            userId: "2",
+            userName: "Leo Harrison",
+            rank: 1,
+            value: 1320,
+            avatarUrl: "https://i.pravatar.cc/96?img=12",
+          },
+          {
+            userId: "1",
+            userName: "Ava Elizabeth Turner",
+            rank: 2,
+            value: 1260,
+            avatarUrl: "https://i.pravatar.cc/96?img=32",
+          },
+          {
+            userId: "3",
+            userName: "Rowan Elijah",
+            rank: 3,
+            value: 1010,
+            avatarUrl: "https://i.pravatar.cc/96?img=15",
+          },
         ],
         rankings: [
-          { userId: "u-2", rank: 1, userName: "Leo Harrison", byline: "Level 39 - Platinum", value: 292100, avatarUrl: "https://i.pravatar.cc/96?img=12", displayed: true },
-          { userId: "u-1", rank: 2, userName: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", value: 286900, avatarUrl: "https://i.pravatar.cc/96?img=32", displayed: true },
-          { userId: "u-3", rank: 3, userName: "Rowan Elijah", byline: "Level 37 - Platinum", value: 241000, avatarUrl: "https://i.pravatar.cc/96?img=15", displayed: true },
-          { userId: "u-4", rank: 4, userName: "Mia Sophia Bennett", byline: "Level 34 - Gold", value: 224100, avatarUrl: "https://i.pravatar.cc/96?img=47", displayed: false },
-          { userId: "u-5", rank: 5, userName: "Olivia Reed", byline: "Level 32 - Gold", value: 212400, avatarUrl: "https://i.pravatar.cc/96?img=5", displayed: true },
-          { userId: "u-6", rank: 6, userName: "William Turner", byline: "Level 31 - Gold", value: 201900, avatarUrl: "https://i.pravatar.cc/96?img=52", displayed: false },
-          { userId: "u-7", rank: 7, userName: "Ruby Claire", byline: "Level 29 - Silver", value: 197200, avatarUrl: "https://i.pravatar.cc/96?img=9", displayed: false },
-          { userId: "u-8", rank: 8, userName: "Ethan Brooks", byline: "Level 28 - Silver", value: 189000, avatarUrl: "https://i.pravatar.cc/96?img=60", displayed: true },
-          { userId: "u-9", rank: 9, userName: "Chloe Madison", byline: "Level 27 - Silver", value: 180300, avatarUrl: "https://i.pravatar.cc/96?img=29", displayed: true },
-          { userId: "u-10", rank: 10, userName: "Noah Bennett", byline: "Level 26 - Silver", value: 172200, avatarUrl: "https://i.pravatar.cc/96?img=36", displayed: false },
+          {
+            userId: "u-2",
+            rank: 1,
+            userName: "Leo Harrison",
+            byline: "Level 39 - Platinum",
+            value: 292100,
+            avatarUrl: "https://i.pravatar.cc/96?img=12",
+            displayed: true,
+          },
+          {
+            userId: "u-1",
+            rank: 2,
+            userName: "Ava Elizabeth Turner",
+            byline: "Level 42 - Diamond",
+            value: 286900,
+            avatarUrl: "https://i.pravatar.cc/96?img=32",
+            displayed: true,
+          },
+          {
+            userId: "u-3",
+            rank: 3,
+            userName: "Rowan Elijah",
+            byline: "Level 37 - Platinum",
+            value: 241000,
+            avatarUrl: "https://i.pravatar.cc/96?img=15",
+            displayed: true,
+          },
+          {
+            userId: "u-4",
+            rank: 4,
+            userName: "Mia Sophia Bennett",
+            byline: "Level 34 - Gold",
+            value: 224100,
+            avatarUrl: "https://i.pravatar.cc/96?img=47",
+            displayed: false,
+          },
+          {
+            userId: "u-5",
+            rank: 5,
+            userName: "Olivia Reed",
+            byline: "Level 32 - Gold",
+            value: 212400,
+            avatarUrl: "https://i.pravatar.cc/96?img=5",
+            displayed: true,
+          },
+          {
+            userId: "u-6",
+            rank: 6,
+            userName: "William Turner",
+            byline: "Level 31 - Gold",
+            value: 201900,
+            avatarUrl: "https://i.pravatar.cc/96?img=52",
+            displayed: false,
+          },
+          {
+            userId: "u-7",
+            rank: 7,
+            userName: "Ruby Claire",
+            byline: "Level 29 - Silver",
+            value: 197200,
+            avatarUrl: "https://i.pravatar.cc/96?img=9",
+            displayed: false,
+          },
+          {
+            userId: "u-8",
+            rank: 8,
+            userName: "Ethan Brooks",
+            byline: "Level 28 - Silver",
+            value: 189000,
+            avatarUrl: "https://i.pravatar.cc/96?img=60",
+            displayed: true,
+          },
+          {
+            userId: "u-9",
+            rank: 9,
+            userName: "Chloe Madison",
+            byline: "Level 27 - Silver",
+            value: 180300,
+            avatarUrl: "https://i.pravatar.cc/96?img=29",
+            displayed: true,
+          },
+          {
+            userId: "u-10",
+            rank: 10,
+            userName: "Noah Bennett",
+            byline: "Level 26 - Silver",
+            value: 172200,
+            avatarUrl: "https://i.pravatar.cc/96?img=36",
+            displayed: false,
+          },
         ],
       },
       "2026-04-20": {
         fromDate: "2026-04-17",
         toDate: "2026-04-23",
         podiumRankings: [
-          { userId: "1", userName: "Ava Elizabeth Turner", rank: 1, value: 1210, avatarUrl: "https://i.pravatar.cc/96?img=32" },
-          { userId: "3", userName: "Rowan Elijah", rank: 2, value: 1140, avatarUrl: "https://i.pravatar.cc/96?img=15" },
-          { userId: "2", userName: "Leo Harrison", rank: 3, value: 1090, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+          {
+            userId: "1",
+            userName: "Ava Elizabeth Turner",
+            rank: 1,
+            value: 1210,
+            avatarUrl: "https://i.pravatar.cc/96?img=32",
+          },
+          {
+            userId: "3",
+            userName: "Rowan Elijah",
+            rank: 2,
+            value: 1140,
+            avatarUrl: "https://i.pravatar.cc/96?img=15",
+          },
+          {
+            userId: "2",
+            userName: "Leo Harrison",
+            rank: 3,
+            value: 1090,
+            avatarUrl: "https://i.pravatar.cc/96?img=12",
+          },
         ],
         rankings: [
-          { userId: "u-1", rank: 1, userName: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", value: 281400, avatarUrl: "https://i.pravatar.cc/96?img=32", displayed: true },
-          { userId: "u-3", rank: 2, userName: "Rowan Elijah", byline: "Level 37 - Platinum", value: 249300, avatarUrl: "https://i.pravatar.cc/96?img=15", displayed: true },
-          { userId: "u-2", rank: 3, userName: "Leo Harrison", byline: "Level 39 - Platinum", value: 245700, avatarUrl: "https://i.pravatar.cc/96?img=12", displayed: true },
-          { userId: "u-4", rank: 4, userName: "Mia Sophia Bennett", byline: "Level 34 - Gold", value: 226600, avatarUrl: "https://i.pravatar.cc/96?img=47", displayed: false },
-          { userId: "u-5", rank: 5, userName: "Olivia Reed", byline: "Level 32 - Gold", value: 214000, avatarUrl: "https://i.pravatar.cc/96?img=5", displayed: true },
-          { userId: "u-6", rank: 6, userName: "William Turner", byline: "Level 31 - Gold", value: 204500, avatarUrl: "https://i.pravatar.cc/96?img=52", displayed: false },
-          { userId: "u-7", rank: 7, userName: "Ruby Claire", byline: "Level 29 - Silver", value: 198900, avatarUrl: "https://i.pravatar.cc/96?img=9", displayed: false },
-          { userId: "u-8", rank: 8, userName: "Ethan Brooks", byline: "Level 28 - Silver", value: 191700, avatarUrl: "https://i.pravatar.cc/96?img=60", displayed: true },
-          { userId: "u-9", rank: 9, userName: "Chloe Madison", byline: "Level 27 - Silver", value: 182600, avatarUrl: "https://i.pravatar.cc/96?img=29", displayed: true },
-          { userId: "u-10", rank: 10, userName: "Noah Bennett", byline: "Level 26 - Silver", value: 174900, avatarUrl: "https://i.pravatar.cc/96?img=36", displayed: false },
+          {
+            userId: "u-1",
+            rank: 1,
+            userName: "Ava Elizabeth Turner",
+            byline: "Level 42 - Diamond",
+            value: 281400,
+            avatarUrl: "https://i.pravatar.cc/96?img=32",
+            displayed: true,
+          },
+          {
+            userId: "u-3",
+            rank: 2,
+            userName: "Rowan Elijah",
+            byline: "Level 37 - Platinum",
+            value: 249300,
+            avatarUrl: "https://i.pravatar.cc/96?img=15",
+            displayed: true,
+          },
+          {
+            userId: "u-2",
+            rank: 3,
+            userName: "Leo Harrison",
+            byline: "Level 39 - Platinum",
+            value: 245700,
+            avatarUrl: "https://i.pravatar.cc/96?img=12",
+            displayed: true,
+          },
+          {
+            userId: "u-4",
+            rank: 4,
+            userName: "Mia Sophia Bennett",
+            byline: "Level 34 - Gold",
+            value: 226600,
+            avatarUrl: "https://i.pravatar.cc/96?img=47",
+            displayed: false,
+          },
+          {
+            userId: "u-5",
+            rank: 5,
+            userName: "Olivia Reed",
+            byline: "Level 32 - Gold",
+            value: 214000,
+            avatarUrl: "https://i.pravatar.cc/96?img=5",
+            displayed: true,
+          },
+          {
+            userId: "u-6",
+            rank: 6,
+            userName: "William Turner",
+            byline: "Level 31 - Gold",
+            value: 204500,
+            avatarUrl: "https://i.pravatar.cc/96?img=52",
+            displayed: false,
+          },
+          {
+            userId: "u-7",
+            rank: 7,
+            userName: "Ruby Claire",
+            byline: "Level 29 - Silver",
+            value: 198900,
+            avatarUrl: "https://i.pravatar.cc/96?img=9",
+            displayed: false,
+          },
+          {
+            userId: "u-8",
+            rank: 8,
+            userName: "Ethan Brooks",
+            byline: "Level 28 - Silver",
+            value: 191700,
+            avatarUrl: "https://i.pravatar.cc/96?img=60",
+            displayed: true,
+          },
+          {
+            userId: "u-9",
+            rank: 9,
+            userName: "Chloe Madison",
+            byline: "Level 27 - Silver",
+            value: 182600,
+            avatarUrl: "https://i.pravatar.cc/96?img=29",
+            displayed: true,
+          },
+          {
+            userId: "u-10",
+            rank: 10,
+            userName: "Noah Bennett",
+            byline: "Level 26 - Silver",
+            value: 174900,
+            avatarUrl: "https://i.pravatar.cc/96?img=36",
+            displayed: false,
+          },
         ],
       },
       "2026-04-13": {
         fromDate: "2026-04-10",
         toDate: "2026-04-16",
         podiumRankings: [
-          { userId: "3", userName: "Rowan Elijah", rank: 1, value: 1280, avatarUrl: "https://i.pravatar.cc/96?img=15" },
-          { userId: "1", userName: "Ava Elizabeth Turner", rank: 2, value: 1200, avatarUrl: "https://i.pravatar.cc/96?img=32" },
-          { userId: "2", userName: "Leo Harrison", rank: 3, value: 1080, avatarUrl: "https://i.pravatar.cc/96?img=12" },
+          {
+            userId: "3",
+            userName: "Rowan Elijah",
+            rank: 1,
+            value: 1280,
+            avatarUrl: "https://i.pravatar.cc/96?img=15",
+          },
+          {
+            userId: "1",
+            userName: "Ava Elizabeth Turner",
+            rank: 2,
+            value: 1200,
+            avatarUrl: "https://i.pravatar.cc/96?img=32",
+          },
+          {
+            userId: "2",
+            userName: "Leo Harrison",
+            rank: 3,
+            value: 1080,
+            avatarUrl: "https://i.pravatar.cc/96?img=12",
+          },
         ],
         rankings: [
-          { userId: "u-3", rank: 1, userName: "Rowan Elijah", byline: "Level 37 - Platinum", value: 287700, avatarUrl: "https://i.pravatar.cc/96?img=15", displayed: true },
-          { userId: "u-1", rank: 2, userName: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", value: 283200, avatarUrl: "https://i.pravatar.cc/96?img=32", displayed: true },
-          { userId: "u-2", rank: 3, userName: "Leo Harrison", byline: "Level 39 - Platinum", value: 246000, avatarUrl: "https://i.pravatar.cc/96?img=12", displayed: true },
-          { userId: "u-4", rank: 4, userName: "Mia Sophia Bennett", byline: "Level 34 - Gold", value: 227900, avatarUrl: "https://i.pravatar.cc/96?img=47", displayed: false },
-          { userId: "u-5", rank: 5, userName: "Olivia Reed", byline: "Level 32 - Gold", value: 216400, avatarUrl: "https://i.pravatar.cc/96?img=5", displayed: true },
-          { userId: "u-6", rank: 6, userName: "William Turner", byline: "Level 31 - Gold", value: 206800, avatarUrl: "https://i.pravatar.cc/96?img=52", displayed: false },
-          { userId: "u-7", rank: 7, userName: "Ruby Claire", byline: "Level 29 - Silver", value: 200400, avatarUrl: "https://i.pravatar.cc/96?img=9", displayed: false },
-          { userId: "u-8", rank: 8, userName: "Ethan Brooks", byline: "Level 28 - Silver", value: 193300, avatarUrl: "https://i.pravatar.cc/96?img=60", displayed: true },
-          { userId: "u-9", rank: 9, userName: "Chloe Madison", byline: "Level 27 - Silver", value: 185500, avatarUrl: "https://i.pravatar.cc/96?img=29", displayed: true },
-          { userId: "u-10", rank: 10, userName: "Noah Bennett", byline: "Level 26 - Silver", value: 177000, avatarUrl: "https://i.pravatar.cc/96?img=36", displayed: false },
+          {
+            userId: "u-3",
+            rank: 1,
+            userName: "Rowan Elijah",
+            byline: "Level 37 - Platinum",
+            value: 287700,
+            avatarUrl: "https://i.pravatar.cc/96?img=15",
+            displayed: true,
+          },
+          {
+            userId: "u-1",
+            rank: 2,
+            userName: "Ava Elizabeth Turner",
+            byline: "Level 42 - Diamond",
+            value: 283200,
+            avatarUrl: "https://i.pravatar.cc/96?img=32",
+            displayed: true,
+          },
+          {
+            userId: "u-2",
+            rank: 3,
+            userName: "Leo Harrison",
+            byline: "Level 39 - Platinum",
+            value: 246000,
+            avatarUrl: "https://i.pravatar.cc/96?img=12",
+            displayed: true,
+          },
+          {
+            userId: "u-4",
+            rank: 4,
+            userName: "Mia Sophia Bennett",
+            byline: "Level 34 - Gold",
+            value: 227900,
+            avatarUrl: "https://i.pravatar.cc/96?img=47",
+            displayed: false,
+          },
+          {
+            userId: "u-5",
+            rank: 5,
+            userName: "Olivia Reed",
+            byline: "Level 32 - Gold",
+            value: 216400,
+            avatarUrl: "https://i.pravatar.cc/96?img=5",
+            displayed: true,
+          },
+          {
+            userId: "u-6",
+            rank: 6,
+            userName: "William Turner",
+            byline: "Level 31 - Gold",
+            value: 206800,
+            avatarUrl: "https://i.pravatar.cc/96?img=52",
+            displayed: false,
+          },
+          {
+            userId: "u-7",
+            rank: 7,
+            userName: "Ruby Claire",
+            byline: "Level 29 - Silver",
+            value: 200400,
+            avatarUrl: "https://i.pravatar.cc/96?img=9",
+            displayed: false,
+          },
+          {
+            userId: "u-8",
+            rank: 8,
+            userName: "Ethan Brooks",
+            byline: "Level 28 - Silver",
+            value: 193300,
+            avatarUrl: "https://i.pravatar.cc/96?img=60",
+            displayed: true,
+          },
+          {
+            userId: "u-9",
+            rank: 9,
+            userName: "Chloe Madison",
+            byline: "Level 27 - Silver",
+            value: 185500,
+            avatarUrl: "https://i.pravatar.cc/96?img=29",
+            displayed: true,
+          },
+          {
+            userId: "u-10",
+            rank: 10,
+            userName: "Noah Bennett",
+            byline: "Level 26 - Silver",
+            value: 177000,
+            avatarUrl: "https://i.pravatar.cc/96?img=36",
+            displayed: false,
+          },
         ],
       },
       "2026-04-06": {
         fromDate: "2026-04-03",
         toDate: "2026-04-09",
         podiumRankings: [
-          { userId: "2", userName: "Leo Harrison", rank: 1, value: 1230, avatarUrl: "https://i.pravatar.cc/96?img=12" },
-          { userId: "3", userName: "Rowan Elijah", rank: 2, value: 1170, avatarUrl: "https://i.pravatar.cc/96?img=15" },
-          { userId: "1", userName: "Ava Elizabeth Turner", rank: 3, value: 1110, avatarUrl: "https://i.pravatar.cc/96?img=32" },
+          {
+            userId: "2",
+            userName: "Leo Harrison",
+            rank: 1,
+            value: 1230,
+            avatarUrl: "https://i.pravatar.cc/96?img=12",
+          },
+          {
+            userId: "3",
+            userName: "Rowan Elijah",
+            rank: 2,
+            value: 1170,
+            avatarUrl: "https://i.pravatar.cc/96?img=15",
+          },
+          {
+            userId: "1",
+            userName: "Ava Elizabeth Turner",
+            rank: 3,
+            value: 1110,
+            avatarUrl: "https://i.pravatar.cc/96?img=32",
+          },
         ],
         rankings: [
-          { userId: "u-2", rank: 1, userName: "Leo Harrison", byline: "Level 39 - Platinum", value: 279900, avatarUrl: "https://i.pravatar.cc/96?img=12", displayed: true },
-          { userId: "u-3", rank: 2, userName: "Rowan Elijah", byline: "Level 37 - Platinum", value: 273100, avatarUrl: "https://i.pravatar.cc/96?img=15", displayed: true },
-          { userId: "u-1", rank: 3, userName: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", value: 268400, avatarUrl: "https://i.pravatar.cc/96?img=32", displayed: true },
-          { userId: "u-4", rank: 4, userName: "Mia Sophia Bennett", byline: "Level 34 - Gold", value: 229800, avatarUrl: "https://i.pravatar.cc/96?img=47", displayed: false },
-          { userId: "u-5", rank: 5, userName: "Olivia Reed", byline: "Level 32 - Gold", value: 218700, avatarUrl: "https://i.pravatar.cc/96?img=5", displayed: true },
-          { userId: "u-6", rank: 6, userName: "William Turner", byline: "Level 31 - Gold", value: 208300, avatarUrl: "https://i.pravatar.cc/96?img=52", displayed: false },
-          { userId: "u-7", rank: 7, userName: "Ruby Claire", byline: "Level 29 - Silver", value: 202100, avatarUrl: "https://i.pravatar.cc/96?img=9", displayed: false },
-          { userId: "u-8", rank: 8, userName: "Ethan Brooks", byline: "Level 28 - Silver", value: 194700, avatarUrl: "https://i.pravatar.cc/96?img=60", displayed: true },
-          { userId: "u-9", rank: 9, userName: "Chloe Madison", byline: "Level 27 - Silver", value: 187600, avatarUrl: "https://i.pravatar.cc/96?img=29", displayed: true },
-          { userId: "u-10", rank: 10, userName: "Noah Bennett", byline: "Level 26 - Silver", value: 179900, avatarUrl: "https://i.pravatar.cc/96?img=36", displayed: false },
+          {
+            userId: "u-2",
+            rank: 1,
+            userName: "Leo Harrison",
+            byline: "Level 39 - Platinum",
+            value: 279900,
+            avatarUrl: "https://i.pravatar.cc/96?img=12",
+            displayed: true,
+          },
+          {
+            userId: "u-3",
+            rank: 2,
+            userName: "Rowan Elijah",
+            byline: "Level 37 - Platinum",
+            value: 273100,
+            avatarUrl: "https://i.pravatar.cc/96?img=15",
+            displayed: true,
+          },
+          {
+            userId: "u-1",
+            rank: 3,
+            userName: "Ava Elizabeth Turner",
+            byline: "Level 42 - Diamond",
+            value: 268400,
+            avatarUrl: "https://i.pravatar.cc/96?img=32",
+            displayed: true,
+          },
+          {
+            userId: "u-4",
+            rank: 4,
+            userName: "Mia Sophia Bennett",
+            byline: "Level 34 - Gold",
+            value: 229800,
+            avatarUrl: "https://i.pravatar.cc/96?img=47",
+            displayed: false,
+          },
+          {
+            userId: "u-5",
+            rank: 5,
+            userName: "Olivia Reed",
+            byline: "Level 32 - Gold",
+            value: 218700,
+            avatarUrl: "https://i.pravatar.cc/96?img=5",
+            displayed: true,
+          },
+          {
+            userId: "u-6",
+            rank: 6,
+            userName: "William Turner",
+            byline: "Level 31 - Gold",
+            value: 208300,
+            avatarUrl: "https://i.pravatar.cc/96?img=52",
+            displayed: false,
+          },
+          {
+            userId: "u-7",
+            rank: 7,
+            userName: "Ruby Claire",
+            byline: "Level 29 - Silver",
+            value: 202100,
+            avatarUrl: "https://i.pravatar.cc/96?img=9",
+            displayed: false,
+          },
+          {
+            userId: "u-8",
+            rank: 8,
+            userName: "Ethan Brooks",
+            byline: "Level 28 - Silver",
+            value: 194700,
+            avatarUrl: "https://i.pravatar.cc/96?img=60",
+            displayed: true,
+          },
+          {
+            userId: "u-9",
+            rank: 9,
+            userName: "Chloe Madison",
+            byline: "Level 27 - Silver",
+            value: 187600,
+            avatarUrl: "https://i.pravatar.cc/96?img=29",
+            displayed: true,
+          },
+          {
+            userId: "u-10",
+            rank: 10,
+            userName: "Noah Bennett",
+            byline: "Level 26 - Silver",
+            value: 179900,
+            avatarUrl: "https://i.pravatar.cc/96?img=36",
+            displayed: false,
+          },
         ],
       },
     }
   }, [])
-  const selectedRun = runData[selectedRunId as keyof typeof runData] ?? runData["this-week"]
+  const selectedRun =
+    runData[selectedRunId as keyof typeof runData] ?? runData["this-week"]
 
   return (
     <div className="w-full max-w-2xl">
@@ -514,7 +921,7 @@ const achievementBadgePreviewItem = {
   id: "badge-1",
   name: "Consistency I",
   trigger: "streak" as const,
-  achievedAt: new Date().toISOString()
+  achievedAt: new Date().toISOString(),
 }
 
 const achievementListPreviewItems = [
@@ -604,22 +1011,120 @@ const achievementCardHighlightedPreviewItems = [
 ]
 
 const leaderboardPodiumPreviewRankings = [
-  { userId: "1", userName: "Ava Elizabeth Turner", rank: 1, value: 1250, avatarUrl: "https://i.pravatar.cc/96?img=32" },
-  { userId: "2", userName: "Leo Harrison", rank: 2, value: 1100, avatarUrl: "https://i.pravatar.cc/96?img=12" },
-  { userId: "3", userName: "Rowan Elijah", rank: 3, value: 980, avatarUrl: "https://i.pravatar.cc/96?img=15" },
+  {
+    userId: "1",
+    userName: "Ava Elizabeth Turner",
+    rank: 1,
+    value: 1250,
+    avatarUrl: "https://i.pravatar.cc/96?img=32",
+  },
+  {
+    userId: "2",
+    userName: "Leo Harrison",
+    rank: 2,
+    value: 1100,
+    avatarUrl: "https://i.pravatar.cc/96?img=12",
+  },
+  {
+    userId: "3",
+    userName: "Rowan Elijah",
+    rank: 3,
+    value: 980,
+    avatarUrl: "https://i.pravatar.cc/96?img=15",
+  },
 ]
 
 const leaderboardCardPreviewRankings = [
-  { userId: "u-1", rank: 1, userName: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", value: 289400, avatarUrl: "https://i.pravatar.cc/96?img=32", displayed: true },
-  { userId: "u-2", rank: 2, userName: "Leo Harrison", byline: "Level 39 - Platinum", value: 251800, avatarUrl: "https://i.pravatar.cc/96?img=12", displayed: true },
-  { userId: "u-3", rank: 3, userName: "Rowan Elijah", byline: "Level 37 - Platinum", value: 238300, avatarUrl: "https://i.pravatar.cc/96?img=15", displayed: true },
-  { userId: "u-4", rank: 4, userName: "Mia Sophia Bennett", byline: "Level 34 - Gold", value: 221700, avatarUrl: "https://i.pravatar.cc/96?img=47", displayed: false },
-  { userId: "u-5", rank: 5, userName: "Olivia Reed", byline: "Level 32 - Gold", value: 210900, avatarUrl: "https://i.pravatar.cc/96?img=5", displayed: true },
-  { userId: "u-6", rank: 6, userName: "William Turner", byline: "Level 31 - Gold", value: 199500, avatarUrl: "https://i.pravatar.cc/96?img=52", displayed: false },
-  { userId: "u-7", rank: 7, userName: "Ruby Claire", byline: "Level 29 - Silver", value: 198300, avatarUrl: "https://i.pravatar.cc/96?img=9", displayed: false },
-  { userId: "u-8", rank: 8, userName: "Ethan Brooks", byline: "Level 28 - Silver", value: 187200, avatarUrl: "https://i.pravatar.cc/96?img=60", displayed: true },
-  { userId: "u-9", rank: 9, userName: "Chloe Madison", byline: "Level 27 - Silver", value: 176800, avatarUrl: "https://i.pravatar.cc/96?img=29", displayed: true },
-  { userId: "u-10", rank: 10, userName: "Noah Bennett", byline: "Level 26 - Silver", value: 169300, avatarUrl: "https://i.pravatar.cc/96?img=36", displayed: false },
+  {
+    userId: "u-1",
+    rank: 1,
+    userName: "Ava Elizabeth Turner",
+    byline: "Level 42 - Diamond",
+    value: 289400,
+    avatarUrl: "https://i.pravatar.cc/96?img=32",
+    displayed: true,
+  },
+  {
+    userId: "u-2",
+    rank: 2,
+    userName: "Leo Harrison",
+    byline: "Level 39 - Platinum",
+    value: 251800,
+    avatarUrl: "https://i.pravatar.cc/96?img=12",
+    displayed: true,
+  },
+  {
+    userId: "u-3",
+    rank: 3,
+    userName: "Rowan Elijah",
+    byline: "Level 37 - Platinum",
+    value: 238300,
+    avatarUrl: "https://i.pravatar.cc/96?img=15",
+    displayed: true,
+  },
+  {
+    userId: "u-4",
+    rank: 4,
+    userName: "Mia Sophia Bennett",
+    byline: "Level 34 - Gold",
+    value: 221700,
+    avatarUrl: "https://i.pravatar.cc/96?img=47",
+    displayed: false,
+  },
+  {
+    userId: "u-5",
+    rank: 5,
+    userName: "Olivia Reed",
+    byline: "Level 32 - Gold",
+    value: 210900,
+    avatarUrl: "https://i.pravatar.cc/96?img=5",
+    displayed: true,
+  },
+  {
+    userId: "u-6",
+    rank: 6,
+    userName: "William Turner",
+    byline: "Level 31 - Gold",
+    value: 199500,
+    avatarUrl: "https://i.pravatar.cc/96?img=52",
+    displayed: false,
+  },
+  {
+    userId: "u-7",
+    rank: 7,
+    userName: "Ruby Claire",
+    byline: "Level 29 - Silver",
+    value: 198300,
+    avatarUrl: "https://i.pravatar.cc/96?img=9",
+    displayed: false,
+  },
+  {
+    userId: "u-8",
+    rank: 8,
+    userName: "Ethan Brooks",
+    byline: "Level 28 - Silver",
+    value: 187200,
+    avatarUrl: "https://i.pravatar.cc/96?img=60",
+    displayed: true,
+  },
+  {
+    userId: "u-9",
+    rank: 9,
+    userName: "Chloe Madison",
+    byline: "Level 27 - Silver",
+    value: 176800,
+    avatarUrl: "https://i.pravatar.cc/96?img=29",
+    displayed: true,
+  },
+  {
+    userId: "u-10",
+    rank: 10,
+    userName: "Noah Bennett",
+    byline: "Level 26 - Silver",
+    value: 169300,
+    avatarUrl: "https://i.pravatar.cc/96?img=36",
+    displayed: false,
+  },
 ]
 
 type ComponentExampleConfig = {
@@ -649,9 +1154,7 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
 <StreakBadge length={7} frequency="daily" size="lg" />`,
   },
   "streak-calendar": {
-    component: (
-      <StreakCalendar streak={createStreakHistory()} />
-    ),
+    component: <StreakCalendar streak={createStreakHistory()} />,
     code: `<StreakCalendar
   streak={[
     { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
@@ -661,10 +1164,7 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
   },
   "streak-calendar-monday": {
     component: (
-      <StreakCalendar
-        startOfWeek={1}
-        streak={createStreakHistory()}
-      />
+      <StreakCalendar startOfWeek={1} streak={createStreakHistory()} />
     ),
     code: `<StreakCalendar
   streak={createStreakHistory()}
@@ -687,10 +1187,7 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
   },
   "streak-calendar-year": {
     component: (
-      <StreakCalendar
-        view="year"
-        streak={createYearStyleStreakHistory()}
-      />
+      <StreakCalendar view="year" streak={createYearStyleStreakHistory()} />
     ),
     code: `<StreakCalendar
   streak={createYearStyleStreakHistory()}
@@ -740,7 +1237,9 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
               id: "2",
               name: "First Steps",
               trigger: "streak",
-              achievedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+              achievedAt: new Date(
+                Date.now() - 24 * 60 * 60 * 1000
+              ).toISOString(),
             },
             {
               id: "3",
@@ -765,9 +1264,18 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
   "achievement-grid-columns": {
     component: (
       <div className="w-full max-w-5xl space-y-6">
-        <AchievementGrid achievements={achievementGridUnlockedPreviewItems} columns={2} />
-        <AchievementGrid achievements={achievementGridUnlockedPreviewItems} columns={3} />
-        <AchievementGrid achievements={achievementGridUnlockedPreviewItems} columns={4} />
+        <AchievementGrid
+          achievements={achievementGridUnlockedPreviewItems}
+          columns={2}
+        />
+        <AchievementGrid
+          achievements={achievementGridUnlockedPreviewItems}
+          columns={3}
+        />
+        <AchievementGrid
+          achievements={achievementGridUnlockedPreviewItems}
+          columns={4}
+        />
       </div>
     ),
     code: `<AchievementGrid
@@ -798,9 +1306,18 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
   "achievement-grid-gap": {
     component: (
       <div className="w-full max-w-5xl space-y-6">
-        <AchievementGrid achievements={achievementGridUnlockedPreviewItems} gap="sm" />
-        <AchievementGrid achievements={achievementGridUnlockedPreviewItems} gap="default" />
-        <AchievementGrid achievements={achievementGridUnlockedPreviewItems} gap="lg" />
+        <AchievementGrid
+          achievements={achievementGridUnlockedPreviewItems}
+          gap="sm"
+        />
+        <AchievementGrid
+          achievements={achievementGridUnlockedPreviewItems}
+          gap="default"
+        />
+        <AchievementGrid
+          achievements={achievementGridUnlockedPreviewItems}
+          gap="lg"
+        />
       </div>
     ),
     code: `<AchievementGrid
@@ -829,9 +1346,7 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
 />`,
   },
   "achievement-badge": {
-    component: (
-      <AchievementBadge achievement={achievementBadgePreviewItem} />
-    ),
+    component: <AchievementBadge achievement={achievementBadgePreviewItem} />,
     code: `<AchievementBadge
   achievement={{
     id: "1",
@@ -968,7 +1483,7 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
     component: (
       <AchievementBadge
         achievement={achievementBadgePreviewItem}
-        onAchievementClick={() => { }}
+        onAchievementClick={() => {}}
       />
     ),
     code: `<AchievementBadge
@@ -990,7 +1505,7 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
         <AchievementGrid
           achievements={achievementGridCompletePreviewItems}
           columns={4}
-          onAchievementClick={() => { }}
+          onAchievementClick={() => {}}
         />
       </div>
     ),
@@ -1304,18 +1819,102 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
         <LeaderboardRankings
           showPagination
           rankings={[
-            { userId: "u-1", rank: 1, userName: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", value: 289400, avatarUrl: "https://i.pravatar.cc/96?img=32" },
-            { userId: "u-2", rank: 2, userName: "Leo Harrison", byline: "Level 39 - Platinum", value: 251800, avatarUrl: "https://i.pravatar.cc/96?img=12" },
-            { userId: "u-3", rank: 3, userName: "Rowan Elijah", byline: "Level 37 - Platinum", value: 238300, avatarUrl: "https://i.pravatar.cc/96?img=15" },
-            { userId: "u-4", rank: 4, userName: "Mia Sophia Bennett", byline: "Level 34 - Gold", value: 221700, avatarUrl: "https://i.pravatar.cc/96?img=47" },
-            { userId: "u-5", rank: 5, userName: "William Turner", byline: "Level 33 - Gold", value: 199500, avatarUrl: "https://i.pravatar.cc/96?img=52" },
-            { userId: "u-6", rank: 6, userName: "Ruby Claire", byline: "Level 31 - Gold", value: 198300, avatarUrl: "https://i.pravatar.cc/96?img=9" },
-            { userId: "u-7", rank: 7, userName: "Ethan Brooks", byline: "Level 29 - Silver", value: 187200, avatarUrl: "https://i.pravatar.cc/96?img=60" },
-            { userId: "u-8", rank: 8, userName: "Chloe Madison", byline: "Level 28 - Silver", value: 176800, avatarUrl: "https://i.pravatar.cc/96?img=29" },
-            { userId: "u-9", rank: 9, userName: "Noah Bennett", byline: "Level 27 - Silver", value: 169300, avatarUrl: "https://i.pravatar.cc/96?img=36" },
-            { userId: "u-10", rank: 10, userName: "Isla Monroe", byline: "Level 26 - Silver", value: 161900, avatarUrl: "https://i.pravatar.cc/96?img=33" },
-            { userId: "u-11", rank: 11, userName: "Mason Carter", byline: "Level 25 - Bronze", value: 154600, avatarUrl: "https://i.pravatar.cc/96?img=61" },
-            { userId: "u-12", rank: 12, userName: "Ella Foster", byline: "Level 24 - Bronze", value: 148200, avatarUrl: "https://i.pravatar.cc/96?img=26" },
+            {
+              userId: "u-1",
+              rank: 1,
+              userName: "Ava Elizabeth Turner",
+              byline: "Level 42 - Diamond",
+              value: 289400,
+              avatarUrl: "https://i.pravatar.cc/96?img=32",
+            },
+            {
+              userId: "u-2",
+              rank: 2,
+              userName: "Leo Harrison",
+              byline: "Level 39 - Platinum",
+              value: 251800,
+              avatarUrl: "https://i.pravatar.cc/96?img=12",
+            },
+            {
+              userId: "u-3",
+              rank: 3,
+              userName: "Rowan Elijah",
+              byline: "Level 37 - Platinum",
+              value: 238300,
+              avatarUrl: "https://i.pravatar.cc/96?img=15",
+            },
+            {
+              userId: "u-4",
+              rank: 4,
+              userName: "Mia Sophia Bennett",
+              byline: "Level 34 - Gold",
+              value: 221700,
+              avatarUrl: "https://i.pravatar.cc/96?img=47",
+            },
+            {
+              userId: "u-5",
+              rank: 5,
+              userName: "William Turner",
+              byline: "Level 33 - Gold",
+              value: 199500,
+              avatarUrl: "https://i.pravatar.cc/96?img=52",
+            },
+            {
+              userId: "u-6",
+              rank: 6,
+              userName: "Ruby Claire",
+              byline: "Level 31 - Gold",
+              value: 198300,
+              avatarUrl: "https://i.pravatar.cc/96?img=9",
+            },
+            {
+              userId: "u-7",
+              rank: 7,
+              userName: "Ethan Brooks",
+              byline: "Level 29 - Silver",
+              value: 187200,
+              avatarUrl: "https://i.pravatar.cc/96?img=60",
+            },
+            {
+              userId: "u-8",
+              rank: 8,
+              userName: "Chloe Madison",
+              byline: "Level 28 - Silver",
+              value: 176800,
+              avatarUrl: "https://i.pravatar.cc/96?img=29",
+            },
+            {
+              userId: "u-9",
+              rank: 9,
+              userName: "Noah Bennett",
+              byline: "Level 27 - Silver",
+              value: 169300,
+              avatarUrl: "https://i.pravatar.cc/96?img=36",
+            },
+            {
+              userId: "u-10",
+              rank: 10,
+              userName: "Isla Monroe",
+              byline: "Level 26 - Silver",
+              value: 161900,
+              avatarUrl: "https://i.pravatar.cc/96?img=33",
+            },
+            {
+              userId: "u-11",
+              rank: 11,
+              userName: "Mason Carter",
+              byline: "Level 25 - Bronze",
+              value: 154600,
+              avatarUrl: "https://i.pravatar.cc/96?img=61",
+            },
+            {
+              userId: "u-12",
+              rank: 12,
+              userName: "Ella Foster",
+              byline: "Level 24 - Bronze",
+              value: 148200,
+              avatarUrl: "https://i.pravatar.cc/96?img=26",
+            },
           ]}
         />
       </div>
@@ -1336,23 +1935,159 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
         <LeaderboardRankings
           currentUserId="u-20"
           rankings={[
-            { userId: "u-1", rank: 1, userName: "Ava Elizabeth Turner", byline: "Level 42 - Diamond", value: 289400, avatarUrl: "https://i.pravatar.cc/96?img=32", displayed: true },
-            { userId: "u-2", rank: 2, userName: "Leo Harrison", byline: "Level 39 - Platinum", value: 251800, avatarUrl: "https://i.pravatar.cc/96?img=12", displayed: true },
-            { userId: "u-3", rank: 3, userName: "Rowan Elijah", byline: "Level 37 - Platinum", value: 238300, avatarUrl: "https://i.pravatar.cc/96?img=15", displayed: true },
-            { userId: "u-4", rank: 4, userName: "Mia Sophia Bennett", byline: "Level 34 - Gold", value: 221700, avatarUrl: "https://i.pravatar.cc/96?img=47", displayed: false },
-            { userId: "u-5", rank: 5, userName: "William Turner", byline: "Level 33 - Gold", value: 199500, avatarUrl: "https://i.pravatar.cc/96?img=52", displayed: false },
-            { userId: "u-6", rank: 6, userName: "Ruby Claire", byline: "Level 31 - Gold", value: 198300, avatarUrl: "https://i.pravatar.cc/96?img=9", displayed: false },
-            { userId: "u-19", rank: 19, userName: "Grace Coleman", byline: "Level 22 - Bronze", value: 130600, avatarUrl: "https://i.pravatar.cc/96?img=41", displayed: true },
-            { userId: "u-20", rank: 20, userName: "Olivia Reed", byline: "Level 22 - Bronze", value: 129900, avatarUrl: "https://i.pravatar.cc/96?img=5", displayed: true },
-            { userId: "u-21", rank: 21, userName: "Evan Knight", byline: "Level 21 - Bronze", value: 129300, avatarUrl: "https://i.pravatar.cc/96?img=8", displayed: true },
-            { userId: "u-22", rank: 22, userName: "Ivy Brooks", byline: "Level 20 - Bronze", value: 128700, avatarUrl: "https://i.pravatar.cc/96?img=24", displayed: false },
-            { userId: "u-23", rank: 23, userName: "Jack Porter", byline: "Level 20 - Bronze", value: 128100, avatarUrl: "https://i.pravatar.cc/96?img=62", displayed: false },
-            { userId: "u-24", rank: 24, userName: "Lily Morgan", byline: "Level 19 - Bronze", value: 127500, avatarUrl: "https://i.pravatar.cc/96?img=48", displayed: false },
-            { userId: "u-40", rank: 40, userName: "Nora Ellis", byline: "Level 14 - Rookie", value: 110300, avatarUrl: "https://i.pravatar.cc/96?img=27", displayed: true },
-            { userId: "u-41", rank: 41, userName: "Owen Ward", byline: "Level 14 - Rookie", value: 109800, avatarUrl: "https://i.pravatar.cc/96?img=17", displayed: true },
-            { userId: "u-42", rank: 42, userName: "Paige Hudson", byline: "Level 13 - Rookie", value: 109200, avatarUrl: "https://i.pravatar.cc/96?img=44", displayed: true },
-            { userId: "u-43", rank: 43, userName: "Quinn Tate", byline: "Level 13 - Rookie", value: 108600, avatarUrl: "https://i.pravatar.cc/96?img=23", displayed: true },
-            { userId: "u-44", rank: 44, userName: "Riley James", byline: "Level 12 - Rookie", value: 107900, avatarUrl: "https://i.pravatar.cc/96?img=58", displayed: true },
+            {
+              userId: "u-1",
+              rank: 1,
+              userName: "Ava Elizabeth Turner",
+              byline: "Level 42 - Diamond",
+              value: 289400,
+              avatarUrl: "https://i.pravatar.cc/96?img=32",
+              displayed: true,
+            },
+            {
+              userId: "u-2",
+              rank: 2,
+              userName: "Leo Harrison",
+              byline: "Level 39 - Platinum",
+              value: 251800,
+              avatarUrl: "https://i.pravatar.cc/96?img=12",
+              displayed: true,
+            },
+            {
+              userId: "u-3",
+              rank: 3,
+              userName: "Rowan Elijah",
+              byline: "Level 37 - Platinum",
+              value: 238300,
+              avatarUrl: "https://i.pravatar.cc/96?img=15",
+              displayed: true,
+            },
+            {
+              userId: "u-4",
+              rank: 4,
+              userName: "Mia Sophia Bennett",
+              byline: "Level 34 - Gold",
+              value: 221700,
+              avatarUrl: "https://i.pravatar.cc/96?img=47",
+              displayed: false,
+            },
+            {
+              userId: "u-5",
+              rank: 5,
+              userName: "William Turner",
+              byline: "Level 33 - Gold",
+              value: 199500,
+              avatarUrl: "https://i.pravatar.cc/96?img=52",
+              displayed: false,
+            },
+            {
+              userId: "u-6",
+              rank: 6,
+              userName: "Ruby Claire",
+              byline: "Level 31 - Gold",
+              value: 198300,
+              avatarUrl: "https://i.pravatar.cc/96?img=9",
+              displayed: false,
+            },
+            {
+              userId: "u-19",
+              rank: 19,
+              userName: "Grace Coleman",
+              byline: "Level 22 - Bronze",
+              value: 130600,
+              avatarUrl: "https://i.pravatar.cc/96?img=41",
+              displayed: true,
+            },
+            {
+              userId: "u-20",
+              rank: 20,
+              userName: "Olivia Reed",
+              byline: "Level 22 - Bronze",
+              value: 129900,
+              avatarUrl: "https://i.pravatar.cc/96?img=5",
+              displayed: true,
+            },
+            {
+              userId: "u-21",
+              rank: 21,
+              userName: "Evan Knight",
+              byline: "Level 21 - Bronze",
+              value: 129300,
+              avatarUrl: "https://i.pravatar.cc/96?img=8",
+              displayed: true,
+            },
+            {
+              userId: "u-22",
+              rank: 22,
+              userName: "Ivy Brooks",
+              byline: "Level 20 - Bronze",
+              value: 128700,
+              avatarUrl: "https://i.pravatar.cc/96?img=24",
+              displayed: false,
+            },
+            {
+              userId: "u-23",
+              rank: 23,
+              userName: "Jack Porter",
+              byline: "Level 20 - Bronze",
+              value: 128100,
+              avatarUrl: "https://i.pravatar.cc/96?img=62",
+              displayed: false,
+            },
+            {
+              userId: "u-24",
+              rank: 24,
+              userName: "Lily Morgan",
+              byline: "Level 19 - Bronze",
+              value: 127500,
+              avatarUrl: "https://i.pravatar.cc/96?img=48",
+              displayed: false,
+            },
+            {
+              userId: "u-40",
+              rank: 40,
+              userName: "Nora Ellis",
+              byline: "Level 14 - Rookie",
+              value: 110300,
+              avatarUrl: "https://i.pravatar.cc/96?img=27",
+              displayed: true,
+            },
+            {
+              userId: "u-41",
+              rank: 41,
+              userName: "Owen Ward",
+              byline: "Level 14 - Rookie",
+              value: 109800,
+              avatarUrl: "https://i.pravatar.cc/96?img=17",
+              displayed: true,
+            },
+            {
+              userId: "u-42",
+              rank: 42,
+              userName: "Paige Hudson",
+              byline: "Level 13 - Rookie",
+              value: 109200,
+              avatarUrl: "https://i.pravatar.cc/96?img=44",
+              displayed: true,
+            },
+            {
+              userId: "u-43",
+              rank: 43,
+              userName: "Quinn Tate",
+              byline: "Level 13 - Rookie",
+              value: 108600,
+              avatarUrl: "https://i.pravatar.cc/96?img=23",
+              displayed: true,
+            },
+            {
+              userId: "u-44",
+              rank: 44,
+              userName: "Riley James",
+              byline: "Level 12 - Rookie",
+              value: 107900,
+              avatarUrl: "https://i.pravatar.cc/96?img=58",
+              displayed: true,
+            },
           ]}
         />
       </div>
@@ -1380,9 +2115,7 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
   },
   "leaderboard-podium": {
     component: (
-      <LeaderboardPodium
-        rankings={leaderboardPodiumPreviewRankings}
-      />
+      <LeaderboardPodium rankings={leaderboardPodiumPreviewRankings} />
     ),
     code: `<LeaderboardPodium
   rankings={[
@@ -1395,9 +2128,18 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
   "leaderboard-podium-sizes": {
     component: (
       <div className="flex w-full flex-col items-center gap-8">
-        <LeaderboardPodium rankings={leaderboardPodiumPreviewRankings} size="sm" />
-        <LeaderboardPodium rankings={leaderboardPodiumPreviewRankings} size="default" />
-        <LeaderboardPodium rankings={leaderboardPodiumPreviewRankings} size="lg" />
+        <LeaderboardPodium
+          rankings={leaderboardPodiumPreviewRankings}
+          size="sm"
+        />
+        <LeaderboardPodium
+          rankings={leaderboardPodiumPreviewRankings}
+          size="default"
+        />
+        <LeaderboardPodium
+          rankings={leaderboardPodiumPreviewRankings}
+          size="lg"
+        />
       </div>
     ),
     code: `<LeaderboardPodium rankings={rankings} size="sm" />
@@ -1408,8 +2150,20 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
     component: (
       <LeaderboardPodium
         rankings={[
-          { userId: "1", userName: "Alice", rank: 1, value: 2500, avatarUrl: "https://i.pravatar.cc/96?img=34" },
-          { userId: "2", userName: "Bob", rank: 2, value: 2200, avatarUrl: "https://i.pravatar.cc/96?img=19" },
+          {
+            userId: "1",
+            userName: "Alice",
+            rank: 1,
+            value: 2500,
+            avatarUrl: "https://i.pravatar.cc/96?img=34",
+          },
+          {
+            userId: "2",
+            userName: "Bob",
+            rank: 2,
+            value: 2200,
+            avatarUrl: "https://i.pravatar.cc/96?img=19",
+          },
         ]}
       />
     ),
@@ -1496,9 +2250,7 @@ const selectedRun = runs[selectedRunId] ?? runs["this-week"]
 />`,
   },
   "points-badge": {
-    component: (
-      <PointsBadge name="XP" total={2500} />
-    ),
+    component: <PointsBadge name="XP" total={2500} />,
     code: `<PointsBadge name="XP" total={2500} />`,
   },
   "points-badge-sizes": {
@@ -1715,14 +2467,39 @@ const datasets = {
       <div className="w-full max-w-6xl">
         <PointsLevelsSimple
           levels={[
-            { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+            {
+              id: "beginner",
+              points: 0,
+              name: "Beginner",
+              iconType: "beginner",
+            },
             { id: "novice", points: 500, name: "Novice", iconType: "novice" },
-            { id: "intermediate", points: 2500, name: "Intermediate", iconType: "intermediate" },
-            { id: "professional", points: 5000, name: "Professional", iconType: "professional" },
+            {
+              id: "intermediate",
+              points: 2500,
+              name: "Intermediate",
+              iconType: "intermediate",
+            },
+            {
+              id: "professional",
+              points: 5000,
+              name: "Professional",
+              iconType: "professional",
+            },
             { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
             { id: "master", points: 10000, name: "Master", iconType: "master" },
-            { id: "grand-master", points: 20000, name: "Grand Master", iconType: "grand-master" },
-            { id: "enlightened", points: 50000, name: "Enlightened", iconType: "enlightened" },
+            {
+              id: "grand-master",
+              points: 20000,
+              name: "Grand Master",
+              iconType: "grand-master",
+            },
+            {
+              id: "enlightened",
+              points: 50000,
+              name: "Enlightened",
+              iconType: "enlightened",
+            },
           ]}
         />
       </div>
@@ -1746,14 +2523,39 @@ const datasets = {
         <PointsLevelsSimple
           currentPoints={6200}
           levels={[
-            { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+            {
+              id: "beginner",
+              points: 0,
+              name: "Beginner",
+              iconType: "beginner",
+            },
             { id: "novice", points: 500, name: "Novice", iconType: "novice" },
-            { id: "intermediate", points: 2500, name: "Intermediate", iconType: "intermediate" },
-            { id: "professional", points: 5000, name: "Professional", iconType: "professional" },
+            {
+              id: "intermediate",
+              points: 2500,
+              name: "Intermediate",
+              iconType: "intermediate",
+            },
+            {
+              id: "professional",
+              points: 5000,
+              name: "Professional",
+              iconType: "professional",
+            },
             { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
             { id: "master", points: 10000, name: "Master", iconType: "master" },
-            { id: "grand-master", points: 20000, name: "Grand Master", iconType: "grand-master" },
-            { id: "enlightened", points: 50000, name: "Enlightened", iconType: "enlightened" },
+            {
+              id: "grand-master",
+              points: 20000,
+              name: "Grand Master",
+              iconType: "grand-master",
+            },
+            {
+              id: "enlightened",
+              points: 50000,
+              name: "Enlightened",
+              iconType: "enlightened",
+            },
           ]}
         />
       </div>
@@ -1779,14 +2581,39 @@ const datasets = {
           currentPoints={6200}
           showProgressBar
           levels={[
-            { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+            {
+              id: "beginner",
+              points: 0,
+              name: "Beginner",
+              iconType: "beginner",
+            },
             { id: "novice", points: 500, name: "Novice", iconType: "novice" },
-            { id: "intermediate", points: 2500, name: "Intermediate", iconType: "intermediate" },
-            { id: "professional", points: 5000, name: "Professional", iconType: "professional" },
+            {
+              id: "intermediate",
+              points: 2500,
+              name: "Intermediate",
+              iconType: "intermediate",
+            },
+            {
+              id: "professional",
+              points: 5000,
+              name: "Professional",
+              iconType: "professional",
+            },
             { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
             { id: "master", points: 10000, name: "Master", iconType: "master" },
-            { id: "grand-master", points: 20000, name: "Grand Master", iconType: "grand-master" },
-            { id: "enlightened", points: 50000, name: "Enlightened", iconType: "enlightened" },
+            {
+              id: "grand-master",
+              points: 20000,
+              name: "Grand Master",
+              iconType: "grand-master",
+            },
+            {
+              id: "enlightened",
+              points: 50000,
+              name: "Enlightened",
+              iconType: "enlightened",
+            },
           ]}
         />
       </div>
@@ -1975,13 +2802,16 @@ const datasets = {
           boost={{
             name: "Limited-Time Points Boost",
             status: "active",
-            description: "Boost expires soon, activate now to maximize your points",
+            description:
+              "Boost expires soon, activate now to maximize your points",
             multiplier: 3,
             cta: {
               link: "#",
               text: "Activate now",
             },
-            endDate: new Date(Date.now() + 1000 * 60 * 60 * 11 + 1000 * 60 * 29 + 1000 * 36).toISOString(),
+            endDate: new Date(
+              Date.now() + 1000 * 60 * 60 * 11 + 1000 * 60 * 29 + 1000 * 36
+            ).toISOString(),
           }}
         />
       </div>

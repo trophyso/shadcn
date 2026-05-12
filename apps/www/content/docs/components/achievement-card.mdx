@@ -146,7 +146,11 @@ import { AchievementCard } from "@/components/ui/achievement-card"
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch a user's achievements server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/achievements" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/achievements"
+/>
 
 Then pass and transform the response into `AchievementCard` props in your UI layer:
 
@@ -162,10 +166,10 @@ const highlightedAchievements = achievements.slice(0, 3)
 
 ## API Reference
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `highlightedAchievements` | `UserAchievement[]` | Required | Separate featured achievements shown in the top section |
-| `achievements` | `UserAchievement[]` | Required | List achievements rendered in the lower section and used for totals |
-| `badgeSize` | `"sm" \| "default" \| "lg"` | `"default"` | Badge size used by the lower list |
-| `lockedStyle` | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | Locked row presentation in the embedded `AchievementList` |
-| `onAchievementClick` | `(achievement) => void` | - | Click handler for badges and list rows |
+| Prop                      | Type                                      | Default       | Description                                                         |
+| ------------------------- | ----------------------------------------- | ------------- | ------------------------------------------------------------------- |
+| `highlightedAchievements` | `UserAchievement[]`                       | Required      | Separate featured achievements shown in the top section             |
+| `achievements`            | `UserAchievement[]`                       | Required      | List achievements rendered in the lower section and used for totals |
+| `badgeSize`               | `"sm" \| "default" \| "lg"`               | `"default"`   | Badge size used by the lower list                                   |
+| `lockedStyle`             | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | Locked row presentation in the embedded `AchievementList`           |
+| `onAchievementClick`      | `(achievement) => void`                   | -             | Click handler for badges and list rows                              |

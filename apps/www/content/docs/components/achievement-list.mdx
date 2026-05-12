@@ -100,7 +100,11 @@ import { AchievementList } from "@/components/ui/achievement-list"
 
 Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch a user's achievements server-side:
 
-<OpenApiCodeSamples spec="application.yml" method="get" endpoint="/users/{id}/achievements" />
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/achievements"
+/>
 
 Then pass the response into `AchievementList` props in your UI layer:
 
@@ -112,14 +116,14 @@ Then pass the response into `AchievementList` props in your UI layer:
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `achievements` | `UserAchievement[]` | Required | Array of achievements to render in list rows |
-| `badgeSize` | `"sm" \| "default" \| "lg"` | `"default"` | Size of badge in each row |
-| `lockedStyle` | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | Locked achievement visual treatment |
-| `onAchievementClick` | `(achievement) => void` | - | Row click handler |
-| `columns` | `2 \| 3 \| 4 \| "auto"` | `"auto"` | Supported for compatibility with `AchievementGrid` |
-| `gap` | `"sm" \| "default" \| "lg"` | `"default"` | Vertical spacing between rows |
+| Prop                 | Type                                      | Default       | Description                                        |
+| -------------------- | ----------------------------------------- | ------------- | -------------------------------------------------- |
+| `achievements`       | `UserAchievement[]`                       | Required      | Array of achievements to render in list rows       |
+| `badgeSize`          | `"sm" \| "default" \| "lg"`               | `"default"`   | Size of badge in each row                          |
+| `lockedStyle`        | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | Locked achievement visual treatment                |
+| `onAchievementClick` | `(achievement) => void`                   | -             | Row click handler                                  |
+| `columns`            | `2 \| 3 \| 4 \| "auto"`                   | `"auto"`      | Supported for compatibility with `AchievementGrid` |
+| `gap`                | `"sm" \| "default" \| "lg"`               | `"default"`   | Vertical spacing between rows                      |
 
 ### Types
 

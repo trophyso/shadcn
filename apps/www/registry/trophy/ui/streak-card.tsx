@@ -1,34 +1,43 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { CheckCircle2, ChevronDown, ChevronRight, Flame, RefreshCcw } from "lucide-react";
+import * as React from "react"
+import {
+  CheckCircle2,
+  ChevronDown,
+  ChevronRight,
+  Flame,
+  RefreshCcw,
+} from "lucide-react"
 
-import { cn } from "@/lib/utils";
-import { StreakCalendar, type StreakPeriod } from "@/registry/trophy/ui/streak-calendar";
+import { cn } from "@/lib/utils"
+import {
+  StreakCalendar,
+  type StreakPeriod,
+} from "@/registry/trophy/ui/streak-calendar"
 
 interface StreakCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Streak periods passed through to StreakCalendar */
-  streak: StreakPeriod[];
+  streak: StreakPeriod[]
   /** Current streak value in days */
-  currentStreak: number;
+  currentStreak: number
   /** Longest streak value in days */
-  longestStreak: number;
+  longestStreak: number
   /** Secondary total metric value */
-  total: number;
+  total: number
   /** Optional heading text */
-  title?: string;
+  title?: string
   /** Label for the action button */
-  actionLabel?: string;
+  actionLabel?: string
   /** Callback for action click */
-  onActionClick?: () => void;
+  onActionClick?: () => void
   /** Show "How streaks work" dropdown section */
-  showHowItWorks?: boolean;
+  showHowItWorks?: boolean
   /** Title for the dropdown trigger */
-  howItWorksTitle?: string;
+  howItWorksTitle?: string
   /** Content rows shown when the dropdown is expanded */
-  howItWorksItems?: string[];
+  howItWorksItems?: string[]
   /** Initial expanded state for dropdown */
-  defaultHowItWorksOpen?: boolean;
+  defaultHowItWorksOpen?: boolean
 }
 
 const StreakCard = React.forwardRef<HTMLDivElement, StreakCardProps>(
@@ -52,29 +61,31 @@ const StreakCard = React.forwardRef<HTMLDivElement, StreakCardProps>(
       defaultHowItWorksOpen = false,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const [isHowItWorksOpen, setIsHowItWorksOpen] = React.useState(defaultHowItWorksOpen);
-    const howItWorksContentId = React.useId();
+    const [isHowItWorksOpen, setIsHowItWorksOpen] = React.useState(
+      defaultHowItWorksOpen
+    )
+    const howItWorksContentId = React.useId()
 
     return (
       <section
         ref={ref}
         aria-label="Streak summary card"
-        className={cn("rounded-2xl border bg-card p-6 shadow-sm", className)}
+        className={cn("bg-card rounded-2xl border p-6 shadow-sm", className)}
         {...props}
       >
         <header className="mb-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <Flame className="h-6 w-6 text-primary" aria-hidden="true" />
-            <h3 className="text-2xl font-semibold leading-none">{title}</h3>
+            <Flame className="text-primary h-6 w-6" aria-hidden="true" />
+            <h3 className="text-2xl leading-none font-semibold">{title}</h3>
           </div>
           <button
             type="button"
             onClick={onActionClick}
             className={cn(
-              "inline-flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors",
-              "hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+              "text-muted-foreground inline-flex items-center gap-1 text-sm font-medium transition-colors",
+              "hover:text-foreground focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
             )}
             aria-label={actionLabel}
           >
@@ -83,9 +94,11 @@ const StreakCard = React.forwardRef<HTMLDivElement, StreakCardProps>(
           </button>
         </header>
 
-        <p className="mb-4 text-5xl font-semibold leading-none tracking-tight">
+        <p className="mb-4 text-5xl leading-none font-semibold tracking-tight">
           {currentStreak}
-          <span className="ml-2 text-2xl font-medium text-muted-foreground">days</span>
+          <span className="text-muted-foreground ml-2 text-2xl font-medium">
+            days
+          </span>
         </p>
 
         <StreakCalendar
@@ -100,15 +113,15 @@ const StreakCard = React.forwardRef<HTMLDivElement, StreakCardProps>(
           aria-label="Streak stats"
         >
           <div>
-            <p className="text-sm text-muted-foreground">Longest Streak</p>
-            <p className="text-3xl font-semibold leading-tight">
+            <p className="text-muted-foreground text-sm">Longest Streak</p>
+            <p className="text-3xl leading-tight font-semibold">
               {longestStreak}
               <span className="ml-1 text-2xl font-medium">days</span>
             </p>
           </div>
           <div className="text-right">
-            <p className="text-sm text-muted-foreground">Total</p>
-            <p className="text-3xl font-semibold leading-tight">{total}</p>
+            <p className="text-muted-foreground text-sm">Total</p>
+            <p className="text-3xl leading-tight font-semibold">{total}</p>
           </div>
         </div>
 
@@ -116,7 +129,7 @@ const StreakCard = React.forwardRef<HTMLDivElement, StreakCardProps>(
           <div className="mt-4 border-t pt-4">
             <button
               type="button"
-              className="flex w-full items-center justify-between rounded-xl bg-muted px-4 py-3 text-left"
+              className="bg-muted flex w-full items-center justify-between rounded-xl px-4 py-3 text-left"
               onClick={() => setIsHowItWorksOpen((prev) => !prev)}
               aria-expanded={isHowItWorksOpen}
               aria-controls={howItWorksContentId}
@@ -124,8 +137,8 @@ const StreakCard = React.forwardRef<HTMLDivElement, StreakCardProps>(
               <span className="text-lg font-semibold">{howItWorksTitle}</span>
               <ChevronDown
                 className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform",
-                  isHowItWorksOpen && "rotate-180",
+                  "text-muted-foreground h-5 w-5 transition-transform",
+                  isHowItWorksOpen && "rotate-180"
                 )}
                 aria-hidden="true"
               />
@@ -134,23 +147,36 @@ const StreakCard = React.forwardRef<HTMLDivElement, StreakCardProps>(
             {isHowItWorksOpen && (
               <div id={howItWorksContentId} className="space-y-4 px-2 pt-4">
                 {howItWorksItems.map((item, index) => {
-                  const Icon = index === 0 ? CheckCircle2 : index === 1 ? Flame : RefreshCcw;
+                  const Icon =
+                    index === 0
+                      ? CheckCircle2
+                      : index === 1
+                        ? Flame
+                        : RefreshCcw
                   return (
-                    <div key={`${item}-${index}`} className="flex items-start gap-3">
-                      <Icon className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
-                      <p className="text-lg leading-snug text-muted-foreground">{item}</p>
+                    <div
+                      key={`${item}-${index}`}
+                      className="flex items-start gap-3"
+                    >
+                      <Icon
+                        className="text-primary mt-0.5 h-5 w-5 shrink-0"
+                        aria-hidden="true"
+                      />
+                      <p className="text-muted-foreground text-lg leading-snug">
+                        {item}
+                      </p>
                     </div>
-                  );
+                  )
                 })}
               </div>
             )}
           </div>
         )}
       </section>
-    );
-  },
-);
-StreakCard.displayName = "StreakCard";
+    )
+  }
+)
+StreakCard.displayName = "StreakCard"
 
-export { StreakCard };
-export type { StreakCardProps };
+export { StreakCard }
+export type { StreakCardProps }

@@ -3,8 +3,8 @@
 import * as React from "react"
 import { Check, Copy } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { highlight } from "@/lib/highlight"
+import { cn } from "@/lib/utils"
 import { Button } from "@/registry/trophy/ui/button"
 
 const languageLabels: Record<string, string> = {
@@ -56,7 +56,8 @@ export function CodeBlock({
 
   const lang = language || dataLanguage
   const codeText = code || extractTextContent(children)
-  const displayLanguage = languageLabel || (lang ? languageLabels[lang] || lang : null)
+  const displayLanguage =
+    languageLabel || (lang ? languageLabels[lang] || lang : null)
 
   React.useEffect(() => {
     if (code) {
@@ -74,13 +75,13 @@ export function CodeBlock({
   return (
     <figure
       className={cn(
-        "group relative my-4 overflow-hidden rounded-lg border border-border",
+        "group border-border relative my-4 overflow-hidden rounded-lg border",
         className
       )}
       {...props}
     >
       {displayLanguage && (
-        <figcaption className="flex items-center justify-between bg-muted/50 px-4 py-2 text-xs font-medium text-muted-foreground">
+        <figcaption className="bg-muted/50 text-muted-foreground flex items-center justify-between px-4 py-2 text-xs font-medium">
           {languageControl ?? <span>{displayLanguage}</span>}
           <Button
             variant="ghost"
@@ -91,7 +92,7 @@ export function CodeBlock({
           >
             {copied ? (
               <>
-                <Check className="h-3 w-3 text-success" />
+                <Check className="text-success h-3 w-3" />
                 <span className="text-success">Copied</span>
               </>
             ) : (
@@ -107,29 +108,27 @@ export function CodeBlock({
         <Button
           variant="ghost"
           size="icon"
-          className="absolute right-2 top-2 z-10 h-7 w-7 opacity-0 transition-opacity group-hover:opacity-100"
+          className="absolute top-2 right-2 z-10 h-7 w-7 opacity-0 transition-opacity group-hover:opacity-100"
           onClick={copyToClipboard}
           aria-label={copied ? "Copied" : "Copy code"}
         >
           {copied ? (
-            <Check className="h-3.5 w-3.5 text-success" />
+            <Check className="text-success h-3.5 w-3.5" />
           ) : (
-            <Copy className="h-3.5 w-3.5 text-muted-foreground" />
+            <Copy className="text-muted-foreground h-3.5 w-3.5" />
           )}
         </Button>
       )}
       <div className="bg-muted/30 px-4 py-2 [&_pre]:p-0">
         {code ? (
-          highlighted ?? (
+          (highlighted ?? (
             <pre
               className="overflow-x-auto p-4"
               style={{ margin: 0, background: "transparent" }}
             >
-              <code className="font-mono text-sm leading-relaxed">
-                {code}
-              </code>
+              <code className="font-mono text-sm leading-relaxed">{code}</code>
             </pre>
-          )
+          ))
         ) : (
           <pre
             className="overflow-x-auto p-4"
@@ -150,7 +149,7 @@ export function InlineCode({
   return (
     <code
       className={cn(
-        "relative rounded-md bg-muted px-[0.3rem] py-[0.15rem] font-mono text-[0.85em] break-words",
+        "bg-muted relative rounded-md px-[0.3rem] py-[0.15rem] font-mono text-[0.85em] break-words",
         className
       )}
       {...props}
