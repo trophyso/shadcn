@@ -66,7 +66,7 @@ const StreakCard = React.forwardRef<HTMLDivElement, StreakCardProps>(
       >
         <header className="mb-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <Flame className="h-6 w-6 text-warning" aria-hidden="true" />
+            <Flame className="h-6 w-6 text-primary" aria-hidden="true" />
             <h3 className="text-2xl font-semibold leading-none">{title}</h3>
           </div>
           <button
@@ -137,7 +137,7 @@ const StreakCard = React.forwardRef<HTMLDivElement, StreakCardProps>(
                   const Icon = index === 0 ? CheckCircle2 : index === 1 ? Flame : RefreshCcw;
                   return (
                     <div key={`${item}-${index}`} className="flex items-start gap-3">
-                      <Icon className="mt-0.5 h-5 w-5 shrink-0 text-warning" aria-hidden="true" />
+                      <Icon className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                       <p className="text-lg leading-snug text-muted-foreground">{item}</p>
                     </div>
                   );

@@ -48,17 +48,6 @@ export async function generateMetadata(props: {
         },
       ],
     },
-    twitter: {
-      card: "summary_large_image",
-      title: doc.title,
-      description: doc.description,
-      images: [
-        {
-          url: `/og?title=${encodeURIComponent(doc.title)}&description=${encodeURIComponent(doc.description)}`,
-        },
-      ],
-      creator: "@trophyso",
-    },
   }
 }
 

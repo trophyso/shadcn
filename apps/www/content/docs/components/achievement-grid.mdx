@@ -144,7 +144,7 @@ import { AchievementGrid } from "@/components/ui/achievement-grid"
 />
 ```
 
-`AchievementGrid` composes the `AchievementBadge` component internally. For visual badge options such as size, locked styles, progress, rarity, and click handling, see [Achievement Badge](/docs/components/achievement-badge).
+`AchievementGrid` composes the `AchievementBadge` component internally. For visual badge options such as size, progress, rarity, and click handling, see [Achievement Badge](/docs/components/achievement-badge). Locked badges are determined by `achievedAt === null` on each item.
 
 ### Complete Example
 
@@ -209,7 +209,6 @@ Then pass the response into `AchievementGrid` props in your UI layer:
 | `columns` | `2 \| 3 \| 4 \| "auto"` | `"auto"` | Number of grid columns |
 | `gap` | `"sm" \| "default" \| "lg"` | `"default"` | Gap between grid items |
 | `badgeSize` | `"sm" \| "default" \| "lg"` | `"default"` | Size of achievement badges |
-| `lockedStyle` | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | How to display locked achievements |
 | `onAchievementClick` | `(achievement) => void` | - | Click handler for achievements |
 
 ### Types

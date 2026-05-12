@@ -21,7 +21,7 @@ const componentPreviewConfig: Record<string, ComponentPreviewConfig> = {
   "achievement-badge-sizes": {
     showCard: false,
   },
-  "achievement-badge-locked-styles": {
+  "achievement-badge-locked-state": {
     showCard: false,
   },
   "achievement-badge-series-progress": {

@@ -1,6 +1,4 @@
-import type { Metadata } from "next"
-
-import { META_THEME_COLORS, siteConfig } from "@/lib/config"
+import { META_THEME_COLORS } from "@/lib/config"
 import { fontVariables } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { LayoutProvider } from "@/hooks/use-layout"
@@ -9,51 +7,6 @@ import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
 import "@/styles/globals.css"
-
-export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
-  },
-  metadataBase: new URL(siteConfig.url),
-  description: siteConfig.description,
-  keywords: ["Trophy", "UI", "shadcn", "Components", "gamification", "streaks", "leaderboards", "achievements"],
-  authors: [
-    {
-      name: "Trophy",
-      url: "https://trophy.so",
-    },
-  ],
-  creator: "trophy",
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: siteConfig.url,
-    title: siteConfig.name,
-    description: siteConfig.description,
-    siteName: siteConfig.name,
-    images: [
-      {
-        url: `${siteConfig.url}/opengraph-image.png`,
-        width: 1200,
-        height: 630,
-        alt: siteConfig.name,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: siteConfig.name,
-    description: siteConfig.description,
-    images: [`${siteConfig.url}/opengraph-image.png`],
-    creator: "@trophyso",
-  },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
-  },
-}
 
 export default function RootLayout({
   children,

@@ -8,31 +8,27 @@ import {
 } from "@/components/page-header"
 import { HomeComponentMosaic } from "@/components/home-component-mosaic"
 import { Button } from "@/registry/trophy/ui/button"
+import { siteConfig } from "@/lib/config"
 
 export const dynamic = "force-static";
 export const revalidate = false;
 
-const title = "Trophy UI";
-const tagline = "Open Source gamification components";
-const description =
-  "A collection of Open Source gamification components that you can customize and extend."
-
 export const metadata: Metadata = {
   title: {
-    template: `%s | ${title}`,
-    default: `${tagline} | ${title}`,
+    template: `%s | ${siteConfig.title}`,
+    default: `${siteConfig.tagline} | ${siteConfig.title}`,
   },
-  description,
+  description: siteConfig.description,
   openGraph: {
-    title: `${tagline} | ${title}`,
-    description,
-    url: 'https://ui.trophy.so',
-    siteName: title,
-    images: [{ url: 'https://ui.trophy.so/og.png' }],
+    title: `${siteConfig.tagline} | ${siteConfig.title}`,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.title,
+    images: [{ url: siteConfig.ogImage }],
     locale: 'en_US',
     type: 'website',
   },
-  metadataBase: new URL('https://ui.trophy.so'),
+  metadataBase: new URL(siteConfig.url),
 };
 
 export default function IndexPage() {
@@ -58,7 +54,7 @@ export default function IndexPage() {
             </span>
           </PageHeaderHeading>
           <PageHeaderDescription>
-            {description}
+            {siteConfig.description}
           </PageHeaderDescription>
           <PageActions>
             <Button asChild size="sm">

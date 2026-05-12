@@ -121,37 +121,28 @@ import { AchievementBadge } from "@/components/ui/achievement-badge"
 />
 ```
 
-### Locked Styles
+### Locked State
 
-<ComponentPreview name="achievement-badge-locked-styles" />
+When `achievement.achievedAt` is `null`, the badge is shown in a locked state.
+
+<ComponentPreview name="achievement-badge-locked-state" />
 
 ```tsx
 <AchievementBadge
   achievement={{
-    id: "2",
-    name: "Perfectionist",
-    trigger: "metric",
-    achievedAt: null,
+    id: "badge-1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
   }}
-  lockedStyle="grayscale"
 />
 <AchievementBadge
   achievement={{
-    id: "2",
+    id: "badge-locked-1",
     name: "Perfectionist",
     trigger: "metric",
     achievedAt: null,
   }}
-  lockedStyle="silhouette"
-/>
-<AchievementBadge
-  achievement={{
-    id: "2",
-    name: "Perfectionist",
-    trigger: "metric",
-    achievedAt: null,
-  }}
-  lockedStyle="hidden"
 />
 ```
 
@@ -226,7 +217,6 @@ const achievement = response[0]
 |------|------|---------|-------------|
 | `achievement` | `UserAchievement` | Required | Achievement data for this badge |
 | `badgeSize` | `"sm" \| "default" \| "lg" \| "xl"` | `"default"` | Badge size |
-| `lockedStyle` | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | Locked state presentation |
 | `onAchievementClick` | `(achievement) => void` | - | Click handler |
 
 ### Types
@@ -242,6 +232,6 @@ interface Achievement {
 }
 
 interface UserAchievement extends Achievement {
-  achievedAt: string | null
+  achievedAt: string | null // null = locked
 }
 ```

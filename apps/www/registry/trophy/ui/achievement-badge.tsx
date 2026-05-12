@@ -15,13 +15,13 @@ interface Achievement {
 }
 
 interface UserAchievement extends Achievement {
+  /** ISO date when earned, or `null` if locked */
   achievedAt: string | null;
 }
 
 interface AchievementBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   achievement: UserAchievement;
   badgeSize?: "sm" | "default" | "lg" | "xl";
-  lockedStyle?: "grayscale" | "silhouette" | "hidden";
   onAchievementClick?: (achievement: UserAchievement) => void;
 }
 
@@ -52,17 +52,12 @@ const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>
       className,
       achievement,
       badgeSize = "default",
-      lockedStyle = "grayscale",
       onAchievementClick,
       ...props
     },
     ref
   ) => {
     const isUnlocked = achievement.achievedAt !== null;
-
-    if (!isUnlocked && lockedStyle === "hidden") {
-      return null;
-    }
 
     const hasProgress = isUnlocked && typeof achievement.progress === "number";
     const progress = hasProgress
@@ -102,7 +97,7 @@ const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>
         className={cn(
           "flex flex-col items-center justify-center gap-2 rounded-lg border bg-card p-4",
           onAchievementClick && "cursor-pointer",
-          !isUnlocked && lockedStyle === "grayscale" && "opacity-50",
+          !isUnlocked && "opacity-50",
           className
         )}
         {...props}
@@ -142,10 +137,7 @@ const AchievementBadge = React.forwardRef<HTMLDivElement, AchievementBadgeProps>
               className={cn(
                 badgeSizeMap[badgeSize],
                 "relative z-10 rounded-full object-cover",
-                !isUnlocked && lockedStyle === "grayscale" && "grayscale",
-                !isUnlocked &&
-                lockedStyle === "silhouette" &&
-                "brightness-0 opacity-30"
+                !isUnlocked && "grayscale"
               )}
             />
           ) : (

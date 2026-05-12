@@ -62,7 +62,6 @@ const AchievementCard = React.forwardRef<HTMLDivElement, AchievementCardProps>(
               key={achievement.id}
               achievement={achievement}
               badgeSize="sm"
-              lockedStyle={lockedStyle}
               onAchievementClick={onAchievementClick}
               className={cn(
                 "w-28 border-0 bg-transparent p-0 shadow-none hover:shadow-none",

@@ -51,8 +51,6 @@ interface AchievementGridProps
   achievements: UserAchievement[];
   /** Size of achievement badges */
   badgeSize?: "sm" | "default" | "lg";
-  /** Style for locked achievements */
-  lockedStyle?: "grayscale" | "silhouette" | "hidden";
   /** Callback when achievement clicked */
   onAchievementClick?: (achievement: UserAchievement) => void;
 }
@@ -65,7 +63,6 @@ const AchievementGrid = React.forwardRef<HTMLDivElement, AchievementGridProps>(
       gap,
       achievements,
       badgeSize = "default",
-      lockedStyle = "grayscale",
       onAchievementClick,
       ...props
     },
@@ -85,7 +82,6 @@ const AchievementGrid = React.forwardRef<HTMLDivElement, AchievementGridProps>(
               key={achievement.id}
               achievement={achievement}
               badgeSize={badgeSize}
-              lockedStyle={lockedStyle}
               onAchievementClick={onAchievementClick}
             />
           );

@@ -54,7 +54,7 @@ function createStreakHistoryWithVisibleFreeze() {
     history.push({
       periodStart: dateStr,
       periodEnd: dateStr,
-      usedFreeze: i === 0,
+      usedFreeze: true,
     })
   }
   return history
@@ -503,6 +503,13 @@ const achievementGridCompletePreviewItems = [
   },
 ]
 
+const achievementBadgeLockedPreviewItem = {
+  id: "badge-locked-1",
+  name: "Perfectionist",
+  trigger: "metric" as const,
+  achievedAt: null,
+}
+
 const achievementBadgePreviewItem = {
   id: "badge-1",
   name: "Consistency I",
@@ -897,49 +904,28 @@ export const componentExamples: Record<string, ComponentExampleConfig> = {
   badgeSize="xl"
 />`,
   },
-  "achievement-badge-locked-styles": {
+  "achievement-badge-locked-state": {
     component: (
       <div className="flex flex-wrap items-center gap-4">
-        <AchievementBadge
-          achievement={achievementGridLockedPreviewItems[5]}
-          lockedStyle="grayscale"
-        />
-        <AchievementBadge
-          achievement={achievementGridLockedPreviewItems[5]}
-          lockedStyle="silhouette"
-        />
-        <AchievementBadge
-          achievement={achievementGridLockedPreviewItems[5]}
-          lockedStyle="hidden"
-        />
+        <AchievementBadge achievement={achievementBadgePreviewItem} />
+        <AchievementBadge achievement={achievementBadgeLockedPreviewItem} />
       </div>
     ),
     code: `<AchievementBadge
   achievement={{
-    id: "2",
-    name: "Perfectionist",
-    trigger: "metric",
-    achievedAt: null,
+    id: "badge-1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
   }}
-  lockedStyle="grayscale"
 />
 <AchievementBadge
   achievement={{
-    id: "2",
+    id: "badge-locked-1",
     name: "Perfectionist",
     trigger: "metric",
     achievedAt: null,
   }}
-  lockedStyle="silhouette"
-/>
-<AchievementBadge
-  achievement={{
-    id: "2",
-    name: "Perfectionist",
-    trigger: "metric",
-    achievedAt: null,
-  }}
-  lockedStyle="hidden"
 />`,
   },
   "achievement-badge-series-progress": {

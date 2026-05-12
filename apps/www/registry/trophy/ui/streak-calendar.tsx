@@ -302,13 +302,13 @@ const StreakCalendar = React.forwardRef<HTMLDivElement, StreakCalendarProps>(
                     onClick={() => onDayClick?.(date, isActive)}
                     disabled={isFuture}
                     className={cn(
-                      "relative aspect-square flex items-center justify-center rounded-md text-sm transition-colors",
-                      "hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                      isToday && "ring-2 ring-primary",
+                      "relative aspect-square flex items-center justify-center rounded-lg text-sm transition-colors",
+                      "hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring p-1",
+                      isToday && "ring-2 ring-inset ring-primary !bg-primary-foreground !text-primary",
                       isFuture && "text-muted-foreground/50 cursor-not-allowed",
                       isActive &&
                       !usedFreeze &&
-                      "bg-warning text-warning-foreground hover:bg-warning/90",
+                      "bg-primary text-primary-foreground hover:bg-primary/90",
                       usedFreeze &&
                       "bg-[var(--freeze-color)] text-[var(--freeze-foreground-color)] hover:opacity-90",
                     )}
@@ -341,15 +341,15 @@ const StreakCalendar = React.forwardRef<HTMLDivElement, StreakCalendarProps>(
                     onClick={() => onDayClick?.(date, isActive)}
                     disabled={isFuture}
                     className={cn(
-                      "relative flex h-12 w-12 items-center justify-center rounded-full border transition-colors",
+                      "relative flex h-12 w-12 items-center justify-center rounded-full border border-2 transition-colors",
                       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                       !isFuture && "hover:opacity-90",
-                      isToday && "ring-2 ring-primary ring-offset-2",
+                      isToday && "!bg-primary-foreground !text-primary",
                       isFuture &&
                       "cursor-not-allowed border-border/40 bg-muted/20 text-muted-foreground/40",
                       isActive &&
                       !usedFreeze &&
-                      "border-warning bg-warning text-warning-foreground",
+                      "border-primary bg-primary text-primary-foreground",
                       usedFreeze &&
                       "border-[var(--freeze-color)] bg-[var(--freeze-color)] text-[var(--freeze-foreground-color)]",
                       !isActive && !usedFreeze && !isFuture && "border-border/60 bg-muted/30",
@@ -357,9 +357,9 @@ const StreakCalendar = React.forwardRef<HTMLDivElement, StreakCalendarProps>(
                     style={usedFreeze ? freezeColorStyles : undefined}
                   >
                     {usedFreeze ? (
-                      <Snowflake className="h-5 w-5" />
+                      <Snowflake className={cn("h-5 w-5", isToday && "!text-muted-foreground/20")} />
                     ) : (
-                      isActive && <Check className="h-5 w-5" />
+                      isActive && <Check className={cn("h-5 w-5", isToday && "!text-muted-foreground/20")} />
                     )}
                   </button>
                   <span
@@ -432,8 +432,8 @@ const StreakCalendar = React.forwardRef<HTMLDivElement, StreakCalendarProps>(
                               className={cn(
                                 "h-4 w-4 rounded-[0.4rem] border border-border/40 transition-colors",
                                 "hover:ring-1 hover:ring-ring",
-                                isToday && "ring-1 ring-primary",
-                                isActive && !usedFreeze && "bg-warning border-warning/80",
+                                isToday && "!bg-primary-foreground !text-primary border-primary",
+                                isActive && !usedFreeze && "bg-primary border-primary/80",
                                 usedFreeze &&
                                 "bg-[var(--freeze-color)] border-[var(--freeze-color)]",
                                 !isActive && !usedFreeze && "bg-muted/40",
