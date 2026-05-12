@@ -9,36 +9,31 @@ import {
 import { HomeComponentMosaic } from "@/components/home-component-mosaic"
 import { Button } from "@/registry/trophy/ui/button"
 
-const title = "Trophy UI"
+export const dynamic = "force-static";
+export const revalidate = false;
+
+const title = "Trophy UI";
+const tagline = "Open Source gamification components";
 const description =
   "A collection of Open Source gamification components that you can customize and extend."
 
-export const dynamic = "force-static"
-export const revalidate = false
-
 export const metadata: Metadata = {
-  title,
+  title: {
+    template: `%s | ${title}`,
+    default: `${tagline} | ${title}`,
+  },
   description,
   openGraph: {
-    images: [
-      {
-        url: `/og?title=${encodeURIComponent(
-          title
-        )}&description=${encodeURIComponent(description)}`,
-      },
-    ],
+    title: `${tagline} | ${title}`,
+    description,
+    url: 'https://ui.trophy.so',
+    siteName: title,
+    images: [{ url: 'https://ui.trophy.so/og.png' }],
+    locale: 'en_US',
+    type: 'website',
   },
-  twitter: {
-    card: "summary_large_image",
-    images: [
-      {
-        url: `/og?title=${encodeURIComponent(
-          title
-        )}&description=${encodeURIComponent(description)}`,
-      },
-    ],
-  },
-}
+  metadataBase: new URL('https://ui.trophy.so'),
+};
 
 export default function IndexPage() {
   return (
@@ -55,14 +50,16 @@ export default function IndexPage() {
           <PageHeaderHeading className="max-w-4xl">
             <span className="flex items-baseline gap-2 sm:gap-3 font-montserrat">
               <span className="leading-[0.95] font-bold tracking-[-0.03em]">
-                Gamification UI Kit
+                Trophy
               </span>
               <span className="font-normal tracking-[-0.02em] opacity-90">
-                from <a href="https://trophy.so" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Trophy</a>
+                UI
               </span>
             </span>
           </PageHeaderHeading>
-          <PageHeaderDescription>{description}</PageHeaderDescription>
+          <PageHeaderDescription>
+            {description}
+          </PageHeaderDescription>
           <PageActions>
             <Button asChild size="sm">
               <Link href="/docs">Get Started</Link>
