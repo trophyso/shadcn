@@ -53,10 +53,10 @@ import { PointsBoost } from "@/components/ui/points-boost"
     status: "active",
     description: "Earn extra points for all tracked actions",
     multiplier: 2,
-    cta: {
-      link: "#",
-      text: "Activate boost",
-    },
+  }}
+  cta={{
+    link: "#",
+    text: "Activate boost",
   }}
 />
 ```
@@ -74,10 +74,10 @@ import { PointsBoost } from "@/components/ui/points-boost"
     status: "active",
     description: "Earn extra points for all tracked actions",
     multiplier: 2,
-    cta: {
-      link: "#",
-      text: "Activate boost",
-    },
+  }}
+  cta={{
+    link: "#",
+    text: "Activate boost",
   }}
 />
 ```
@@ -95,13 +95,13 @@ Pass `endDate` to enable the countdown label.
     status: "active",
     description: "Boost expires soon — activate now to maximize your points.",
     multiplier: 3,
-    cta: {
-      link: "#",
-      text: "Activate now",
-    },
     endDate: new Date(
       Date.now() + 1000 * 60 * 60 * 11 + 1000 * 60 * 29 + 1000 * 36
     ).toISOString(),
+  }}
+  cta={{
+    link: "#",
+    text: "Activate now",
   }}
 />
 ```
@@ -126,14 +126,12 @@ const boost = activeOrScheduledBoost && {
   status: activeOrScheduledBoost.status,
   multiplier: activeOrScheduledBoost.multiplier,
   endDate: activeOrScheduledBoost.end ?? undefined,
-  cta: {
-    link: "/rewards",
-    text: "View boost",
-  },
 }
 
 {
-  boost ? <PointsBoost boost={boost} /> : null
+  boost ? (
+    <PointsBoost boost={boost} cta={{ link: "/rewards", text: "View boost" }} />
+  ) : null
 }
 ```
 
@@ -144,6 +142,7 @@ const boost = activeOrScheduledBoost && {
 | Prop    | Type              | Default  | Description                 |
 | ------- | ----------------- | -------- | --------------------------- |
 | `boost` | `PointsBoostData` | Required | Boost content configuration |
+| `cta`   | `PointsBoostCta`  | Required | Call-to-action link config  |
 
 ### Types
 
@@ -160,7 +159,6 @@ interface PointsBoostData {
   status: PointsBoostStatus
   description?: string
   multiplier: number
-  cta: PointsBoostCta
   endDate?: string | Date
 }
 ```

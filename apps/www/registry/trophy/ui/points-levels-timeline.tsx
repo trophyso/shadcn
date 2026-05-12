@@ -5,23 +5,23 @@ import { Star } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-export interface PointsSubLevel {
+export interface PointsSubLevelTimeline {
   name: string
   points: number
 }
 
-export interface PointsLevel {
+export interface PointsLevelTimeline {
   id: string
   key?: string
   name: string
   description?: string
   badgeUrl?: string | null
   points: number
-  subLevels?: PointsSubLevel[]
+  subLevels?: PointsSubLevelTimeline[]
 }
 
-interface PointsLevelsProps extends React.HTMLAttributes<HTMLDivElement> {
-  levels: PointsLevel[]
+interface PointsLevelsTimelineProps extends React.HTMLAttributes<HTMLDivElement> {
+  levels: PointsLevelTimeline[]
   currentPoints?: number
   currentLevelLabel?: string
   formatPoints?: (value: number) => string
@@ -39,7 +39,10 @@ function formatRangeLabel(
   return `${format(points)}+ XP`
 }
 
-const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
+const PointsLevelsTimeline = React.forwardRef<
+  HTMLDivElement,
+  PointsLevelsTimelineProps
+>(
   (
     {
       className,
@@ -205,7 +208,7 @@ const PointsLevels = React.forwardRef<HTMLDivElement, PointsLevelsProps>(
   }
 )
 
-PointsLevels.displayName = "PointsLevels"
+PointsLevelsTimeline.displayName = "PointsLevelsTimeline"
 
-export { PointsLevels }
-export type { PointsLevelsProps }
+export { PointsLevelsTimeline }
+export type { PointsLevelsTimelineProps }

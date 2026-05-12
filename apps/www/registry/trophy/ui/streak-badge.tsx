@@ -78,7 +78,7 @@ const StreakBadge = React.forwardRef<HTMLDivElement, StreakBadgeProps>(
       lg: "text-base",
     }[size ?? "default"]
 
-    const subtitleText = subtitle ?? `${pluralLabel} streak`
+    const subtitleText = subtitle ?? "streak"
     const valueUnit = pluralLabel
 
     // Build accessible label

@@ -14,8 +14,8 @@ import { PointsAwards } from "@/registry/trophy/ui/points-awards"
 import { PointsBadge } from "@/registry/trophy/ui/points-badge"
 import { PointsBoost } from "@/registry/trophy/ui/points-boost"
 import { PointsChart } from "@/registry/trophy/ui/points-chart"
-import { PointsLevels } from "@/registry/trophy/ui/points-levels"
-import { PointsLevelsSimple } from "@/registry/trophy/ui/points-levels-simple"
+import { PointsLevelsList } from "@/registry/trophy/ui/points-levels-list"
+import { PointsLevelsTimeline } from "@/registry/trophy/ui/points-levels-timeline"
 import { StreakBadge } from "@/registry/trophy/ui/streak-badge"
 import { StreakCalendar } from "@/registry/trophy/ui/streak-calendar"
 import { StreakCard } from "@/registry/trophy/ui/streak-card"
@@ -2462,10 +2462,10 @@ const datasets = {
   ]}
 />`,
   },
-  "points-levels-simple": {
+  "points-levels-list": {
     component: (
       <div className="w-full max-w-6xl">
-        <PointsLevelsSimple
+        <PointsLevelsList
           levels={[
             {
               id: "beginner",
@@ -2504,7 +2504,7 @@ const datasets = {
         />
       </div>
     ),
-    code: `<PointsLevelsSimple
+    code: `<PointsLevelsList
   levels={[
     { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
     { id: "novice", points: 500, name: "Novice", iconType: "novice" },
@@ -2517,10 +2517,10 @@ const datasets = {
   ]}
 />`,
   },
-  "points-levels-simple-current-level": {
+  "points-levels-list-current-level": {
     component: (
       <div className="w-full max-w-6xl">
-        <PointsLevelsSimple
+        <PointsLevelsList
           currentPoints={6200}
           levels={[
             {
@@ -2560,7 +2560,7 @@ const datasets = {
         />
       </div>
     ),
-    code: `<PointsLevelsSimple
+    code: `<PointsLevelsList
   currentPoints={6200}
   levels={[
     { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
@@ -2574,10 +2574,10 @@ const datasets = {
   ]}
 />`,
   },
-  "points-levels-simple-progress": {
+  "points-levels-list-progress": {
     component: (
       <div className="w-full max-w-6xl">
-        <PointsLevelsSimple
+        <PointsLevelsList
           currentPoints={6200}
           showProgressBar
           levels={[
@@ -2618,7 +2618,7 @@ const datasets = {
         />
       </div>
     ),
-    code: `<PointsLevelsSimple
+    code: `<PointsLevelsList
   currentPoints={6200}
   showProgressBar
   levels={[
@@ -2633,10 +2633,10 @@ const datasets = {
   ]}
 />`,
   },
-  "points-levels": {
+  "points-levels-timeline": {
     component: (
       <div className="w-full max-w-6xl">
-        <PointsLevels
+        <PointsLevelsTimeline
           levels={[
             { id: "bronze", name: "Bronze", points: 75 },
             { id: "silver", name: "Silver", points: 150 },
@@ -2645,7 +2645,7 @@ const datasets = {
         />
       </div>
     ),
-    code: `<PointsLevels
+    code: `<PointsLevelsTimeline
   levels={[
     { id: "bronze", name: "Bronze", points: 75 },
     { id: "silver", name: "Silver", points: 150 },
@@ -2653,10 +2653,10 @@ const datasets = {
   ]}
 />`,
   },
-  "points-levels-sub-levels": {
+  "points-levels-timeline-sub-levels": {
     component: (
       <div className="w-full max-w-6xl">
-        <PointsLevels
+        <PointsLevelsTimeline
           levels={[
             {
               id: "bronze",
@@ -2682,7 +2682,7 @@ const datasets = {
         />
       </div>
     ),
-    code: `<PointsLevels
+    code: `<PointsLevelsTimeline
   levels={[
     {
       id: "bronze",
@@ -2707,10 +2707,10 @@ const datasets = {
   ]}
 />`,
   },
-  "points-levels-progress-tracking": {
+  "points-levels-timeline-progress-tracking": {
     component: (
       <div className="w-full max-w-6xl">
-        <PointsLevels
+        <PointsLevelsTimeline
           currentPoints={136}
           levels={[
             {
@@ -2738,7 +2738,7 @@ const datasets = {
         />
       </div>
     ),
-    code: `<PointsLevels
+    code: `<PointsLevelsTimeline
   currentPoints={136}
   levels={[
     {
@@ -2774,10 +2774,10 @@ const datasets = {
             status: "active",
             description: "Earn extra points for all tracked actions",
             multiplier: 2,
-            cta: {
-              link: "#",
-              text: "Activate boost",
-            },
+          }}
+          cta={{
+            link: "#",
+            text: "Activate boost",
           }}
         />
       </div>
@@ -2788,10 +2788,10 @@ const datasets = {
     status: "active",
     description: "Earn extra points for all tracked actions",
     multiplier: 2,
-    cta: {
-      link: "#",
-      text: "Activate boost",
-    },
+  }}
+  cta={{
+    link: "#",
+    text: "Activate boost",
   }}
 />`,
   },
@@ -2805,13 +2805,13 @@ const datasets = {
             description:
               "Boost expires soon, activate now to maximize your points",
             multiplier: 3,
-            cta: {
-              link: "#",
-              text: "Activate now",
-            },
             endDate: new Date(
               Date.now() + 1000 * 60 * 60 * 11 + 1000 * 60 * 29 + 1000 * 36
             ).toISOString(),
+          }}
+          cta={{
+            link: "#",
+            text: "Activate now",
           }}
         />
       </div>
@@ -2822,11 +2822,11 @@ const datasets = {
     status: "active",
     description: "Boost expires soon, activate now to maximize your points",
     multiplier: 3,
-    cta: {
-      link: "#",
-      text: "Activate now",
-    },
     endDate: new Date(Date.now() + 1000 * 60 * 60 * 11 + 1000 * 60 * 29 + 1000 * 36).toISOString(),
+  }}
+  cta={{
+    link: "#",
+    text: "Activate now",
   }}
 />`,
   },

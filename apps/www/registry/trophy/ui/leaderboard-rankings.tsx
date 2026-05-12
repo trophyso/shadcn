@@ -12,6 +12,7 @@ import {
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+
 import { Button } from "./button"
 
 interface LeaderboardRankingItem {
@@ -155,19 +156,19 @@ const LeaderboardRankings = React.forwardRef<
                 onKeyDown={
                   onUserClick
                     ? (e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault()
-                        onUserClick(ranking)
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault()
+                          onUserClick(ranking)
+                        }
                       }
-                    }
                     : undefined
                 }
                 className={cn(
                   "flex items-center gap-2 px-4 py-2",
                   isCurrentUser &&
-                  "border-primary bg-muted rounded-md border-2",
+                    "border-primary bg-muted rounded-md border-2",
                   onUserClick &&
-                  "hover:bg-muted/40 cursor-pointer transition-colors"
+                    "hover:bg-muted/40 cursor-pointer transition-colors"
                 )}
               >
                 <div className="flex w-12 items-center gap-1">
@@ -209,7 +210,7 @@ const LeaderboardRankings = React.forwardRef<
 
                 <div className="flex items-center gap-2 text-right">
                   {typeof ranking.rankChange === "number" &&
-                    ranking.rankChange !== 0 ? (
+                  ranking.rankChange !== 0 ? (
                     <p
                       className={cn(
                         "inline-flex items-center gap-1 text-xs font-medium",
@@ -242,7 +243,7 @@ const LeaderboardRankings = React.forwardRef<
         </div>
 
         {showPagination ? (
-          <div className="flex items-center justify-between gap-3 border-t py-2 px-4">
+          <div className="flex items-center justify-between gap-3 border-t px-4 py-2">
             <div className="flex items-center gap-2">
               <label
                 htmlFor="leaderboard-page-size"

@@ -1,9 +1,9 @@
 ---
-title: Points Levels
+title: Points Levels Timeline
 description: A vertical levels timeline with optional sub-level details and progress tracking.
 ---
 
-<ComponentPreview name="points-levels" />
+<ComponentPreview name="points-levels-timeline" />
 
 ## Installation
 
@@ -17,7 +17,7 @@ description: A vertical levels timeline with optional sub-level details and prog
 <TabsContent value="cli">
 
 ```bash
-npx shadcn@latest add https://ui.trophy.so/points-levels
+npx shadcn@latest add https://ui.trophy.so/points-levels-timeline
 ```
 
 </TabsContent>
@@ -28,7 +28,7 @@ npx shadcn@latest add https://ui.trophy.so/points-levels
 
 <Step>Copy and paste the following code into your project.</Step>
 
-<ComponentSource name="points-levels" />
+<ComponentSource name="points-levels-timeline" />
 
 <Step>Update the import paths to match your project setup.</Step>
 
@@ -43,17 +43,17 @@ npx shadcn@latest add https://ui.trophy.so/points-levels
 Import the component:
 
 ```tsx
-import { PointsLevels } from "@/components/ui/points-levels"
+import { PointsLevelsTimeline } from "@/components/ui/points-levels-timeline"
 ```
 
 ## Examples
 
 ### Basic Usage
 
-<ComponentPreview name="points-levels" />
+<ComponentPreview name="points-levels-timeline" />
 
 ```tsx
-<PointsLevels
+<PointsLevelsTimeline
   levels={[
     { id: "bronze", name: "Bronze", points: 75 },
     { id: "silver", name: "Silver", points: 150 },
@@ -64,10 +64,10 @@ import { PointsLevels } from "@/components/ui/points-levels"
 
 ### With Sub-levels
 
-<ComponentPreview name="points-levels-sub-levels" />
+<ComponentPreview name="points-levels-timeline-sub-levels" />
 
 ```tsx
-<PointsLevels
+<PointsLevelsTimeline
   levels={[
     {
       id: "bronze",
@@ -95,10 +95,10 @@ import { PointsLevels } from "@/components/ui/points-levels"
 
 ### Progress Tracking
 
-<ComponentPreview name="points-levels-progress-tracking" />
+<ComponentPreview name="points-levels-timeline-progress-tracking" />
 
 ```tsx
-<PointsLevels
+<PointsLevelsTimeline
   currentPoints={136}
   levels={[
     {
@@ -144,7 +144,7 @@ Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to f
   endpoint="/points/{key}/levels"
 />
 
-Then aggregate both responses and pass them into `PointsLevels` props in your UI layer. Trophy does not support sub-levels yet.
+Then aggregate both responses and pass them into `PointsLevelsTimeline` props in your UI layer. Trophy does not support sub-levels yet.
 
 ```tsx
 const currentPoints = userPointsResponse.total
@@ -154,7 +154,7 @@ const levels = (pointsLevelsResponse.levels ?? []).map((level) => ({
   subLevels: [],
 }))
 
-<PointsLevels levels={levels} currentPoints={currentPoints} />
+<PointsLevelsTimeline levels={levels} currentPoints={currentPoints} />
 ```
 
 ## API Reference
@@ -163,7 +163,7 @@ const levels = (pointsLevelsResponse.levels ?? []).map((level) => ({
 
 | Prop                | Type                        | Default     | Description                                            |
 | ------------------- | --------------------------- | ----------- | ------------------------------------------------------ |
-| `levels`            | `PointsLevel[]`             | Required    | Vertical list of levels                                |
+| `levels`            | `PointsLevelTimeline[]`     | Required    | Vertical list of levels                                |
 | `currentPoints`     | `number`                    | -           | User total used to derive current level and progress   |
 | `currentLevelLabel` | `string`                    | `"Current"` | Label shown next to the current level                  |
 | `formatPoints`      | `(value: number) => string` | -           | Optional formatter used when rendering computed ranges |
@@ -171,18 +171,18 @@ const levels = (pointsLevelsResponse.levels ?? []).map((level) => ({
 ### Types
 
 ```ts
-interface PointsSubLevel {
+interface PointsSubLevelTimeline {
   name: string
   points: number
 }
 
-interface PointsLevel {
+interface PointsLevelTimeline {
   id: string
   key?: string
   name: string
   description?: string
   badgeUrl?: string | null
   points: number
-  subLevels?: PointsSubLevel[]
+  subLevels?: PointsSubLevelTimeline[]
 }
 ```

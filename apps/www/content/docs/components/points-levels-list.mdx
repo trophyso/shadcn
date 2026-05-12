@@ -1,9 +1,9 @@
 ---
-title: Points Levels (Simple)
+title: Points Levels List
 description: A compact points levels table with optional current-level label and progress header.
 ---
 
-<ComponentPreview name="points-levels-simple" />
+<ComponentPreview name="points-levels-list" />
 
 ## Installation
 
@@ -17,7 +17,7 @@ description: A compact points levels table with optional current-level label and
 <TabsContent value="cli">
 
 ```bash
-npx shadcn@latest add https://ui.trophy.so/points-levels-simple
+npx shadcn@latest add https://ui.trophy.so/points-levels-list
 ```
 
 </TabsContent>
@@ -28,7 +28,7 @@ npx shadcn@latest add https://ui.trophy.so/points-levels-simple
 
 <Step>Copy and paste the following code into your project.</Step>
 
-<ComponentSource name="points-levels-simple" />
+<ComponentSource name="points-levels-list" />
 
 <Step>Update the import paths to match your project setup.</Step>
 
@@ -41,11 +41,11 @@ npx shadcn@latest add https://ui.trophy.so/points-levels-simple
 ## Usage
 
 ```tsx
-import { PointsLevelsSimple } from "@/components/ui/points-levels-simple"
+import { PointsLevelsList } from "@/components/ui/points-levels-list"
 ```
 
 ```tsx
-<PointsLevelsSimple
+<PointsLevelsList
   levels={[
     { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
     { id: "novice", points: 500, name: "Novice", iconType: "novice" },
@@ -83,10 +83,10 @@ import { PointsLevelsSimple } from "@/components/ui/points-levels-simple"
 
 ### Basic Usage
 
-<ComponentPreview name="points-levels-simple" />
+<ComponentPreview name="points-levels-list" />
 
 ```tsx
-<PointsLevelsSimple
+<PointsLevelsList
   levels={[
     { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
     { id: "novice", points: 500, name: "Novice", iconType: "novice" },
@@ -122,10 +122,10 @@ import { PointsLevelsSimple } from "@/components/ui/points-levels-simple"
 
 ### Current Level
 
-<ComponentPreview name="points-levels-simple-current-level" />
+<ComponentPreview name="points-levels-list-current-level" />
 
 ```tsx
-<PointsLevelsSimple
+<PointsLevelsList
   currentPoints={6200}
   levels={[
     { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
@@ -162,10 +162,10 @@ import { PointsLevelsSimple } from "@/components/ui/points-levels-simple"
 
 ### With Progress
 
-<ComponentPreview name="points-levels-simple-progress" />
+<ComponentPreview name="points-levels-list-progress" />
 
 ```tsx
-<PointsLevelsSimple
+<PointsLevelsList
   currentPoints={6200}
   showProgressBar
   levels={[
@@ -219,7 +219,7 @@ Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to f
   endpoint="/points/{key}/levels"
 />
 
-Then aggregate both responses and pass them into `PointsLevelsSimple` props in your UI layer. Trophy does not support sub-levels yet.
+Then aggregate both responses and pass them into `PointsLevelsList` props in your UI layer. Trophy does not support sub-levels yet.
 
 ```tsx
 const currentPoints = userPointsResponse.total
@@ -229,7 +229,7 @@ const levels = (pointsLevelsResponse.levels ?? []).map((level) => ({
   subLevels: [],
 }))
 
-<PointsLevelsSimple
+<PointsLevelsList
   levels={levels}
   currentPoints={currentPoints}
   showProgressBar
@@ -242,7 +242,7 @@ const levels = (pointsLevelsResponse.levels ?? []).map((level) => ({
 
 | Prop                | Type                        | Default                | Description                                                                     |
 | ------------------- | --------------------------- | ---------------------- | ------------------------------------------------------------------------------- |
-| `levels`            | `PointsLevelSimple[]`       | Required               | Ordered level definitions used to render point tiers and labels                 |
+| `levels`            | `PointsLevelList[]`         | Required               | Ordered level definitions used to render point tiers and labels                 |
 | `currentPoints`     | `number`                    | -                      | User points total used to determine current level and progress                  |
 | `showProgressBar`   | `boolean`                   | `false`                | Shows a progress header toward the next level when `currentPoints` is available |
 | `currentLevelLabel` | `string`                    | `"Your current level"` | Label shown on the active row                                                   |
@@ -251,7 +251,7 @@ const levels = (pointsLevelsResponse.levels ?? []).map((level) => ({
 ### Types
 
 ```ts
-type PointsLevelSimpleIconType =
+type PointsLevelListIconType =
   | "beginner"
   | "novice"
   | "intermediate"
@@ -261,19 +261,19 @@ type PointsLevelSimpleIconType =
   | "grand-master"
   | "enlightened"
 
-interface PointsSubLevelSimple {
+interface PointsSubLevelList {
   name: string
   points: number
 }
 
-interface PointsLevelSimple {
+interface PointsLevelList {
   id: string
   key?: string
   name: string
   description?: string
   badgeUrl?: string | null
   points: number
-  iconType?: PointsLevelSimpleIconType
-  subLevels?: PointsSubLevelSimple[]
+  iconType?: PointsLevelListIconType
+  subLevels?: PointsSubLevelList[]
 }
 ```

@@ -8,6 +8,7 @@ import {
   AchievementBadge,
   type UserAchievement,
 } from "@/registry/trophy/ui/achievement-badge"
+
 import { Button } from "./button"
 
 // Types (inlined - only fields used by this component)
@@ -172,11 +173,7 @@ const AchievementUnlocked = React.forwardRef<
                 </Button>
               )}
 
-              <Button
-                onClick={() => onOpenChange(false)}
-              >
-                Awesome!
-              </Button>
+              <Button onClick={() => onOpenChange(false)}>Awesome!</Button>
             </div>
           </div>
         </div>

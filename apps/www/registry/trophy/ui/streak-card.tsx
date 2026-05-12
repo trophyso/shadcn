@@ -14,6 +14,7 @@ import {
   StreakCalendar,
   type StreakPeriod,
 } from "@/registry/trophy/ui/streak-calendar"
+
 import { Button } from "./button"
 
 interface StreakCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -86,7 +87,7 @@ const StreakCard = React.forwardRef<HTMLDivElement, StreakCardProps>(
             size="sm"
             onClick={onActionClick}
             aria-label={actionLabel}
-            className="text-muted-foreground text-sm font-medium transition-colors hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
           >
             {actionLabel}
           </Button>

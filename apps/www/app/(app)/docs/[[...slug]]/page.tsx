@@ -162,7 +162,7 @@ export default async function DocsPage(props: {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <GitFork className="size-4" /> Suggest a component
+              <GitFork className="size-4" /> Contribute
             </Link>
           </Button>
         </div>

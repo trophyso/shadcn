@@ -14,7 +14,7 @@ import {
 
 import { cn } from "@/lib/utils"
 
-export type PointsLevelSimpleIconType =
+export type PointsLevelListIconType =
   | "beginner"
   | "novice"
   | "intermediate"
@@ -24,41 +24,40 @@ export type PointsLevelSimpleIconType =
   | "grand-master"
   | "enlightened"
 
-export interface PointsSubLevelSimple {
+export interface PointsSubLevelList {
   name: string
   points: number
 }
 
-export interface PointsLevelSimple {
+export interface PointsLevelList {
   id: string
   key?: string
   name: string
   description?: string
   badgeUrl?: string | null
   points: number
-  iconType?: PointsLevelSimpleIconType
-  subLevels?: PointsSubLevelSimple[]
+  iconType?: PointsLevelListIconType
+  subLevels?: PointsSubLevelList[]
 }
 
-interface PointsLevelsSimpleProps extends React.HTMLAttributes<HTMLDivElement> {
-  levels: PointsLevelSimple[]
+interface PointsLevelsListProps extends React.HTMLAttributes<HTMLDivElement> {
+  levels: PointsLevelList[]
   currentPoints?: number
   showProgressBar?: boolean
   currentLevelLabel?: string
   formatPoints?: (value: number) => string
 }
 
-const pointsLevelSimpleIconMap: Record<PointsLevelSimpleIconType, LucideIcon> =
-  {
-    beginner: Shield,
-    novice: ShieldHalf,
-    intermediate: BadgeCheck,
-    professional: ShieldCheck,
-    expert: Medal,
-    master: Trophy,
-    "grand-master": Trophy,
-    enlightened: Sparkles,
-  }
+const pointsLevelListIconMap: Record<PointsLevelListIconType, LucideIcon> = {
+  beginner: Shield,
+  novice: ShieldHalf,
+  intermediate: BadgeCheck,
+  professional: ShieldCheck,
+  expert: Medal,
+  master: Trophy,
+  "grand-master": Trophy,
+  enlightened: Sparkles,
+}
 
 function formatRange(
   points: number,
@@ -72,9 +71,9 @@ function formatRange(
   return `${format(points)}+`
 }
 
-const PointsLevelsSimple = React.forwardRef<
+const PointsLevelsList = React.forwardRef<
   HTMLDivElement,
-  PointsLevelsSimpleProps
+  PointsLevelsListProps
 >(
   (
     {
@@ -142,7 +141,7 @@ const PointsLevelsSimple = React.forwardRef<
                 className="bg-foreground text-background inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
               >
                 {React.createElement(
-                  pointsLevelSimpleIconMap[currentLevel.iconType ?? "beginner"],
+                  pointsLevelListIconMap[currentLevel.iconType ?? "beginner"],
                   {
                     className: "h-4 w-4",
                   }
@@ -166,7 +165,7 @@ const PointsLevelsSimple = React.forwardRef<
                 className="bg-foreground text-background inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
               >
                 {React.createElement(
-                  pointsLevelSimpleIconMap[nextLevel.iconType ?? "beginner"],
+                  pointsLevelListIconMap[nextLevel.iconType ?? "beginner"],
                   {
                     className: "h-4 w-4",
                   }
@@ -181,7 +180,7 @@ const PointsLevelsSimple = React.forwardRef<
           className="divide-border divide-y"
         >
           {levels.map((level, index) => {
-            const Icon = pointsLevelSimpleIconMap[level.iconType ?? "beginner"]
+            const Icon = pointsLevelListIconMap[level.iconType ?? "beginner"]
             const nextLevelPoints =
               index < levels.length - 1 ? levels[index + 1].points : null
 
@@ -228,7 +227,7 @@ const PointsLevelsSimple = React.forwardRef<
   }
 )
 
-PointsLevelsSimple.displayName = "PointsLevelsSimple"
+PointsLevelsList.displayName = "PointsLevelsList"
 
-export { PointsLevelsSimple }
-export type { PointsLevelsSimpleProps }
+export { PointsLevelsList }
+export type { PointsLevelsListProps }

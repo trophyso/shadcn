@@ -14,8 +14,8 @@
     "points-badge",
     "points-boost",
     "points-chart",
-    "points-levels",
-    "points-levels-simple",
+    "points-levels-list",
+    "points-levels-timeline",
     "streak-badge",
     "streak-calendar",
     "streak-card"

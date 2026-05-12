@@ -13,7 +13,7 @@ import { PointsAwards } from "@/registry/trophy/ui/points-awards"
 import { PointsBadge } from "@/registry/trophy/ui/points-badge"
 import { PointsBoost } from "@/registry/trophy/ui/points-boost"
 import { PointsChart } from "@/registry/trophy/ui/points-chart"
-import { PointsLevelsSimple } from "@/registry/trophy/ui/points-levels-simple"
+import { PointsLevelsList } from "@/registry/trophy/ui/points-levels-list"
 import { StreakBadge } from "@/registry/trophy/ui/streak-badge"
 
 const chartData7Days = (() => {
@@ -492,7 +492,7 @@ export function HomeComponentMosaic() {
           </div>
 
           <div className="overflow-hidden md:col-span-3">
-            <PointsLevelsSimple
+            <PointsLevelsList
               levels={levels}
               className="py-2 [&_[role=listitem]]:grid-cols-[8rem_1fr_auto] [&_[role=listitem]]:px-3 [&_[role=listitem]]:py-2.5 [&_[role=listitem]]:pr-0"
             />
@@ -515,11 +515,11 @@ export function HomeComponentMosaic() {
                 status: "active",
                 description: "Enjoy double XP on all activity this weekend.",
                 multiplier: 2,
-                cta: { link: "#", text: "Do something" },
                 endDate: new Date(
                   Date.now() + 1000 * 60 * 60 * 24 * 2
                 ).toISOString(),
               }}
+              cta={{ link: "#", text: "Do something" }}
             />
             <div className="grid auto-rows-[minmax(180px,auto)] gap-4 md:grid-cols-12">
               <div className="bg-card/60 rounded-2xl border backdrop-blur md:col-span-7">

@@ -68,11 +68,11 @@
       "type": "registry:ui"
     },
     {
-      "name": "points-levels-simple",
+      "name": "points-levels-list",
       "type": "registry:ui"
     },
     {
-      "name": "points-levels",
+      "name": "points-levels-timeline",
       "type": "registry:ui"
     },
     {

@@ -20,12 +20,12 @@ interface PointsBoostData {
   /** Optional subtitle below the title row. */
   description?: string
   multiplier: number
-  cta: PointsBoostCta
   endDate?: string | Date
 }
 
 interface PointsBoostProps extends React.HTMLAttributes<HTMLDivElement> {
   boost: PointsBoostData
+  cta: PointsBoostCta
 }
 
 function formatCountdown(ms: number) {
@@ -37,7 +37,7 @@ function formatCountdown(ms: number) {
 }
 
 const PointsBoost = React.forwardRef<HTMLDivElement, PointsBoostProps>(
-  ({ className, boost, ...props }, ref) => {
+  ({ className, boost, cta, ...props }, ref) => {
     const endTimestamp = React.useMemo(() => {
       if (!boost.endDate) return null
       const date =
@@ -91,8 +91,8 @@ const PointsBoost = React.forwardRef<HTMLDivElement, PointsBoostProps>(
             </span>
           ) : null}
           <Button asChild size="sm">
-            <a href={boost.cta.link}>
-              {boost.cta.text}
+            <a href={cta.link}>
+              {cta.text}
               <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
           </Button>
