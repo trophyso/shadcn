@@ -60,14 +60,15 @@ const LeaderboardCard = React.forwardRef<HTMLDivElement, LeaderboardCardProps>(
     const fromLabel = formatRangeDate(fromDate)
     const toLabel = formatRangeDate(toDate)
     const resolvedRunId = selectedRunId ?? runOptions?.[0]?.id ?? ""
+    const hasOnRunChange = Boolean(onRunChange)
     const [localRunId, setLocalRunId] = React.useState(resolvedRunId)
 
     React.useEffect(() => {
-      if (onRunChange) return
+      if (hasOnRunChange) return
       setLocalRunId(resolvedRunId)
-    }, [onRunChange, resolvedRunId])
+    }, [hasOnRunChange, resolvedRunId])
 
-    const activeRunId = onRunChange ? resolvedRunId : localRunId
+    const activeRunId = hasOnRunChange ? resolvedRunId : localRunId
 
     return (
       <div
