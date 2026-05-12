@@ -180,8 +180,8 @@ export function CommandMenu({
                       router.push(item.href)
                     }}
                   >
-                    <ChevronRight />
                     {item.label}
+                    <ChevronRight />
                   </CommandMenuItem>
                 ))}
               </CommandGroup>
@@ -205,8 +205,8 @@ export function CommandMenu({
                           router.push(page.url)
                         }}
                       >
-                        <ChevronRight />
                         {page.name}
+                        <ChevronRight />
                       </CommandMenuItem>
                     ))}
                 </CommandGroup>
