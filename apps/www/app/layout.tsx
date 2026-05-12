@@ -31,6 +31,7 @@ export default function RootLayout({
           }}
         />
         <meta name="theme-color" content={META_THEME_COLORS.light} />
+        <meta name="apple-mobile-web-app-title" content="Trophy UI" />
       </head>
       <body
         className={cn(
