@@ -59,7 +59,15 @@ const LeaderboardCard = React.forwardRef<HTMLDivElement, LeaderboardCardProps>(
   ) => {
     const fromLabel = formatRangeDate(fromDate)
     const toLabel = formatRangeDate(toDate)
-    const activeRunId = selectedRunId ?? runOptions?.[0]?.id ?? ""
+    const resolvedRunId = selectedRunId ?? runOptions?.[0]?.id ?? ""
+    const [localRunId, setLocalRunId] = React.useState(resolvedRunId)
+
+    React.useEffect(() => {
+      if (onRunChange) return
+      setLocalRunId(resolvedRunId)
+    }, [onRunChange, resolvedRunId])
+
+    const activeRunId = onRunChange ? resolvedRunId : localRunId
 
     return (
       <div
@@ -79,7 +87,13 @@ const LeaderboardCard = React.forwardRef<HTMLDivElement, LeaderboardCardProps>(
             <select
               aria-label="Select leaderboard run"
               value={activeRunId}
-              onChange={(e) => onRunChange?.(e.target.value)}
+              onChange={(e) => {
+                if (onRunChange) {
+                  onRunChange(e.target.value)
+                  return
+                }
+                setLocalRunId(e.target.value)
+              }}
               className="bg-background text-foreground rounded-md border px-3 py-1.5 text-sm"
             >
               {runOptions.map((option) => (

@@ -21,17 +21,15 @@ export function DocsSidebarCta({ className }: React.ComponentProps<"div">) {
         Trophy powers the infrastructure you need to ship reliable gamification
         features at scale.
       </div>
-      <Button size="sm" className="relative z-10 mt-2 w-fit">
-        Get Started
+      <Button size="sm" className="relative z-10 mt-2 w-fit" asChild>
+        <Link
+          href="https://trophy.so?utm_source=trophy-ui"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Get Started
+        </Link>
       </Button>
-      <Link
-        href="https://trophy.so?utm_source=trophy-ui"
-        target="_blank"
-        rel="noreferrer"
-        className="absolute inset-0 z-20"
-      >
-        <span className="sr-only">Get Started</span>
-      </Link>
     </div>
   )
 }

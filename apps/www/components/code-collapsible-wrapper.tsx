@@ -4,8 +4,6 @@ import * as React from "react"
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/registry/trophy/ui/button"
-import { Separator } from "@/registry/trophy/ui/separator"
 
 export function CodeCollapsibleWrapper({
   className,
@@ -27,7 +25,7 @@ export function CodeCollapsibleWrapper({
       >
         {children}
       </CollapsiblePrimitive.CollapsibleContent>
-      <CollapsiblePrimitive.CollapsibleTrigger className="from-code/30 to-code text-muted-foreground absolute inset-x-0 -bottom-2 flex h-20 cursor-pointer items-center justify-center rounded-b-lg bg-gradient-to-b text-sm group-data-[state=open]/collapsible:hidden">
+      <CollapsiblePrimitive.CollapsibleTrigger className="from-code/30 to-code text-muted-foreground absolute inset-x-0 -bottom-2 flex h-20 cursor-pointer items-center justify-center rounded-b-lg bg-gradient-to-b text-sm">
         {isOpened ? "Collapse" : "Expand"}
       </CollapsiblePrimitive.CollapsibleTrigger>
     </CollapsiblePrimitive.Root>

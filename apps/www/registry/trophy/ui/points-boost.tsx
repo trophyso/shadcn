@@ -70,7 +70,7 @@ const PointsBoost = React.forwardRef<HTMLDivElement, PointsBoostProps>(
         )}
         {...props}
       >
-        <div className="gap-.5 flex min-w-0 flex-1 flex-col">
+        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
           <p className="flex flex-wrap items-center gap-2 font-semibold">
             <span className="min-w-0 truncate">{boost.name}</span>
             <span className="bg-muted-foreground/10 text-primary shrink-0 rounded-full px-2 py-0.5">
