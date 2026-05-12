@@ -10,7 +10,7 @@ Trophy UI provides pre-built, customizable React components specifically designe
 
 ```bash
 # Using shadcn CLI
-npx shadcn@latest add https://ui.trophy.so/r/streak-badge.json
+npx shadcn@latest add https://ui.trophy.so/streak-badge
 ```
 
 ## Prerequisites
