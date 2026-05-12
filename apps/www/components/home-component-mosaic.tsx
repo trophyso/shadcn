@@ -498,10 +498,10 @@ export function HomeComponentMosaic() {
             />
           </div>
 
-          <div className="bg-card/60 overflow-hidden rounded-2xl border p-4 backdrop-blur md:col-span-4">
+          <div className="bg-card/60 overflow-hidden rounded-2xl border backdrop-blur md:col-span-4">
             <LeaderboardRankings
               rankings={rankings}
-              className="h-full border-0 bg-transparent"
+              className="h-full border-0"
               currentUserId="u-5"
               defaultPageSize={10}
               showPagination

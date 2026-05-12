@@ -8,6 +8,7 @@ import {
   AchievementBadge,
   type UserAchievement,
 } from "@/registry/trophy/ui/achievement-badge"
+import { Button } from "./button"
 
 // Types (inlined - only fields used by this component)
 interface Achievement {
@@ -123,14 +124,15 @@ const AchievementUnlocked = React.forwardRef<
           )}
         >
           {/* Close button */}
-          <button
-            type="button"
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => onOpenChange(false)}
-            className="ring-offset-background focus:ring-ring absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-none"
             aria-label="Close"
+            className="absolute top-4 right-4"
           >
             <X className="h-4 w-4" />
-          </button>
+          </Button>
 
           {/* Content */}
           <div className="flex flex-col items-center text-center">
@@ -160,24 +162,21 @@ const AchievementUnlocked = React.forwardRef<
 
             <div className="mt-8 flex gap-3">
               {handleSecondaryActionClick && (
-                <button
-                  type="button"
+                <Button
+                  variant="outline"
+                  size="lg"
                   onClick={handleSecondaryActionClick}
-                  className="hover:bg-muted flex items-center gap-2 rounded-lg border px-4 py-2.5 font-medium transition-colors"
                 >
                   <Share2 className="h-4 w-4" />
                   {secondaryActionLabel}
-                </button>
+                </Button>
               )}
 
-              <button
-                type="button"
-                autoFocus
+              <Button
                 onClick={() => onOpenChange(false)}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-6 py-2.5 font-medium transition-colors"
               >
                 Awesome!
-              </button>
+              </Button>
             </div>
           </div>
         </div>

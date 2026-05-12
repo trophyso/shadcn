@@ -5,6 +5,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import { AchievementBadge } from "@/registry/trophy/ui/achievement-badge"
 import { AchievementList } from "@/registry/trophy/ui/achievement-list"
+import { Button } from "./button"
 
 interface Achievement {
   id: string
@@ -80,12 +81,13 @@ const AchievementCard = React.forwardRef<HTMLDivElement, AchievementCardProps>(
             <h3 className="text-primary text-sm font-medium">
               All Achievements
             </h3>
-            <button
-              type="button"
-              className="text-primary text-sm font-medium transition-colors hover:opacity-80"
+            <Button
+              variant="link"
+              size="sm"
+              onClick={() => { }}
             >
               See all
-            </button>
+            </Button>
           </div>
           <AchievementList
             achievements={achievements}
