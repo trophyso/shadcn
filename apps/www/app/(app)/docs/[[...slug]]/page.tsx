@@ -167,7 +167,8 @@ export default async function DocsPage(props: {
           </Button>
         </div>
       </div>
-      <div className="sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[calc(100svh-var(--footer-height)+2rem)] w-72 flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
+      <div className="w-72" />
+      <div className="fixed right-8 top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[calc(100svh-var(--footer-height)+2rem)] w-72 flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
         <div className="h-(--top-spacing) shrink-0" />
         {/* @ts-expect-error - fumadocs types */}
         {doc.toc?.length ? (

@@ -117,42 +117,45 @@ export function DocsSidebar({ tree }: { tree: PageTree }) {
   const pathname = usePathname()
 
   return (
-    <Sidebar
-      className="sticky top-[calc(var(--header-height)+1px)] z-30 hidden h-[calc(100svh-var(--footer-height)+2rem)] bg-transparent lg:flex"
-      collapsible="none"
-    >
-      <SidebarContent className="no-scrollbar overflow-x-hidden px-2 pb-12">
-        <div className="h-(--top-spacing) shrink-0" />
-        <nav className="flex flex-col gap-8 px-1">
-          <SidebarSection title="Getting Started">
-            <SidebarLink href="/docs" isActive={pathname === "/docs"}>
-              Introduction
-            </SidebarLink>
-            <SidebarLink
-              href="/docs/components"
-              isActive={pathname === "/docs/components"}
-            >
-              Components
-            </SidebarLink>
-            <SidebarLink
-              href="/docs/styles"
-              isActive={pathname === "/docs/styles"}
-            >
-              Styles
-            </SidebarLink>
-            <SidebarLink
-              href="/docs/usage"
-              isActive={pathname === "/docs/usage"}
-            >
-              Usage
-            </SidebarLink>
-          </SidebarSection>
+    <>
+      <div />
+      <Sidebar
+        className="fixed top-[calc(var(--header-height)+1px)] z-30 hidden h-[calc(100svh-var(--footer-height)+2rem)] bg-transparent lg:flex"
+        collapsible="none"
+      >
+        <SidebarContent className="no-scrollbar overflow-x-hidden px-2 pb-12">
+          <div className="h-(--top-spacing) shrink-0" />
+          <nav className="flex flex-col gap-8 px-1">
+            <SidebarSection title="Getting Started">
+              <SidebarLink href="/docs" isActive={pathname === "/docs"}>
+                Introduction
+              </SidebarLink>
+              <SidebarLink
+                href="/docs/components"
+                isActive={pathname === "/docs/components"}
+              >
+                Components
+              </SidebarLink>
+              <SidebarLink
+                href="/docs/styles"
+                isActive={pathname === "/docs/styles"}
+              >
+                Styles
+              </SidebarLink>
+              <SidebarLink
+                href="/docs/usage"
+                isActive={pathname === "/docs/usage"}
+              >
+                Usage
+              </SidebarLink>
+            </SidebarSection>
 
-          <SidebarSection title="Components">
-            {renderNodes(tree.children, pathname)}
-          </SidebarSection>
-        </nav>
-      </SidebarContent>
-    </Sidebar>
+            <SidebarSection title="Components">
+              {renderNodes(tree.children, pathname)}
+            </SidebarSection>
+          </nav>
+        </SidebarContent>
+      </Sidebar>
+    </>
   )
 }
