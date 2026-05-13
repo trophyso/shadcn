@@ -72,15 +72,15 @@ export default async function DocsPage(props: {
 
   return (
     <div className="flex items-stretch text-[1.05rem] sm:text-[15px] xl:w-full">
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex md:min-w-0 min-w-full flex-1 flex-col">
         <div className="h-(--top-spacing) shrink-0" />
-        <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-1 flex-col gap-8 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
+        <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
           <div className="flex flex-col gap-2">
-            <div className="flex items-start justify-between">
+            <div className="flex items-center justify-between">
               <h1 className="scroll-m-20 text-4xl font-semibold tracking-tight sm:text-3xl xl:text-4xl">
                 {doc.title}
               </h1>
-              <div className="flex shrink-0 items-center gap-2">
+              <div className="hidden md:flex shrink-0 items-center gap-2">
                 <DocsCopyPage page={pageMarkdown} url={absoluteUrl(page.url)} />
                 {neighbours.previous && (
                   <Button
@@ -167,8 +167,8 @@ export default async function DocsPage(props: {
           </Button>
         </div>
       </div>
-      <div className="w-72" />
-      <div className="fixed right-8 top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[calc(100svh-var(--footer-height)+2rem)] w-72 flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
+      <div className="hidden md:block w-72" />
+      <div className="fixed right-8 top-[calc(var(--header-height)+1px)] z-30 hidden h-[calc(100svh-var(--footer-height)+2rem)] w-72 flex-col gap-4  overscroll-none pb-8 hidden md:flex">
         <div className="h-(--top-spacing) shrink-0" />
         {/* @ts-expect-error - fumadocs types */}
         {doc.toc?.length ? (
@@ -178,7 +178,7 @@ export default async function DocsPage(props: {
             <div className="h-12" />
           </div>
         ) : null}
-        <div className="flex flex-1 flex-col gap-12 px-6">
+        <div className="flex flex-1 flex-col gap-12 px-6 w-72 ml-6">
           <DocsSidebarCta />
         </div>
       </div>

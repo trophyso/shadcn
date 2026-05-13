@@ -79,12 +79,12 @@ export function OpenApiCodeSamples({
   }
 
   const languageSelector = (
-    <label className="flex items-center gap-2">
+    <label className="flex min-w-0 items-center gap-2">
       <span className="sr-only">SDK language</span>
       <select
         value={currentLanguage}
         onChange={(event) => setActiveLanguage(event.target.value)}
-        className="border-border bg-background text-foreground rounded border px-2 py-1 text-xs"
+        className="border-border bg-background text-foreground min-w-0 max-w-full rounded border px-2 py-1 text-xs"
         aria-label="SDK language"
       >
         {languages.map((language) => (
@@ -99,14 +99,14 @@ export function OpenApiCodeSamples({
   return (
     <div className={cn("my-6", className)}>
       {hasMultipleSamples && (
-        <label className="text-muted-foreground mb-2 flex items-center gap-2 text-xs">
-          <span>Snippet</span>
+        <label className="text-muted-foreground mb-2 flex min-w-0 items-center gap-2 text-xs">
+          <span className="shrink-0">Snippet</span>
           <select
             value={String(activeSampleIndex)}
             onChange={(event) =>
               setActiveSampleIndex(Number(event.target.value))
             }
-            className="border-border bg-background text-foreground rounded border px-2 py-1 text-xs"
+            className="border-border bg-background text-foreground min-w-0 max-w-full rounded border px-2 py-1 text-xs"
             aria-label="Snippet variant"
           >
             {snippets.map((snippet, index) => (
