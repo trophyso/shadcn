@@ -39,6 +39,17 @@ export async function generateMetadata(props: {
   return {
     title: doc.title,
     description: doc.description,
+    keywords: [
+      doc.title,
+      "gamification UI component",
+      "React component",
+      "shadcn UI",
+      "Tailwind CSS",
+      "Trophy UI",
+    ],
+    alternates: {
+      canonical: `${siteConfig.url}${page.url}`,
+    },
     openGraph: {
       title: doc.title,
       description: doc.description,
@@ -49,6 +60,11 @@ export async function generateMetadata(props: {
           url: `/og?title=${encodeURIComponent(doc.title)}&description=${encodeURIComponent(doc.description)}`,
         },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: doc.title,
+      description: doc.description,
     },
   }
 }

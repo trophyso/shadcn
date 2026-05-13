@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     default: `${siteConfig.tagline} | ${siteConfig.title}`,
   },
   description: siteConfig.description,
+  keywords: siteConfig.keywords,
   openGraph: {
     title: `${siteConfig.tagline} | ${siteConfig.title}`,
     description: siteConfig.description,
@@ -29,12 +30,42 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.tagline} | ${siteConfig.title}`,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+  },
+  alternates: {
+    canonical: siteConfig.url,
+  },
   metadataBase: new URL(siteConfig.url),
+}
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Trophy UI",
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "Any",
+  description: siteConfig.description,
+  url: siteConfig.url,
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+  keywords:
+    "gamification UI components, React gamification, streak component, achievement component, leaderboard component, points component, shadcn gamification, Tailwind CSS gamification",
 }
 
 export default function IndexPage() {
   return (
     <div className="flex flex-1 flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="relative overflow-hidden">
         <div
           className="pointer-events-none absolute inset-0"
@@ -68,6 +99,24 @@ export default function IndexPage() {
         </PageHeader>
         <HomeComponentMosaic />
       </div>
+      <section className="container-wrapper">
+        <div className="container mx-auto max-w-3xl px-4 py-12 text-center">
+          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            Gamification UI Components for React
+          </h2>
+          <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-base sm:text-lg">
+            Trophy UI gives you production-ready gamification components — streak
+            trackers, achievement badges, leaderboards, points displays, and
+            more. Built on{" "}
+            <Link href="https://ui.shadcn.com" className="underline">
+              shadcn/ui
+            </Link>{" "}
+            and Tailwind CSS, every component is open source, fully
+            customizable, and installs with a single CLI command into any React
+            or Next.js project.
+          </p>
+        </div>
+      </section>
     </div>
   )
 }
