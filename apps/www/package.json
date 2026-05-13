@@ -4,19 +4,21 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack --port 3001",
+    "dev": "next dev --turbopack --port 3000",
     "build": "next build",
-    "start": "next start --port 3001",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
+    "start": "next start --port ${PORT:-3000}",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
+    "openapi:build": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/build-openapi-code-samples.mts",
     "registry:build": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/build-registry.mts && prettier --log-level silent --write \"registry/**/*.{ts,tsx,json,mdx}\" --cache",
-    "postinstall": "fumadocs-mdx"
+    "postinstall": "fumadocs-mdx && pnpm openapi:build"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.2",
+    "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-dialog": "^1.1.5",
     "@radix-ui/react-dropdown-menu": "^2.1.5",
     "@radix-ui/react-popover": "^1.1.5",
@@ -29,8 +31,9 @@
     "@tailwindcss/postcss": "^4.1.11",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
     "fumadocs-core": "15.3.1",
-    "fumadocs-mdx": "11.6.3",
+    "fumadocs-mdx": "14.2.11",
     "fumadocs-ui": "15.3.1",
     "hast-util-to-jsx-runtime": "^2.3.6",
     "lucide-react": "0.474.0",
@@ -39,8 +42,10 @@
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-syntax-highlighter": "^16.1.0",
+    "recharts": "^3.8.1",
     "shiki": "3.22.0",
-    "tailwind-merge": "^3.0.1"
+    "tailwind-merge": "^3.0.1",
+    "yaml": "^2.8.2"
   },
   "prettier": {
     "endOfLine": "lf",
@@ -89,7 +94,7 @@
     "@types/react-dom": "19.2.3",
     "@types/react-syntax-highlighter": "^15.5.13",
     "eslint": "^9",
-    "eslint-config-next": "15.3.1",
+    "eslint-config-next": "16.0.10",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4.1.11",

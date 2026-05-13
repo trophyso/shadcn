@@ -91,7 +91,10 @@ export function MobileNav({
                     <div className="flex flex-col gap-3">
                       {group.children.map((item) => {
                         if (item.type === "page") {
-                          const itemName = typeof item.name === "string" ? item.name : String(item.name)
+                          const itemName =
+                            typeof item.name === "string"
+                              ? item.name
+                              : String(item.name)
                           return (
                             <MobileLink
                               key={`${item.url}-${index}`}

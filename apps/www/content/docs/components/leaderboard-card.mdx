@@ -1,0 +1,229 @@
+---
+title: Leaderboard Card
+description: A composed leaderboard view with title, date range, podium, and rankings.
+---
+
+<ComponentPreview name="leaderboard-card" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/leaderboard-card
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="leaderboard-card" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { LeaderboardCard } from "@/components/ui/leaderboard-card"
+```
+
+```tsx
+<LeaderboardCard
+  title="Weekly Leaderboard"
+  fromDate="2026-05-01"
+  toDate="2026-05-07"
+  currentUserId="u-5"
+  podiumRankings={[
+    { userId: "u-1", userName: "Ava Elizabeth Turner", rank: 1, value: 289400 },
+    { userId: "u-2", userName: "Leo Harrison", rank: 2, value: 251800 },
+    { userId: "u-3", userName: "Rowan Elijah", rank: 3, value: 238300 },
+  ]}
+  rankings={[
+    {
+      userId: "u-1",
+      rank: 1,
+      userName: "Ava Elizabeth Turner",
+      byline: "Level 42 - Diamond",
+      value: 289400,
+      displayed: true,
+    },
+    {
+      userId: "u-2",
+      rank: 2,
+      userName: "Leo Harrison",
+      byline: "Level 39 - Platinum",
+      value: 251800,
+      displayed: true,
+    },
+    {
+      userId: "u-3",
+      rank: 3,
+      userName: "Rowan Elijah",
+      byline: "Level 37 - Platinum",
+      value: 238300,
+      displayed: true,
+    },
+    {
+      userId: "u-4",
+      rank: 4,
+      userName: "Mia Sophia Bennett",
+      byline: "Level 34 - Gold",
+      value: 221700,
+      displayed: false,
+    },
+    {
+      userId: "u-5",
+      rank: 5,
+      userName: "Olivia Reed",
+      byline: "Level 32 - Gold",
+      value: 210900,
+      displayed: true,
+    },
+    {
+      userId: "u-6",
+      rank: 6,
+      userName: "William Turner",
+      byline: "Level 31 - Gold",
+      value: 199500,
+      displayed: false,
+    },
+    {
+      userId: "u-7",
+      rank: 7,
+      userName: "Ruby Claire",
+      byline: "Level 29 - Silver",
+      value: 198300,
+      displayed: false,
+    },
+    {
+      userId: "u-8",
+      rank: 8,
+      userName: "Ethan Brooks",
+      byline: "Level 28 - Silver",
+      value: 187200,
+      displayed: true,
+    },
+    {
+      userId: "u-9",
+      rank: 9,
+      userName: "Chloe Madison",
+      byline: "Level 27 - Silver",
+      value: 176800,
+      displayed: true,
+    },
+    {
+      userId: "u-10",
+      rank: 10,
+      userName: "Noah Bennett",
+      byline: "Level 26 - Silver",
+      value: 169300,
+      displayed: false,
+    },
+  ]}
+/>
+```
+
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="leaderboard-card" />
+
+```tsx
+<LeaderboardCard
+  title="Weekly Leaderboard"
+  fromDate="2026-05-01"
+  toDate="2026-05-07"
+  currentUserId="u-5"
+  podiumRankings={podiumRankings}
+  rankings={rankings}
+/>
+```
+
+### With Previous Runs
+
+<ComponentPreview name="leaderboard-card-with-previous-runs" />
+
+```tsx
+const [selectedRunId, setSelectedRunId] = useState("this-week")
+const runs = {
+  "this-week": { fromDate: "2026-05-01", toDate: "2026-05-07", podiumRankings, rankings },
+  "last-week": { fromDate: "2026-04-24", toDate: "2026-04-30", podiumRankings: lastWeekPodiumRankings, rankings: lastWeekRankings },
+  // ...older runs
+}
+const selectedRun = runs[selectedRunId] ?? runs["this-week"]
+
+<LeaderboardCard
+  title="Weekly Leaderboard"
+  fromDate={selectedRun.fromDate}
+  toDate={selectedRun.toDate}
+  currentUserId="u-5"
+  selectedRunId={selectedRunId}
+  onRunChange={setSelectedRunId}
+  runOptions={[
+    { id: "this-week", label: "This week" },
+    { id: "last-week", label: "Last week" },
+    { id: "2026-04-20", label: "Apr 17 - Apr 23" },
+    { id: "2026-04-13", label: "Apr 10 - Apr 16" },
+    { id: "2026-04-06", label: "Apr 3 - Apr 9" },
+  ]}
+  podiumRankings={selectedRun.podiumRankings}
+  rankings={selectedRun.rankings}
+/>
+```
+
+## With Trophy
+
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch leaderboard data server-side:
+
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/leaderboards/{key}"
+/>
+
+Then pass and transform the response into `LeaderboardCard` props in your UI layer:
+
+```tsx
+const rankings = response.rankings ?? []
+const podiumRankings = rankings.slice(0, 3)
+
+<LeaderboardCard
+  title={response.name}
+  fromDate={response.start}
+  toDate={response.end}
+  podiumRankings={podiumRankings}
+  rankings={rankings}
+/>
+```
+
+## API Reference
+
+| Prop             | Type                              | Default         | Description                                           |
+| ---------------- | --------------------------------- | --------------- | ----------------------------------------------------- |
+| `title`          | `string`                          | `"Leaderboard"` | Card heading text                                     |
+| `fromDate`       | `string \| Date`                  | Required        | Start date of the leaderboard window                  |
+| `toDate`         | `string \| Date`                  | Required        | End date of the leaderboard window                    |
+| `podiumRankings` | `LeaderboardRanking[]`            | Required        | Data for the top 3 podium section                     |
+| `rankings`       | `LeaderboardRankingItem[]`        | Required        | Rankings list data                                    |
+| `currentUserId`  | `string`                          | -               | Highlights the matching user row                      |
+| `runOptions`     | `{ id: string; label: string }[]` | -               | Optional list of leaderboard runs shown in a selector |
+| `selectedRunId`  | `string`                          | -               | Currently selected run option id                      |
+| `onRunChange`    | `(runId: string) => void`         | -               | Called when the run selector value changes            |

@@ -3,65 +3,42 @@ title: Introduction
 description: Trophy UI - Gamification components for shadcn/ui
 ---
 
-# Trophy UI
-
-Trophy UI is a component library built on top of shadcn/ui to help you build gamification experiences faster. It provides pre-built components for streaks, achievements, leaderboards, points, and more.
+Trophy UI is a component library built on top of [shadcn/ui](https://ui.shadcn.com) that helps you build gamification experiences faster. It provides pre-built components for streaks, achievements, leaderboards, points, and more.
 
 Components are available via the shadcn CLI:
 
 ```bash
-npx shadcn@latest add https://ui.trophy.so/r/<component>.json
+npx shadcn@latest add https://ui.trophy.so/<component>
 ```
 
 For example, to install the Streak Badge component:
 
 ```bash
-npx shadcn@latest add https://ui.trophy.so/r/streak-badge.json
+npx shadcn@latest add https://ui.trophy.so/streak-badge
 ```
 
-## Component Categories
+## Prerequisites
 
-### Streaks
+- **React 18+** — Components are client-side React.
+- **Tailwind v4+** — Styling is Tailwind utility classes. Configure Tailwind so those classes compile, and add the [semantic theme tokens](/docs/styles) Trophy expects (or map them to your design system).
+- **shadcn/ui structure** — Maintain a project that already follows the [shadcn/ui](https://ui.shadcn.com/docs/installation) setup (`components.json`, aliases, and optional `src/` layout).
 
-Track and display user streaks with beautiful, animated components:
+## All Components
 
-- **Streak Badge** - Compact badge showing current streak count
-- **Streak Calendar** - Monthly calendar view of streak history
-- **Streak Freeze Indicator** - Shows available streak freezes
-- **Streak At Risk** - Alert when streak is about to expire
-
-### Achievements
-
-Celebrate user accomplishments with customizable achievement displays:
-
-- **Achievement Badge** - Individual achievement cards with locked/unlocked states
-- **Achievement Grid** - Grid layout for multiple achievements
-- **Achievement Unlocked** - Celebration animation for new achievements
-- **Achievement Progress** - Progress tracking toward achievements
-
-### Leaderboards
-
-Rank users and drive competition with leaderboard components:
-
-- **Leaderboard** - Full leaderboard with rankings
-- **Leaderboard Entry** - Individual ranking row
-- **Leaderboard Podium** - Top 3 podium display
-- **User Rank** - Compact card showing user's position
-
-### Points
-
-Display and animate point totals:
-
-- **Points Display** - Show point totals with icons
-- **Points Animation** - Animated point changes
-
-## Getting Started
-
-Browse the component documentation in the sidebar to learn about each component's features, API, and usage examples.
-
-Each component includes:
-- Live preview
-- Installation command
-- Usage examples
-- Full API reference
-- Accessibility notes
+- [Achievement Badge](/docs/components/achievement-badge)
+- [Achievement Card](/docs/components/achievement-card)
+- [Achievement Grid](/docs/components/achievement-grid)
+- [Achievement List](/docs/components/achievement-list)
+- [Achievement Unlocked](/docs/components/achievement-unlocked)
+- [Leaderboard Card](/docs/components/leaderboard-card)
+- [Leaderboard Podium](/docs/components/leaderboard-podium)
+- [Leaderboard Rankings](/docs/components/leaderboard-rankings)
+- [Points Awards](/docs/components/points-awards)
+- [Points Badge](/docs/components/points-badge)
+- [Points Boost](/docs/components/points-boost)
+- [Points Chart](/docs/components/points-chart)
+- [Points Levels List](/docs/components/points-levels-list)
+- [Points Levels Timeline](/docs/components/points-levels-timeline)
+- [Streak Badge](/docs/components/streak-badge)
+- [Streak Calendar](/docs/components/streak-calendar)
+- [Streak Card](/docs/components/streak-card)

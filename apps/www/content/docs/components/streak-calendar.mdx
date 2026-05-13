@@ -1,19 +1,42 @@
 ---
 title: Streak Calendar
-description: A monthly calendar view showing streak activity history with freeze indicators.
+description: A streak calendar with week, month, and git-style history views.
 ---
-
-# Streak Calendar
-
-A visual calendar component that displays streak activity history. Shows active days, freeze usage, and supports both Sunday and Monday week starts.
 
 <ComponentPreview name="streak-calendar" />
 
 ## Installation
 
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
 ```bash
-npx shadcn@latest add https://ui.trophy.so/r/streak-calendar.json
+npx shadcn@latest add https://ui.trophy.so/streak-calendar
 ```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="streak-calendar" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
 
 ## Usage
 
@@ -23,76 +46,121 @@ Import the component:
 import { StreakCalendar } from "@/components/ui/streak-calendar"
 ```
 
-With Trophy API data:
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="streak-calendar" />
 
 ```tsx
-const streak = await trophy.streaks.get({ userId: "user_123" })
+const streak = [
+  { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
+  { periodStart: "2024-01-02", periodEnd: "2024-01-02" },
+  { periodStart: "2024-01-03", periodEnd: "2024-01-03" },
+]
 
 <StreakCalendar streak={streak} />
 ```
 
-## Examples
+### Monday Start
 
-### Specific Month
+<ComponentPreview name="streak-calendar-monday" />
 
 ```tsx
-<StreakCalendar 
-  streak={streak} 
+const streak = [
+  { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
+  { periodStart: "2024-01-02", periodEnd: "2024-01-02" },
+  { periodStart: "2024-01-03", periodEnd: "2024-01-03" },
+]
+
+<StreakCalendar streak={streak} startOfWeek={1} />
+```
+
+### Month View
+
+<ComponentPreview name="streak-calendar-month" />
+
+```tsx
+const streak = [
+  { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
+  { periodStart: "2024-01-02", periodEnd: "2024-01-02" },
+  { periodStart: "2024-01-03", periodEnd: "2024-01-03" },
+]
+
+<StreakCalendar
+  streak={streak}
+  view="month"
   month={new Date(2024, 0, 1)}
 />
 ```
 
-### Monday Start
+### Git-Style Year View
+
+<ComponentPreview name="streak-calendar-year" />
 
 ```tsx
-<StreakCalendar streak={streak} startOfWeek={1} />
+const streak = [
+  { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
+  { periodStart: "2024-01-02", periodEnd: "2024-01-02" },
+  { periodStart: "2024-01-03", periodEnd: "2024-01-03" },
+]
+
+<StreakCalendar
+  streak={streak}
+  view="year"
+/>
 ```
 
-### Without Freeze Indicators
+### With Freezes
+
+<ComponentPreview name="streak-calendar-with-freezes" />
 
 ```tsx
-<StreakCalendar streak={streak} showFreezes={false} />
+const streak = [
+  { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
+  { periodStart: "2024-01-02", periodEnd: "2024-01-02" },
+  { periodStart: "2024-01-04", periodEnd: "2024-01-04", usedFreeze: true },
+]
+
+<StreakCalendar streak={streak} />
+```
+
+## With Trophy
+
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch streak data server-side:
+
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/streak"
+/>
+
+Then pass the response into `StreakCalendar` props in your UI layer:
+
+```tsx
+<StreakCalendar streak={response.streakHistory} />
 ```
 
 ## API Reference
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `streak` | `StreakResponse` | Required | Trophy API streak response with history |
-| `month` | `Date` | Current month | Month to display |
-| `showFreezes` | `boolean` | `true` | Show freeze indicators on days |
-| `startOfWeek` | `0 \| 1` | `0` | Week start: 0 = Sunday, 1 = Monday |
-| `onDayClick` | `(date: Date, wasActive: boolean) => void` | - | Callback when day is clicked |
+| Prop            | Type                                       | Default       | Description                        |
+| --------------- | ------------------------------------------ | ------------- | ---------------------------------- |
+| `streak`        | `StreakPeriod[]`                           | Required      | Streak data as periods array       |
+| `view`          | `"week" \| "month" \| "year"`              | `"week"`      | Calendar layout style              |
+| `month`         | `Date`                                     | Current month | Month to display                   |
+| `referenceDate` | `Date`                                     | Today         | Anchor date for week view          |
+| `showFreezes`   | `boolean`                                  | `true`        | Show freeze indicators on days     |
+| `startOfWeek`   | `0 \| 1`                                   | `0`           | Week start: 0 = Sunday, 1 = Monday |
+| `onDayClick`    | `(date: Date, wasActive: boolean) => void` | -             | Callback when day is clicked       |
 
 ### Types
 
 ```ts
-interface StreakResponse {
-  streakHistory: StreakPeriod[]
-}
-
 interface StreakPeriod {
   periodStart: string
   periodEnd: string
   usedFreeze?: boolean
 }
 ```
-
-## Visual States
-
-| State | Appearance |
-|-------|------------|
-| Active day | Orange background |
-| Freeze used | Blue background with snowflake icon |
-| Today | Ring outline |
-| Future | Muted, disabled |
-| Inactive | Default background |
-
-## Accessibility
-
-- Uses `role="grid"` with proper grid semantics
-- Column headers with `role="columnheader"`
-- Each day has descriptive `aria-label` with date and status
-- Today marked with `aria-current="date"`

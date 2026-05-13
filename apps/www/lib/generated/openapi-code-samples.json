@@ -1,0 +1,1076 @@
+{
+  "admin.yml get /attributes": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/attributes",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst attributes = await trophy.admin.attributes.list({\n  limit: 10,\n  skip: 0\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nattributes = client.admin.attributes.list(\n  limit=10,\n  skip=0\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml post /attributes": {
+    "spec": "admin.yml",
+    "method": "post",
+    "path": "/attributes",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.attributes.create([\n  {\n    name: 'Plan',\n    key: 'plan',\n    type: 'user'\n  },\n  {\n    name: 'Device',\n    key: 'device',\n    type: 'event'\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.attributes.create([\n  {\n    \"name\": \"Plan\",\n    \"key\": \"plan\",\n    \"type\": \"user\"\n  },\n  {\n    \"name\": \"Device\",\n    \"key\": \"device\",\n    \"type\": \"event\"\n  }\n])\n"
+        }
+      ]
+    }
+  },
+  "admin.yml patch /attributes": {
+    "spec": "admin.yml",
+    "method": "patch",
+    "path": "/attributes",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.attributes.update([\n  {\n    id: '550e8400-e29b-41d4-a716-446655440000',\n    name: 'Subscription Plan'\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.attributes.update([\n  {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"Subscription Plan\"\n  }\n])\n"
+        }
+      ]
+    }
+  },
+  "admin.yml delete /attributes": {
+    "spec": "admin.yml",
+    "method": "delete",
+    "path": "/attributes",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.attributes.delete({\n  ids: [\n    '550e8400-e29b-41d4-a716-446655440000',\n    '550e8400-e29b-41d4-a716-446655440001'\n  ]\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.attributes.delete(\n  ids=[\n    '550e8400-e29b-41d4-a716-446655440000',\n    '550e8400-e29b-41d4-a716-446655440001'\n  ]\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /attributes/{id}": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/attributes/{id}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst attribute = await trophy.admin.attributes.get(\n  '550e8400-e29b-41d4-a716-446655440000'\n);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nattribute = client.admin.attributes.get(\n  \"550e8400-e29b-41d4-a716-446655440000\"\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /metrics": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/metrics",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst metrics = await trophy.admin.metrics.list({\n  limit: 10,\n  skip: 0\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nmetrics = client.admin.metrics.list(\n  limit=10,\n  skip=0\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml post /metrics": {
+    "spec": "admin.yml",
+    "method": "post",
+    "path": "/metrics",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.metrics.create([\n  {\n    name: 'Invites Sent',\n    key: 'invites-sent'\n  },\n  {\n    name: 'Revenue',\n    key: 'revenue',\n    unitType: 'currency',\n    units: 'USD'\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.metrics.create([\n  {\n    \"name\": \"Invites Sent\",\n    \"key\": \"invites-sent\"\n  },\n  {\n    \"name\": \"Revenue\",\n    \"key\": \"revenue\",\n    \"unitType\": \"currency\",\n    \"units\": \"USD\"\n  }\n])\n"
+        }
+      ]
+    }
+  },
+  "admin.yml patch /metrics": {
+    "spec": "admin.yml",
+    "method": "patch",
+    "path": "/metrics",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.metrics.update([\n  {\n    id: '550e8400-e29b-41d4-a716-446655440000',\n    name: 'Invites Completed',\n    units: 'invites'\n  },\n  {\n    id: '550e8400-e29b-41d4-a716-446655440001',\n    unitType: 'number',\n    units: 'dollars'\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.metrics.update([\n  {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"Invites Completed\",\n    \"units\": \"invites\"\n  },\n  {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n    \"unitType\": \"number\",\n    \"units\": \"dollars\"\n  }\n])\n"
+        }
+      ]
+    }
+  },
+  "admin.yml delete /metrics": {
+    "spec": "admin.yml",
+    "method": "delete",
+    "path": "/metrics",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.metrics.delete({\n  ids: [\n    '550e8400-e29b-41d4-a716-446655440000',\n    '550e8400-e29b-41d4-a716-446655440001'\n  ]\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.metrics.delete(\n  ids=[\n    '550e8400-e29b-41d4-a716-446655440000',\n    '550e8400-e29b-41d4-a716-446655440001'\n  ]\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /metrics/{id}": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/metrics/{id}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst metric = await trophy.admin.metrics.get(\n  '550e8400-e29b-41d4-a716-446655440000'\n);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nmetric = client.admin.metrics.get(\n  \"550e8400-e29b-41d4-a716-446655440000\"\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /points": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/points",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst systems = await trophy.admin.points.systems.list({\n  limit: 10,\n  skip: 0\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nsystems = client.admin.points.systems.list(\n  limit=10,\n  skip=0\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml post /points": {
+    "spec": "admin.yml",
+    "method": "post",
+    "path": "/points",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.points.systems.create([\n  {\n    name: 'XP',\n    key: 'xp',\n    description: 'Experience points',\n    levels: [\n      { name: 'Bronze', key: 'bronze', points: 100 },\n      { name: 'Silver', key: 'silver', points: 500 }\n    ]\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.points.systems.create(\n  request=[{\n    \"name\": \"XP\",\n    \"key\": \"xp\",\n    \"description\": \"Experience points\",\n    \"levels\": [\n      {\"name\": \"Bronze\", \"key\": \"bronze\", \"points\": 100},\n      {\"name\": \"Silver\", \"key\": \"silver\", \"points\": 500}\n    ]\n  }]\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml patch /points": {
+    "spec": "admin.yml",
+    "method": "patch",
+    "path": "/points",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.points.systems.update([\n  {\n    id: 'system-uuid',\n    name: 'New Name',\n    description: 'Updated description'\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.points.systems.update(\n  request=[{\n    \"id\": \"system-uuid\",\n    \"name\": \"New Name\",\n    \"description\": \"Updated description\"\n  }]\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml delete /points": {
+    "spec": "admin.yml",
+    "method": "delete",
+    "path": "/points",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.points.systems.delete({\n  ids: ['system-uuid-1', 'system-uuid-2']\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.points.systems.delete(\n  ids=['system-uuid-1', 'system-uuid-2']\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /points/{id}": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/points/{id}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst system = await trophy.admin.points.systems.get('system-uuid');\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nsystem = client.admin.points.systems.get(id='system-uuid')\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /points/{systemId}/boosts": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/points/{systemId}/boosts",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst boosts = await trophy.admin.points.boosts.list('system-uuid', {\n  limit: 10,\n  skip: 0\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nboosts = client.admin.points.boosts.list(\n  system_id='system-uuid',\n  limit=10,\n  skip=0\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml post /points/{systemId}/boosts": {
+    "spec": "admin.yml",
+    "method": "post",
+    "path": "/points/{systemId}/boosts",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.points.boosts.create('system-uuid', [\n  {\n    userId: 'user-123',\n    name: 'Double XP Weekend',\n    start: '2024-01-01',\n    end: '2024-01-03',\n    multiplier: 2\n  },\n  {\n    name: 'Global Holiday Bonus',\n    start: '2024-12-25',\n    multiplier: 1.5,\n    rounding: 'up'\n  },\n  {\n    name: 'Premium User Boost',\n    start: '2024-01-01',\n    multiplier: 2,\n    userAttributes: [\n      { attributeId: 'attr-uuid', attributeValue: 'premium' }\n    ]\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.points.boosts.create(\n  system_id='system-uuid',\n  boosts=[\n    {\n      \"userId\": \"user-123\",\n      \"name\": \"Double XP Weekend\",\n      \"start\": \"2024-01-01\",\n      \"end\": \"2024-01-03\",\n      \"multiplier\": 2\n    },\n    {\n      \"name\": \"Global Holiday Bonus\",\n      \"start\": \"2024-12-25\",\n      \"multiplier\": 1.5,\n      \"rounding\": \"up\"\n    },\n    {\n      \"name\": \"Premium User Boost\",\n      \"start\": \"2024-01-01\",\n      \"multiplier\": 2,\n      \"userAttributes\": [\n        {\"attributeId\": \"attr-uuid\", \"attributeValue\": \"premium\"}\n      ]\n    }\n  ]\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml patch /points/{systemId}/boosts": {
+    "spec": "admin.yml",
+    "method": "patch",
+    "path": "/points/{systemId}/boosts",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.points.boosts.update('system-uuid', [\n  {\n    id: 'boost-uuid-1',\n    name: 'Updated Boost Name',\n    multiplier: 3\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.points.boosts.update(\n  system_id='system-uuid',\n  boosts=[\n    {\n      \"id\": \"boost-uuid-1\",\n      \"name\": \"Updated Boost Name\",\n      \"multiplier\": 3\n    }\n  ]\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml delete /points/{systemId}/boosts": {
+    "spec": "admin.yml",
+    "method": "delete",
+    "path": "/points/{systemId}/boosts",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.points.boosts.delete('system-uuid', {\n  ids: ['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']\n});\n\nconsole.log(`Deleted ${response.deleted.length} boosts`);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.points.boosts.delete(\n  system_id='system-uuid',\n  ids=['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']\n)\n\nprint(f\"Deleted {len(response.deleted)} boosts\")\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /points/{systemId}/boosts/{id}": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/points/{systemId}/boosts/{id}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst boost = await trophy.admin.points.boosts.get('system-uuid', 'boost-uuid');\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nboost = client.admin.points.boosts.get(\n  system_id='system-uuid',\n  boost_id='boost-uuid'\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /points/{systemId}/levels": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/points/{systemId}/levels",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst levels = await trophy.admin.points.levels.list('system-uuid', {\n  limit: 10,\n  skip: 0\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nlevels = client.admin.points.levels.list(\n  system_id='system-uuid',\n  limit=10,\n  skip=0\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml post /points/{systemId}/levels": {
+    "spec": "admin.yml",
+    "method": "post",
+    "path": "/points/{systemId}/levels",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.points.levels.create('system-uuid', [\n  {\n    name: 'Bronze',\n    key: 'bronze',\n    points: 100,\n    description: 'Starting level',\n    badge: { url: 'https://example.com/bronze.png' }\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.points.levels.create(\n  system_id='system-uuid',\n  request=[{\n    \"name\": \"Bronze\",\n    \"key\": \"bronze\",\n    \"points\": 100,\n    \"description\": \"Starting level\",\n    \"badge\": {\"url\": \"https://example.com/bronze.png\"}\n  }]\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml patch /points/{systemId}/levels": {
+    "spec": "admin.yml",
+    "method": "patch",
+    "path": "/points/{systemId}/levels",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.points.levels.update('system-uuid', [\n  {\n    id: '550e8400-e29b-41d4-a716-446655440000',\n    name: 'Bronze Tier',\n    points: 150\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.points.levels.update(\n  system_id='system-uuid',\n  request=[{\n    \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"Bronze Tier\",\n    \"points\": 150\n  }]\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml delete /points/{systemId}/levels": {
+    "spec": "admin.yml",
+    "method": "delete",
+    "path": "/points/{systemId}/levels",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.points.levels.delete('system-uuid', {\n  ids: ['550e8400-e29b-41d4-a716-446655440000']\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.points.levels.delete(\n  system_id='system-uuid',\n  ids=['550e8400-e29b-41d4-a716-446655440000']\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /points/{systemId}/levels/{id}": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/points/{systemId}/levels/{id}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst level = await trophy.admin.points.levels.get('system-uuid', 'level-uuid');\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nlevel = client.admin.points.levels.get(\n  system_id='system-uuid',\n  level_id='level-uuid'\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /points/{systemId}/triggers": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/points/{systemId}/triggers",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst triggers = await trophy.admin.points.triggers.list('system-uuid', {\n  limit: 10,\n  skip: 0\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\ntriggers = client.admin.points.triggers.list(\n  system_id='system-uuid',\n  limit=10,\n  skip=0\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml post /points/{systemId}/triggers": {
+    "spec": "admin.yml",
+    "method": "post",
+    "path": "/points/{systemId}/triggers",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.points.triggers.create('system-uuid', [\n  {\n    type: 'metric',\n    points: 10,\n    metricId: 'metric-uuid',\n    metricThreshold: 5\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.points.triggers.create(\n  system_id='system-uuid',\n  request=[{\n    'type': 'metric',\n    'points': 10,\n    'metric_id': 'metric-uuid',\n    'metric_threshold': 5\n  }]\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml patch /points/{systemId}/triggers": {
+    "spec": "admin.yml",
+    "method": "patch",
+    "path": "/points/{systemId}/triggers",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.points.triggers.update('system-uuid', [\n  { id: 'trigger-uuid', points: 20 }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.points.triggers.update(\n  system_id='system-uuid',\n  request=[{'id': 'trigger-uuid', 'points': 20}]\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml delete /points/{systemId}/triggers": {
+    "spec": "admin.yml",
+    "method": "delete",
+    "path": "/points/{systemId}/triggers",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.points.triggers.delete('system-uuid', {\n  ids: ['trigger-uuid-1', 'trigger-uuid-2']\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.points.triggers.delete(\n  system_id='system-uuid',\n  ids=['trigger-uuid-1', 'trigger-uuid-2']\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /points/{systemId}/triggers/{id}": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/points/{systemId}/triggers/{id}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst trigger = await trophy.admin.points.triggers.get('system-uuid', 'trigger-uuid');\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\ntrigger = client.admin.points.triggers.get(\n  system_id='system-uuid',\n  id='trigger-uuid'\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /leaderboards": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/leaderboards",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst leaderboards = await trophy.admin.leaderboards.list({\n  limit: 10,\n  skip: 0\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nleaderboards = client.admin.leaderboards.list(\n  limit=10,\n  skip=0\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml get /leaderboards/{id}": {
+    "spec": "admin.yml",
+    "method": "get",
+    "path": "/leaderboards/{id}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst leaderboard = await trophy.admin.leaderboards.get(\n  '550e8400-e29b-41d4-a716-446655440100'\n);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nleaderboard = client.admin.leaderboards.get(\n  \"550e8400-e29b-41d4-a716-446655440100\"\n)\n"
+        }
+      ]
+    }
+  },
+  "admin.yml post /streaks/freezes": {
+    "spec": "admin.yml",
+    "method": "post",
+    "path": "/streaks/freezes",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.streaks.freezes.create({\n  freezes: [\n    { userId: 'user-123' },\n    { userId: 'user-456' },\n  ]\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.streaks.freezes.create({\n  \"freezes\": [\n    {\"userId\": \"user-123\"},\n    {\"userId\": \"user-456\"}\n  ]\n})\n"
+        }
+      ]
+    }
+  },
+  "admin.yml post /streaks/restore": {
+    "spec": "admin.yml",
+    "method": "post",
+    "path": "/streaks/restore",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.streaks.restore({\n  users: [{ id: 'user-123' }, { id: 'user-456' }]\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.streaks.restore({\n  \"users\": [{\"id\": \"user-123\"}, {\"id\": \"user-456\"}]\n})\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /achievements": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/achievements",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.achievements.all();\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.achievements.all()\n"
+        }
+      ]
+    }
+  },
+  "application.yml post /achievements/{key}/complete": {
+    "spec": "application.yml",
+    "method": "post",
+    "path": "/achievements/{key}/complete",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.achievements.complete(\"achievement-key\", {\n  user: {\n    id: \"user-id\",\n  }\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nuser = UpsertedUser(id=\"123\")\n\nresponse = client.achievements.complete(\"achievement-key\", user=user)\n"
+        }
+      ]
+    }
+  },
+  "application.yml post /metrics/{key}/event": {
+    "spec": "application.yml",
+    "method": "post",
+    "path": "/metrics/{key}/event",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.metrics.event(\n  \"words-written\",\n  {\n    user: {\n      id: 'user-id',\n      email: 'user@example.com',\n      tz: 'Europe/London',\n      subscribedToEmails: true,\n      attributes: {\n        department: 'engineering',\n        role: 'developer'\n      }\n    },\n    value: 750,\n    attributes: {\n      category: 'writing',\n      source: 'mobile-app'\n    }\n  }\n);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nuser = UpsertedUser(\n  id=\"123\",\n  email=\"user@example.com\",\n  tz=\"Europe/London\",\n  subscribedToEmails=True,\n  attributes={\n    \"department\": \"engineering\",\n    \"role\": \"developer\"\n  }\n)\n\nresponse = client.metrics.event(\n  \"words-written\",\n  user=user,\n  value=750,\n  attributes={\n    \"category\": \"writing\",\n    \"source\": \"mobile-app\"\n})\n"
+        }
+      ]
+    }
+  },
+  "application.yml post /users": {
+    "spec": "application.yml",
+    "method": "post",
+    "path": "/users",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.create({\n  id: 'user-id',\n  email: 'user@example.com',\n  tz: 'Europe/London',\n  subscribedToEmails: true,\n  attributes: {\n    department: 'engineering',\n    role: 'developer'\n  }\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.create(\n  id=\"123\",\n  email=\"user@example.com\",\n  tz=\"Europe/London\",\n  subscribedToEmails=True,\n  attributes={\n    \"department\": \"engineering\",\n    \"role\": \"developer\"\n  }\n)\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /users/{id}": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/users/{id}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.get(\"user-id\");\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.get(\"user-id\")\n"
+        }
+      ]
+    }
+  },
+  "application.yml put /users/{id}": {
+    "spec": "application.yml",
+    "method": "put",
+    "path": "/users/{id}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.identify(\"user-id\", {\n  email: 'user@example.com',\n  tz: 'Europe/London',\n  attributes: {\n    department: 'engineering',\n    role: 'developer'\n  }\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.identify(\n  id=\"123\",\n  email=\"user@example.com\",\n  tz=\"Europe/London\",\n  subscribedToEmails=True,\n  attributes={\n    \"department\": \"engineering\",\n    \"role\": \"developer\"\n  }\n)\n"
+        }
+      ]
+    }
+  },
+  "application.yml patch /users/{id}": {
+    "spec": "application.yml",
+    "method": "patch",
+    "path": "/users/{id}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.update(\"user-id\", {\n  email: 'user@example.com',\n  tz: 'Europe/London',\n  attributes: {\n    department: 'engineering',\n    role: 'developer'\n  }\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.update(\n  id=\"123\",\n  email=\"user@example.com\",\n  tz=\"Europe/London\",\n  subscribedToEmails=True,\n  attributes={\n    \"department\": \"engineering\",\n    \"role\": \"developer\"\n  }\n)\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /users/{id}/preferences": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/users/{id}/preferences",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.getPreferences(\"user-123\");\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.get_preferences(id=\"user-123\")\n"
+        }
+      ]
+    }
+  },
+  "application.yml patch /users/{id}/preferences": {
+    "spec": "application.yml",
+    "method": "patch",
+    "path": "/users/{id}/preferences",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.updatePreferences(\"user-123\", {\n  notifications: {\n    recap: [\"email\"],\n    streak_reminder: []\n  }\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.update_preferences(\n  id=\"user-123\",\n  notifications={\n    \"recap\": [\"email\"],\n    \"streak_reminder\": []\n  }\n)\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /users/{id}/metrics": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/users/{id}/metrics",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.allMetrics(\"user-id\");\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.all_metrics(\"user-id\")\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /users/{id}/metrics/{key}": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/users/{id}/metrics/{key}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.singleMetric(\"user-id\", \"words-written\");\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.single_metric(id=\"user-id\", key=\"words-written\")\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /users/{id}/metrics/{key}/event-summary": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/users/{id}/metrics/{key}/event-summary",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.metricEventSummary(\"user-id\", \"words-written\", {\n  aggregation: \"daily\",\n  startDate: \"2024-01-01\",\n  endDate: \"2024-01-31\"\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.metric_event_summary(\n  id=\"user-id\",\n  key=\"words-written\",\n  aggregation=\"daily\",\n  start_date=\"2024-01-01\",\n  end_date=\"2024-01-31\"\n)\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /users/{id}/achievements": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/users/{id}/achievements",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "label": "Get a user's completed achievements",
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.achievements(\"user-id\");\n"
+        },
+        {
+          "label": "Get a user's achievements (include incomplete)",
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.achievements(\"user-id\", {\n  includeIncomplete: true\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "label": "Get a user's completed achievements",
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.achievements(id=\"user-id\")\n"
+        },
+        {
+          "label": "Get a user's achievements (include incomplete)",
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.achievements(id=\"user-id\", include_incomplete=\"true\")\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /users/{id}/streak": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/users/{id}/streak",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.streak(\"user-id\", {\n  historyPeriods: 14\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.streak(id=\"user-id\", history_periods=14)\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /streaks": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/streaks",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst response = await trophy.streaks.list({\n  userIds: ['user-123', 'user-456', 'user-789']\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.streaks.list(user_ids=[\"user-123\", \"user-456\", \"user-789\"])\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /streaks/rankings": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/streaks/rankings",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.streaks.rankings({\n  limit: 20,\n  type: 'active'\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.streaks.rankings(limit=20, type=\"active\")\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /users/{id}/points/{key}": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/users/{id}/points/{key}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.points(\"user-id\", \"points-system-key\");\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.points(id=\"user-id\", key=\"points-system-key\")\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /users/{id}/points/{key}/boosts": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/users/{id}/points/{key}/boosts",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.pointsBoosts(\"user-id\", \"points-system-key\");\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.points_boosts(id=\"user-id\", key=\"points-system-key\")\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /users/{id}/points/{key}/event-summary": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/users/{id}/points/{key}/event-summary",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.pointsEventSummary(\"user-id\", \"points-system-key\", {\n  aggregation: \"daily\",\n  startDate: \"2024-01-01\",\n  endDate: \"2024-01-31\"\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.points_event_summary(\n  id=\"user-id\",\n  key=\"points-system-key\",\n  aggregation=\"daily\",\n  start_date=\"2024-01-01\",\n  end_date=\"2024-01-31\"\n)\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /users/{id}/leaderboards/{key}": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/users/{id}/leaderboards/{key}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.leaderboards(\"user-123\", \"weekly-words\", {\n  run: \"2025-01-15\"\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.leaderboards(\n  user_id=\"user-123\",\n  key=\"weekly-words\",\n  run=\"2025-01-15\"\n)\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /users/{id}/wrapped": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/users/{id}/wrapped",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.wrapped(\"user-123\", {\n  year: 2024\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.wrapped(id=\"user-123\", year=2024)\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /points/{key}/summary": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/points/{key}/summary",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.points.summary(\"points-system-key\", {\n  userAttributes: \"plan-type:premium,region:us-east\"\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.points.summary(\n  key=\"points-system-key\",\n  user_attributes=\"plan-type:premium,region:us-east\"\n)\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /points/{key}": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/points/{key}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.points.system(\"points-system-key\");\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.points.system(key=\"points-system-key\")\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /points/{key}/boosts": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/points/{key}/boosts",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.points.boosts(\"points-system-key\");\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.points.boosts(key=\"points-system-key\")\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /points/{key}/levels": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/points/{key}/levels",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.points.levels(\"points-system-key\");\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.points.levels(key=\"points-system-key\")\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /points/{key}/level-summary": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/points/{key}/level-summary",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.points.levelSummary(\"points-system-key\");\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.points.level_summary(key=\"points-system-key\")\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /leaderboards": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/leaderboards",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.leaderboards.all();\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.leaderboards.all()\n"
+        }
+      ]
+    }
+  },
+  "application.yml get /leaderboards/{key}": {
+    "spec": "application.yml",
+    "method": "get",
+    "path": "/leaderboards/{key}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "label": "Get rankings",
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.leaderboards.get(\"weekly-words\", {\n  offset: 0,\n  limit: 10,\n  run: \"2025-01-15\"\n});\n"
+        },
+        {
+          "label": "Get rankings by user attribute",
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.leaderboards.get(\"weekly-words\", {\n  offset: 0,\n  limit: 10,\n  run: \"2025-01-15\",\n  userAttributes: \"city:london\"\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "label": "Get rankings",
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.leaderboards.get(\n  key=\"weekly-words\",\n  offset=0,\n  limit=10,\n  run=\"2025-01-15\"\n)\n"
+        },
+        {
+          "label": "Get rankings by user attribute",
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.leaderboards.get(\n  key=\"weekly-words\",\n  offset=0,\n  limit=10,\n  run=\"2025-01-15\",\n  user_attributes=\"city:london\"\n)\n"
+        }
+      ]
+    }
+  }
+}

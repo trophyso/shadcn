@@ -5,7 +5,9 @@ import { LogoIcon } from "@/components/logo"
 type IconProps = React.SVGProps<SVGSVGElement>
 
 export const Icons = {
-  logo: (props: IconProps) => <LogoIcon {...props} />,
+  logo: (props: React.ComponentPropsWithoutRef<typeof LogoIcon>) => (
+    <LogoIcon {...props} />
+  ),
   gitHub: (props: IconProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path

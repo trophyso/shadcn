@@ -1,69 +1,50 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { Lock, Trophy } from "lucide-react";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react"
+import { Trophy } from "lucide-react"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-// Types (inlined - only fields used by this component)
 interface Achievement {
-  id: string;
-  name: string;
-  trigger: "metric" | "api" | "streak";
-  description?: string | null;
-  badgeUrl?: string | null;
-  metricValue?: number;
+  id: string
+  name: string
+  trigger: "metric" | "api" | "streak"
+  badgeUrl?: string | null
+  progress?: number
+  rarity?: number
 }
 
 interface UserAchievement extends Achievement {
-  achievedAt: string | null; // null = locked
+  /** ISO date when earned, or `null` if locked */
+  achievedAt: string | null
 }
 
-// Variants
-const achievementBadgeVariants = cva(
-  "relative flex flex-col items-center gap-2 rounded-lg border p-4 transition-all",
-  {
-    variants: {
-      variant: {
-        card: "bg-card shadow-sm hover:shadow-md",
-        badge: "bg-transparent border-none p-2",
-        minimal: "border-none bg-transparent p-1",
-      },
-      size: {
-        sm: "w-20",
-        default: "w-28",
-        lg: "w-36",
-        xl: "w-44",
-      },
-    },
-    defaultVariants: {
-      variant: "card",
-      size: "default",
-    },
-  },
-);
-
-// Props
-interface AchievementBadgeProps
-  extends
-    React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof achievementBadgeVariants> {
-  /** Achievement data (use UserAchievement for locked/unlocked state) */
-  achievement: UserAchievement;
-  /** Show description below name */
-  showDescription?: boolean;
-  /** Show progress for metric achievements */
-  showProgress?: boolean;
-  /** Current value for metric progress */
-  currentValue?: number;
-  /** Style for locked achievements */
-  lockedStyle?: "grayscale" | "silhouette" | "hidden";
-  /** Show lock icon on locked achievements */
-  showLockIcon?: boolean;
-  /** Custom icon when no badgeUrl */
-  icon?: React.ReactNode;
+interface AchievementBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+  achievement: UserAchievement
+  badgeSize?: "sm" | "default" | "lg" | "xl"
+  onAchievementClick?: (achievement: UserAchievement) => void
 }
+
+const badgeSizeMap = {
+  sm: "h-12 w-12",
+  default: "h-16 w-16",
+  lg: "h-20 w-20",
+  xl: "h-28 w-28",
+} as const
+
+const iconSizeMap = {
+  sm: "h-8 w-8",
+  default: "h-10 w-10",
+  lg: "h-12 w-12",
+  xl: "h-16 w-16",
+} as const
+
+const progressRingSizeMap = {
+  sm: 72,
+  default: 88,
+  lg: 104,
+  xl: 136,
+} as const
 
 const AchievementBadge = React.forwardRef<
   HTMLDivElement,
@@ -72,166 +53,131 @@ const AchievementBadge = React.forwardRef<
   (
     {
       className,
-      variant,
-      size,
       achievement,
-      showDescription = false,
-      showProgress = false,
-      currentValue = 0,
-      lockedStyle = "grayscale",
-      showLockIcon = true,
-      icon,
-      onClick,
+      badgeSize = "default",
+      onAchievementClick,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const isUnlocked = achievement.achievedAt !== null;
-    const isMetric = achievement.trigger === "metric";
-    const target = achievement.metricValue ?? 0;
-    const progress =
-      target > 0 ? Math.min((currentValue / target) * 100, 100) : 0;
+    const isUnlocked = achievement.achievedAt !== null
 
-    // Don't render if locked and lockedStyle is "hidden"
-    if (!isUnlocked && lockedStyle === "hidden") {
-      return null;
-    }
+    const hasProgress = isUnlocked && typeof achievement.progress === "number"
+    const progress = hasProgress
+      ? Math.min(100, Math.max(0, achievement.progress ?? 0))
+      : 0
+    const hasRarity = typeof achievement.rarity === "number"
+    const rarity = hasRarity
+      ? Math.min(100, Math.max(1, Math.round(achievement.rarity ?? 1)))
+      : null
+    const ringSize = progressRingSizeMap[badgeSize]
+    const ringStrokeWidth = 4
+    const ringRadius = (ringSize - ringStrokeWidth) / 2
+    const ringCircumference = 2 * Math.PI * ringRadius
+    const ringDashoffset =
+      ringCircumference - (progress / 100) * ringCircumference
 
-    // Build accessible label
-    const statusLabel = isUnlocked ? "Unlocked" : "Locked";
-    const progressLabel =
-      showProgress && isMetric && !isUnlocked
-        ? `, ${currentValue} of ${target} progress`
-        : "";
-    const ariaLabel = `${achievement.name}, ${statusLabel}${progressLabel}`;
-
-    const imageSize = {
-      sm: "h-12 w-12",
-      default: "h-16 w-16",
-      lg: "h-20 w-20",
-      xl: "h-24 w-24",
-    }[size ?? "default"];
-
-    const iconSize = {
-      sm: "h-8 w-8",
-      default: "h-10 w-10",
-      lg: "h-12 w-12",
-      xl: "h-14 w-14",
-    }[size ?? "default"];
-
-    const textSize = {
-      sm: "text-xs",
-      default: "text-sm",
-      lg: "text-base",
-      xl: "text-lg",
-    }[size ?? "default"];
+    const statusLabel = isUnlocked ? "Earned" : "Locked"
+    const itemLabel = `${achievement.name} - ${statusLabel}`
 
     return (
       <div
         ref={ref}
-        role={onClick ? "button" : "article"}
-        aria-label={ariaLabel}
-        tabIndex={onClick ? 0 : undefined}
-        onClick={onClick}
+        role={onAchievementClick ? "button" : "listitem"}
+        aria-label={onAchievementClick ? itemLabel : undefined}
+        tabIndex={onAchievementClick ? 0 : undefined}
+        onClick={() => onAchievementClick?.(achievement)}
         onKeyDown={
-          onClick
+          onAchievementClick
             ? (e) => {
                 if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  onClick(e as unknown as React.MouseEvent<HTMLDivElement>);
+                  e.preventDefault()
+                  onAchievementClick(achievement)
                 }
               }
             : undefined
         }
         className={cn(
-          achievementBadgeVariants({ variant, size }),
-          onClick && "cursor-pointer",
-          !isUnlocked && lockedStyle === "grayscale" && "opacity-50",
-          className,
+          "bg-card flex flex-col items-center justify-center gap-2 rounded-lg border p-4",
+          onAchievementClick && "cursor-pointer",
+          !isUnlocked && "opacity-50",
+          className
         )}
         {...props}
       >
-        {/* Badge image or icon */}
-        <div className="relative">
+        <div
+          className="relative flex items-center justify-center"
+          style={{
+            width: hasProgress ? `${ringSize}px` : undefined,
+            height: hasProgress ? `${ringSize}px` : undefined,
+          }}
+        >
+          {hasProgress ? (
+            <svg
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full"
+              viewBox={`0 0 ${ringSize} ${ringSize}`}
+            >
+              <circle
+                cx={ringSize / 2}
+                cy={ringSize / 2}
+                r={ringRadius}
+                fill="none"
+                stroke="var(--primary)"
+                strokeLinecap="round"
+                strokeWidth={ringStrokeWidth}
+                strokeDasharray={ringCircumference}
+                strokeDashoffset={ringDashoffset}
+                transform={`rotate(-90 ${ringSize / 2} ${ringSize / 2})`}
+              />
+            </svg>
+          ) : null}
+
           {achievement.badgeUrl ? (
             <img
               src={achievement.badgeUrl}
-              alt={achievement.name}
+              alt={`${achievement.name} badge - ${statusLabel}`}
               className={cn(
-                imageSize,
-                "rounded-full object-cover",
-                !isUnlocked && lockedStyle === "grayscale" && "grayscale",
-                !isUnlocked &&
-                  lockedStyle === "silhouette" &&
-                  "brightness-0 opacity-30",
+                badgeSizeMap[badgeSize],
+                "relative z-10 rounded-full object-cover",
+                !isUnlocked && "grayscale"
               )}
             />
           ) : (
             <div
+              aria-hidden="true"
               className={cn(
-                imageSize,
-                "flex items-center justify-center rounded-full",
+                badgeSizeMap[badgeSize],
+                "relative z-10 flex items-center justify-center rounded-full",
                 isUnlocked
-                  ? "bg-purple-500 text-white"
-                  : "bg-muted text-muted-foreground",
+                  ? "bg-muted text-muted-foreground"
+                  : "bg-primary text-primary-foreground"
               )}
             >
-              {icon ?? <Trophy className={iconSize} />}
-            </div>
-          )}
-
-          {/* Lock icon overlay */}
-          {!isUnlocked && showLockIcon && (
-            <div className="absolute -bottom-1 -right-1 rounded-full bg-background p-1 shadow-sm">
-              <Lock className="h-3 w-3 text-muted-foreground" />
+              <Trophy className={iconSizeMap[badgeSize]} />
             </div>
           )}
         </div>
 
-        {/* Name */}
+        {rarity !== null ? (
+          <span className="text-muted-foreground text-xs font-medium">
+            {rarity}% of users
+          </span>
+        ) : null}
+
         <span
           className={cn(
-            textSize,
-            "text-center font-medium leading-tight",
-            !isUnlocked && "text-muted-foreground",
+            "text-center text-sm leading-tight font-bold",
+            !isUnlocked && "text-muted-foreground"
           )}
         >
           {achievement.name}
         </span>
-
-        {/* Description */}
-        {showDescription && achievement.description && (
-          <span className="text-xs text-center text-muted-foreground line-clamp-2">
-            {achievement.description}
-          </span>
-        )}
-
-        {/* Progress bar for metric achievements */}
-        {showProgress && isMetric && !isUnlocked && (
-          <div className="w-full space-y-1" aria-hidden="true">
-            <div
-              role="progressbar"
-              aria-valuenow={currentValue}
-              aria-valuemin={0}
-              aria-valuemax={target}
-              aria-label={`Progress: ${currentValue} of ${target}`}
-              className="h-1.5 w-full overflow-hidden rounded-full bg-muted"
-            >
-              <div
-                className="h-full bg-purple-500 transition-all"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <span className="text-xs text-muted-foreground text-center block">
-              {currentValue}/{target}
-            </span>
-          </div>
-        )}
       </div>
-    );
-  },
-);
-AchievementBadge.displayName = "AchievementBadge";
+    )
+  }
+)
+AchievementBadge.displayName = "AchievementBadge"
 
-export { AchievementBadge, achievementBadgeVariants };
-export type { AchievementBadgeProps, Achievement, UserAchievement };
+export { AchievementBadge }
+export type { AchievementBadgeProps, Achievement, UserAchievement }

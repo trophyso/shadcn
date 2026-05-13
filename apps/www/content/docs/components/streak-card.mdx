@@ -1,0 +1,118 @@
+---
+title: Streak Card
+description: A composed streak summary card built from streak calendar and metrics.
+---
+
+<ComponentPreview name="streak-card" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/streak-card
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="streak-card" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+Import the component:
+
+```tsx
+import { StreakCard } from "@/components/ui/streak-card"
+```
+
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="streak-card" />
+
+```tsx
+const streak = [
+  { periodStart: "2024-01-01", periodEnd: "2024-01-01" },
+  { periodStart: "2024-01-02", periodEnd: "2024-01-02" },
+  { periodStart: "2024-01-03", periodEnd: "2024-01-03" },
+]
+
+<StreakCard
+  streak={streak}
+  currentStreak={16}
+  longestStreak={100}
+  total={131}
+  defaultHowItWorksOpen
+/>
+```
+
+## With Trophy
+
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch streak data server-side:
+
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/streak"
+/>
+
+Then pass and aggregate the response into `StreakCard` props in your UI layer:
+
+```tsx
+const streakPeriods = response.streakHistory ?? []
+const currentStreak = response.length
+const longestStreak = Math.max(
+  currentStreak,
+  ...streakPeriods.map((period) => period.length ?? 0)
+)
+const totalActivePeriods = streakPeriods.filter(
+  (period) => (period.length ?? 0) > 0
+).length
+
+<StreakCard
+  streak={streakPeriods}
+  currentStreak={currentStreak}
+  longestStreak={longestStreak}
+  total={totalActivePeriods}
+/>
+```
+
+## API Reference
+
+### Props
+
+| Prop                    | Type             | Default                  | Description                                       |
+| ----------------------- | ---------------- | ------------------------ | ------------------------------------------------- |
+| `streak`                | `StreakPeriod[]` | Required                 | Streak periods used by the embedded week calendar |
+| `currentStreak`         | `number`         | Required                 | Current streak in days                            |
+| `longestStreak`         | `number`         | Required                 | Longest streak in days                            |
+| `total`                 | `number`         | Required                 | Secondary total metric value                      |
+| `title`                 | `string`         | `"Streak"`               | Card heading                                      |
+| `actionLabel`           | `string`         | `"View Details"`         | Text for the top-right action button              |
+| `onActionClick`         | `() => void`     | -                        | Callback for action button                        |
+| `showHowItWorks`        | `boolean`        | `true`                   | Show the bottom "How streaks work" dropdown       |
+| `howItWorksTitle`       | `string`         | `"How do streaks work?"` | Dropdown trigger title                            |
+| `howItWorksItems`       | `string[]`       | Built-in defaults        | Rows rendered in the expanded panel               |
+| `defaultHowItWorksOpen` | `boolean`        | `false`                  | Initial open state of dropdown                    |

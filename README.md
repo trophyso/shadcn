@@ -10,7 +10,7 @@ Trophy UI provides pre-built, customizable React components specifically designe
 
 ```bash
 # Using shadcn CLI
-npx shadcn@latest add https://ui.trophy.so/r/streak-badge.json
+npx shadcn@latest add https://ui.trophy.so/streak-badge
 ```
 
 ## Prerequisites
@@ -23,11 +23,10 @@ Before using Trophy UI, ensure your project meets these requirements:
 
 ## Available Components
 
-- **Streaks**: streak-badge, streak-calendar, streak-freeze-indicator, streak-at-risk
-- **Achievements**: achievement-badge, achievement-grid, achievement-unlocked, achievement-progress
-- **Leaderboards**: leaderboard, leaderboard-entry, leaderboard-podium, user-rank
-- **Points**: points-display, points-animation
-- **Core**: trophy-provider
+- **Streaks**: streak-badge, streak-calendar
+- **Achievements**: achievement-badge, achievement-card, achievement-grid, achievement-list, achievement-unlocked
+- **Leaderboards**: leaderboard, leaderboard-podium
+- **Points**: points-display
 
 ## License
 

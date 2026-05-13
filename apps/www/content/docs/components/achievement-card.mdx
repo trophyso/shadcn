@@ -1,0 +1,175 @@
+---
+title: Achievement Card
+description: A composed achievement overview card with totals, featured badges, and an achievements list.
+---
+
+<ComponentPreview name="achievement-card" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/achievement-card
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="achievement-card" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { AchievementCard } from "@/components/ui/achievement-card"
+```
+
+```tsx
+<AchievementCard
+  highlightedAchievements={[
+    {
+      id: "highlight-1",
+      name: "Wellness God",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      rarity: 8,
+    },
+    {
+      id: "highlight-2",
+      name: "10 day streak",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      rarity: 24,
+    },
+    {
+      id: "highlight-3",
+      name: "Chatbot King",
+      trigger: "api",
+      achievedAt: "2024-01-01T00:00:00Z",
+      rarity: 5,
+    },
+  ]}
+  achievements={[
+    {
+      id: "list-1",
+      name: "10 day streak",
+      description: "Open app for 10 days",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 60,
+    },
+    {
+      id: "list-2",
+      name: "Fully Hydrated Bro",
+      description: "Drink 5,000L of water total",
+      trigger: "metric",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 32,
+    },
+  ]}
+/>
+```
+
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="achievement-card" />
+
+```tsx
+<AchievementCard
+  highlightedAchievements={[
+    {
+      id: "highlight-1",
+      name: "Wellness God",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      rarity: 8,
+    },
+    {
+      id: "highlight-2",
+      name: "10 day streak",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      rarity: 24,
+    },
+    {
+      id: "highlight-3",
+      name: "Chatbot King",
+      trigger: "api",
+      achievedAt: "2024-01-01T00:00:00Z",
+      rarity: 5,
+    },
+  ]}
+  achievements={[
+    {
+      id: "list-1",
+      name: "10 day streak",
+      description: "Open app for 10 days",
+      trigger: "streak",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 60,
+    },
+    {
+      id: "list-2",
+      name: "Fully Hydrated Bro",
+      description: "Drink 5,000L of water total",
+      trigger: "metric",
+      achievedAt: "2024-01-01T00:00:00Z",
+      progress: 32,
+    },
+  ]}
+/>
+```
+
+## With Trophy
+
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch a user's achievements server-side:
+
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/achievements"
+/>
+
+Then pass and transform the response into `AchievementCard` props in your UI layer:
+
+```tsx
+const achievements = response
+const highlightedAchievements = achievements.slice(0, 3)
+
+<AchievementCard
+  highlightedAchievements={highlightedAchievements}
+  achievements={achievements}
+/>
+```
+
+## API Reference
+
+| Prop                      | Type                                      | Default       | Description                                                         |
+| ------------------------- | ----------------------------------------- | ------------- | ------------------------------------------------------------------- |
+| `highlightedAchievements` | `UserAchievement[]`                       | Required      | Separate featured achievements shown in the top section             |
+| `achievements`            | `UserAchievement[]`                       | Required      | List achievements rendered in the lower section and used for totals |
+| `badgeSize`               | `"sm" \| "default" \| "lg"`               | `"default"`   | Badge size used by the lower list                                   |
+| `lockedStyle`             | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | Locked row presentation in the embedded `AchievementList`           |
+| `onAchievementClick`      | `(achievement) => void`                   | -             | Click handler for badges and list rows                              |

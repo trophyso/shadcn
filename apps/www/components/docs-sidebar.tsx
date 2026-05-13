@@ -24,9 +24,8 @@ function SidebarLink({
     <Link
       href={href}
       className={cn(
-        "text-muted-foreground hover:text-foreground block rounded-md px-3 py-1.5 text-sm transition-colors",
-        isActive &&
-          "bg-primary/10 text-primary font-medium"
+        "text-foreground hover:bg-primary/10 text-primary block rounded-md px-3 py-1.5 text-[0.8rem] font-medium transition-colors",
+        isActive && "bg-primary/10 text-primary font-medium"
       )}
     >
       {children}
@@ -34,12 +33,20 @@ function SidebarLink({
   )
 }
 
-function SidebarSeparator({ name, isFirst = false }: { name: string; isFirst?: boolean }) {
+function SidebarSeparator({
+  name,
+  isFirst = false,
+}: {
+  name: string
+  isFirst?: boolean
+}) {
   return (
-    <div className={cn(
-      "text-foreground mb-2 px-3 text-xs font-semibold tracking-wide",
-      isFirst ? "mt-3" : "mt-6"
-    )}>
+    <div
+      className={cn(
+        "text-foreground mb-2 px-3 text-xs font-semibold tracking-wide",
+        isFirst ? "mt-3" : "mt-6"
+      )}
+    >
       {name}
     </div>
   )
@@ -54,7 +61,7 @@ function SidebarSection({
 }) {
   return (
     <div className="flex flex-col">
-      <h4 className="text-muted-foreground mb-2 px-3 text-xs font-medium uppercase tracking-wider">
+      <h4 className="text-muted-foreground mb-2 px-3 text-xs font-medium tracking-wider">
         {title}
       </h4>
       <div className="flex flex-col gap-0.5">{children}</div>
@@ -73,14 +80,22 @@ function renderNodes(
     if (node.type === "separator") {
       const name = typeof node.name === "string" ? node.name : String(node.name)
       result.push(
-        <SidebarSeparator key={node.$id || name} name={name} isFirst={isFirstSeparator} />
+        <SidebarSeparator
+          key={node.$id || name}
+          name={name}
+          isFirst={isFirstSeparator}
+        />
       )
       isFirstSeparator = false
     } else if (node.type === "page") {
-      if (node.url === "/docs" || node.url === "/docs/components") {
+      if (node.url === "/docs/components") {
         continue
       }
-      const nodeName = typeof node.name === "string" ? node.name : String(node.name)
+      if (!node.url.startsWith("/docs/components/")) {
+        continue
+      }
+      const nodeName =
+        typeof node.name === "string" ? node.name : String(node.name)
       result.push(
         <SidebarLink
           key={node.url}
@@ -102,35 +117,45 @@ export function DocsSidebar({ tree }: { tree: PageTree }) {
   const pathname = usePathname()
 
   return (
-    <Sidebar
-      className="sticky top-[calc(var(--header-height)+1px)] z-30 hidden h-[calc(100svh-var(--footer-height)+2rem)] bg-transparent lg:flex"
-      collapsible="none"
-    >
-      <SidebarContent className="no-scrollbar overflow-x-hidden px-2 pb-12">
-        <div className="h-(--top-spacing) shrink-0" />
-        <nav className="flex flex-col gap-1 px-1">
-          <SidebarSection title="Getting Started">
-            <SidebarLink href="/docs" isActive={pathname === "/docs"}>
-              Introduction
-            </SidebarLink>
-            <SidebarLink
-              href="/docs/components"
-              isActive={pathname === "/docs/components"}
-            >
-              Components
-            </SidebarLink>
-          </SidebarSection>
+    <>
+      <div />
+      <Sidebar
+        className="fixed top-[calc(var(--header-height)+1px)] z-30 hidden h-[calc(100svh-var(--footer-height)+2rem)] bg-transparent lg:flex"
+        collapsible="none"
+      >
+        <SidebarContent className="no-scrollbar overflow-x-hidden px-2 pb-12">
+          <div className="h-(--top-spacing) shrink-0" />
+          <nav className="flex flex-col gap-8 px-1">
+            <SidebarSection title="Getting Started">
+              <SidebarLink href="/docs" isActive={pathname === "/docs"}>
+                Introduction
+              </SidebarLink>
+              <SidebarLink
+                href="/docs/components"
+                isActive={pathname === "/docs/components"}
+              >
+                Components
+              </SidebarLink>
+              <SidebarLink
+                href="/docs/styles"
+                isActive={pathname === "/docs/styles"}
+              >
+                Styles
+              </SidebarLink>
+              <SidebarLink
+                href="/docs/usage"
+                isActive={pathname === "/docs/usage"}
+              >
+                Usage
+              </SidebarLink>
+            </SidebarSection>
 
-          <div className="mt-6">
-            <h4 className="text-muted-foreground mb-2 px-3 text-xs font-medium uppercase tracking-wider">
-              Components
-            </h4>
-            <div className="flex flex-col gap-0.5">
+            <SidebarSection title="Components">
               {renderNodes(tree.children, pathname)}
-            </div>
-          </div>
-        </nav>
-      </SidebarContent>
-    </Sidebar>
+            </SidebarSection>
+          </nav>
+        </SidebarContent>
+      </Sidebar>
+    </>
   )
 }

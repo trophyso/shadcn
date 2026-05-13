@@ -1,0 +1,172 @@
+---
+title: Points Awards
+description: A points activity feed with date, totals, and dynamic trigger types
+---
+
+<ComponentPreview name="points-awards" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/points-awards
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="points-awards" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+Import the component:
+
+```tsx
+import { PointsAwards } from "@/components/ui/points-awards"
+```
+
+```tsx
+<PointsAwards
+  awards={[
+    {
+      id: "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+      awarded: 10,
+      date: "2021-01-01T00:00:00Z",
+      total: 100,
+      trigger: {
+        id: "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+        type: "metric",
+        points: 10,
+        metricName: "words written",
+        metricThreshold: 1000,
+      },
+    },
+  ]}
+/>
+```
+
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="points-awards" />
+
+```tsx
+<PointsAwards
+  awards={[
+    {
+      id: "1",
+      awarded: 13,
+      date: "2026-05-08T18:22:00.000Z",
+      total: 20176,
+      trigger: {
+        id: "t-1",
+        type: "metric",
+        points: 13,
+        metricName: "words written",
+        metricThreshold: 1000,
+      },
+    },
+    {
+      id: "2",
+      awarded: 15,
+      date: "2026-05-07T12:00:00.000Z",
+      total: 20163,
+      trigger: {
+        id: "t-2",
+        type: "achievement",
+        points: 15,
+        achievementName: "Week warrior",
+      },
+    },
+    {
+      id: "3",
+      awarded: 12,
+      date: "2026-05-07T09:15:00.000Z",
+      total: 20148,
+      trigger: {
+        id: "t-3",
+        type: "streak",
+        points: 12,
+        streakLengthThreshold: 14,
+      },
+    },
+  ]}
+/>
+```
+
+## With Trophy
+
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch the user's points data server-side:
+
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/points/{key}"
+/>
+
+Pass the response into `PointsAwards` props in your UI layer:
+
+```tsx
+const awards = response.awards ?? []
+
+<PointsAwards awards={awards} />
+```
+
+Icon tooltips use **`trigger.metricName`** (and optional **`metricThreshold`**) for metric awards; **`achievementName`**, streak thresholds, **`trigger.type`** or custom types to cover other types of awards.
+
+## API Reference
+
+### Props
+
+| Prop                  | Type                          | Default  | Description                                           |
+| --------------------- | ----------------------------- | -------- | ----------------------------------------------------- |
+| `awards`              | `PointsAward[]`               | Required | Events that awarded points                            |
+| `formatTotalPoints`   | `(value: number) => string`   | -        | Optional formatter for each row's cumulative `total`  |
+| `formatAwardedPoints` | `(value: number) => string`   | -        | Optional formatter for each row's `awarded` delta     |
+| `formatDate`          | `(isoDate: string) => string` | -        | Optional formatter for each row's `date` (ISO string) |
+
+### Types
+
+```ts
+interface PointsAwardTrigger {
+  id: string
+  type: string
+  points: number
+  metricName?: string | null
+  metricThreshold?: number | null
+  achievementName?: string | null
+  streakLengthThreshold?: number | null
+  timeUnit?: "hour" | "day"
+  timeInterval?: number | null
+}
+
+interface PointsAward {
+  id: string
+  awarded: number
+  date: string
+  total: number
+  trigger: PointsAwardTrigger
+}
+```

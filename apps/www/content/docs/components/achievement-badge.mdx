@@ -1,94 +1,227 @@
 ---
 title: Achievement Badge
-description: A versatile badge component for displaying individual achievements with locked/unlocked states.
+description: A single achievement card with locked states, progress rings, rarity labels, and click handling.
 ---
-
-# Achievement Badge
-
-A flexible achievement card component that displays individual achievements with support for locked/unlocked states and progress tracking.
 
 <ComponentPreview name="achievement-badge" />
 
 ## Installation
 
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
 ```bash
-npx shadcn@latest add https://ui.trophy.so/r/achievement-badge.json
+npx shadcn@latest add https://ui.trophy.so/achievement-badge
 ```
 
-## Usage
+</TabsContent>
 
-Import the component:
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="achievement-badge" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
 
 ```tsx
 import { AchievementBadge } from "@/components/ui/achievement-badge"
 ```
 
-Basic usage:
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+/>
+```
+
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="achievement-badge" />
 
 ```tsx
 <AchievementBadge
   achievement={{
     id: "1",
-    name: "Early Bird",
-    trigger: "api",
-    description: "Complete a task before 9am",
-    achievedAt: new Date().toISOString(),
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
   }}
 />
 ```
 
-With Trophy API data:
+### Badge Sizes
 
-```tsx
-const achievements = await trophy.achievements.list({ userId: "user_123" })
-
-{achievements.map((achievement) => (
-  <AchievementBadge key={achievement.id} achievement={achievement} />
-))}
-```
-
-## Examples
-
-### Locked Achievement
-
-Achievements that haven't been unlocked yet.
+<ComponentPreview name="achievement-badge-sizes" />
 
 ```tsx
 <AchievementBadge
   achievement={{
-    id: "2",
-    name: "First Steps",
-    trigger: "api",
-    description: "Complete your first task",
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  badgeSize="sm"
+/>
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  badgeSize="default"
+/>
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  badgeSize="lg"
+/>
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  badgeSize="xl"
+/>
+```
+
+### Locked State
+
+When `achievement.achievedAt` is `null`, the badge is shown in a locked state.
+
+<ComponentPreview name="achievement-badge-locked-state" />
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "badge-1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+  }}
+/>
+<AchievementBadge
+  achievement={{
+    id: "badge-locked-1",
+    name: "Perfectionist",
+    trigger: "metric",
     achievedAt: null,
   }}
 />
 ```
 
-### With Progress
+### Series Progress
 
-Show progress toward metric-based achievements.
+<ComponentPreview name="achievement-badge-series-progress" />
 
 ```tsx
 <AchievementBadge
-  achievement={achievement}
-  showProgress
-  currentValue={75}
+  achievement={{
+    id: "series-1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
 />
+```
+
+### Rarity
+
+<ComponentPreview name="achievement-badge-rarity" />
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "rare-1",
+    name: "Daily Legend",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    rarity: 3,
+  }}
+/>
+```
+
+### Clickable Achievement
+
+<ComponentPreview name="achievement-badge-clickable" />
+
+```tsx
+<AchievementBadge
+  achievement={{
+    id: "1",
+    name: "Consistency I",
+    trigger: "streak",
+    achievedAt: "2024-01-01T00:00:00Z",
+    progress: 28,
+  }}
+  onAchievementClick={(achievement) => {
+    openDetailModal(achievement)
+  }}
+/>
+```
+
+## With Trophy
+
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch a user's achievements server-side:
+
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/achievements"
+/>
+
+Then pass the response into `AchievementBadge` props in your UI layer:
+
+```tsx
+const achievement = response[0]
+
+<AchievementBadge achievement={achievement} />
 ```
 
 ## API Reference
 
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `achievement` | `UserAchievement` | Required | Achievement data |
-| `showDescription` | `boolean` | `true` | Show description below name |
-| `showProgress` | `boolean` | `false` | Show progress for metric achievements |
-| `currentValue` | `number` | - | Current value for metric progress |
-| `lockedStyle` | `"grayscale" \| "silhouette" \| "hidden"` | `"grayscale"` | Style for locked achievements |
-| `showLockIcon` | `boolean` | `true` | Show lock icon on locked achievements |
+| Prop                 | Type                                | Default     | Description                     |
+| -------------------- | ----------------------------------- | ----------- | ------------------------------- |
+| `achievement`        | `UserAchievement`                   | Required    | Achievement data for this badge |
+| `badgeSize`          | `"sm" \| "default" \| "lg" \| "xl"` | `"default"` | Badge size                      |
+| `onAchievementClick` | `(achievement) => void`             | -           | Click handler                   |
 
 ### Types
 
@@ -97,18 +230,12 @@ interface Achievement {
   id: string
   name: string
   trigger: "metric" | "api" | "streak"
-  description?: string | null
   badgeUrl?: string | null
-  metricValue?: number
+  progress?: number // optional series progress from 0 to 100, unlocked only
+  rarity?: number // optional rarity from 1 to 100 shown as "X% of users"
 }
 
 interface UserAchievement extends Achievement {
-  achievedAt: string | null
+  achievedAt: string | null // null = locked
 }
 ```
-
-## Accessibility
-
-- Uses semantic HTML for achievement display
-- Proper ARIA labels for locked/unlocked state
-- Visual indicators for achievement status

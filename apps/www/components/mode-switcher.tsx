@@ -3,8 +3,8 @@
 import * as React from "react"
 import { useTheme } from "next-themes"
 
-import { Button } from "@/registry/trophy/ui/button"
 import { Icons } from "@/components/icons"
+import { Button } from "@/registry/trophy/ui/button"
 
 export function ModeSwitcher() {
   const { setTheme, resolvedTheme } = useTheme()

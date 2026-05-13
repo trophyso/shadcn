@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import Link from "next/link"
 
 import { siteConfig } from "@/lib/config"
+import { HomeComponentMosaic } from "@/components/home-component-mosaic"
 import {
   PageActions,
   PageHeader,
@@ -10,35 +11,25 @@ import {
 } from "@/components/page-header"
 import { Button } from "@/registry/trophy/ui/button"
 
-const title = "Trophy UI"
-const description =
-  "A collection of Open Source gamification components that you can customize and extend."
-
 export const dynamic = "force-static"
 export const revalidate = false
 
 export const metadata: Metadata = {
-  title,
-  description,
+  title: {
+    template: `%s | ${siteConfig.title}`,
+    default: `${siteConfig.tagline} | ${siteConfig.title}`,
+  },
+  description: siteConfig.description,
   openGraph: {
-    images: [
-      {
-        url: `/og?title=${encodeURIComponent(
-          title
-        )}&description=${encodeURIComponent(description)}`,
-      },
-    ],
+    title: `${siteConfig.tagline} | ${siteConfig.title}`,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.title,
+    images: [{ url: siteConfig.ogImage }],
+    locale: "en_US",
+    type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    images: [
-      {
-        url: `/og?title=${encodeURIComponent(
-          title
-        )}&description=${encodeURIComponent(description)}`,
-      },
-    ],
-  },
+  metadataBase: new URL(siteConfig.url),
 }
 
 export default function IndexPage() {
@@ -54,7 +45,7 @@ export default function IndexPage() {
         />
         <PageHeader className="relative z-10">
           <PageHeaderHeading className="max-w-4xl">
-            <span className="flex items-baseline gap-2 sm:gap-3">
+            <span className="font-montserrat flex items-baseline gap-2 sm:gap-3">
               <span className="leading-[0.95] font-bold tracking-[-0.03em]">
                 Trophy
               </span>
@@ -63,7 +54,9 @@ export default function IndexPage() {
               </span>
             </span>
           </PageHeaderHeading>
-          <PageHeaderDescription>{description}</PageHeaderDescription>
+          <PageHeaderDescription>
+            {siteConfig.description}
+          </PageHeaderDescription>
           <PageActions>
             <Button asChild size="sm">
               <Link href="/docs">Get Started</Link>
@@ -73,24 +66,7 @@ export default function IndexPage() {
             </Button>
           </PageActions>
         </PageHeader>
-      </div>
-      <div className="container-wrapper section-soft flex-1 pb-6">
-        <div className="container overflow-hidden">
-          <section className="py-8 text-center">
-            <h2 className="text-2xl font-semibold mb-4">Gamification Components</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Streaks, achievements, leaderboards, and points — all the components you need 
-              to build engaging gamification experiences. Built on top of{" "}
-              <a href="https://ui.shadcn.com" className="underline underline-offset-4" target="_blank" rel="noreferrer">
-                shadcn/ui
-              </a>{" "}
-              and designed to work with the{" "}
-              <a href="https://trophy.so" className="underline underline-offset-4" target="_blank" rel="noreferrer">
-                Trophy API
-              </a>.
-            </p>
-          </section>
-        </div>
+        <HomeComponentMosaic />
       </div>
     </div>
   )

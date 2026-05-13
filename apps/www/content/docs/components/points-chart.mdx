@@ -1,0 +1,162 @@
+---
+title: Points Chart
+description: A line chart component for displaying points trends over time.
+---
+
+<ComponentPreview name="points-chart" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/points-chart
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="points-chart" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+Import the component:
+
+```tsx
+import { PointsChart } from "@/components/ui/points-chart"
+```
+
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="points-chart" />
+
+```tsx
+<PointsChart
+  data={[
+    { date: "Fri", total: 0, change: 0 },
+    { date: "Sat", total: 125, change: 125 },
+    { date: "Sun", total: 290, change: 165 },
+    { date: "Mon", total: 420, change: 130 },
+    { date: "Tue", total: 680, change: 260 },
+    { date: "Wed", total: 940, change: 260 },
+    { date: "Thu", total: 1250, change: 310 },
+  ]}
+/>
+```
+
+### With Levels
+
+Add bronze, silver, and gold level markers on the Y-axis with matching dashed threshold lines.
+
+<ComponentPreview name="points-chart-levels" />
+
+```tsx
+<PointsChart
+  data={[
+    { date: "Fri", total: 120, change: 120 },
+    { date: "Sat", total: 260, change: 140 },
+    { date: "Sun", total: 520, change: 260 },
+    { date: "Mon", total: 710, change: 190 },
+    { date: "Tue", total: 890, change: 180 },
+    { date: "Wed", total: 1120, change: 230 },
+    { date: "Thu", total: 1320, change: 200 },
+  ]}
+  levels={[
+    { value: 250, color: "#CD7F32" },
+    { value: 500, color: "#C0C0C0" },
+    { value: 1000, color: "#D4AF37" },
+  ]}
+/>
+```
+
+### Period Selector
+
+Use a top-right selector to switch between date ranges and granularity presets.
+
+<ComponentPreview name="points-chart-period-selector" />
+
+```tsx
+const [period, setPeriod] = useState("last-7-days")
+
+<PointsChart
+  title={`Your points · ${periodLabel}`}
+  data={periodData}
+  headerRight={
+    <select value={period} onChange={(event) => setPeriod(event.target.value)} className="rounded-md border bg-background px-2 py-1 text-xs text-foreground">
+      <option value="last-7-days">Last 7 days</option>
+      <option value="last-4-weeks">Last 4 weeks</option>
+      <option value="last-3-months">Last 3 months</option>
+      <option value="last-6-months">Last 6 months</option>
+      <option value="last-12-months">Last 12 months</option>
+      <option value="year-to-date">Year to date</option>
+      <option value="all-time">All time</option>
+    </select>
+  }
+/>
+```
+
+## With Trophy
+
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch points time-series data server-side:
+
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/points/{key}/event-summary"
+/>
+
+Then pass the response into `PointsChart` props in your UI layer:
+
+```tsx
+<PointsChart data={response} />
+```
+
+## API Reference
+
+### Props
+
+| Prop          | Type                     | Default         | Description                                                   |
+| ------------- | ------------------------ | --------------- | ------------------------------------------------------------- |
+| `data`        | `PointsChartDataPoint[]` | Required        | Time-series points values                                     |
+| `height`      | `number`                 | `260`           | Chart container height in pixels                              |
+| `title`       | `string`                 | `"Your points"` | Chart title text                                              |
+| `headerRight` | `ReactNode`              | -               | Optional right-side header content, such as a period selector |
+| `yAxisLabel`  | `string`                 | -               | Optional Y-axis label text                                    |
+| `levels`      | `PointsChartLevel[]`     | -               | Optional level thresholds with star markers and dashed lines  |
+
+### Types
+
+```ts
+interface PointsChartDataPoint {
+  date: string
+  total: number
+  change: number
+}
+
+interface PointsChartLevel {
+  value: number
+  color: string
+}
+```

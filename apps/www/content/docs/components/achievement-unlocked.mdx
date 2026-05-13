@@ -1,17 +1,42 @@
 ---
 title: Achievement Unlocked
-description: A celebratory modal dialog for announcing newly unlocked achievements with animations and optional sharing.
+description: A celebratory modal dialog for announcing newly unlocked achievements with optional sharing.
 ---
 
-# Achievement Unlocked
-
-A modal dialog component for celebrating achievement unlocks. Features a glowing badge animation, smooth transitions, and an optional share button for social engagement.
+<ComponentPreview name="achievement-unlocked" />
 
 ## Installation
 
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
 ```bash
-npx shadcn@latest add https://ui.trophy.so/r/achievement-unlocked.json
+npx shadcn@latest add https://ui.trophy.so/achievement-unlocked
 ```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="achievement-unlocked" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
 
 ## Usage
 
@@ -22,14 +47,31 @@ import { AchievementUnlocked } from "@/components/ui/achievement-unlocked"
 ```tsx
 const [open, setOpen] = useState(false)
 
+<button
+  type="button"
+  onClick={() => setOpen(true)}
+  className="rounded-lg border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+>
+  Unlock achievement
+</button>
+
 <AchievementUnlocked
   achievement={{
-    id: "first-win",
-    name: "First Win",
-    description: "Complete your first challenge",
+    id: "task-champion",
+    name: "Task Champion",
+    description: "Complete a task 30 days in a row. Congratulations!!",
+    unlockedAt: new Date().toISOString(),
   }}
   open={open}
   onOpenChange={setOpen}
+  secondaryActionLabel="Share"
+  onSecondaryActionClick={() => {
+    navigator.share?.({
+      title: "I unlocked Task Champion!",
+      text: "Complete a task 30 days in a row. Congratulations!!",
+      url: window.location.href,
+    })
+  }}
 />
 ```
 
@@ -37,135 +79,67 @@ const [open, setOpen] = useState(false)
 
 ### Basic Usage
 
-```tsx
-const [showUnlock, setShowUnlock] = useState(false)
-const [unlockedAchievement, setUnlockedAchievement] = useState(null)
-
-// When achievement unlocks (e.g., from webhook or API response)
-const handleAchievementUnlock = (achievement) => {
-  setUnlockedAchievement(achievement)
-  setShowUnlock(true)
-}
-
-<AchievementUnlocked
-  achievement={unlockedAchievement}
-  open={showUnlock}
-  onOpenChange={setShowUnlock}
-/>
-```
-
-### With Badge Image
+<ComponentPreview name="achievement-unlocked" />
 
 ```tsx
+const [open, setOpen] = useState(false)
+
+<button
+  type="button"
+  onClick={() => setOpen(true)}
+  className="rounded-lg border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+>
+  Unlock achievement
+</button>
+
 <AchievementUnlocked
   achievement={{
-    id: "streak-master",
-    name: "Streak Master",
-    description: "Maintain a 30-day streak",
-    badgeUrl: "https://example.com/badges/streak-master.png",
+    id: "task-champion",
+    name: "Task Champion",
+    description: "Complete a task 30 days in a row. Congratulations!!",
+    unlockedAt: new Date().toISOString(),
   }}
   open={open}
   onOpenChange={setOpen}
 />
 ```
 
-### With Share Button
+## With Trophy
 
-```tsx
-<AchievementUnlocked
-  achievement={achievement}
-  open={open}
-  onOpenChange={setOpen}
-  onShare={() => {
-    navigator.share({
-      title: `I unlocked "${achievement.name}"!`,
-      text: achievement.description,
-      url: window.location.href,
-    })
-  }}
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to send a metric event server-side:
+
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="post"
+  endpoint="/metrics/{key}/event"
 />
-```
 
-### Trophy Webhook Integration
-
-Listen for real-time achievement unlocks:
+Then pass and transform the response into `AchievementUnlocked` props in your UI layer:
 
 ```tsx
-// In your webhook handler or SSE listener
-useEffect(() => {
-  const eventSource = new EventSource('/api/trophy-events')
-  
-  eventSource.addEventListener('achievement.unlocked', (event) => {
-    const achievement = JSON.parse(event.data)
-    setUnlockedAchievement(achievement)
-    setShowUnlock(true)
-  })
-  
-  return () => eventSource.close()
-}, [])
+const unlockedAchievement = response.achievements?.[0]
+const shouldOpen = Boolean(unlockedAchievement)
 
-<AchievementUnlocked
-  achievement={unlockedAchievement}
-  open={showUnlock}
-  onOpenChange={setShowUnlock}
-  onShare={handleShare}
-/>
-```
-
-### Queue Multiple Unlocks
-
-Handle multiple achievements unlocking at once:
-
-```tsx
-const [queue, setQueue] = useState<Achievement[]>([])
-const [current, setCurrent] = useState<Achievement | null>(null)
-
-const handleUnlock = (achievement: Achievement) => {
-  if (current) {
-    setQueue(q => [...q, achievement])
-  } else {
-    setCurrent(achievement)
-  }
+{
+  unlockedAchievement ? (
+    <AchievementUnlocked achievement={unlockedAchievement} open={shouldOpen} />
+  ) : null
 }
-
-const handleClose = () => {
-  if (queue.length > 0) {
-    setCurrent(queue[0])
-    setQueue(q => q.slice(1))
-  } else {
-    setCurrent(null)
-  }
-}
-
-<AchievementUnlocked
-  achievement={current}
-  open={!!current}
-  onOpenChange={(open) => !open && handleClose()}
-/>
-```
-
-### Custom Styling
-
-```tsx
-<AchievementUnlocked
-  achievement={achievement}
-  open={open}
-  onOpenChange={setOpen}
-  className="bg-gradient-to-b from-purple-900 to-purple-950"
-/>
 ```
 
 ## API Reference
 
 ### AchievementUnlocked
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `achievement` | `Achievement` | Required | The achievement to display |
-| `open` | `boolean` | Required | Controls dialog visibility |
-| `onOpenChange` | `(open: boolean) => void` | Required | Called when open state changes |
-| `onShare` | `() => void` | - | Share button click handler (button hidden if not provided) |
-| `className` | `string` | - | Additional classes for the dialog |
+| Prop                     | Type                      | Default   | Description                                                       |
+| ------------------------ | ------------------------- | --------- | ----------------------------------------------------------------- |
+| `achievement`            | `Achievement`             | Required  | The achievement to display                                        |
+| `open`                   | `boolean`                 | Required  | Controls dialog visibility                                        |
+| `onOpenChange`           | `(open: boolean) => void` | Required  | Called when open state changes                                    |
+| `secondaryActionLabel`   | `string`                  | `"Share"` | Label for the secondary action button                             |
+| `onSecondaryActionClick` | `() => void`              | -         | Secondary button click handler for social share or custom actions |
+| `onShare`                | `() => void`              | -         | Deprecated alias for `onSecondaryActionClick`                     |
+| `className`              | `string`                  | -         | Additional classes for the dialog                                 |
 
 ### Achievement
 
@@ -174,26 +148,6 @@ interface Achievement {
   id: string
   name: string
   description?: string | null
-  badgeUrl?: string | null
+  unlockedAt?: string
 }
 ```
-
-## Features
-
-- **Animated entrance** - Smooth fade and zoom animation on open
-- **Glowing badge** - Pulsing glow effect around the achievement badge
-- **Focus management** - Auto-focuses the "Awesome!" button
-- **Escape to close** - Press Escape key to dismiss
-- **Click outside** - Click backdrop to close
-- **Body scroll lock** - Prevents background scrolling when open
-- **Reduced motion** - Respects `prefers-reduced-motion` preference
-
-## Accessibility
-
-- Uses `role="dialog"` with `aria-modal="true"`
-- Dialog title linked via `aria-labelledby`
-- Close button has `aria-label="Close"`
-- Decorative badge/icon marked `aria-hidden`
-- Escape key closes dialog
-- Focus trapped within dialog while open
-- Auto-focus on primary action button

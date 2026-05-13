@@ -1,121 +1,123 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { Flame } from "lucide-react";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { Flame } from "lucide-react"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 // Types (inlined - only fields used by this component)
 interface StreakResponse {
-  length: number;
-  frequency: "daily" | "weekly" | "monthly";
+  length: number
+  frequency: "daily" | "weekly" | "monthly"
 }
 
 // Variants
 const streakBadgeVariants = cva(
-  "inline-flex items-center gap-1.5 rounded-full font-semibold transition-colors",
+  "inline-flex flex-col items-center justify-center rounded-3xl border border-border/60 bg-card text-center text-card-foreground transition-colors",
   {
     variants: {
-      variant: {
-        default: "bg-orange-500 text-white hover:bg-orange-600",
-        outline:
-          "border-2 border-orange-500 text-orange-500 bg-transparent hover:bg-orange-50 dark:hover:bg-orange-950",
-        ghost: "text-orange-500 bg-orange-500/10 hover:bg-orange-500/20",
-      },
       size: {
-        sm: "text-xs px-2 py-0.5",
-        default: "text-sm px-3 py-1",
-        lg: "text-base px-4 py-1.5",
+        sm: "w-28 gap-1.5 p-3",
+        default: "w-40 gap-2.5 p-5",
+        lg: "w-52 gap-3 p-6",
       },
     },
     defaultVariants: {
-      variant: "default",
       size: "default",
     },
-  },
-);
+  }
+)
 
 // Props
 interface StreakBadgeProps
   extends
     React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof streakBadgeVariants> {
-  /** Trophy API streak response */
-  streak?: StreakResponse;
-  /** Manual streak length (alternative to streak prop) */
-  length?: number;
-  /** Show frequency label (day/week/month) */
-  showFrequency?: boolean;
-  /** Show flame icon */
-  showFlame?: boolean;
+  /** Streak length value */
+  length?: number
+  /** Streak frequency used for label rendering */
+  frequency?: StreakResponse["frequency"]
+  /** Optional subtitle shown below streak length */
+  subtitle?: string
   /** Custom icon to replace flame */
-  icon?: React.ReactNode;
-  /** Animate on mount/change */
-  animate?: boolean;
+  icon?: React.ReactNode
 }
 
 const StreakBadge = React.forwardRef<HTMLDivElement, StreakBadgeProps>(
   (
-    {
-      className,
-      variant,
-      size,
-      streak,
-      length,
-      showFrequency = false,
-      showFlame = true,
-      icon,
-      animate = true,
-      ...props
-    },
-    ref,
+    { className, size, length, frequency = "daily", subtitle, icon, ...props },
+    ref
   ) => {
-    const streakLength = streak?.length ?? length ?? 0;
-    const frequency = streak?.frequency ?? "daily";
+    const streakLength = length ?? 0
 
     const frequencyLabel = {
       daily: "day",
       weekly: "week",
       monthly: "month",
-    }[frequency];
+    }[frequency]
 
     const pluralLabel =
-      streakLength === 1 ? frequencyLabel : `${frequencyLabel}s`;
+      streakLength === 1 ? frequencyLabel : `${frequencyLabel}s`
 
     const iconSize = {
-      sm: "h-3 w-3",
-      default: "h-4 w-4",
-      lg: "h-5 w-5",
-    }[size ?? "default"];
+      sm: "h-10 w-10",
+      default: "h-16 w-16",
+      lg: "h-20 w-20",
+    }[size ?? "default"]
+
+    const valueSize = {
+      sm: "text-2xl",
+      default: "text-5xl",
+      lg: "text-6xl",
+    }[size ?? "default"]
+
+    const subtitleSize = {
+      sm: "text-xs",
+      default: "text-sm",
+      lg: "text-base",
+    }[size ?? "default"]
+
+    const subtitleText = subtitle ?? "streak"
+    const valueUnit = pluralLabel
 
     // Build accessible label
-    const ariaLabel = showFrequency
-      ? `${streakLength} ${pluralLabel} streak`
-      : `${streakLength} ${frequency} streak`;
+    const ariaLabel = `${streakLength} ${pluralLabel} streak`
 
     return (
       <div
         ref={ref}
         role="status"
         aria-label={ariaLabel}
-        className={cn(
-          streakBadgeVariants({ variant, size }),
-          animate && streakLength > 0 && "motion-safe:animate-pulse",
-          className,
-        )}
+        className={cn(streakBadgeVariants({ size }), className)}
         {...props}
       >
-        {showFlame && (icon ?? <Flame className={cn(iconSize, "shrink-0")} aria-hidden="true" />)}
-        <span aria-hidden="true">{streakLength}</span>
-        {showFrequency && (
-          <span className="font-normal opacity-80" aria-hidden="true">{pluralLabel}</span>
+        {icon ?? (
+          <Flame
+            className={cn(iconSize, "text-primary shrink-0")}
+            aria-hidden="true"
+          />
         )}
+        <span
+          className={cn("font-semibold tracking-tight", valueSize)}
+          aria-hidden="true"
+        >
+          {streakLength}
+          <span className="text-muted-foreground ml-2 font-medium">
+            {valueUnit}
+          </span>
+        </span>
+        <span
+          className={cn("text-muted-foreground font-normal", subtitleSize)}
+          aria-hidden="true"
+        >
+          {subtitleText}
+        </span>
       </div>
-    );
-  },
-);
-StreakBadge.displayName = "StreakBadge";
+    )
+  }
+)
+StreakBadge.displayName = "StreakBadge"
 
-export { StreakBadge, streakBadgeVariants };
-export type { StreakBadgeProps, StreakResponse };
+export { StreakBadge, streakBadgeVariants }
+export type { StreakBadgeProps, StreakResponse }

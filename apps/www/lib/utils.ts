@@ -8,5 +8,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function absoluteUrl(path: string) {
-  return `${siteConfig.url}${path}`
+  const pathname = path.startsWith("/") ? path : `/${path}`
+  return `${siteConfig.url}${pathname}`
 }

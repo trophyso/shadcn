@@ -8,11 +8,15 @@
       "type": "registry:ui"
     },
     {
+      "name": "achievement-card",
+      "type": "registry:ui"
+    },
+    {
       "name": "achievement-grid",
       "type": "registry:ui"
     },
     {
-      "name": "achievement-progress",
+      "name": "achievement-list",
       "type": "registry:ui"
     },
     {
@@ -20,7 +24,23 @@
       "type": "registry:ui"
     },
     {
-      "name": "leaderboard-entry",
+      "name": "button",
+      "type": "registry:ui"
+    },
+    {
+      "name": "command",
+      "type": "registry:ui"
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui"
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui"
+    },
+    {
+      "name": "leaderboard-card",
       "type": "registry:ui"
     },
     {
@@ -28,11 +48,43 @@
       "type": "registry:ui"
     },
     {
-      "name": "leaderboard",
+      "name": "leaderboard-rankings",
       "type": "registry:ui"
     },
     {
-      "name": "streak-at-risk",
+      "name": "points-awards",
+      "type": "registry:ui"
+    },
+    {
+      "name": "points-badge",
+      "type": "registry:ui"
+    },
+    {
+      "name": "points-boost",
+      "type": "registry:ui"
+    },
+    {
+      "name": "points-chart",
+      "type": "registry:ui"
+    },
+    {
+      "name": "points-levels-list",
+      "type": "registry:ui"
+    },
+    {
+      "name": "points-levels-timeline",
+      "type": "registry:ui"
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui"
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui"
+    },
+    {
+      "name": "sidebar",
       "type": "registry:ui"
     },
     {
@@ -44,7 +96,11 @@
       "type": "registry:ui"
     },
     {
-      "name": "streak-freeze-indicator",
+      "name": "streak-card",
+      "type": "registry:ui"
+    },
+    {
+      "name": "tabs",
       "type": "registry:ui"
     }
   ]

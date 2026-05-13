@@ -1,17 +1,42 @@
 ---
 title: Leaderboard Podium
-description: A visual podium display for the top 3 ranked users with medals, avatars, and animated entrance.
+description: A visual podium display for the top 3 ranked users with crowns and avatars.
 ---
 
-# Leaderboard Podium
-
-A celebratory podium component that displays the top 3 users in a traditional podium layout (2nd-1st-3rd). Features animated entrance, medal badges, and customizable styling.
+<ComponentPreview name="leaderboard-podium" />
 
 ## Installation
 
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
 ```bash
-npx shadcn@latest add https://ui.trophy.so/r/leaderboard-podium.json
+npx shadcn@latest add https://ui.trophy.so/leaderboard-podium
 ```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="leaderboard-podium" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
 
 ## Usage
 
@@ -22,24 +47,44 @@ import { LeaderboardPodium } from "@/components/ui/leaderboard-podium"
 ```tsx
 <LeaderboardPodium
   rankings={[
-    { userId: "1", userName: "Alice", rank: 1, value: 2500 },
-    { userId: "2", userName: "Bob", rank: 2, value: 2200 },
-    { userId: "3", userName: "Charlie", rank: 3, value: 1800 },
+    {
+      userId: "1",
+      userName: "Ava Elizabeth Turner",
+      rank: 1,
+      value: 2500,
+      avatarUrl: "https://i.pravatar.cc/96?img=32",
+    },
+    {
+      userId: "2",
+      userName: "Leo Harrison",
+      rank: 2,
+      value: 2200,
+      avatarUrl: "https://i.pravatar.cc/96?img=12",
+    },
+    {
+      userId: "3",
+      userName: "Rowan Elijah",
+      rank: 3,
+      value: 1800,
+      avatarUrl: "https://i.pravatar.cc/96?img=15",
+    },
   ]}
 />
 ```
 
 ## Examples
 
-### With Trophy API Data
+### Basic Usage
+
+<ComponentPreview name="leaderboard-podium" />
 
 ```tsx
-const leaderboard = await trophy.leaderboards.get({ leaderboardId: "weekly-xp" })
-
-<LeaderboardPodium rankings={leaderboard.rankings} />
+<LeaderboardPodium rankings={rankings} />
 ```
 
 ### Sizes
+
+<ComponentPreview name="leaderboard-podium-sizes" />
 
 ```tsx
 <LeaderboardPodium rankings={rankings} size="sm" />
@@ -47,88 +92,11 @@ const leaderboard = await trophy.leaderboards.get({ leaderboardId: "weekly-xp" }
 <LeaderboardPodium rankings={rankings} size="lg" />
 ```
 
-### Medal Styles
-
-```tsx
-// Classic - medal badge overlay on avatar
-<LeaderboardPodium rankings={rankings} medalStyle="classic" />
-
-// Modern - rounded corners on podium blocks
-<LeaderboardPodium rankings={rankings} medalStyle="modern" />
-
-// Minimal - no medal badge, just colored avatar ring
-<LeaderboardPodium rankings={rankings} medalStyle="minimal" />
-```
-
-### Without Animation
-
-```tsx
-<LeaderboardPodium rankings={rankings} animated={false} />
-```
-
-### Without Values
-
-```tsx
-<LeaderboardPodium rankings={rankings} showValue={false} />
-```
-
-### Without Avatars
-
-Shows medal icons instead of avatar initials:
-
-```tsx
-<LeaderboardPodium rankings={rankings} showAvatar={false} />
-```
-
-### Hero Section
-
-```tsx
-<div className="bg-gradient-to-b from-purple-900 to-purple-950 py-12 px-4 rounded-xl">
-  <h2 className="text-2xl font-bold text-white text-center mb-8">
-    This Week's Champions
-  </h2>
-  <LeaderboardPodium
-    rankings={rankings}
-    size="lg"
-    medalStyle="modern"
-  />
-</div>
-```
-
-### With Full Leaderboard Below
-
-```tsx
-<div className="space-y-8">
-  <LeaderboardPodium rankings={rankings} />
-  
-  <Leaderboard
-    rankings={rankings.slice(3)} // Skip top 3
-    variant="table"
-  />
-</div>
-```
-
-### Contest Results Page
-
-```tsx
-<Card>
-  <CardHeader>
-    <CardTitle>February Challenge Results</CardTitle>
-    <CardDescription>Congratulations to our top performers!</CardDescription>
-  </CardHeader>
-  <CardContent className="flex justify-center py-8">
-    <LeaderboardPodium
-      rankings={contestResults}
-      size="lg"
-      showValue
-    />
-  </CardContent>
-</Card>
-```
-
 ### Partial Podium
 
 Works with fewer than 3 users:
+
+<ComponentPreview name="leaderboard-podium-partial" />
 
 ```tsx
 // Only 2 users - shows 2nd and 1st place
@@ -138,27 +106,37 @@ Works with fewer than 3 users:
     { userId: "2", userName: "Bob", rank: 2, value: 2200 },
   ]}
 />
+```
 
-// Only 1 user - shows just 1st place
-<LeaderboardPodium
-  rankings={[
-    { userId: "1", userName: "Alice", rank: 1, value: 2500 },
-  ]}
+## With Trophy
+
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch leaderboard data server-side:
+
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/leaderboards/{key}"
 />
+
+Then pass the response into `LeaderboardPodium` props in your UI layer:
+
+```tsx
+const rankings = (response.rankings ?? []).slice(0, 3)
+
+<LeaderboardPodium rankings={rankings} />
 ```
 
 ## API Reference
 
 ### LeaderboardPodium
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `rankings` | `LeaderboardRanking[]` | Required | Top rankings (uses first 3) |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Podium size |
-| `showValue` | `boolean` | `true` | Show score below name |
-| `showAvatar` | `boolean` | `true` | Show avatar initials |
-| `animated` | `boolean` | `true` | Animate entrance |
-| `medalStyle` | `"classic" \| "modern" \| "minimal"` | `"classic"` | Medal display style |
+| Prop         | Type                                 | Default     | Description                 |
+| ------------ | ------------------------------------ | ----------- | --------------------------- |
+| `rankings`   | `LeaderboardRanking[]`               | Required    | Top rankings (uses first 3) |
+| `size`       | `"sm" \| "default" \| "lg"`          | `"default"` | Podium size                 |
+| `showValue`  | `boolean`                            | `true`      | Show score below name       |
+| `showAvatar` | `boolean`                            | `true`      | Show avatar images          |
+| `medalStyle` | `"classic" \| "modern" \| "minimal"` | `"classic"` | Crown badge display style   |
 
 ### LeaderboardRanking
 
@@ -168,22 +146,6 @@ interface LeaderboardRanking {
   userName: string | null
   rank: number
   value: number
+  avatarUrl?: string | null
 }
 ```
-
-## Features
-
-- **Podium layout** - Classic 2nd-1st-3rd arrangement with height differences
-- **Medal colors** - Gold crown for 1st, silver medal for 2nd, bronze for 3rd
-- **Animated entrance** - Staggered fade-in from bottom (1st appears first)
-- **Flexible sizing** - Three size options for different contexts
-- **Partial support** - Works with 1, 2, or 3 users
-- **Reduced motion** - Respects `prefers-reduced-motion`
-
-## Accessibility
-
-- Container uses `role="list"` with `aria-label="Top 3 rankings"`
-- Each position uses `role="listitem"` with descriptive `aria-label`
-- Avatars, medals, and podium blocks marked `aria-hidden` (decorative)
-- Numbers formatted with `toLocaleString()` for screen readers
-- Animations respect `prefers-reduced-motion` media query

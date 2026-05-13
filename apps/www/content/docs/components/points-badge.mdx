@@ -1,0 +1,102 @@
+---
+title: Points Badge
+description: A compact component for displaying user point totals.
+---
+
+<ComponentPreview name="points-badge" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/points-badge
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="points-badge" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+Import the component:
+
+```tsx
+import { PointsBadge } from "@/components/ui/points-badge"
+```
+
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="points-badge" />
+
+```tsx
+<PointsBadge name="XP" total={2500} />
+```
+
+### Sizes
+
+Available in three sizes: `sm`, `default`, and `lg`.
+
+<ComponentPreview name="points-badge-sizes" />
+
+```tsx
+<PointsBadge name="XP" total={1250} size="sm" />
+<PointsBadge name="XP" total={1250} size="default" />
+<PointsBadge name="XP" total={1250} size="lg" />
+```
+
+## With Trophy
+
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch the user's points total server-side:
+
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/points/{key}"
+/>
+
+Then pass the response into `PointsBadge` props in your UI layer:
+
+```tsx
+<PointsBadge
+  name={response.name}
+  badgeUrl={response.badgeUrl}
+  total={response.total}
+/>
+```
+
+## API Reference
+
+### Props
+
+| Prop          | Type                        | Default     | Description                                                            |
+| ------------- | --------------------------- | ----------- | ---------------------------------------------------------------------- |
+| `name`        | `string`                    | Required    | Label for the points (e.g. currency name)                              |
+| `badgeUrl`    | `string \| null`            | -           | Optional badge image URL; omit or pass `null` to show the default icon |
+| `total`       | `number`                    | Required    | Points total to display                                                |
+| `size`        | `"sm" \| "default" \| "lg"` | `"default"` | Component size                                                         |
+| `icon`        | `ComponentType`             | -           | Custom icon component when no badge image is available                 |
+| `formatValue` | `(value: number) => string` | -           | Custom value formatter                                                 |

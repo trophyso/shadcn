@@ -34,23 +34,13 @@
       ]
     },
     {
-      "name": "streak-freeze-indicator",
+      "name": "streak-card",
       "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "lucide-react"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["streak-calendar"],
       "files": [
         {
-          "path": "registry/trophy/ui/streak-freeze-indicator.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "streak-at-risk",
-      "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "lucide-react"],
-      "files": [
-        {
-          "path": "registry/trophy/ui/streak-at-risk.tsx",
+          "path": "registry/trophy/ui/streak-card.tsx",
           "type": "registry:ui"
         }
       ]
@@ -58,7 +48,7 @@
     {
       "name": "achievement-badge",
       "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "lucide-react"],
+      "dependencies": ["lucide-react"],
       "files": [
         {
           "path": "registry/trophy/ui/achievement-badge.tsx",
@@ -70,9 +60,21 @@
       "name": "achievement-grid",
       "type": "registry:ui",
       "dependencies": ["class-variance-authority", "lucide-react"],
+      "registryDependencies": ["achievement-badge"],
       "files": [
         {
           "path": "registry/trophy/ui/achievement-grid.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "achievement-list",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/achievement-list.tsx",
           "type": "registry:ui"
         }
       ]
@@ -89,34 +91,24 @@
       ]
     },
     {
-      "name": "achievement-progress",
+      "name": "achievement-card",
       "type": "registry:ui",
-      "dependencies": ["class-variance-authority"],
+      "dependencies": [],
+      "registryDependencies": ["achievement-badge", "achievement-list"],
       "files": [
         {
-          "path": "registry/trophy/ui/achievement-progress.tsx",
+          "path": "registry/trophy/ui/achievement-card.tsx",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "leaderboard",
+      "name": "leaderboard-rankings",
       "type": "registry:ui",
       "dependencies": ["class-variance-authority", "lucide-react"],
       "files": [
         {
-          "path": "registry/trophy/ui/leaderboard.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "leaderboard-entry",
-      "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "lucide-react"],
-      "files": [
-        {
-          "path": "registry/trophy/ui/leaderboard-entry.tsx",
+          "path": "registry/trophy/ui/leaderboard-rankings.tsx",
           "type": "registry:ui"
         }
       ]
@@ -128,6 +120,84 @@
       "files": [
         {
           "path": "registry/trophy/ui/leaderboard-podium.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "leaderboard-card",
+      "type": "registry:ui",
+      "dependencies": [],
+      "registryDependencies": ["leaderboard-podium", "leaderboard-rankings"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/leaderboard-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "points-badge",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/points-badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "points-chart",
+      "type": "registry:ui",
+      "dependencies": ["recharts"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/points-chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "points-awards",
+      "type": "registry:ui",
+      "dependencies": ["@radix-ui/react-tooltip", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/points-awards.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "points-levels-timeline",
+      "type": "registry:ui",
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/points-levels-timeline.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "points-levels-list",
+      "type": "registry:ui",
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/points-levels-list.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "points-boost",
+      "type": "registry:ui",
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/trophy/ui/points-boost.tsx",
           "type": "registry:ui"
         }
       ]

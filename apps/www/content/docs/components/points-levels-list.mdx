@@ -1,0 +1,279 @@
+---
+title: Points Levels List
+description: A compact points levels table with optional current-level label and progress header.
+---
+
+<ComponentPreview name="points-levels-list" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/points-levels-list
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="points-levels-list" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PointsLevelsList } from "@/components/ui/points-levels-list"
+```
+
+```tsx
+<PointsLevelsList
+  levels={[
+    { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", points: 500, name: "Novice", iconType: "novice" },
+    {
+      id: "intermediate",
+      points: 2500,
+      name: "Intermediate",
+      iconType: "intermediate",
+    },
+    {
+      id: "professional",
+      points: 5000,
+      name: "Professional",
+      iconType: "professional",
+    },
+    { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", points: 10000, name: "Master", iconType: "master" },
+    {
+      id: "grand-master",
+      points: 20000,
+      name: "Grand Master",
+      iconType: "grand-master",
+    },
+    {
+      id: "enlightened",
+      points: 50000,
+      name: "Enlightened",
+      iconType: "enlightened",
+    },
+  ]}
+/>
+```
+
+## Examples
+
+### Basic Usage
+
+<ComponentPreview name="points-levels-list" />
+
+```tsx
+<PointsLevelsList
+  levels={[
+    { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", points: 500, name: "Novice", iconType: "novice" },
+    {
+      id: "intermediate",
+      points: 2500,
+      name: "Intermediate",
+      iconType: "intermediate",
+    },
+    {
+      id: "professional",
+      points: 5000,
+      name: "Professional",
+      iconType: "professional",
+    },
+    { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", points: 10000, name: "Master", iconType: "master" },
+    {
+      id: "grand-master",
+      points: 20000,
+      name: "Grand Master",
+      iconType: "grand-master",
+    },
+    {
+      id: "enlightened",
+      points: 50000,
+      name: "Enlightened",
+      iconType: "enlightened",
+    },
+  ]}
+/>
+```
+
+### Current Level
+
+<ComponentPreview name="points-levels-list-current-level" />
+
+```tsx
+<PointsLevelsList
+  currentPoints={6200}
+  levels={[
+    { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", points: 500, name: "Novice", iconType: "novice" },
+    {
+      id: "intermediate",
+      points: 2500,
+      name: "Intermediate",
+      iconType: "intermediate",
+    },
+    {
+      id: "professional",
+      points: 5000,
+      name: "Professional",
+      iconType: "professional",
+    },
+    { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", points: 10000, name: "Master", iconType: "master" },
+    {
+      id: "grand-master",
+      points: 20000,
+      name: "Grand Master",
+      iconType: "grand-master",
+    },
+    {
+      id: "enlightened",
+      points: 50000,
+      name: "Enlightened",
+      iconType: "enlightened",
+    },
+  ]}
+/>
+```
+
+### With Progress
+
+<ComponentPreview name="points-levels-list-progress" />
+
+```tsx
+<PointsLevelsList
+  currentPoints={6200}
+  showProgressBar
+  levels={[
+    { id: "beginner", points: 0, name: "Beginner", iconType: "beginner" },
+    { id: "novice", points: 500, name: "Novice", iconType: "novice" },
+    {
+      id: "intermediate",
+      points: 2500,
+      name: "Intermediate",
+      iconType: "intermediate",
+    },
+    {
+      id: "professional",
+      points: 5000,
+      name: "Professional",
+      iconType: "professional",
+    },
+    { id: "expert", points: 7500, name: "Expert", iconType: "expert" },
+    { id: "master", points: 10000, name: "Master", iconType: "master" },
+    {
+      id: "grand-master",
+      points: 20000,
+      name: "Grand Master",
+      iconType: "grand-master",
+    },
+    {
+      id: "enlightened",
+      points: 50000,
+      name: "Enlightened",
+      iconType: "enlightened",
+    },
+  ]}
+/>
+```
+
+## With Trophy
+
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch user progress and system levels server-side:
+
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/users/{id}/points/{key}"
+/>
+
+Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to fetch points system level definitions server-side:
+
+<OpenApiCodeSamples
+  spec="application.yml"
+  method="get"
+  endpoint="/points/{key}/levels"
+/>
+
+Then aggregate both responses and pass them into `PointsLevelsList` props in your UI layer. Trophy does not support sub-levels yet.
+
+```tsx
+const currentPoints = userPointsResponse.total
+
+const levels = (pointsLevelsResponse.levels ?? []).map((level) => ({
+  ...level,
+  subLevels: [],
+}))
+
+<PointsLevelsList
+  levels={levels}
+  currentPoints={currentPoints}
+  showProgressBar
+/>
+```
+
+## API Reference
+
+### Props
+
+| Prop                | Type                        | Default                | Description                                                                     |
+| ------------------- | --------------------------- | ---------------------- | ------------------------------------------------------------------------------- |
+| `levels`            | `PointsLevelList[]`         | Required               | Ordered level definitions used to render point tiers and labels                 |
+| `currentPoints`     | `number`                    | -                      | User points total used to determine current level and progress                  |
+| `showProgressBar`   | `boolean`                   | `false`                | Shows a progress header toward the next level when `currentPoints` is available |
+| `currentLevelLabel` | `string`                    | `"Your current level"` | Label shown on the active row                                                   |
+| `formatPoints`      | `(value: number) => string` | -                      | Optional formatter for tier and progress values                                 |
+
+### Types
+
+```ts
+type PointsLevelListIconType =
+  | "beginner"
+  | "novice"
+  | "intermediate"
+  | "professional"
+  | "expert"
+  | "master"
+  | "grand-master"
+  | "enlightened"
+
+interface PointsSubLevelList {
+  name: string
+  points: number
+}
+
+interface PointsLevelList {
+  id: string
+  key?: string
+  name: string
+  description?: string
+  badgeUrl?: string | null
+  points: number
+  iconType?: PointsLevelListIconType
+  subLevels?: PointsSubLevelList[]
+}
+```

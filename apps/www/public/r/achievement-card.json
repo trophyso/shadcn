@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "achievement-card",
+  "type": "registry:ui",
+  "dependencies": [],
+  "registryDependencies": [
+    "achievement-badge",
+    "achievement-list"
+  ],
+  "files": [
+    {
+      "path": "components/ui/achievement-card.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { AchievementBadge } from \"@/registry/trophy/ui/achievement-badge\"\nimport { AchievementList } from \"@/registry/trophy/ui/achievement-list\"\n\nimport { Button } from \"./button\"\n\ninterface Achievement {\n  id: string\n  name: string\n  description?: string | null\n  trigger: \"metric\" | \"api\" | \"streak\"\n  badgeUrl?: string | null\n  progress?: number\n  rarity?: number\n}\n\ninterface UserAchievement extends Achievement {\n  achievedAt: string | null\n}\n\ninterface AchievementCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  achievements: UserAchievement[]\n  highlightedAchievements: UserAchievement[]\n  badgeSize?: \"sm\" | \"default\" | \"lg\"\n  lockedStyle?: \"grayscale\" | \"silhouette\" | \"hidden\"\n  onAchievementClick?: (achievement: UserAchievement) => void\n}\n\nconst AchievementCard = React.forwardRef<HTMLDivElement, AchievementCardProps>(\n  (\n    {\n      className,\n      achievements,\n      highlightedAchievements,\n      badgeSize = \"default\",\n      lockedStyle = \"grayscale\",\n      onAchievementClick,\n      ...props\n    },\n    ref\n  ) => {\n    const unlockedCount = achievements.filter(\n      (a) => a.achievedAt !== null\n    ).length\n\n    return (\n      <div\n        ref={ref}\n        className={cn(\"bg-card rounded-2xl border p-6 shadow-sm\", className)}\n        {...props}\n      >\n        <div className=\"text-center\">\n          <p className=\"text-7xl font-bold tracking-tight sm:text-8xl\">\n            {unlockedCount}\n          </p>\n          <p className=\"text-muted-foreground mt-1 text-sm font-medium\">\n            Badges Unlocked\n          </p>\n        </div>\n\n        <div className=\"mt-10 flex items-end justify-center gap-4\">\n          {highlightedAchievements.slice(0, 3).map((achievement, index) => (\n            <AchievementBadge\n              key={achievement.id}\n              achievement={achievement}\n              badgeSize=\"sm\"\n              onAchievementClick={onAchievementClick}\n              className={cn(\n                \"w-28 border-0 bg-transparent p-0 shadow-none hover:shadow-none\",\n                index === 1 ? \"-translate-y-2\" : \"translate-y-1\"\n              )}\n            />\n          ))}\n        </div>\n\n        <div className=\"mt-10\">\n          <div className=\"mb-3 flex items-center justify-between\">\n            <h3 className=\"text-primary text-sm font-medium\">\n              All Achievements\n            </h3>\n            <Button variant=\"link\" size=\"sm\" onClick={() => {}}>\n              See all\n            </Button>\n          </div>\n          <AchievementList\n            achievements={achievements}\n            badgeSize={badgeSize}\n            lockedStyle={lockedStyle}\n            onAchievementClick={onAchievementClick}\n          />\n        </div>\n      </div>\n    )\n  }\n)\nAchievementCard.displayName = \"AchievementCard\"\n\nexport { AchievementCard }\nexport type { AchievementCardProps, Achievement, UserAchievement }\n",
+      "type": "registry:ui"
+    }
+  ]
+}
