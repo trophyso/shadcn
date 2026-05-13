@@ -1,6 +1,21 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@keyframes expand-in {
+  from {
+    max-width: 0;
+    opacity: 0;
+  }
+  to {
+    max-width: 8.5ch;
+    opacity: 0.9;
+  }
+}
+
+@utility animate-expand-in {
+  animation: expand-in 1.5s ease-in-out 0.5s both;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @custom-variant fixed (&:is(.layout-fixed *));

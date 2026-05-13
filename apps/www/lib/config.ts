@@ -7,13 +7,12 @@ function siteOrigin(): string {
 }
 
 export const siteConfig = {
-  name: "Trophy UI",
+  name: "Gamification UI Kit by Trophy",
   url: siteOrigin(),
   ogImage: `${siteOrigin()}/og.jpg`,
-  title: "Trophy UI",
-  tagline: "Open-source gamification UI components for React",
+  title: "Gamification UI Kit by Trophy",
   description:
-    "Trophy UI is an open-source library of gamification UI components built on shadcn/ui and Tailwind CSS. Drop-in React components for streaks, achievements, leaderboards, points, and more — ready to copy and customize.",
+    "Trophy's Gamification UI Kit is an open-source library of gamification UI components built on shadcn/ui and Tailwind CSS. Drop-in React components for streaks, achievements, leaderboards, points, and more — ready to copy and customize.",
   keywords: [
     "gamification UI components",
     "gamification React components",
