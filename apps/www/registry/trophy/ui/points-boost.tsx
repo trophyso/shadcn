@@ -65,7 +65,7 @@ const PointsBoost = React.forwardRef<HTMLDivElement, PointsBoostProps>(
       <div
         ref={ref}
         className={cn(
-          "bg-card text-foreground flex items-center justify-between gap-4 rounded-xl border px-4 py-3",
+          "bg-card text-foreground flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 rounded-xl border px-4 py-3",
           className
         )}
         {...props}
@@ -84,7 +84,7 @@ const PointsBoost = React.forwardRef<HTMLDivElement, PointsBoostProps>(
           ) : null}
         </div>
 
-        <div className="ml-4 flex shrink-0 items-center gap-3 self-center">
+        <div className="lg:ml-4 flex shrink-0 items-center gap-3 self-end lg:self-center">
           {countdownLabel ? (
             <span className="text-muted-foreground text-xs font-medium">
               {countdownLabel}
