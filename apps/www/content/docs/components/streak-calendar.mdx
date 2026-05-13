@@ -135,17 +135,10 @@ Use the [Trophy SDK](https://docs.trophy.so/api-reference/client-libraries) to f
   endpoint="/users/{id}/streak"
 />
 
-Then pass and transform the response into `StreakCalendar` props in your UI layer:
+Then pass the response into `StreakCalendar` props in your UI layer:
 
 ```tsx
-const streakPeriods =
-  response.streakHistory?.map((period) => ({
-    periodStart: period.periodStart,
-    periodEnd: period.periodEnd,
-    usedFreeze: period.usedFreeze,
-  })) ?? []
-
-<StreakCalendar streak={streakPeriods} />
+<StreakCalendar streak={response.streakHistory} />
 ```
 
 ## API Reference
