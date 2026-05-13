@@ -13,6 +13,7 @@
     "packages/*"
   ],
   "scripts": {
+    "start": "pnpm --filter=www start",
     "build": "turbo run build",
     "registry:build": "pnpm --filter=www registry:build && pnpm lint:fix && pnpm format:write -- --loglevel silent",
     "dev": "turbo run dev",
