@@ -526,6 +526,57 @@
       ]
     }
   },
+  "admin.yml post /leaderboards": {
+    "spec": "admin.yml",
+    "method": "post",
+    "path": "/leaderboards",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.leaderboards.create([\n  {\n    name: 'Revenue Champions',\n    key: 'revenue-champions',\n    status: 'inactive',\n    rankBy: 'metric',\n    metricId: '550e8400-e29b-41d4-a716-446655440000',\n    maxParticipants: 100,\n    start: '2026-04-20'\n  },\n  {\n    name: 'Streak Legends',\n    key: 'streak-legends',\n    status: 'scheduled',\n    rankBy: 'streak',\n    start: '2026-04-27'\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.leaderboards.create([\n  {\n    \"name\": \"Revenue Champions\",\n    \"key\": \"revenue-champions\",\n    \"status\": \"inactive\",\n    \"rankBy\": \"metric\",\n    \"metricId\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"maxParticipants\": 100,\n    \"start\": \"2026-04-20\"\n  },\n  {\n    \"name\": \"Streak Legends\",\n    \"key\": \"streak-legends\",\n    \"status\": \"scheduled\",\n    \"rankBy\": \"streak\",\n    \"start\": \"2026-04-27\"\n  }\n])\n"
+        }
+      ]
+    }
+  },
+  "admin.yml patch /leaderboards": {
+    "spec": "admin.yml",
+    "method": "patch",
+    "path": "/leaderboards",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.leaderboards.update([\n  {\n    id: '550e8400-e29b-41d4-a716-446655440100',\n    name: 'Monthly Revenue Champions',\n    description: 'Ranked by monthly revenue',\n    status: 'active'\n  },\n  {\n    id: '550e8400-e29b-41d4-a716-446655440101',\n    status: 'finished'\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.leaderboards.update([\n  {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440100\",\n    \"name\": \"Monthly Revenue Champions\",\n    \"description\": \"Ranked by monthly revenue\",\n    \"status\": \"active\"\n  },\n  {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440101\",\n    \"status\": \"finished\"\n  }\n])\n"
+        }
+      ]
+    }
+  },
+  "admin.yml delete /leaderboards": {
+    "spec": "admin.yml",
+    "method": "delete",
+    "path": "/leaderboards",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.leaderboards.delete({\n  ids: [\n    '550e8400-e29b-41d4-a716-446655440100',\n    '550e8400-e29b-41d4-a716-446655440101'\n  ]\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.leaderboards.delete(\n  ids=[\n    '550e8400-e29b-41d4-a716-446655440100',\n    '550e8400-e29b-41d4-a716-446655440101'\n  ]\n)\n"
+        }
+      ]
+    }
+  },
   "admin.yml get /leaderboards/{id}": {
     "spec": "admin.yml",
     "method": "get",

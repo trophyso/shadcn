@@ -2,18 +2,29 @@ import * as fs from "fs"
 import * as path from "path"
 import { fileURLToPath } from "url"
 
-import { parse } from "yaml"
-
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const OPENAPI_DIR = path.join(__dirname, "../openapi")
 const OUTPUT_PATH = path.join(
   __dirname,
   "../lib/generated/openapi-code-samples.json"
 )
 
-const SPEC_FILES = ["admin.yml", "application.yml"] as const
+const SPECS = [
+  {
+    specKey: "admin.yml" as const,
+    url:
+      process.env.TROPHY_OPENAPI_ADMIN_URL ??
+      "https://admin.trophy.so/v1/openapi",
+  },
+  {
+    specKey: "application.yml" as const,
+    url:
+      process.env.TROPHY_OPENAPI_APPLICATION_URL ??
+      "https://api.trophy.so/v1/openapi",
+  },
+] as const
+
 const HTTP_METHODS = ["get", "post", "put", "patch", "delete"] as const
 
 interface RawCodeSample {
@@ -95,20 +106,48 @@ function normalizeOperationSamples(
   }
 }
 
-function readSpec(specFile: (typeof SPEC_FILES)[number]) {
-  const specPath = path.join(OPENAPI_DIR, specFile)
-  const raw = fs.readFileSync(specPath, "utf8")
-  return parse(raw) as {
-    paths?: Record<string, Partial<Record<(typeof HTTP_METHODS)[number], RawOperation>>>
+async function fetchOpenApiDocument(
+  specKey: string,
+  url: string
+): Promise<{
+  paths?: Record<string, Partial<Record<(typeof HTTP_METHODS)[number], RawOperation>>>
+}> {
+  const response = await fetch(url, {
+    headers: {
+      Accept: "application/json",
+      "User-Agent": "trophy-ui-docs-openapi-build",
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(
+      `OpenAPI fetch failed for ${specKey}: ${response.status} ${response.statusText} (${url})`
+    )
+  }
+
+  const text = await response.text()
+  try {
+    return JSON.parse(text) as {
+      paths?: Record<string, Partial<Record<(typeof HTTP_METHODS)[number], RawOperation>>>
+    }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    throw new Error(`OpenAPI JSON parse failed for ${specKey} (${url}): ${message}`)
   }
 }
 
 async function buildOpenApiCodeSamples() {
+  const documents = await Promise.all(
+    SPECS.map(async ({ specKey, url }) => ({
+      specKey,
+      document: await fetchOpenApiDocument(specKey, url),
+    }))
+  )
+
   const entries: Record<string, OpenApiMethodSamples> = {}
   let sampleCount = 0
 
-  for (const specFile of SPEC_FILES) {
-    const document = readSpec(specFile)
+  for (const { specKey, document } of documents) {
     const paths = document.paths ?? {}
 
     for (const [endpointPath, pathItem] of Object.entries(paths)) {
@@ -119,7 +158,7 @@ async function buildOpenApiCodeSamples() {
         }
 
         const normalized = normalizeOperationSamples(
-          specFile,
+          specKey,
           method,
           endpointPath,
           operation
@@ -129,7 +168,7 @@ async function buildOpenApiCodeSamples() {
           continue
         }
 
-        const key = `${specFile} ${method} ${endpointPath}`
+        const key = `${specKey} ${method} ${endpointPath}`
         entries[key] = normalized
         sampleCount += Object.values(normalized.samplesByLanguage).reduce(
           (total, snippets) => total + snippets.length,
