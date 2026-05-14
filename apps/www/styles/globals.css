@@ -6,6 +6,7 @@
     max-width: 0;
     opacity: 0;
   }
+
   to {
     max-width: 8.5ch;
     opacity: 0.9;
@@ -13,7 +14,7 @@
 }
 
 @utility animate-expand-in {
-  animation: expand-in 1.5s ease-in-out 0.5s both;
+  animation: expand-in 350ms ease-out 200ms both;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -385,15 +386,15 @@ pre code span {
       @apply !mt-0;
     }
 
-    &:first-child > h3:first-child {
+    &:first-child>h3:first-child {
       @apply !mt-0;
     }
 
-    > h3 {
+    >h3 {
       @apply !mt-16;
     }
 
-    > h3 + p {
+    >h3+p {
       @apply !mt-2;
     }
   }

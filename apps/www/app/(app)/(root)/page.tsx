@@ -182,7 +182,7 @@ export default function IndexPage() {
       <section className="container-wrapper border-grid border-t">
         <div className="container mx-auto max-w-5xl px-4 py-16">
           <h2 className="text-center text-2xl font-semibold tracking-tight sm:text-3xl">
-            Everything You Need to Gamify Your App
+            Everything You Need to Ship Gamification
           </h2>
           <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-center text-base sm:text-lg">
             Four categories of components covering the most impactful
