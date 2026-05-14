@@ -13,8 +13,9 @@
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "openapi:build": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/build-openapi-code-samples.mts",
+    "prebuild": "pnpm openapi:build",
     "registry:build": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/build-registry.mts && prettier --log-level silent --write \"registry/**/*.{ts,tsx,json,mdx}\" --cache",
-    "postinstall": "fumadocs-mdx && pnpm openapi:build"
+    "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.2",

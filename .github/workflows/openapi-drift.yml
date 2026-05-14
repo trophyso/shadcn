@@ -1,0 +1,27 @@
+name: OpenAPI code samples
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm --filter www openapi:build
+
+      - name: Ensure generated OpenAPI index matches commit
+        run: git diff --exit-code -- apps/www/lib/generated/openapi-code-samples.json
