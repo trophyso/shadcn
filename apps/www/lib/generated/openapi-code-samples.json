@@ -1,6 +1,6 @@
 {
-  "admin.yml get /attributes": {
-    "spec": "admin.yml",
+  "admin get /attributes": {
+    "spec": "admin",
     "method": "get",
     "path": "/attributes",
     "samplesByLanguage": {
@@ -16,8 +16,8 @@
       ]
     }
   },
-  "admin.yml post /attributes": {
-    "spec": "admin.yml",
+  "admin post /attributes": {
+    "spec": "admin",
     "method": "post",
     "path": "/attributes",
     "samplesByLanguage": {
@@ -33,8 +33,8 @@
       ]
     }
   },
-  "admin.yml patch /attributes": {
-    "spec": "admin.yml",
+  "admin patch /attributes": {
+    "spec": "admin",
     "method": "patch",
     "path": "/attributes",
     "samplesByLanguage": {
@@ -50,8 +50,8 @@
       ]
     }
   },
-  "admin.yml delete /attributes": {
-    "spec": "admin.yml",
+  "admin delete /attributes": {
+    "spec": "admin",
     "method": "delete",
     "path": "/attributes",
     "samplesByLanguage": {
@@ -67,8 +67,8 @@
       ]
     }
   },
-  "admin.yml get /attributes/{id}": {
-    "spec": "admin.yml",
+  "admin get /attributes/{id}": {
+    "spec": "admin",
     "method": "get",
     "path": "/attributes/{id}",
     "samplesByLanguage": {
@@ -84,8 +84,8 @@
       ]
     }
   },
-  "admin.yml get /metrics": {
-    "spec": "admin.yml",
+  "admin get /metrics": {
+    "spec": "admin",
     "method": "get",
     "path": "/metrics",
     "samplesByLanguage": {
@@ -101,8 +101,8 @@
       ]
     }
   },
-  "admin.yml post /metrics": {
-    "spec": "admin.yml",
+  "admin post /metrics": {
+    "spec": "admin",
     "method": "post",
     "path": "/metrics",
     "samplesByLanguage": {
@@ -118,8 +118,8 @@
       ]
     }
   },
-  "admin.yml patch /metrics": {
-    "spec": "admin.yml",
+  "admin patch /metrics": {
+    "spec": "admin",
     "method": "patch",
     "path": "/metrics",
     "samplesByLanguage": {
@@ -135,8 +135,8 @@
       ]
     }
   },
-  "admin.yml delete /metrics": {
-    "spec": "admin.yml",
+  "admin delete /metrics": {
+    "spec": "admin",
     "method": "delete",
     "path": "/metrics",
     "samplesByLanguage": {
@@ -152,8 +152,8 @@
       ]
     }
   },
-  "admin.yml get /metrics/{id}": {
-    "spec": "admin.yml",
+  "admin get /metrics/{id}": {
+    "spec": "admin",
     "method": "get",
     "path": "/metrics/{id}",
     "samplesByLanguage": {
@@ -169,8 +169,8 @@
       ]
     }
   },
-  "admin.yml get /points": {
-    "spec": "admin.yml",
+  "admin get /points": {
+    "spec": "admin",
     "method": "get",
     "path": "/points",
     "samplesByLanguage": {
@@ -186,8 +186,8 @@
       ]
     }
   },
-  "admin.yml post /points": {
-    "spec": "admin.yml",
+  "admin post /points": {
+    "spec": "admin",
     "method": "post",
     "path": "/points",
     "samplesByLanguage": {
@@ -203,8 +203,8 @@
       ]
     }
   },
-  "admin.yml patch /points": {
-    "spec": "admin.yml",
+  "admin patch /points": {
+    "spec": "admin",
     "method": "patch",
     "path": "/points",
     "samplesByLanguage": {
@@ -220,8 +220,8 @@
       ]
     }
   },
-  "admin.yml delete /points": {
-    "spec": "admin.yml",
+  "admin delete /points": {
+    "spec": "admin",
     "method": "delete",
     "path": "/points",
     "samplesByLanguage": {
@@ -237,8 +237,8 @@
       ]
     }
   },
-  "admin.yml get /points/{id}": {
-    "spec": "admin.yml",
+  "admin get /points/{id}": {
+    "spec": "admin",
     "method": "get",
     "path": "/points/{id}",
     "samplesByLanguage": {
@@ -254,8 +254,8 @@
       ]
     }
   },
-  "admin.yml get /points/{systemId}/boosts": {
-    "spec": "admin.yml",
+  "admin get /points/{systemId}/boosts": {
+    "spec": "admin",
     "method": "get",
     "path": "/points/{systemId}/boosts",
     "samplesByLanguage": {
@@ -271,8 +271,8 @@
       ]
     }
   },
-  "admin.yml post /points/{systemId}/boosts": {
-    "spec": "admin.yml",
+  "admin post /points/{systemId}/boosts": {
+    "spec": "admin",
     "method": "post",
     "path": "/points/{systemId}/boosts",
     "samplesByLanguage": {
@@ -288,8 +288,8 @@
       ]
     }
   },
-  "admin.yml patch /points/{systemId}/boosts": {
-    "spec": "admin.yml",
+  "admin patch /points/{systemId}/boosts": {
+    "spec": "admin",
     "method": "patch",
     "path": "/points/{systemId}/boosts",
     "samplesByLanguage": {
@@ -305,8 +305,8 @@
       ]
     }
   },
-  "admin.yml delete /points/{systemId}/boosts": {
-    "spec": "admin.yml",
+  "admin delete /points/{systemId}/boosts": {
+    "spec": "admin",
     "method": "delete",
     "path": "/points/{systemId}/boosts",
     "samplesByLanguage": {
@@ -322,8 +322,8 @@
       ]
     }
   },
-  "admin.yml get /points/{systemId}/boosts/{id}": {
-    "spec": "admin.yml",
+  "admin get /points/{systemId}/boosts/{id}": {
+    "spec": "admin",
     "method": "get",
     "path": "/points/{systemId}/boosts/{id}",
     "samplesByLanguage": {
@@ -339,8 +339,8 @@
       ]
     }
   },
-  "admin.yml get /points/{systemId}/levels": {
-    "spec": "admin.yml",
+  "admin get /points/{systemId}/levels": {
+    "spec": "admin",
     "method": "get",
     "path": "/points/{systemId}/levels",
     "samplesByLanguage": {
@@ -356,8 +356,8 @@
       ]
     }
   },
-  "admin.yml post /points/{systemId}/levels": {
-    "spec": "admin.yml",
+  "admin post /points/{systemId}/levels": {
+    "spec": "admin",
     "method": "post",
     "path": "/points/{systemId}/levels",
     "samplesByLanguage": {
@@ -373,8 +373,8 @@
       ]
     }
   },
-  "admin.yml patch /points/{systemId}/levels": {
-    "spec": "admin.yml",
+  "admin patch /points/{systemId}/levels": {
+    "spec": "admin",
     "method": "patch",
     "path": "/points/{systemId}/levels",
     "samplesByLanguage": {
@@ -390,8 +390,8 @@
       ]
     }
   },
-  "admin.yml delete /points/{systemId}/levels": {
-    "spec": "admin.yml",
+  "admin delete /points/{systemId}/levels": {
+    "spec": "admin",
     "method": "delete",
     "path": "/points/{systemId}/levels",
     "samplesByLanguage": {
@@ -407,8 +407,8 @@
       ]
     }
   },
-  "admin.yml get /points/{systemId}/levels/{id}": {
-    "spec": "admin.yml",
+  "admin get /points/{systemId}/levels/{id}": {
+    "spec": "admin",
     "method": "get",
     "path": "/points/{systemId}/levels/{id}",
     "samplesByLanguage": {
@@ -424,8 +424,8 @@
       ]
     }
   },
-  "admin.yml get /points/{systemId}/triggers": {
-    "spec": "admin.yml",
+  "admin get /points/{systemId}/triggers": {
+    "spec": "admin",
     "method": "get",
     "path": "/points/{systemId}/triggers",
     "samplesByLanguage": {
@@ -441,8 +441,8 @@
       ]
     }
   },
-  "admin.yml post /points/{systemId}/triggers": {
-    "spec": "admin.yml",
+  "admin post /points/{systemId}/triggers": {
+    "spec": "admin",
     "method": "post",
     "path": "/points/{systemId}/triggers",
     "samplesByLanguage": {
@@ -458,8 +458,8 @@
       ]
     }
   },
-  "admin.yml patch /points/{systemId}/triggers": {
-    "spec": "admin.yml",
+  "admin patch /points/{systemId}/triggers": {
+    "spec": "admin",
     "method": "patch",
     "path": "/points/{systemId}/triggers",
     "samplesByLanguage": {
@@ -475,8 +475,8 @@
       ]
     }
   },
-  "admin.yml delete /points/{systemId}/triggers": {
-    "spec": "admin.yml",
+  "admin delete /points/{systemId}/triggers": {
+    "spec": "admin",
     "method": "delete",
     "path": "/points/{systemId}/triggers",
     "samplesByLanguage": {
@@ -492,8 +492,8 @@
       ]
     }
   },
-  "admin.yml get /points/{systemId}/triggers/{id}": {
-    "spec": "admin.yml",
+  "admin get /points/{systemId}/triggers/{id}": {
+    "spec": "admin",
     "method": "get",
     "path": "/points/{systemId}/triggers/{id}",
     "samplesByLanguage": {
@@ -509,8 +509,8 @@
       ]
     }
   },
-  "admin.yml get /leaderboards": {
-    "spec": "admin.yml",
+  "admin get /leaderboards": {
+    "spec": "admin",
     "method": "get",
     "path": "/leaderboards",
     "samplesByLanguage": {
@@ -526,8 +526,8 @@
       ]
     }
   },
-  "admin.yml post /leaderboards": {
-    "spec": "admin.yml",
+  "admin post /leaderboards": {
+    "spec": "admin",
     "method": "post",
     "path": "/leaderboards",
     "samplesByLanguage": {
@@ -543,8 +543,8 @@
       ]
     }
   },
-  "admin.yml patch /leaderboards": {
-    "spec": "admin.yml",
+  "admin patch /leaderboards": {
+    "spec": "admin",
     "method": "patch",
     "path": "/leaderboards",
     "samplesByLanguage": {
@@ -560,8 +560,8 @@
       ]
     }
   },
-  "admin.yml delete /leaderboards": {
-    "spec": "admin.yml",
+  "admin delete /leaderboards": {
+    "spec": "admin",
     "method": "delete",
     "path": "/leaderboards",
     "samplesByLanguage": {
@@ -577,8 +577,8 @@
       ]
     }
   },
-  "admin.yml get /leaderboards/{id}": {
-    "spec": "admin.yml",
+  "admin get /leaderboards/{id}": {
+    "spec": "admin",
     "method": "get",
     "path": "/leaderboards/{id}",
     "samplesByLanguage": {
@@ -594,8 +594,8 @@
       ]
     }
   },
-  "admin.yml post /streaks/freezes": {
-    "spec": "admin.yml",
+  "admin post /streaks/freezes": {
+    "spec": "admin",
     "method": "post",
     "path": "/streaks/freezes",
     "samplesByLanguage": {
@@ -611,8 +611,8 @@
       ]
     }
   },
-  "admin.yml post /streaks/restore": {
-    "spec": "admin.yml",
+  "admin post /streaks/restore": {
+    "spec": "admin",
     "method": "post",
     "path": "/streaks/restore",
     "samplesByLanguage": {
@@ -628,8 +628,8 @@
       ]
     }
   },
-  "application.yml get /achievements": {
-    "spec": "application.yml",
+  "application get /achievements": {
+    "spec": "application",
     "method": "get",
     "path": "/achievements",
     "samplesByLanguage": {
@@ -645,8 +645,8 @@
       ]
     }
   },
-  "application.yml post /achievements/{key}/complete": {
-    "spec": "application.yml",
+  "application post /achievements/{key}/complete": {
+    "spec": "application",
     "method": "post",
     "path": "/achievements/{key}/complete",
     "samplesByLanguage": {
@@ -662,8 +662,8 @@
       ]
     }
   },
-  "application.yml post /metrics/{key}/event": {
-    "spec": "application.yml",
+  "application post /metrics/{key}/event": {
+    "spec": "application",
     "method": "post",
     "path": "/metrics/{key}/event",
     "samplesByLanguage": {
@@ -679,8 +679,8 @@
       ]
     }
   },
-  "application.yml post /users": {
-    "spec": "application.yml",
+  "application post /users": {
+    "spec": "application",
     "method": "post",
     "path": "/users",
     "samplesByLanguage": {
@@ -696,8 +696,8 @@
       ]
     }
   },
-  "application.yml get /users/{id}": {
-    "spec": "application.yml",
+  "application get /users/{id}": {
+    "spec": "application",
     "method": "get",
     "path": "/users/{id}",
     "samplesByLanguage": {
@@ -713,8 +713,8 @@
       ]
     }
   },
-  "application.yml put /users/{id}": {
-    "spec": "application.yml",
+  "application put /users/{id}": {
+    "spec": "application",
     "method": "put",
     "path": "/users/{id}",
     "samplesByLanguage": {
@@ -730,8 +730,8 @@
       ]
     }
   },
-  "application.yml patch /users/{id}": {
-    "spec": "application.yml",
+  "application patch /users/{id}": {
+    "spec": "application",
     "method": "patch",
     "path": "/users/{id}",
     "samplesByLanguage": {
@@ -747,8 +747,8 @@
       ]
     }
   },
-  "application.yml get /users/{id}/preferences": {
-    "spec": "application.yml",
+  "application get /users/{id}/preferences": {
+    "spec": "application",
     "method": "get",
     "path": "/users/{id}/preferences",
     "samplesByLanguage": {
@@ -764,8 +764,8 @@
       ]
     }
   },
-  "application.yml patch /users/{id}/preferences": {
-    "spec": "application.yml",
+  "application patch /users/{id}/preferences": {
+    "spec": "application",
     "method": "patch",
     "path": "/users/{id}/preferences",
     "samplesByLanguage": {
@@ -781,8 +781,8 @@
       ]
     }
   },
-  "application.yml get /users/{id}/metrics": {
-    "spec": "application.yml",
+  "application get /users/{id}/metrics": {
+    "spec": "application",
     "method": "get",
     "path": "/users/{id}/metrics",
     "samplesByLanguage": {
@@ -798,8 +798,8 @@
       ]
     }
   },
-  "application.yml get /users/{id}/metrics/{key}": {
-    "spec": "application.yml",
+  "application get /users/{id}/metrics/{key}": {
+    "spec": "application",
     "method": "get",
     "path": "/users/{id}/metrics/{key}",
     "samplesByLanguage": {
@@ -815,8 +815,8 @@
       ]
     }
   },
-  "application.yml get /users/{id}/metrics/{key}/event-summary": {
-    "spec": "application.yml",
+  "application get /users/{id}/metrics/{key}/event-summary": {
+    "spec": "application",
     "method": "get",
     "path": "/users/{id}/metrics/{key}/event-summary",
     "samplesByLanguage": {
@@ -832,8 +832,8 @@
       ]
     }
   },
-  "application.yml get /users/{id}/achievements": {
-    "spec": "application.yml",
+  "application get /users/{id}/achievements": {
+    "spec": "application",
     "method": "get",
     "path": "/users/{id}/achievements",
     "samplesByLanguage": {
@@ -859,8 +859,8 @@
       ]
     }
   },
-  "application.yml get /users/{id}/streak": {
-    "spec": "application.yml",
+  "application get /users/{id}/streak": {
+    "spec": "application",
     "method": "get",
     "path": "/users/{id}/streak",
     "samplesByLanguage": {
@@ -876,8 +876,8 @@
       ]
     }
   },
-  "application.yml get /streaks": {
-    "spec": "application.yml",
+  "application get /streaks": {
+    "spec": "application",
     "method": "get",
     "path": "/streaks",
     "samplesByLanguage": {
@@ -893,8 +893,8 @@
       ]
     }
   },
-  "application.yml get /streaks/rankings": {
-    "spec": "application.yml",
+  "application get /streaks/rankings": {
+    "spec": "application",
     "method": "get",
     "path": "/streaks/rankings",
     "samplesByLanguage": {
@@ -910,8 +910,8 @@
       ]
     }
   },
-  "application.yml get /users/{id}/points/{key}": {
-    "spec": "application.yml",
+  "application get /users/{id}/points/{key}": {
+    "spec": "application",
     "method": "get",
     "path": "/users/{id}/points/{key}",
     "samplesByLanguage": {
@@ -927,8 +927,8 @@
       ]
     }
   },
-  "application.yml get /users/{id}/points/{key}/boosts": {
-    "spec": "application.yml",
+  "application get /users/{id}/points/{key}/boosts": {
+    "spec": "application",
     "method": "get",
     "path": "/users/{id}/points/{key}/boosts",
     "samplesByLanguage": {
@@ -944,8 +944,8 @@
       ]
     }
   },
-  "application.yml get /users/{id}/points/{key}/event-summary": {
-    "spec": "application.yml",
+  "application get /users/{id}/points/{key}/event-summary": {
+    "spec": "application",
     "method": "get",
     "path": "/users/{id}/points/{key}/event-summary",
     "samplesByLanguage": {
@@ -961,8 +961,8 @@
       ]
     }
   },
-  "application.yml get /users/{id}/leaderboards/{key}": {
-    "spec": "application.yml",
+  "application get /users/{id}/leaderboards/{key}": {
+    "spec": "application",
     "method": "get",
     "path": "/users/{id}/leaderboards/{key}",
     "samplesByLanguage": {
@@ -978,8 +978,8 @@
       ]
     }
   },
-  "application.yml get /users/{id}/wrapped": {
-    "spec": "application.yml",
+  "application get /users/{id}/wrapped": {
+    "spec": "application",
     "method": "get",
     "path": "/users/{id}/wrapped",
     "samplesByLanguage": {
@@ -995,8 +995,8 @@
       ]
     }
   },
-  "application.yml get /points/{key}/summary": {
-    "spec": "application.yml",
+  "application get /points/{key}/summary": {
+    "spec": "application",
     "method": "get",
     "path": "/points/{key}/summary",
     "samplesByLanguage": {
@@ -1012,8 +1012,8 @@
       ]
     }
   },
-  "application.yml get /points/{key}": {
-    "spec": "application.yml",
+  "application get /points/{key}": {
+    "spec": "application",
     "method": "get",
     "path": "/points/{key}",
     "samplesByLanguage": {
@@ -1029,8 +1029,8 @@
       ]
     }
   },
-  "application.yml get /points/{key}/boosts": {
-    "spec": "application.yml",
+  "application get /points/{key}/boosts": {
+    "spec": "application",
     "method": "get",
     "path": "/points/{key}/boosts",
     "samplesByLanguage": {
@@ -1046,8 +1046,8 @@
       ]
     }
   },
-  "application.yml get /points/{key}/levels": {
-    "spec": "application.yml",
+  "application get /points/{key}/levels": {
+    "spec": "application",
     "method": "get",
     "path": "/points/{key}/levels",
     "samplesByLanguage": {
@@ -1063,8 +1063,8 @@
       ]
     }
   },
-  "application.yml get /points/{key}/level-summary": {
-    "spec": "application.yml",
+  "application get /points/{key}/level-summary": {
+    "spec": "application",
     "method": "get",
     "path": "/points/{key}/level-summary",
     "samplesByLanguage": {
@@ -1080,8 +1080,8 @@
       ]
     }
   },
-  "application.yml get /leaderboards": {
-    "spec": "application.yml",
+  "application get /leaderboards": {
+    "spec": "application",
     "method": "get",
     "path": "/leaderboards",
     "samplesByLanguage": {
@@ -1097,8 +1097,8 @@
       ]
     }
   },
-  "application.yml get /leaderboards/{key}": {
-    "spec": "application.yml",
+  "application get /leaderboards/{key}": {
+    "spec": "application",
     "method": "get",
     "path": "/leaderboards/{key}",
     "samplesByLanguage": {

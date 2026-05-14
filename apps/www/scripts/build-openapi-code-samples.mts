@@ -12,13 +12,13 @@ const OUTPUT_PATH = path.join(
 
 const SPECS = [
   {
-    specKey: "admin.yml" as const,
+    specKey: "admin" as const,
     url:
       process.env.TROPHY_OPENAPI_ADMIN_URL ??
       "https://admin.trophy.so/v1/openapi",
   },
   {
-    specKey: "application.yml" as const,
+    specKey: "application" as const,
     url:
       process.env.TROPHY_OPENAPI_APPLICATION_URL ??
       "https://api.trophy.so/v1/openapi",
