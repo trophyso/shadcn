@@ -5,6 +5,11 @@ import { findNeighbour } from "fumadocs-core/server"
 import { ChevronLeft, ChevronRight, CircleAlert, GitFork } from "lucide-react"
 
 import { siteConfig } from "@/lib/config"
+import {
+  resolveDocsMetaKeywords,
+  resolveDocsSeoTitle,
+  type TrophyDocsFrontmatter,
+} from "@/lib/docs-metadata"
 import { source } from "@/lib/source"
 import { absoluteUrl } from "@/lib/utils"
 import { DocsCopyPage } from "@/components/docs-copy-page"
@@ -30,40 +35,36 @@ export async function generateMetadata(props: {
     notFound()
   }
 
-  const doc = page.data
+  const doc = page.data as typeof page.data & TrophyDocsFrontmatter
 
   if (!doc.title || !doc.description) {
     notFound()
   }
 
+  const metaTitle = resolveDocsSeoTitle(doc)
+  const metaKeywords = resolveDocsMetaKeywords(doc)
+
   return {
-    title: doc.title,
+    title: metaTitle,
     description: doc.description,
-    keywords: [
-      doc.title,
-      "gamification UI component",
-      "React component",
-      "shadcn UI",
-      "Tailwind CSS",
-      "Trophy UI",
-    ],
+    keywords: metaKeywords,
     alternates: {
       canonical: `${siteConfig.url}${page.url}`,
     },
     openGraph: {
-      title: doc.title,
+      title: metaTitle,
       description: doc.description,
       type: "article",
       url: `${siteConfig.url}${page.url}`,
       images: [
         {
-          url: `/og?title=${encodeURIComponent(doc.title)}&description=${encodeURIComponent(doc.description)}`,
+          url: `/og?title=${encodeURIComponent(metaTitle)}&description=${encodeURIComponent(doc.description)}`,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: doc.title,
+      title: metaTitle,
       description: doc.description,
     },
   }

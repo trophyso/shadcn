@@ -50,20 +50,15 @@ const jsonLd = {
   operatingSystem: "Any",
   description: siteConfig.description,
   url: siteConfig.url,
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-  },
   keywords:
-    "gamification UI components, React gamification, streak component, achievement component, leaderboard component, points component, shadcn gamification, Tailwind CSS gamification",
+    "gamification UI kit, gamification component library, open source gamification UI, free gamification components, React gamification, Next.js gamification, shadcn gamification, shadcn registry, Tailwind gamification, streak component, achievement component, leaderboard component, points component",
   featureList: [
     "Streak tracking components",
     "Achievement badges and cards",
     "Leaderboard rankings and podiums",
     "Points displays and level systems",
-    "Built on shadcn/ui and Tailwind CSS",
-    "CLI installation with one command",
+    "Built on shadcn/ui and Tailwind CSS for React and Next.js",
+    "Install with the shadcn CLI from this open registry",
     "Fully customizable and open source",
   ],
   softwareHelp: {

@@ -1,5 +1,12 @@
+import type { Metadata } from "next"
+
+import { siteConfig } from "@/lib/config"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+}
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (

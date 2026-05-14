@@ -1,7 +1,15 @@
 // source.config.ts
-import { defineConfig, defineDocs } from "fumadocs-mdx/config";
+import { defineConfig, defineDocs, frontmatterSchema } from "fumadocs-mdx/config";
+import { z } from "zod";
+var docsPageSchema = frontmatterSchema.extend({
+  seoTitle: z.string().optional(),
+  keywords: z.array(z.string()).optional()
+});
 var docs = defineDocs({
-  dir: "content/docs"
+  dir: "content/docs",
+  docs: {
+    schema: docsPageSchema
+  }
 });
 var source_config_default = defineConfig({
   mdxOptions: {
