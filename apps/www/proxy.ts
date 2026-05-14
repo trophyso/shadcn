@@ -2,7 +2,7 @@ import { NextRequest, NextResponse, type NextFetchEvent } from "next/server"
 
 import { sendProfoundCustomLogs } from "@/lib/profound/customLogs"
 
-const PROFOUND_LOG_HOST = "ui.trophy.so"
+const PROFOUND_LOG_HOST = "ui.trophy.so";
 
 const SAFE_QUERY_PARAMS = new Set(
   (process.env.PROFOUND_LOG_QUERY_PARAM_ALLOWLIST ?? "")
@@ -37,7 +37,7 @@ function getSafeQueryParams(url: URL): Record<string, string> | undefined {
   return Object.fromEntries(safeEntries)
 }
 
-export function middleware(request: NextRequest, event: NextFetchEvent) {
+export function proxy(request: NextRequest, event: NextFetchEvent) {
   const response = NextResponse.next()
 
   const referer = request.headers.get("referer") || undefined
