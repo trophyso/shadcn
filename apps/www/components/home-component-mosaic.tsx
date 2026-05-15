@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import * as DialogPrimitive from "@radix-ui/react-dialog"
 
 import { AchievementGrid } from "@/registry/trophy/ui/achievement-grid"
 import { AchievementList } from "@/registry/trophy/ui/achievement-list"
@@ -15,6 +14,7 @@ import { PointsBoost } from "@/registry/trophy/ui/points-boost"
 import { PointsChart } from "@/registry/trophy/ui/points-chart"
 import { PointsLevelsList } from "@/registry/trophy/ui/points-levels-list"
 import { StreakBadge } from "@/registry/trophy/ui/streak-badge"
+import { BlurFade } from "./ui/blur-fade"
 
 const chartData7Days = (() => {
   // 1 data point per day for previous 7 days, always increasing by highly variable random increments
@@ -448,24 +448,33 @@ export function HomeComponentMosaic() {
         <div className="grid auto-rows-[minmax(180px,auto)] gap-4 md:grid-cols-12">
           <div className="md:col-span-3">
             <div className="flex h-full flex-col gap-4">
-              <PointsBadge name="XP" total={19845} />
-              <StreakBadge
-                size="sm"
-                length={12}
-                frequency="daily"
-                className="border-border w-full rounded-xl"
-              />
-              <AchievementGrid
-                achievements={achievements}
-                columns={2}
-                gap="sm"
-                badgeSize="sm"
-                className="h-full"
-              />
+              <BlurFade delay={0}>
+                <PointsBadge name="XP" total={19845} />
+              </BlurFade>
+              <BlurFade delay={0.05}>
+                <StreakBadge
+                  size="sm"
+                  length={12}
+                  frequency="daily"
+                  className="border-border w-full rounded-xl"
+                />
+              </BlurFade>
+              <BlurFade delay={0.1} className="h-full">
+                <AchievementGrid
+                  achievements={achievements}
+                  columns={2}
+                  gap="sm"
+                  badgeSize="sm"
+                  className="h-full"
+                />
+              </BlurFade>
             </div>
           </div>
 
-          <div className="bg-card/60 rounded-2xl border p-4 backdrop-blur md:col-span-6">
+          <BlurFade
+            delay={0.15}
+            className="bg-card/60 rounded-2xl border p-4 backdrop-blur md:col-span-6"
+          >
             <PointsChart
               data={chartData[period as keyof typeof chartData]}
               levels={chartLevels}
@@ -489,16 +498,19 @@ export function HomeComponentMosaic() {
               height={300}
               className="h-full border-0 bg-transparent p-0"
             />
-          </div>
+          </BlurFade>
 
-          <div className="overflow-hidden md:col-span-3">
+          <BlurFade delay={0.2} className="overflow-hidden md:col-span-3">
             <PointsLevelsList
               levels={levels}
               className="py-2 [&_[role=listitem]]:grid-cols-[8rem_1fr_auto] [&_[role=listitem]]:px-3 [&_[role=listitem]]:py-2.5 [&_[role=listitem]]:pr-0"
             />
-          </div>
+          </BlurFade>
 
-          <div className="bg-card/60 overflow-hidden rounded-2xl border backdrop-blur md:col-span-4">
+          <BlurFade
+            delay={0.25}
+            className="bg-card/60 overflow-hidden rounded-2xl border backdrop-blur md:col-span-4"
+          >
             <LeaderboardRankings
               rankings={rankings}
               className="h-full border-0"
@@ -506,30 +518,38 @@ export function HomeComponentMosaic() {
               defaultPageSize={10}
               showPagination
             />
-          </div>
+          </BlurFade>
 
           <div className="flex h-full flex-col gap-4 overflow-hidden md:col-span-8">
-            <PointsBoost
-              boost={{
-                name: "Double XP Weekend",
-                status: "active",
-                description: "Enjoy double XP on all activity this weekend.",
-                multiplier: 2,
-                endDate: new Date(
-                  Date.now() + 1000 * 60 * 60 * 24 * 2
-                ).toISOString(),
-              }}
-              cta={{ link: "#", text: "Do something" }}
-            />
+            <BlurFade delay={0.3}>
+              <PointsBoost
+                boost={{
+                  name: "Double XP Weekend",
+                  status: "active",
+                  description: "Enjoy double XP on all activity this weekend.",
+                  multiplier: 2,
+                  endDate: new Date(
+                    Date.now() + 1000 * 60 * 60 * 24 * 2
+                  ).toISOString(),
+                }}
+                cta={{ link: "#", text: "Do something" }}
+              />
+            </BlurFade>
             <div className="grid auto-rows-[minmax(180px,auto)] gap-4 md:grid-cols-12">
-              <div className="bg-card/60 rounded-2xl border backdrop-blur md:col-span-7">
+              <BlurFade
+                delay={0.35}
+                className="bg-card/60 rounded-2xl border backdrop-blur md:col-span-7"
+              >
                 <PointsAwards
                   awards={awardsRows}
                   className="h-full border-0 bg-transparent"
                 />
-              </div>
+              </BlurFade>
               <div className="flex flex-col gap-4 md:col-span-5">
-                <div className="bg-card/60 flex justify-center overflow-hidden rounded-2xl border p-4 backdrop-blur">
+                <BlurFade
+                  delay={0.4}
+                  className="bg-card/60 flex justify-center overflow-hidden rounded-2xl border p-4 backdrop-blur"
+                >
                   <Button
                     variant="outline"
                     onClick={() => setAchievementModalOpen(true)}
@@ -537,8 +557,11 @@ export function HomeComponentMosaic() {
                   >
                     Unlock achievement
                   </Button>
-                </div>
-                <div className="bg-card/60 flex justify-center overflow-hidden rounded-2xl border p-4 backdrop-blur">
+                </BlurFade>
+                <BlurFade
+                  delay={0.45}
+                  className="bg-card/60 flex justify-center overflow-hidden rounded-2xl border p-4 backdrop-blur"
+                >
                   <LeaderboardPodium
                     rankings={[
                       {
@@ -566,8 +589,8 @@ export function HomeComponentMosaic() {
                     size="sm"
                     className="h-full"
                   />
-                </div>
-                <div className="overflow-hidden">
+                </BlurFade>
+                <BlurFade delay={0.5} className="overflow-hidden">
                   <AchievementList
                     achievements={[achievements[0]!]}
                     columns={2}
@@ -575,7 +598,7 @@ export function HomeComponentMosaic() {
                     badgeSize="sm"
                     className="h-full w-full"
                   />
-                </div>
+                </BlurFade>
               </div>
             </div>
           </div>

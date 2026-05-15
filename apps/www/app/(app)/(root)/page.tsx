@@ -10,6 +10,7 @@ import {
   PageHeaderHeading,
 } from "@/components/page-header"
 import { Button } from "@/registry/trophy/ui/button"
+import { TextAnimate } from "@/components/ui/text-animate"
 
 export const dynamic = "force-static"
 export const revalidate = false
@@ -134,12 +135,15 @@ export default function IndexPage() {
         <PageHeader className="relative z-10">
           <PageHeaderHeading className="max-w-4xl">
             <span className="font-montserrat flex items-baseline gap-2 sm:gap-3">
-              <span className="leading-[0.95] font-bold tracking-[-0.03em]">
+              {/* <span className="leading-[0.95] font-bold tracking-[-0.03em]">
                 Gamification UI Kit
-              </span>
-              <span className="animate-expand-in overflow-hidden whitespace-nowrap font-normal tracking-[-0.02em]">
+              </span> */}
+              <TextAnimate animation="slideLeft" by="character">
+                Gamification UI Kit by Trophy
+              </TextAnimate>
+              {/* <span className="animate-expand-in overflow-hidden whitespace-nowrap font-normal tracking-[-0.02em]">
                 by Trophy
-              </span>
+              </span> */}
             </span>
           </PageHeaderHeading>
           <PageHeaderDescription>
