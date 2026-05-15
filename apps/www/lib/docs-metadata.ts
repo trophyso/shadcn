@@ -1,3 +1,5 @@
+import { siteConfig } from "@/lib/config"
+
 export type TrophyDocsFrontmatter = {
   title: string
   description?: string
@@ -5,12 +7,19 @@ export type TrophyDocsFrontmatter = {
   keywords?: string[]
 }
 
+export function formatDocsSeoTitle(core: string): string {
+  const trimmed = core.trim()
+  const suffix = siteConfig.title.trim()
+  if (!suffix) return trimmed
+  return `${trimmed} | ${suffix}`
+}
+
 export function resolveDocsSeoTitle(
   doc: Pick<TrophyDocsFrontmatter, "title" | "seoTitle">
 ): string {
   const custom = doc.seoTitle?.trim()
-  if (custom) return custom
-  return `${doc.title} | Trophy UI`
+  if (custom) return formatDocsSeoTitle(custom)
+  return formatDocsSeoTitle(doc.title)
 }
 
 export function resolveDocsMetaKeywords(
