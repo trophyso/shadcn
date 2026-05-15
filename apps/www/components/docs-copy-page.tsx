@@ -20,7 +20,7 @@ import { Separator } from "@/registry/trophy/ui/separator"
 
 function getPromptUrl(baseURL: string, url: string) {
   return `${baseURL}?q=${encodeURIComponent(
-    `I'm looking at this Trophy UI documentation: ${url}.
+    `I'm looking at this Gamification UI Kit by Trophy documentation: ${url}.
 Help me understand how to use it. Be ready to explain concepts, give examples, or help debug based on it.
   `
   )}`
