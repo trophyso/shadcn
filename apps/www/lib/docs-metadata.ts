@@ -30,8 +30,7 @@ export function resolveDocsMetaKeywords(
     "gamification UI component",
     "React component",
     "shadcn UI",
-    "Tailwind CSS",
-    "Trophy UI",
+    "Tailwind CSS"
   ]
   const extra = doc.keywords?.map((k) => k.trim()).filter(Boolean) ?? []
   return [...new Set([...extra, ...base])]

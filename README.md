@@ -1,12 +1,12 @@
-![Trophy UI](./assets/readme-hero.png)
+![Gamification UI Kit by Trophy](./assets/readme-hero.png)
 
-# Trophy UI
+# Gamification UI Kit by Trophy
 
-[Trophy UI](https://ui.trophy.so) is a component library built on top of [shadcn/ui](https://ui.shadcn.com/) to help you build gamification experiences faster.
+[Gamification UI Kit by Trophy](https://ui.trophy.so) is a component library built on top of [shadcn/ui](https://ui.shadcn.com/) to help you build gamification experiences faster.
 
 ## Overview
 
-Trophy UI provides pre-built, customizable React components for gamification—streaks, achievements, leaderboards, points, XP charts, event banners, and more. The [shadcn/ui](https://ui.shadcn.com/) CLI pulls components straight from the registry so you can own the code and tailor it to your product.
+Trophy's Gamification UI Kit provides pre-built, customizable React components for gamification—streaks, achievements, leaderboards, points, XP charts, event banners, and more. The [shadcn/ui](https://ui.shadcn.com/) CLI pulls components straight from the registry so you can own the code and tailor it to your product.
 
 ## Installation
 
@@ -18,7 +18,7 @@ npx shadcn@latest add https://ui.trophy.so/streak-badge
 
 ## Prerequisites
 
-Before using Trophy UI, ensure your project meets these requirements:
+Before using Trophy's Gamification UI Kit, ensure your project meets these requirements:
 
 - **Node.js 18** or later
 - **React 18+** — components are client-side React
@@ -35,7 +35,7 @@ Install every registry component at once:
 npx shadcn@latest add https://ui.trophy.so/all
 ```
 
-This adds Trophy UI components (and any shared primitives they depend on) into your configured components directory.
+This adds components (and any shared primitives they depend on) into your configured components directory.
 
 ### Install specific components
 
@@ -65,7 +65,7 @@ Browse the full set on the docs site: [Components](https://ui.trophy.so/docs/com
 
 ## Contributing
 
-If you would like to contribute to Trophy UI:
+If you would like to contribute to Gamification UI Kit by Trophy:
 
 1. Fork the repository
 2. Create a branch for your change

@@ -38,8 +38,7 @@ export const siteConfig = {
     "leaderboard React component",
     "achievement badge React",
     "points system UI",
-    "gamification UX",
-    "Trophy UI",
+    "gamification UX"
   ],
   links: {
     github: "https://github.com/trophyso/ui",

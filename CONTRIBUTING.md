@@ -1,6 +1,6 @@
-# Contributing to Trophy UI
+# Contributing to Gamification UI Kit by Trophy
 
-Thank you for helping improve [Trophy UI](https://ui.trophy.so). This document explains how to set up the repo locally, run the site and tooling, and what we look for in contributions.
+Thank you for helping improve [Gamification UI Kit by Trophy](https://ui.trophy.so). This document explains how to set up the repo locally, run the site and tooling, and what we look for in contributions.
 
 ## Prerequisites
 

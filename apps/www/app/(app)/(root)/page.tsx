@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "Trophy UI",
+  name: "Gamification UI Kit by Trophy",
   applicationCategory: "DeveloperApplication",
   operatingSystem: "Any",
   description: siteConfig.description,
