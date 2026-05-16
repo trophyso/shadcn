@@ -138,7 +138,7 @@ export default function IndexPage() {
               {/* <span className="leading-[0.95] font-bold tracking-[-0.03em]">
                 Gamification UI Kit
               </span> */}
-              <TextAnimate animation="slideLeft" by="character">
+              <TextAnimate animation="slideLeft" by="word">
                 Gamification UI Kit by Trophy
               </TextAnimate>
               {/* <span className="animate-expand-in overflow-hidden whitespace-nowrap font-normal tracking-[-0.02em]">
