@@ -51,17 +51,17 @@ const nextConfig = {
       // CLI traffic gets the JSON payload while browsers still see the HTML
       // pages from the app router.
       beforeFiles: [
-        // Root hosting: serve the registry index at `/` so the CLI can do
+        // Root hosting: serve the registry catalog at `/` so the CLI can do
         // `shadcn add https://ui.trophy.so` and `shadcn init https://ui.trophy.so`.
         {
           source: "/",
           has: [shadcnAcceptHeader],
-          destination: "/r/index.json",
+          destination: "/r/registry.json",
         },
         {
           source: "/",
           has: [shadcnUserAgentHeader],
-          destination: "/r/index.json",
+          destination: "/r/registry.json",
         },
         // Per-component shortcuts: `/<name>` -> `/r/<name>.json` so install
         // commands can drop the `/r/` prefix and `.json` suffix.

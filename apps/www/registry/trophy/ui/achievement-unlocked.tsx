@@ -7,9 +7,8 @@ import { cn } from "@/lib/utils"
 import {
   AchievementBadge,
   type UserAchievement,
-} from "@/registry/trophy/ui/achievement-badge"
-
-import { Button } from "./button"
+} from "@/components/ui/achievement-badge"
+import { Button } from "@/components/ui/button"
 
 // Types (inlined - only fields used by this component)
 interface Achievement {

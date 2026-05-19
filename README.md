@@ -61,7 +61,7 @@ You can also point at the JSON registry entries directly:
 npx shadcn@latest add https://ui.trophy.so/r/points-chart.json
 ```
 
-Browse the full set on the docs site: [Components](https://ui.trophy.so/docs/components) and the [introduction](https://ui.trophy.so/docs).
+Browse the component catalog at [ui.trophy.so/r/registry.json](https://ui.trophy.so/r/registry.json), or on the docs site: [Components](https://ui.trophy.so/docs/components) and the [introduction](https://ui.trophy.so/docs).
 
 ## Contributing
 

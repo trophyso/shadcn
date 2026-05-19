@@ -6,11 +6,11 @@ import { cn } from "@/lib/utils"
 import {
   LeaderboardPodium,
   type LeaderboardRanking as LeaderboardPodiumRanking,
-} from "@/registry/trophy/ui/leaderboard-podium"
+} from "@/components/ui/leaderboard-podium"
 import {
   LeaderboardRankings,
   type LeaderboardRankingItem,
-} from "@/registry/trophy/ui/leaderboard-rankings"
+} from "@/components/ui/leaderboard-rankings"
 
 interface LeaderboardRunOption {
   id: string

@@ -3,10 +3,9 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
-import { AchievementBadge } from "@/registry/trophy/ui/achievement-badge"
-import { AchievementList } from "@/registry/trophy/ui/achievement-list"
-
-import { Button } from "./button"
+import { AchievementBadge } from "@/components/ui/achievement-badge"
+import { AchievementList } from "@/components/ui/achievement-list"
+import { Button } from "@/components/ui/button"
 
 interface Achievement {
   id: string

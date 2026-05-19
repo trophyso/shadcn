@@ -34,13 +34,22 @@ Other useful root scripts:
 
 ## Working on components and the registry
 
-Registry sources and generated artifacts live under `apps/www/registry/`. When you change registry entries or related scripts, rebuild from the **repository root**:
+Registry sources live under `apps/www/registry/`. The manifest is [`apps/www/registry.json`](apps/www/registry.json); the official [`shadcn build`](https://ui.shadcn.com/docs/cli#build) command emits install payloads to `apps/www/public/r/`.
+
+When you change registry sources or `registry.json`, rebuild from the **repository root**:
 
 ```bash
 pnpm registry:build
 ```
 
-That runs the `www` registry build, then applies lint fixes and formatting so generated files stay consistent.
+That cleans `public/r`, runs `shadcn build`, generates `all.json` for bulk install, then applies formatting. Production builds also run this via `prebuild` in the `www` app.
+
+**Adding a gamification component:**
+
+1. Add the source file under `apps/www/registry/trophy/ui/`.
+2. Add an entry to `apps/www/registry.json` with `title`, `description`, `dependencies`, and `registryDependencies` (use `button` for shadcn's Button primitive, not a Trophy catalog item).
+3. Add MDX docs under `apps/www/content/docs/components/`.
+4. Run `pnpm registry:build` and commit the updated `public/r/*` artifacts.
 
 Documentation and examples for components typically live under `apps/www/content/docs/` (MDX) and `apps/www/components/` as needed. Follow existing patterns for new components or doc pages.
 

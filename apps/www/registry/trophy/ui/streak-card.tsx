@@ -10,12 +10,11 @@ import {
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import {
   StreakCalendar,
   type StreakPeriod,
-} from "@/registry/trophy/ui/streak-calendar"
-
-import { Button } from "./button"
+} from "@/components/ui/streak-calendar"
 
 interface StreakCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Streak periods passed through to StreakCalendar */

@@ -4,7 +4,7 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
-import { AchievementBadge } from "@/registry/trophy/ui/achievement-badge"
+import { AchievementBadge } from "@/components/ui/achievement-badge"
 
 // Types (inlined - only fields used by this component)
 interface Achievement {

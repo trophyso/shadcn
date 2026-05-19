@@ -1,107 +1,17 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "trophy",
-  "homepage": "https://ui.trophy.so",
-  "items": [
-    {
-      "name": "achievement-badge",
-      "type": "registry:ui"
-    },
-    {
-      "name": "achievement-card",
-      "type": "registry:ui"
-    },
-    {
-      "name": "achievement-grid",
-      "type": "registry:ui"
-    },
-    {
-      "name": "achievement-list",
-      "type": "registry:ui"
-    },
-    {
-      "name": "achievement-unlocked",
-      "type": "registry:ui"
-    },
-    {
-      "name": "button",
-      "type": "registry:ui"
-    },
-    {
-      "name": "command",
-      "type": "registry:ui"
-    },
-    {
-      "name": "dialog",
-      "type": "registry:ui"
-    },
-    {
-      "name": "dropdown-menu",
-      "type": "registry:ui"
-    },
-    {
-      "name": "leaderboard-card",
-      "type": "registry:ui"
-    },
-    {
-      "name": "leaderboard-podium",
-      "type": "registry:ui"
-    },
-    {
-      "name": "leaderboard-rankings",
-      "type": "registry:ui"
-    },
-    {
-      "name": "points-awards",
-      "type": "registry:ui"
-    },
-    {
-      "name": "points-badge",
-      "type": "registry:ui"
-    },
-    {
-      "name": "points-boost",
-      "type": "registry:ui"
-    },
-    {
-      "name": "points-chart",
-      "type": "registry:ui"
-    },
-    {
-      "name": "points-levels-list",
-      "type": "registry:ui"
-    },
-    {
-      "name": "points-levels-timeline",
-      "type": "registry:ui"
-    },
-    {
-      "name": "popover",
-      "type": "registry:ui"
-    },
-    {
-      "name": "separator",
-      "type": "registry:ui"
-    },
-    {
-      "name": "sidebar",
-      "type": "registry:ui"
-    },
-    {
-      "name": "streak-badge",
-      "type": "registry:ui"
-    },
-    {
-      "name": "streak-calendar",
-      "type": "registry:ui"
-    },
-    {
-      "name": "streak-card",
-      "type": "registry:ui"
-    },
-    {
-      "name": "tabs",
-      "type": "registry:ui"
-    }
-  ]
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "index",
+  "dependencies": [
+    "class-variance-authority",
+    "lucide-react"
+  ],
+  "devDependencies": [
+    "tw-animate-css"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [],
+  "cssVars": {},
+  "type": "registry:style"
 }

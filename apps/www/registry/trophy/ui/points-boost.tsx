@@ -4,8 +4,7 @@ import * as React from "react"
 import { ChevronRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-
-import { Button } from "./button"
+import { Button } from "@/components/ui/button"
 
 export type PointsBoostStatus = "active" | "scheduled" | "finished"
 

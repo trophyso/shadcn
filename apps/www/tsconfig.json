@@ -24,9 +24,25 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/components/ui/achievement-badge": ["./registry/trophy/ui/achievement-badge"],
+      "@/components/ui/achievement-card": ["./registry/trophy/ui/achievement-card"],
+      "@/components/ui/achievement-grid": ["./registry/trophy/ui/achievement-grid"],
+      "@/components/ui/achievement-list": ["./registry/trophy/ui/achievement-list"],
+      "@/components/ui/achievement-unlocked": ["./registry/trophy/ui/achievement-unlocked"],
+      "@/components/ui/button": ["./registry/trophy/ui/button"],
+      "@/components/ui/leaderboard-card": ["./registry/trophy/ui/leaderboard-card"],
+      "@/components/ui/leaderboard-podium": ["./registry/trophy/ui/leaderboard-podium"],
+      "@/components/ui/leaderboard-rankings": ["./registry/trophy/ui/leaderboard-rankings"],
+      "@/components/ui/points-awards": ["./registry/trophy/ui/points-awards"],
+      "@/components/ui/points-badge": ["./registry/trophy/ui/points-badge"],
+      "@/components/ui/points-boost": ["./registry/trophy/ui/points-boost"],
+      "@/components/ui/points-chart": ["./registry/trophy/ui/points-chart"],
+      "@/components/ui/points-levels-list": ["./registry/trophy/ui/points-levels-list"],
+      "@/components/ui/points-levels-timeline": ["./registry/trophy/ui/points-levels-timeline"],
+      "@/components/ui/streak-badge": ["./registry/trophy/ui/streak-badge"],
+      "@/components/ui/streak-calendar": ["./registry/trophy/ui/streak-calendar"],
+      "@/components/ui/streak-card": ["./registry/trophy/ui/streak-card"],
+      "@/*": ["./*"]
     }
   },
   "include": [
@@ -35,7 +51,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "scripts/build-registry.mts",
+    "scripts/build-registry.mjs",
     "next.config.mjs"
   ],
   "exclude": [
