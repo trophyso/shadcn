@@ -11,6 +11,7 @@ import {
 } from "@/components/page-header"
 import { Button } from "@/registry/trophy/ui/button"
 import { TextAnimate } from "@/components/ui/text-animate"
+import { Star } from "lucide-react"
 
 export const dynamic = "force-static"
 export const revalidate = false
@@ -151,10 +152,17 @@ export default function IndexPage() {
           </PageHeaderDescription>
           <PageActions>
             <Button asChild size="sm">
-              <Link href="/docs">Get Started</Link>
+              <Link
+                href={siteConfig.links.github}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Star className="size-4" />
+                Star on GitHub
+              </Link>
             </Button>
             <Button asChild size="sm" variant="ghost">
-              <Link href="/docs/components">View Components</Link>
+              <Link href="/docs">Get started</Link>
             </Button>
           </PageActions>
         </PageHeader>
