@@ -628,6 +628,91 @@
       ]
     }
   },
+  "admin get /tenants": {
+    "spec": "admin",
+    "method": "get",
+    "path": "/tenants",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst tenants = await trophy.admin.tenants.list({\n  limit: 10,\n  skip: 0\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\ntenants = client.admin.tenants.list(\n  limit=10,\n  skip=0\n)\n"
+        }
+      ]
+    }
+  },
+  "admin post /tenants": {
+    "spec": "admin",
+    "method": "post",
+    "path": "/tenants",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.tenants.create([\n  {\n    customerId: 'customer_12345',\n    name: 'Acme Corp'\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.tenants.create([\n  {\n    \"customerId\": \"customer_12345\",\n    \"name\": \"Acme Corp\"\n  }\n])\n"
+        }
+      ]
+    }
+  },
+  "admin patch /tenants": {
+    "spec": "admin",
+    "method": "patch",
+    "path": "/tenants",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.tenants.update([\n  {\n    id: '550e8400-e29b-41d4-a716-446655440000',\n    name: 'Acme Corporation'\n  }\n]);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.tenants.update([\n  {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"Acme Corporation\"\n  }\n])\n"
+        }
+      ]
+    }
+  },
+  "admin delete /tenants": {
+    "spec": "admin",
+    "method": "delete",
+    "path": "/tenants",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.tenants.delete({\n  ids: [\n    '550e8400-e29b-41d4-a716-446655440000',\n    '550e8400-e29b-41d4-a716-446655440001'\n  ]\n});\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.tenants.delete(\n  ids=[\n    '550e8400-e29b-41d4-a716-446655440000',\n    '550e8400-e29b-41d4-a716-446655440001'\n  ]\n)\n"
+        }
+      ]
+    }
+  },
+  "admin get /tenants/{id}": {
+    "spec": "admin",
+    "method": "get",
+    "path": "/tenants/{id}",
+    "samplesByLanguage": {
+      "javascript": [
+        {
+          "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst tenant = await trophy.admin.tenants.get(\n  '550e8400-e29b-41d4-a716-446655440000'\n);\n"
+        }
+      ],
+      "python": [
+        {
+          "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\ntenant = client.admin.tenants.get(\n  \"550e8400-e29b-41d4-a716-446655440000\"\n)\n"
+        }
+      ]
+    }
+  },
   "application get /achievements": {
     "spec": "application",
     "method": "get",
