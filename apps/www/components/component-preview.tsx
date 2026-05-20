@@ -2,6 +2,7 @@
 
 import * as React from "react"
 
+import { getExampleCode } from "@/components/component-examples"
 import { cn } from "@/lib/utils"
 import { CodeBlock } from "@/components/code-block"
 import { Button } from "@/registry/trophy/ui/button"
@@ -14,6 +15,7 @@ interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function ComponentPreview({
+  name,
   children,
   code,
   showPreviewCard = true,
@@ -21,6 +23,7 @@ export function ComponentPreview({
   ...props
 }: ComponentPreviewProps) {
   const [view, setView] = React.useState<"preview" | "code">("preview")
+  const displayCode = getExampleCode(name) ?? code
 
   return (
     <div
@@ -40,7 +43,7 @@ export function ComponentPreview({
           >
             Preview
           </Button>
-          {code && (
+          {displayCode && (
             <Button
               variant={view === "code" ? "secondary" : "ghost"}
               size="sm"
@@ -65,7 +68,7 @@ export function ComponentPreview({
         </div>
       ) : (
         <CodeBlock
-          code={code}
+          code={displayCode}
           language="tsx"
           className="my-0 rounded-none border-0"
         />

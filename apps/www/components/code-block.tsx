@@ -53,6 +53,7 @@ export function CodeBlock({
 }: CodeBlockProps) {
   const [copied, setCopied] = React.useState(false)
   const [highlighted, setHighlighted] = React.useState<React.JSX.Element>()
+  const contentRef = React.useRef<HTMLDivElement>(null)
 
   const lang = language || dataLanguage
   const codeText = code || extractTextContent(children)
@@ -66,7 +67,12 @@ export function CodeBlock({
   }, [code, lang])
 
   const copyToClipboard = React.useCallback(() => {
-    navigator.clipboard.writeText(codeText).then(() => {
+    const renderedCode =
+      contentRef.current
+        ?.querySelector("code")
+        ?.innerText.replace(/\u00a0/g, " ") || codeText
+
+    navigator.clipboard.writeText(renderedCode).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     })
@@ -119,7 +125,7 @@ export function CodeBlock({
           )}
         </Button>
       )}
-      <div className="bg-muted/30 px-4 py-2 [&_pre]:p-0">
+      <div ref={contentRef} className="bg-muted/30 px-4 py-2 [&_pre]:p-0">
         {code ? (
           (highlighted ?? (
             <pre
