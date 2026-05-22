@@ -9,7 +9,7 @@ function siteOrigin(): string {
 export const siteConfig = {
   name: "Gamification UI Kit by Trophy",
   url: siteOrigin(),
-  ogImage: `${siteOrigin()}/og.jpg`,
+  ogImage: `${siteOrigin()}/og.png`,
   title: "Gamification UI Kit by Trophy",
   description:
     "Trophy's Gamification UI Kit is an open-source library of gamification UI components built on shadcn/ui and Tailwind CSS. Drop-in React components for streaks, achievements, leaderboards, points, and more — ready to copy and customize.",

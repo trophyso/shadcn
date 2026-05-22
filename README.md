@@ -1,4 +1,4 @@
-![Gamification UI Kit by Trophy](./assets/readme-hero.png)
+![Gamification UI Kit by Trophy](./apps/www/public/og.png)
 
 # Gamification UI Kit by Trophy
 

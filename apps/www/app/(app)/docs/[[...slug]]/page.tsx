@@ -56,16 +56,13 @@ export async function generateMetadata(props: {
       description: doc.description,
       type: "article",
       url: `${siteConfig.url}${page.url}`,
-      images: [
-        {
-          url: `/og?title=${encodeURIComponent(metaTitle)}&description=${encodeURIComponent(doc.description)}`,
-        },
-      ],
+      images: [{ url: siteConfig.ogImage }],
     },
     twitter: {
       card: "summary_large_image",
       title: metaTitle,
       description: doc.description,
+      images: [siteConfig.ogImage],
     },
   }
 }
