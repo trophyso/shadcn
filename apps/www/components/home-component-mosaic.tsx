@@ -362,8 +362,7 @@ const awardsRows = (() => {
 
   return dateOffsets.map((offset, i) => {
     const total = totals[i]
-    const prevTotal = i === 0 ? 0 : totals[i - 1]
-    const awarded = total - prevTotal
+    const awarded = increments[i]!
     const triggerId = `trigger-${i}`
     const kind = kindForRow(i)
 
