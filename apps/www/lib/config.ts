@@ -55,6 +55,9 @@ export const siteConfig = {
   ],
 }
 
+export const gaMeasurementId =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || undefined
+
 export const META_THEME_COLORS = {
   light: "#ffffff",
   dark: "#09090b",

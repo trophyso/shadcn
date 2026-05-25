@@ -3,6 +3,7 @@ import { fontVariables } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { LayoutProvider } from "@/hooks/use-layout"
 import { ActiveThemeProvider } from "@/components/active-theme"
+import { GoogleAnalyticsProvider } from "@/components/google-analytics"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -48,6 +49,7 @@ export default function RootLayout({
           </LayoutProvider>
         </ThemeProvider>
       </body>
+      <GoogleAnalyticsProvider />
     </html>
   )
 }
