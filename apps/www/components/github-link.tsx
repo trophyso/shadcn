@@ -39,7 +39,7 @@ export async function StarsCount() {
   const data = await fetch(
     `https://api.github.com/repos/${githubRepoPath()}`,
     {
-      next: { revalidate: 86400 }, // 1 day
+      next: { revalidate: 3600 }, // 1 hour
     }
   )
 
